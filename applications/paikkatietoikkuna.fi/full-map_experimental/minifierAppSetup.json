@@ -266,6 +266,22 @@
 			}
 		}, {
 			"instanceProps": {},
+			"title": "Karttajulkaisu2",
+			"bundleinstancename": "publisher2",
+			"fi": "jquery",
+			"sv": "?",
+			"en": "?",
+			"bundlename": "publisher2",
+			"metadata": {
+				"Import-Bundle": {
+					"publisher2": {
+						"bundlePath": "../../../packages/framework/bundle/"
+					}
+				},
+				"Require-Bundle-Instance": []
+			}
+		}, {
+			"instanceProps": {},
 			"title": "Koordinaattin�ytt�",
 			"bundleinstancename": "coordinatedisplay",
 			"fi": "coordinatedisplay",
@@ -574,17 +590,6 @@
 					}
 				}
 			}
-		},
-		{
-		    "bundlename" : "metrics",
-		    "bundleinstancename" : "metrics",
-		    "metadata" : {
-		        "Import-Bundle" : {
-		            "metrics" : {
-		                "bundlePath" : "../../../packages/admin/bundle/"
-		            }
-		        }
-		    }
 		}
 	]
 }
