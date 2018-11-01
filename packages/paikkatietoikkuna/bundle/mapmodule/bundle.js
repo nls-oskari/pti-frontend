@@ -38,16 +38,16 @@ Oskari.clazz.define(
                  */
                 {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/AbstractMapModule.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/AbstractMapModule.js"
                 }, {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/plugin/AbstractMapModulePlugin.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/plugin/AbstractMapModulePlugin.js"
                 }, {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/plugin/BasicMapModulePlugin.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/plugin/BasicMapModulePlugin.js"
                 }, {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/AbstractMapLayerPlugin.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/AbstractMapLayerPlugin.js"
                 },
                 /*
                  * map-module
@@ -57,76 +57,76 @@ Oskari.clazz.define(
                     "src": "../../../../bundles/paikkatietoikkuna/mapmodule/mapmodule.olcs.js"
                 }, {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/plugin/Plugin.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/plugin/Plugin.js"
                 },
                 /*
                  * domain
                  */
                 {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/domain/AbstractLayer.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/domain/AbstractLayer.js"
                 }, {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/domain/style.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/domain/style.js"
                 }, {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/domain/tool.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/domain/tool.js"
                 },{
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/domain/MaplayerGroup.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/domain/MaplayerGroup.js"
                 },
                 /**
                  * controls plugin
                  */
                 {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule_ol3/plugin/controls/ControlsPlugin.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule_ol3/plugin/controls/ControlsPlugin.js"
                 }, {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/request/DisableMapKeyboardMovementRequest.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/request/DisableMapKeyboardMovementRequest.js"
                 }, {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/request/DisableMapMouseMovementRequest.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/request/DisableMapMouseMovementRequest.js"
                 }, {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/request/EnableMapKeyboardMovementRequest.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/request/EnableMapKeyboardMovementRequest.js"
                 }, {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/request/EnableMapMouseMovementRequest.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/request/EnableMapMouseMovementRequest.js"
                 }, {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule_ol3/request/MapMovementControlsRequestHandler.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule_ol3/request/MapMovementControlsRequestHandler.js"
                 },{
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/request/ShowMapMeasurementRequest.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/request/ShowMapMeasurementRequest.js"
                 },
                 /**
                  * GFI
                  */
                 {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/plugin/getinfo/GetFeatureInfoHandler.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/plugin/getinfo/GetFeatureInfoHandler.js"
                 }, {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/request/GetFeatureInfoRequest.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/request/GetFeatureInfoRequest.js"
                 }, {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/request/GetFeatureInfoActivationRequest.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/request/GetFeatureInfoActivationRequest.js"
                 }, {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/plugin/getinfo/GetInfoPlugin.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/plugin/getinfo/GetInfoPlugin.js"
                 }, {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/plugin/getinfo/GetFeatureInfoFormatter.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/plugin/getinfo/GetFeatureInfoFormatter.js"
                 }, {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/plugin/getinfo/request/ResultHandlerRequest.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/plugin/getinfo/request/ResultHandlerRequest.js"
                 }, {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/plugin/getinfo/request/ResultHandlerRequestHandler.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/plugin/getinfo/request/ResultHandlerRequestHandler.js"
                 }, {
                     "type": "text/css",
-                    "src": "../../../../bundles/mapping/mapmodule/resources/scss/getinfo.scss"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/resources/scss/getinfo.scss"
                 },
 
                 /**
@@ -135,35 +135,35 @@ Oskari.clazz.define(
 
                 {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/plugin/search/SearchPlugin.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/plugin/search/SearchPlugin.js"
                 }, {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/service/search/searchservice.js"
+                    "src": "oskari-frontend/bundles/service/search/searchservice.js"
                 }, {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/service/search/event/SearchResultEvent.js"
+                    "src": "oskari-frontend/bundles/service/search/event/SearchResultEvent.js"
                 }, {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/service/search/request/SearchRequest.js"
+                    "src": "oskari-frontend/bundles/service/search/request/SearchRequest.js"
                 }, {
                     "type": "text/css",
-                    "src": "../../../../bundles/mapping/mapmodule/resources/scss/search.scss"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/resources/scss/search.scss"
                 },
                 /**
                  * Logo plugin
                  */
                 {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/plugin/logo/LogoPlugin.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/plugin/logo/LogoPlugin.js"
                 }, {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/plugin/logo/DataProviderInfoService.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/plugin/logo/DataProviderInfoService.js"
                 }, {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/plugin/logo/logo.service.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/plugin/logo/logo.service.js"
                 }, {
                     "type": "text/css",
-                    "src": "../../../../bundles/mapping/mapmodule/resources/scss/logoplugin.scss"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/resources/scss/logoplugin.scss"
                 },
                 /**
                  * Data Source plugin
@@ -171,72 +171,72 @@ Oskari.clazz.define(
 
                 {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/plugin/datasource/DataSourcePlugin.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/plugin/datasource/DataSourcePlugin.js"
                 }, {
                     "type": "text/css",
-                    "src": "../../../../bundles/mapping/mapmodule/resources/scss/datasource.scss"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/resources/scss/datasource.scss"
                 },
                 // IndexMap
                 {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/plugin/indexmap/IndexMapPlugin.ol3.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/plugin/indexmap/IndexMapPlugin.ol3.js"
                 }, {
                     "type": "text/css",
-                    "src": "../../../../bundles/mapping/mapmodule/resources/scss/indexmap_ol3.scss"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/resources/scss/indexmap_ol3.scss"
                 },
                 // ScaleBar
                 {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/plugin/scalebar/ScaleBarPlugin.ol3.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/plugin/scalebar/ScaleBarPlugin.ol3.js"
                 }, {
                     "type": "text/css",
-                    "src": "../../../../bundles/mapping/mapmodule/resources/scss/scalebar_ol3.scss"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/resources/scss/scalebar_ol3.scss"
                 },
                 // Markers plugin
                 {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/plugin/markers/MarkersPlugin.ol3.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/plugin/markers/MarkersPlugin.ol3.js"
                 }, {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/request/AddMarkerRequest.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/request/AddMarkerRequest.js"
                 }, {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/request/AddMarkerRequestHandler.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/request/AddMarkerRequestHandler.js"
                 }, {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/request/RemoveMarkersRequest.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/request/RemoveMarkersRequest.js"
                 }, {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/request/RemoveMarkersRequestHandler.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/request/RemoveMarkersRequestHandler.js"
                 }, {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/event/AfterAddMarkerEvent.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/event/AfterAddMarkerEvent.js"
                 }, {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/event/MarkerClickEvent.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/event/MarkerClickEvent.js"
                 }, {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/event/AfterRemoveMarkersEvent.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/event/AfterRemoveMarkersEvent.js"
                 },{
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/request/MarkerVisibilityRequest.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/request/MarkerVisibilityRequest.js"
                 }, {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/request/MarkerVisibilityRequestHandler.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/request/MarkerVisibilityRequestHandler.js"
                 },
                 // FullScreen
                 {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/plugin/fullscreen/FullScreen.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/plugin/fullscreen/FullScreen.js"
                 }, {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/request/ToggleFullScreenControlRequest.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/request/ToggleFullScreenControlRequest.js"
                 }, {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/request/ToggleFullScreenControlRequestHandler.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/request/ToggleFullScreenControlRequestHandler.js"
                 }, {
                     "type": "text/css",
-                    "src": "../../../../bundles/mapping/mapmodule/resources/scss/fullscreen.scss"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/resources/scss/fullscreen.scss"
                 },
 
                 /**
@@ -244,10 +244,10 @@ Oskari.clazz.define(
                  */
                 {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/plugin/layers/LayerSelectionPlugin.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/plugin/layers/LayerSelectionPlugin.js"
                 }, {
                     "type": "text/css",
-                    "src": "../../../../bundles/mapping/mapmodule/resources/scss/layersselection.scss"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/resources/scss/layersselection.scss"
                 },
 
                 /**
@@ -255,10 +255,10 @@ Oskari.clazz.define(
                  */
                 {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/plugin/layers/BackgroundLayerSelectionPlugin.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/plugin/layers/BackgroundLayerSelectionPlugin.js"
                 }, {
                     "type": "text/css",
-                    "src": "../../../../bundles/mapping/mapmodule/resources/scss/backgroundlayerselection.scss"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/resources/scss/backgroundlayerselection.scss"
                 },
                 /**
                  * Layers plugin
@@ -270,123 +270,123 @@ Oskari.clazz.define(
 
                 {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/request/MapLayerVisibilityRequest.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/request/MapLayerVisibilityRequest.js"
                 },
                 {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/request/MapLayerVisibilityRequestHandler.ol3.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/request/MapLayerVisibilityRequestHandler.ol3.js"
                 },
 
                 {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/request/MapMoveByLayerContentRequest.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/request/MapMoveByLayerContentRequest.js"
                 }, {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/request/MapMoveByLayerContentRequestHandler.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/request/MapMoveByLayerContentRequestHandler.js"
                 }, {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/event/MapLayerVisibilityChangedEvent.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/event/MapLayerVisibilityChangedEvent.js"
                 },
                 /** Layers backport */
                 {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/plugin/wmslayer/WmsLayerPlugin.ol3.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/plugin/wmslayer/WmsLayerPlugin.ol3.js"
                 }, {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/plugin/wmslayer/wmslayer.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/plugin/wmslayer/wmslayer.js"
                 },
                 /**
                  * Vector Layer plugin
                  */
                 {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/plugin/vectorlayer/VectorLayerPlugin.ol3.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/plugin/vectorlayer/VectorLayerPlugin.ol3.js"
                 }, {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/plugin/vectorlayer/vectorlayer.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/plugin/vectorlayer/vectorlayer.js"
                 }, {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/event/FeatureEvent.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/event/FeatureEvent.js"
                 }, {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/plugin/vectorlayer/request/AddFeaturesToMapRequest.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/plugin/vectorlayer/request/AddFeaturesToMapRequest.js"
                 }, {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/plugin/vectorlayer/request/AddFeaturesToMapRequestHandler.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/plugin/vectorlayer/request/AddFeaturesToMapRequestHandler.js"
                 }, {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/plugin/vectorlayer/request/RemoveFeaturesFromMapRequest.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/plugin/vectorlayer/request/RemoveFeaturesFromMapRequest.js"
                 }, {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/plugin/vectorlayer/request/RemoveFeaturesFromMapRequestHandler.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/plugin/vectorlayer/request/RemoveFeaturesFromMapRequestHandler.js"
                 }, {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/plugin/vectorlayer/request/ZoomToFeaturesRequest.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/plugin/vectorlayer/request/ZoomToFeaturesRequest.js"
                 }, {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/plugin/vectorlayer/request/ZoomToFeaturesRequestHandler.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/plugin/vectorlayer/request/ZoomToFeaturesRequestHandler.js"
                 }, {
                     "type": "text/css",
-                    "src": "../../../../bundles/mapping/mapmodule/resources/scss/vectorlayer.scss"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/resources/scss/vectorlayer.scss"
                 },
                 /**
                  * Vector tiles
                  */ 
                 {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/plugin/vectortilelayer/VectorTileLayerPlugin.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/plugin/vectortilelayer/VectorTileLayerPlugin.js"
                 },
                 /**
                  * GeoLocation plugin
                  */
                 {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/plugin/location/GeoLocationPlugin.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/plugin/location/GeoLocationPlugin.js"
                 },
                 /**
                  * Publishertoolbar plugin
                  */
                 {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/plugin/publishertoolbar/PublisherToolbarPlugin.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/plugin/publishertoolbar/PublisherToolbarPlugin.js"
                 }, {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/plugin/publishertoolbar/request/ToolContainerRequest.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/plugin/publishertoolbar/request/ToolContainerRequest.js"
                 }, {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/plugin/publishertoolbar/request/ToolContainerRequestHandler.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/plugin/publishertoolbar/request/ToolContainerRequestHandler.js"
                 }, {
                     "type": "text/css",
-                    "src": "../../../../bundles/mapping/mapmodule/resources/scss/publishertoolbar.scss"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/resources/scss/publishertoolbar.scss"
                 },
                 /**
                  * Realtime plugin
                  */
                 {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/plugin/realtime/RealtimePlugin.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/plugin/realtime/RealtimePlugin.js"
                 }, {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/plugin/realtime/event/RefreshLayerEvent.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/plugin/realtime/event/RefreshLayerEvent.js"
                 },
                 /**
                  * My Location plugin
                  */
                 {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/plugin/mylocation/MyLocationPlugin.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/plugin/mylocation/MyLocationPlugin.js"
                 }, {
                     "type": "text/css",
-                    "src": "../../../../bundles/mapping/mapmodule/resources/scss/mylocation.scss"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/resources/scss/mylocation.scss"
                 }, {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/request/GetUserLocationRequest.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/request/GetUserLocationRequest.js"
                 }, {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/request/GetUserLocationRequestHandler.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/request/GetUserLocationRequestHandler.js"
                 }, {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/event/UserLocationEvent.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/event/UserLocationEvent.js"
                 },
 
                 /**
@@ -394,13 +394,13 @@ Oskari.clazz.define(
                  */
                 {
                     "type" : "text/javascript",
-                    "src" : "../../../../bundles/mapping/mapmodule/service/map.layer.js"
+                    "src" : "oskari-frontend/bundles/mapping/mapmodule/service/map.layer.js"
                 }, {
                     "type" : "text/javascript",
-                    "src" : "../../../../bundles/mapping/mapmodule/service/map.state.js"
+                    "src" : "oskari-frontend/bundles/mapping/mapmodule/service/map.state.js"
                 }, {
                     "type" : "text/javascript",
-                    "src" : "../../../../bundles/mapping/mapmodule/service/VectorFeatureService.ol.js"
+                    "src" : "oskari-frontend/bundles/mapping/mapmodule/service/VectorFeatureService.ol.js"
                 },
 
                 /**
@@ -408,61 +408,61 @@ Oskari.clazz.define(
                  */
                 {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/request/ToolSelectionRequest.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/request/ToolSelectionRequest.js"
                 }, {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/request/activate.map.layer.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/request/activate.map.layer.js"
                 }, {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/request/add.map.layer.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/request/add.map.layer.js"
                 }, {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/request/remove.map.layer.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/request/remove.map.layer.js"
                 }, {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/request/set.opacity.map.layer.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/request/set.opacity.map.layer.js"
                 }, {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/request/set.style.map.layer.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/request/set.style.map.layer.js"
                 }, {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/request/set.order.map.layer.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/request/set.order.map.layer.js"
                 }, {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/request/map.layer.handler.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/request/map.layer.handler.js"
                 }, {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/request/MapMoveRequest.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/request/MapMoveRequest.js"
                 }, {
                     "type": "text/javascript",
                     "src": "../../../../bundles/paikkatietoikkuna/mapmodule/plugin/controls/ToolSelectionHandler.js"
                 }, {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/request/MapLayerUpdateRequest.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/request/MapLayerUpdateRequest.js"
                 }, {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/request/MapLayerUpdateRequestHandler.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/request/MapLayerUpdateRequestHandler.js"
                 }, {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/request/MapMoveRequestHandler.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/request/MapMoveRequestHandler.js"
                 }, {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/request/ShowProgressSpinnerRequest.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/request/ShowProgressSpinnerRequest.js"
                 }, {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/request/ShowProgressSpinnerRequestHandler.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/request/ShowProgressSpinnerRequestHandler.js"
                 }, {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/request/RegisterStyleRequest.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/request/RegisterStyleRequest.js"
                 }, {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/request/RegisterStyleRequestHandler.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/request/RegisterStyleRequestHandler.js"
                 }, {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/request/VectorLayerRequest.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/request/VectorLayerRequest.js"
                 }, {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/request/VectorLayerRequestHandler.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/request/VectorLayerRequestHandler.js"
                 },
 
                 /**
@@ -470,184 +470,184 @@ Oskari.clazz.define(
                  */
                 {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/event/MapClickedEvent.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/event/MapClickedEvent.js"
                 }, {
                     "type" : "text/javascript",
-                    "src" : "../../../../bundles/mapping/mapmodule/event/MapMoveStartEvent.js"
+                    "src" : "oskari-frontend/bundles/mapping/mapmodule/event/MapMoveStartEvent.js"
                 }, {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/event/map.layer.activation.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/event/map.layer.activation.js"
                 }, {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/event/map.layer.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/event/map.layer.js"
                 }, {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/event/map.layer.add.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/event/map.layer.add.js"
                 }, {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/event/map.layer.remove.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/event/map.layer.remove.js"
                 }, {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/event/map.layer.order.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/event/map.layer.order.js"
                 }, {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/event/map.layer.opacity.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/event/map.layer.opacity.js"
                 }, {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/event/map.layer.style.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/event/map.layer.style.js"
                 }, {
                    "type": "text/javascript",
-                   "src": "../../../../bundles/mapping/mapmodule/event/ProgressEvent.js"
+                   "src": "oskari-frontend/bundles/mapping/mapmodule/event/ProgressEvent.js"
                 }, {
                     "type" : "text/javascript",
-                    "src" : "../../../../bundles/mapping/mapmodule/event/MouseHoverEvent.js"
+                    "src" : "oskari-frontend/bundles/mapping/mapmodule/event/MouseHoverEvent.js"
                 }, {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/event/EscPressedEvent.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/event/EscPressedEvent.js"
                 }, {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/event/AfterMapMoveEvent.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/event/AfterMapMoveEvent.js"
                 }, {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/event/GetInfoResultEvent.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/event/GetInfoResultEvent.js"
                 }, {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/event/MapSizeChangedEvent.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/event/MapSizeChangedEvent.js"
                 },
                 {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/plugin/zoombar/Portti2Zoombar.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/plugin/zoombar/Portti2Zoombar.js"
                 }, {
                     "type": "text/css",
-                    "src": "../../../../bundles/mapping/mapmodule/resources/scss/porttizoombar.scss"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/resources/scss/porttizoombar.scss"
                 }, {
                     "type": "text/javascript",
-                    "src": "../../../../bundles/mapping/mapmodule/plugin/panbuttons/PanButtons.js"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/plugin/panbuttons/PanButtons.js"
                 }, {
                     "type": "text/css",
-                    "src": "../../../../bundles/mapping/mapmodule/resources/scss/panbuttons.scss"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/resources/scss/panbuttons.scss"
                 }, {
                     "type": "text/css",
-                    "src": "../../../../bundles/mapping/mapmodule/resources/scss/mapmodule_ol3.scss"
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/resources/scss/mapmodule_ol3.scss"
                 }
 
             ],
             "locales": [{
                 "lang" : "hy",
                 "type": "text/javascript",
-                "src": "../../../../bundles/mapping/mapmodule/resources/locale/hy.js"
+                "src": "oskari-frontend/bundles/mapping/mapmodule/resources/locale/hy.js"
             }, {
                 "lang" : "bg",
                 "type": "text/javascript",
-                "src": "../../../../bundles/mapping/mapmodule/resources/locale/bg.js"
+                "src": "oskari-frontend/bundles/mapping/mapmodule/resources/locale/bg.js"
             }, {
                 "lang" : "cs",
                 "type": "text/javascript",
-                "src": "../../../../bundles/mapping/mapmodule/resources/locale/cs.js"
+                "src": "oskari-frontend/bundles/mapping/mapmodule/resources/locale/cs.js"
             }, {
                 "lang" : "da",
                 "type": "text/javascript",
-                "src": "../../../../bundles/mapping/mapmodule/resources/locale/da.js"
+                "src": "oskari-frontend/bundles/mapping/mapmodule/resources/locale/da.js"
             }, {
                 "lang" : "de",
                 "type": "text/javascript",
-                "src": "../../../../bundles/mapping/mapmodule/resources/locale/de.js"
+                "src": "oskari-frontend/bundles/mapping/mapmodule/resources/locale/de.js"
             }, {
                 "lang" : "en",
                 "type": "text/javascript",
-                "src": "../../../../bundles/mapping/mapmodule/resources/locale/en.js"
+                "src": "oskari-frontend/bundles/mapping/mapmodule/resources/locale/en.js"
             }, {
                 "lang" : "es",
                 "type": "text/javascript",
-                "src": "../../../../bundles/mapping/mapmodule/resources/locale/es.js"
+                "src": "oskari-frontend/bundles/mapping/mapmodule/resources/locale/es.js"
             }, {
                 "lang" : "et",
                 "type": "text/javascript",
-                "src": "../../../../bundles/mapping/mapmodule/resources/locale/et.js"
+                "src": "oskari-frontend/bundles/mapping/mapmodule/resources/locale/et.js"
             }, {
                 "lang" : "fi",
                 "type": "text/javascript",
-                "src": "../../../../bundles/mapping/mapmodule/resources/locale/fi.js"
+                "src": "oskari-frontend/bundles/mapping/mapmodule/resources/locale/fi.js"
             }, {
                 "lang" : "fr",
                 "type": "text/javascript",
-                "src": "../../../../bundles/mapping/mapmodule/resources/locale/fr.js"
+                "src": "oskari-frontend/bundles/mapping/mapmodule/resources/locale/fr.js"
             }, {
                 "lang" : "ka",
                 "type": "text/javascript",
-                "src": "../../../../bundles/mapping/mapmodule/resources/locale/ka.js"
+                "src": "oskari-frontend/bundles/mapping/mapmodule/resources/locale/ka.js"
             }, {
                 "lang" : "el",
                 "type": "text/javascript",
-                "src": "../../../../bundles/mapping/mapmodule/resources/locale/el.js"
+                "src": "oskari-frontend/bundles/mapping/mapmodule/resources/locale/el.js"
             }, {
                 "lang" : "hr",
                 "type": "text/javascript",
-                "src": "../../../../bundles/mapping/mapmodule/resources/locale/hr.js"
+                "src": "oskari-frontend/bundles/mapping/mapmodule/resources/locale/hr.js"
             }, {
                 "lang" : "hu",
                 "type": "text/javascript",
-                "src": "../../../../bundles/mapping/mapmodule/resources/locale/hu.js"
+                "src": "oskari-frontend/bundles/mapping/mapmodule/resources/locale/hu.js"
             }, {
                 "lang" : "is",
                 "type": "text/javascript",
-                "src": "../../../../bundles/mapping/mapmodule/resources/locale/is.js"
+                "src": "oskari-frontend/bundles/mapping/mapmodule/resources/locale/is.js"
             }, {
                 "lang" : "it",
                 "type": "text/javascript",
-                "src": "../../../../bundles/mapping/mapmodule/resources/locale/it.js"
+                "src": "oskari-frontend/bundles/mapping/mapmodule/resources/locale/it.js"
             }, {
                 "lang" : "lv",
                 "type": "text/javascript",
-                "src": "../../../../bundles/mapping/mapmodule/resources/locale/lv.js"
+                "src": "oskari-frontend/bundles/mapping/mapmodule/resources/locale/lv.js"
             }, {
                 "lang" : "nl",
                 "type": "text/javascript",
-                "src": "../../../../bundles/mapping/mapmodule/resources/locale/nl.js"
+                "src": "oskari-frontend/bundles/mapping/mapmodule/resources/locale/nl.js"
             }, {
                 "lang" : "nb",
                 "type": "text/javascript",
-                "src": "../../../../bundles/mapping/mapmodule/resources/locale/nb.js"
+                "src": "oskari-frontend/bundles/mapping/mapmodule/resources/locale/nb.js"
             }, {
                 "lang" : "nn",
                 "type": "text/javascript",
-                "src": "../../../../bundles/mapping/mapmodule/resources/locale/nn.js"
+                "src": "oskari-frontend/bundles/mapping/mapmodule/resources/locale/nn.js"
             }, {
                 "lang" : "pl",
                 "type": "text/javascript",
-                "src": "../../../../bundles/mapping/mapmodule/resources/locale/pl.js"
+                "src": "oskari-frontend/bundles/mapping/mapmodule/resources/locale/pl.js"
             }, {
                 "lang" : "pt",
                 "type": "text/javascript",
-                "src": "../../../../bundles/mapping/mapmodule/resources/locale/pt.js"
+                "src": "oskari-frontend/bundles/mapping/mapmodule/resources/locale/pt.js"
             }, {
                 "lang" : "ro",
                 "type": "text/javascript",
-                "src": "../../../../bundles/mapping/mapmodule/resources/locale/ro.js"
+                "src": "oskari-frontend/bundles/mapping/mapmodule/resources/locale/ro.js"
             }, {
                 "lang" : "sr",
                 "type": "text/javascript",
-                "src": "../../../../bundles/mapping/mapmodule/resources/locale/sr.js"
+                "src": "oskari-frontend/bundles/mapping/mapmodule/resources/locale/sr.js"
             }, {
                 "lang" : "sl",
                 "type": "text/javascript",
-                "src": "../../../../bundles/mapping/mapmodule/resources/locale/sl.js"
+                "src": "oskari-frontend/bundles/mapping/mapmodule/resources/locale/sl.js"
             }, {
                 "lang" : "sk",
                 "type": "text/javascript",
-                "src": "../../../../bundles/mapping/mapmodule/resources/locale/sk.js"
+                "src": "oskari-frontend/bundles/mapping/mapmodule/resources/locale/sk.js"
             }, {
                 "lang" : "sq",
                 "type": "text/javascript",
-                "src": "../../../../bundles/mapping/mapmodule/resources/locale/sq.js"
+                "src": "oskari-frontend/bundles/mapping/mapmodule/resources/locale/sq.js"
             }, {
                 "lang" : "sv",
                 "type": "text/javascript",
-                "src": "../../../../bundles/mapping/mapmodule/resources/locale/sv.js"
+                "src": "oskari-frontend/bundles/mapping/mapmodule/resources/locale/sv.js"
             }, {
                 "lang" : "uk",
                 "type": "text/javascript",
-                "src": "../../../../bundles/mapping/mapmodule/resources/locale/uk.js"
+                "src": "oskari-frontend/bundles/mapping/mapmodule/resources/locale/uk.js"
             }]
         },
         "bundle": {

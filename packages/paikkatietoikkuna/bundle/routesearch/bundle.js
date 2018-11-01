@@ -22,7 +22,7 @@ Oskari.clazz.define(
                 "src": "../../../../bundles/paikkatietoikkuna/routesearch/Flyout.js"
             }, {
                 "type": "text/javascript",
-                "src": "../../../../bundles/service/search/searchservice.js"
+                "src": "oskari-frontend/bundles/service/search/searchservice.js"
             }, {
                 "type": "text/css",
                 "src": "../../../../bundles/paikkatietoikkuna/routesearch/resources/scss/routesearch.scss"
