@@ -1,0 +1,190 @@
+@font-face {
+  font-family: "Titillium Web Regular 400";
+  src: url("../resources/fonts/TitilliumWeb-Regular.ttf"); 
+}
+
+html, body {
+	height: 100%;
+}
+
+body {
+	background: url(../resources/images/background_image.jpg);
+	background-size: cover;
+    color: #FFFFFF;
+}
+
+.container.main {
+	background: transparent;
+	font-family: "Titillium Web Regular 400";
+}
+
+.main-text p {
+	font-size: calc(0.60em + 1.0vh);
+	color: #FFFFFF;
+	text-align: center;
+	word-wrap: break-word;
+}
+
+a, a:hover, a:focus {
+    color: #FFFFFF;
+}
+
+.logo {
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+.logo_image {
+	width: 100%;
+}
+
+.margin {
+	height: 45px;
+}
+
+.link-panels {
+	margin-top: 15px;
+}
+
+.arrow {
+    position: relative;
+	font-size: 35px;
+    line-height: 10px;
+    bottom: -3px;
+}
+
+.btn-default > .arrow {
+	font-size: 45px;
+    line-height: 10px;
+    bottom: -4px;
+    left: 5px;
+}
+
+.panel {
+	min-height: 300px;
+	min-width: 250px;
+    margin: 5px;
+	margin-top: 0px;
+	border-radius: 0px !important;
+}
+
+.panel.map-panel {
+	background-color: #ffdc00;
+	border: 1px solid #8b7900;
+	color: #333333;
+}
+
+.panel.sdi-panel {
+	background-color: #266b7f;
+	border: 1px solid #205e70;
+}
+
+.panel-body {
+	padding: 20px !important;
+	margin-bottom: 0px;
+	font-size: 18px;
+	text-align: center;
+	min-height: 270px;
+}
+
+.map-desc {
+	min-height: 145px;
+}
+
+.rss-panel {
+	color: #FFFFFF;
+	background-color: black;
+	font-size: 18px;
+	text-align: center;
+	padding: 15px;
+	margin-bottom: 0px;
+    min-height: 180px;
+}
+
+.rss-header {
+    position: relative;
+    left: -20px;
+	line-height: 35px;
+	margin-bottom: 5px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-transform: uppercase;
+}
+
+.rss-image {
+	width: 30px;
+	margin-right: 10px;
+	float: left;
+}
+
+.rss-list {
+	white-space: nowrap;
+	padding: 5px 10px;
+	font-size: 14px;
+	list-style: none;
+	padding: 0;
+	text-align: left;
+}
+
+.rss-list > li {
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.rss-item-date {
+	width: 75px;
+	text-align: right;
+	padding-right: 5px;
+	display: inline-block;
+	text-decoration: inherit;
+}
+
+.btn.btn-default.maplink-btn {
+	background-color: transparent;
+	border-color: #333333;
+	color: #333333;
+	font-size: 24px;
+	margin-top: 20px;
+	margin-bottom: 5px;
+	white-space: pre-wrap;
+}
+
+.btn.btn-default.paikkislink-btn {
+	background-color: transparent;
+	border-color: #FFFFFF;
+	color: #FFFFFF;
+	font-size: 24px;
+	margin-bottom: 20px;
+	white-space: pre-wrap;
+}
+
+.datalink {
+	font-size: 18px;
+	line-height: 30px;
+}
+
+footer {
+	text-align: center;
+	font-size: 14px;
+	margin-bottom: 10px;
+	margin-top: 10px;
+}
+
+.footer-image {
+	width: 40px;
+	margin: 20px;
+}
+.some-link {
+    color: transparent;
+}
+.language-link {
+    text-decoration: underline;
+    cursor: pointer;
+    margin: 10px;
+}
+.tos-link {
+    margin-bottom: 10px;
+}
+.tos-link a {
+    text-decoration: underline;
+}
