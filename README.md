@@ -4,7 +4,7 @@ These are bundles for kartta.paikkatietoikkuna.fi
 
 ## Setup
 
-The application build process assumes that this repository, the main oskari-frontend repository, and oskari-frontend-contrib are located side by side on your filesystem.
+The application build process assumes that this repository, the main [oskari-frontend](https://github.com/oskariorg/oskari-frontend) repository, and [oskari-frontend-contrib](https://github.com/oskariorg/oskari-frontend-contrib) are located side by side on your filesystem.
 
 ## Building Paikkis
 
