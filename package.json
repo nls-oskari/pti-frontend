@@ -1,23 +1,19 @@
 {
-  "name": "oskari-frontend-contrib",
+  "name": "oskari-frontend-paikkis",
   "version": "1.0.0",
-  "description": "These are unofficial bundles for Oskari created by the Oskari community. Many of them add value to your Oskari install, but they come with no official support from the core Oskari team.",
+  "description": "kartta.paikkatietoikkuna.fi bundles & app conf",
   "keywords": [
     "Oskari"
   ],
   "dependencies": {
     "ol-cesium": "^2.2.2",
-    "oskari-frontend": "file:../oskari-frontend"
+    "oskari-frontend": "file:../oskari-frontend",
+    "oskari-frontend-contrib": "file:../oskari-frontend-contrib"
   },
   "scripts": {
     "build": "node ./node_modules/oskari-frontend/node_modules/webpack/bin/webpack.js --config ./node_modules/oskari-frontend/webpack.config.js --mode production",
     "start": "node ./node_modules/oskari-frontend/node_modules/webpack-dev-server/bin/webpack-dev-server.js --config ./node_modules/oskari-frontend/webpack.config.js --hot",
-    "paikkis": "npm run start -- --env.appdef=applications/paikkatietoikkuna.fi",
-    "asdi": "npm run start -- --env.appdef=applications/asdi"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/oskariorg/oskari-frontend-contrib.git"
+    "paikkis": "npm run start -- --env.appdef=applications/paikkatietoikkuna.fi"
   },
   "private": true
 }
