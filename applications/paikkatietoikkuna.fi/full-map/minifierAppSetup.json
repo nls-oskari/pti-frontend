@@ -240,7 +240,7 @@
             "metadata": {
                 "Import-Bundle": {
                     "analyse": {
-                        "bundlePath": "../../../packages/analysis/ol3/"
+                        "bundlePath": "oskari-frontend-contrib/packages/analysis/ol3/"
                     }
                 }
             }
