@@ -6,7 +6,7 @@
     "Oskari"
   ],
   "dependencies": {
-    "ol-cesium": "^2.2.2",
+    "ol-cesium": "^2.4.0",
     "oskari-frontend": "file:../oskari-frontend",
     "oskari-frontend-contrib": "file:../oskari-frontend-contrib"
   },
