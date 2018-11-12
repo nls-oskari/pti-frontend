@@ -76,7 +76,7 @@ Oskari.clazz.define('Oskari.coordinatetransformation.CoordinateDataHandler', fun
             me.helper.addMarkerForCoords(markerId, mapCoord, label, color);
         });
     },
-    /** 
+    /**
      * @method validateData
      * check different conditions if data matches to them
      */
@@ -95,7 +95,7 @@ Oskari.clazz.define('Oskari.coordinatetransformation.CoordinateDataHandler', fun
             }
         }
     },
-    /** 
+    /**
      * @method constructObjectFromRegExpMatch
      * @description constructs a object from string with lon lat keys
      */
@@ -203,7 +203,7 @@ Oskari.clazz.define('Oskari.coordinatetransformation.CoordinateDataHandler', fun
      * @method modifyCoordinateObject
      * @param {string} flag - coordinate array contains two objects, input & output - flag determines which one you interact with
      * @param {array} coordinates - an array containing objects with keys lon lat - one object for each coordinate pair
-     * @description 
+     * @description
      *
     modifyCoordinateObject: function ( flag, coordinates ) {
         var data = this.getCoordinateObject().coordinates;

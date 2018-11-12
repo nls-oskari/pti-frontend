@@ -1,0 +1,10 @@
+
+api/**
+applications/**
+bundles/**/locale/*.js
+dist/**
+libraries/**
+packages/**
+node_modules/**
+static/**
+*.min.js
