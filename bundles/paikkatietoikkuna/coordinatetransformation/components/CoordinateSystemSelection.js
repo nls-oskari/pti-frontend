@@ -254,8 +254,8 @@ Oskari.clazz.define('Oskari.coordinatetransformation.component.CoordinateSystemS
         },
         /**
          * @method updateDropdownOptions
-         * @param {string} valueClass - class selector to show options for 
-         * @param {string} keyToEmpty - optional param to empty only one specific key in the dropdown 
+         * @param {string} valueClass - class selector to show options for
+         * @param {string} keyToEmpty - optional param to empty only one specific key in the dropdown
          */
         updateDropdownOptions: function (dropdownId, selector) {
             var options;
@@ -276,7 +276,7 @@ Oskari.clazz.define('Oskari.coordinatetransformation.component.CoordinateSystemS
         /**
          * @method handleSelectValueChange
          * @param {SelectList} select - dropdown we changed
-         * @desc handle hiding and showing dropdown options based on user selection 
+         * @desc handle hiding and showing dropdown options based on user selection
          */
         handleSelectValueChange: function (select) {
             var currentValue = select.getValue();

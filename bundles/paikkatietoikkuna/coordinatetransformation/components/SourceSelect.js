@@ -107,7 +107,7 @@ Oskari.clazz.define('Oskari.coordinatetransformation.component.SourceSelect',
                 mapButton: this.loc('actions.selectFromMap'),
                 fileButton: this.loc('actions.selectFromFile')
             });
-            var info = this._template.info({ 
+            var info = this._template.info({
                 keyboardupload: this.loc('flyout.dataSource.keyboard.info'),
                 mapInfo: this.loc('flyout.dataSource.map.info'),
                 mapButton: this.loc('actions.selectFromMap')
