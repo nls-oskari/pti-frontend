@@ -510,7 +510,8 @@ Oskari.clazz.define('Oskari.coordinatetransformation.view.transformation',
         },
         transformToMapCoords: function (callback) {
             var crsSettings = {
-                sourceCrs: this.inputSystem.getSrs(),
+                sourceCrs: this.inputSystem.getSrsForTransformation(),
+                sourceElevationCrs: this.inputSystem.getElevation(),
                 sourceDimension: this.instance.getDimensions().input,
                 targetCrs: this.helper.mapSrs,
                 targetDimension: 2
