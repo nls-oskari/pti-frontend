@@ -159,7 +159,10 @@ Oskari.clazz.define('Oskari.coordinatetransformation.instance',
                     return;
                 }
                 var state = event.getViewState();
-                if (state === 'attach' || state === 'restore') {
+                if (state === 'attach') {
+                    this.plugins['Oskari.userinterface.Flyout'].setContainerMaxHeight(Oskari.getSandbox().getMap().getHeight());
+                    this.sandbox.postRequestByName('DisableMapKeyboardMovementRequest');
+                } else if (state === 'restore') {
                     this.sandbox.postRequestByName('DisableMapKeyboardMovementRequest');
                 } else if (state === 'close' || state === 'minimize') {
                     this.sandbox.postRequestByName('EnableMapKeyboardMovementRequest');
