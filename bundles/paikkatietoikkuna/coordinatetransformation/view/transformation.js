@@ -509,7 +509,6 @@ Oskari.clazz.define('Oskari.coordinatetransformation.view.transformation',
             }
         },
         transformToMapCoords: function (callback) {
-            this.showSpinner(true);
             var crsSettings = {
                 sourceCrs: this.inputSystem.getSrs(),
                 sourceDimension: this.instance.getDimensions().input,
@@ -520,14 +519,15 @@ Oskari.clazz.define('Oskari.coordinatetransformation.view.transformation',
             if (this.sourceSelect.getSourceSelection() === 'file') {
                 var fileSettings = this.importFileHandler.getSettings();
                 if (this.helper.validateFileSelections(fileSettings)) {
+                    this.showSpinner(true);
                     this.instance.getService().transformFileToArray(crsSettings, fileSettings, callback, this.handleErrorResponse.bind(this));
                 }
             } else {
+                this.showSpinner(true);
                 this.instance.getService().transformArrayToArray(this.dataHandler.getInputCoords(), crsSettings, callback, this.handleErrorResponse.bind(this));
             }
         },
         transformToTable: function () {
-            this.showSpinner(true);
             var crsSettings = this.getCrsOptions();
             var source = this.sourceSelect.getSourceSelection();
             var coords;
@@ -535,11 +535,13 @@ Oskari.clazz.define('Oskari.coordinatetransformation.view.transformation',
             if (source === 'file') {
                 fileSettings = this.importFileHandler.getSettings();
                 if (this.helper.validateFileSelections(fileSettings)) {
+                    this.showSpinner(true);
                     this.instance.getService().transformFileToArray(crsSettings, fileSettings, this.handleArrayResponse.bind(this), this.handleErrorResponse.bind(this));
                 }
             } else {
                 if (this.dataHandler.hasInputCoords()) {
                     coords = this.dataHandler.getInputCoords();
+                    this.showSpinner(true);
                     this.instance.getService().transformArrayToArray(coords, crsSettings, this.handleArrayResponse.bind(this), this.handleErrorResponse.bind(this));
                 } else {
                     this.showMessage(this.loc('flyout.transform.validateErrors.title'), this.loc('flyout.transform.validateErrors.noInputData'));
@@ -547,7 +549,6 @@ Oskari.clazz.define('Oskari.coordinatetransformation.view.transformation',
             }
         },
         transformToFile: function (settings) {
-            this.showSpinner(true);
             var crsSettings = this.getCrsOptions();
             var exportSettings = settings;
             var coords;
@@ -556,13 +557,15 @@ Oskari.clazz.define('Oskari.coordinatetransformation.view.transformation',
                 var importSettings = this.importFileHandler.getSettings();
                 if (this.helper.validateFileSelections(importSettings)) {
                     if (importSettings.file.size > 5 * 1024 * 1024) {
-                        this.showMessage(this.loc('flyout.transform.warning.title'), this.loc('flyout.transform.warning.largeFile'));
+                        this.showMessage(this.loc('flyout.transform.warnings.title'), this.loc('flyout.transform.warnings.largeFile'));
                     }
+                    this.showSpinner(true);
                     this.instance.getService().transformFileToFile(crsSettings, importSettings, exportSettings, this.handleFileResponse.bind(this), this.handleErrorResponse.bind(this));
                 }
             } else {
                 if (this.dataHandler.hasInputCoords()) {
                     coords = this.dataHandler.getInputCoords();
+                    this.showSpinner(true);
                     this.instance.getService().transformArrayToFile(coords, crsSettings, exportSettings, this.handleFileResponse.bind(this), this.handleErrorResponse.bind(this));
                 } else {
                     this.showMessage(this.loc('flyout.transform.validateErrors.title'), this.loc('flyout.transform.validateErrors.noInputData'));
