@@ -556,7 +556,7 @@ Oskari.clazz.define('Oskari.coordinatetransformation.view.transformation',
             if (source === 'file') {
                 var importSettings = this.importFileHandler.getSettings();
                 if (this.helper.validateFileSelections(importSettings)) {
-                    if (importSettings.file.size > 5 * 1024 * 1024) {
+                    if (importSettings.file.size > 10 * 1024 * 1024) {
                         this.showMessage(this.loc('flyout.transform.warnings.title'), this.loc('flyout.transform.warnings.largeFile'));
                     }
                     this.showSpinner(true);
