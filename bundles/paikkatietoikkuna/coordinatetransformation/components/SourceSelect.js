@@ -6,7 +6,9 @@ Oskari.clazz.define('Oskari.coordinatetransformation.component.SourceSelect',
         this.sources = ['keyboard', 'file', 'map'];
         this.sourceElems = {};
         this.sourceSelection = null;
+        this.systemInfo = Oskari.clazz.create('Oskari.coordinatetransformation.view.CoordinateSystemInformation');
         this._template = {
+            // TODO remove unused sourceWrapper and source. also remove 2 from names and commented codes
             sourceWrapper: jQuery('<div class="datasource-wrapper"></div>'),
             source: _.template(
                 '<h4>${title}</h4>' +
@@ -132,13 +134,13 @@ Oskari.clazz.define('Oskari.coordinatetransformation.component.SourceSelect',
             // });
             // sourceWrapper.append(actions);
             this.setElement(container);
+            this.bindInfoLinks();
         },
         bindClickHandler: function (elem, value) {
             var me = this;
             elem.on('click', function () {
                 // elem.find('input').trigger('click');
-                var currentValue = me.sourceSelection;
-                if (currentValue !== value) {
+                if (me.sourceSelection !== value) {
                     /* elem.addClass('selected');
                     elem.find('.action').removeClass('oskari-hidden');
                     if (currentValue !== null){
@@ -149,6 +151,13 @@ Oskari.clazz.define('Oskari.coordinatetransformation.component.SourceSelect',
                 } else {
                     me.trigger('SourceSelectClick', me.sourceSelection);
                 }
+            });
+        },
+        bindInfoLinks: function () {
+            var me = this;
+            this.getElement().find('.infolink').on('click', function (event) {
+                var key = this.dataset.source;
+                me.systemInfo.show(jQuery(this), key, true);
             });
         },
         selectSource: function (value) {
