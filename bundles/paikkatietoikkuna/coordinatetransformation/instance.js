@@ -23,6 +23,7 @@ Oskari.clazz.define('Oskari.coordinatetransformation.instance',
         this.loc = Oskari.getMsg.bind(null, 'coordinatetransformation');
         this.isMapSelection = false;
         this.isRemoveMarkers = false;
+        this.flyoutAttached = false; // hack, because drag also fires attach
         this.sandbox = Oskari.getSandbox();
         // TODO should dimensions be handled by dataHandler
         this.dimensions = {
@@ -159,12 +160,16 @@ Oskari.clazz.define('Oskari.coordinatetransformation.instance',
                     return;
                 }
                 var state = event.getViewState();
-                if (state === 'attach') {
+                if (state === 'attach' && !this.flyoutAttached) { // hack, drag also fires attach
+                    this.flyoutAttached = true;
                     this.plugins['Oskari.userinterface.Flyout'].setContainerMaxHeight(Oskari.getSandbox().getMap().getHeight());
                     this.sandbox.postRequestByName('DisableMapKeyboardMovementRequest');
                 } else if (state === 'restore') {
                     this.sandbox.postRequestByName('DisableMapKeyboardMovementRequest');
-                } else if (state === 'close' || state === 'minimize') {
+                } else if (state === 'close') {
+                    this.flyoutAttached = false;
+                    this.sandbox.postRequestByName('EnableMapKeyboardMovementRequest');
+                } else if (state === 'minimize') {
                     this.sandbox.postRequestByName('EnableMapKeyboardMovementRequest');
                 }
             },
