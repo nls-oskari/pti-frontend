@@ -364,15 +364,15 @@ Oskari.clazz.define('Oskari.coordinatetransformation.component.CoordinateSystemS
             }
             return false;
         },
-        selectMapProjection: function () {
+        selectMapProjection: function (showProjection) {
             var srsOptions = this.helper.getMapEpsgValues();
             var selects = this.selectInstances;
             if (srsOptions) {
                 selects.datum.setValue(srsOptions.datum);
                 selects.coordinate.setValue(srsOptions.coord);
                 if (srsOptions.coord === 'COORD_PROJ_2D') {
-                    this.showProjectionSelect(true);
                     selects.projection.setValue(srsOptions.proj);
+                    this.showProjectionSelect(showProjection, true);
                 }
                 selects['geodetic-coordinate'].setValue(srsOptions.srs);
                 // TODO

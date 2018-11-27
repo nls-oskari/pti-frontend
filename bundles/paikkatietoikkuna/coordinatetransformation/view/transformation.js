@@ -330,7 +330,7 @@ Oskari.clazz.define('Oskari.coordinatetransformation.view.transformation',
             } else if (value === 'map') {
                 this.inputTable.setIsEditable(false);
                 this.selectFromMap();
-                this.inputSystem.selectMapProjection(this.filter === 'epsg');
+                this.inputSystem.selectMapProjection(this.filter === 'systems');
                 this.inputSystem.disableAllSelections(true);
                 this.exportFileHandler.setIsFileInput(false);
                 this.bindInputTableHandler(false);
