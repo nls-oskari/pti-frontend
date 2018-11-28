@@ -104,7 +104,7 @@ Oskari.registerLocalization(
                     "invalid_file_settings": "Felaktiga filinställningar.",
                     "no_file": "Det fanns ingen fil för begäran.",
                     "invalid_first_coord": "Det var inte möjligt att bilda en koordinat med de angivna inställningarna. Kontrollera att valen av skiljetecken för koordinater, antalet rubrikrader, huruvida identifierare används eller inte samt geodetiska referenssystem för koordinater och höjdsystem (dimension) motsvarar filens innehåll.",
-                    "transformation_error": "Koordinatomvandlingen misslyckades. Koordinaattimuunnospalvelusta palautui virhe:"
+                    "transformation_error": "Koordinatomvandlingen misslyckades. Koordinattransformation service respons:" //TODO
                 },
                 "responseFile": {
                     "title": "Observera!",
