@@ -29,7 +29,6 @@ Oskari.clazz.define('Oskari.coordinatetransformation.Flyout',
             this.template = jQuery();
             this.flyout = jQuery(this.container.parentElement.parentElement);
             this.flyout.addClass('coordinatetransformation-flyout');
-            this.setContainerMaxHeight(Oskari.getSandbox().getMap().getHeight());
         },
         setContainerMaxHeight: function (mapHeight) {
             // calculate max-height based on map size

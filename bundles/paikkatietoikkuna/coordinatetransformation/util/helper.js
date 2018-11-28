@@ -271,7 +271,7 @@ Oskari.clazz.define('Oskari.coordinatetransformation.helper', function () {
                 };
                 if (compound.reversed) {
                     compoundValues.isAxisFlip = true;
-                    compoundValues.reversed = compound.reversed;
+                    compoundValues.replaced = compound.reversed;
                 }
                 return compoundValues;
             }

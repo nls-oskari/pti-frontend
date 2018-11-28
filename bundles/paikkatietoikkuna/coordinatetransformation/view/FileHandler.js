@@ -266,7 +266,7 @@ Oskari.clazz.define('Oskari.coordinatetransformation.view.FileHandler',
             if (this.type === 'export') {
                 var lineEnds = elem.find('.lineEnds');
                 if (this.isFileInput) {
-                    useId.text(this.loc('fileSettings.options.useId.fromFile'));
+                    useId.text(this.loc('fileSettings.options.useId.add'));
                     lineEnds.css('display', '');
                 } else {
                     useId.text(this.loc('fileSettings.options.useId.generate'));

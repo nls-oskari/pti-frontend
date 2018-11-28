@@ -11,7 +11,9 @@
 .coordinatetransformation-flyout h5 {
     padding-bottom: 0px;
 }
-
+.coordinatetransformation-flyout .oskari-select .chosen-drop-up .chosen-results {
+    max-height: 200px;
+}
 /* Custom radio button */
 .coordinatetransformation-flyout input[type="radio"] {
     display: none;
