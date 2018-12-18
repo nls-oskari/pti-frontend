@@ -331,7 +331,11 @@ Oskari.clazz.define(
                 },
                 /**
                  * Vector tiles
-                 */ 
+                 */
+                {
+                    "type": "text/javascript",
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/plugin/vectortilelayer/VectorTileLayer.js"
+                },
                 {
                     "type": "text/javascript",
                     "src": "oskari-frontend/bundles/mapping/mapmodule/plugin/vectortilelayer/VectorTileLayerPlugin.js"
