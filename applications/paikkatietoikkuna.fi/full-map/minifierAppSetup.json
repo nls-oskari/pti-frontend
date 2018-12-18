@@ -28,6 +28,9 @@
                     "mapwfs2": {
                         "bundlePath": "oskari-frontend/packages/mapping/ol3/"
                     },
+                    "wfsmvt": {
+                        "bundlePath": "oskari-frontend/packages/mapping/ol3/"
+                    },
                     "mapuserlayers": {
                         "bundlePath": "oskari-frontend/packages/mapping/ol3/"
                     },
