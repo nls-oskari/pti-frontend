@@ -6,3 +6,11 @@ table td {
 table {
 	border-top-width: 0px;
 }
+
+/**
+ * logoplugin with pti logo
+ */
+ .logoplugin .icon {
+    background-image: url('../logo.png') !important;
+    float: left;
+}
