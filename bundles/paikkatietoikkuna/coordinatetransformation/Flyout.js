@@ -1,11 +1,10 @@
 Oskari.clazz.define('Oskari.coordinatetransformation.Flyout',
 
     function (instance) {
-        var me = this;
-        me.instance = instance;
-        me.loc = Oskari.getMsg.bind(null, 'coordinatetransformation');
-        me.container = null;
-        me.flyout = null;
+        this.instance = instance;
+        this.loc = Oskari.getMsg.bind(null, 'coordinatetransformation');
+        this.container = null;
+        this.flyout = null;
     }, {
         getName: function () {
             return 'Oskari.coordinatetransformation.Flyout';
@@ -16,10 +15,14 @@ Oskari.clazz.define('Oskari.coordinatetransformation.Flyout',
         getViews: function () {
             return this.views;
         },
-        setEl: function (el, width, height) {
-            this.container = el[0];
-            if (!jQuery(this.container).hasClass('coordinatetransformation-flyout')) {
-                jQuery(this.container).addClass('coordinatetransformation-flyout');
+        setEl: function (el, flyout, width, height) {
+            this.container = jQuery(el[0]);
+            this.flyout = flyout;
+            if (!this.container.hasClass('coordinatetransformation')) {
+                this.container.addClass('coordinatetransformation');
+            }
+            if (!this.flyout.hasClass('coordinatetransformation')) {
+                this.flyout.addClass('coordinatetransformation');
             }
         },
         createUi: function () {
@@ -27,8 +30,6 @@ Oskari.clazz.define('Oskari.coordinatetransformation.Flyout',
         },
         startPlugin: function () {
             this.template = jQuery();
-            this.flyout = jQuery(this.container.parentElement.parentElement);
-            this.flyout.addClass('coordinatetransformation-flyout');
         },
         setContainerMaxHeight: function (mapHeight) {
             // calculate max-height based on map size
@@ -42,6 +43,4 @@ Oskari.clazz.define('Oskari.coordinatetransformation.Flyout',
                 this.flyout.css('top', '0px');
             }
         }
-    }, {
-        'extend': ['Oskari.userinterface.extension.DefaultFlyout']
     });
