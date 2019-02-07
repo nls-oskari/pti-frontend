@@ -1,3 +1,4 @@
+const WATCH_JOB = 'CoordinateTransformJob';
 /**
  * @class Oskari.mapframework.bundle.coordinatetool.CoordinateToolService
  */
@@ -10,8 +11,10 @@ Oskari.clazz.define('Oskari.coordinatetransformation.TransformationService',
         this._instance = instance;
         this._sandbox = instance.sandbox;
         this.urls = {};
+        Oskari.urls.set(WATCH_JOB, '/coordinatetransform/watch/');
 
         this.urls.result = Oskari.urls.getRoute('GetConversionResult');
+        this.urls.watchJob = Oskari.urls.getLocation(WATCH_JOB);
     }, {
         __name: 'coordinatetransformation.TransformationService',
         __qname: 'Oskari.coordinatetransformation.TransformationService',
@@ -77,6 +80,42 @@ Oskari.clazz.define('Oskari.coordinatetransformation.TransformationService',
             }
             callback(errorInfo);
         },
+        watchJob: function (jobId, successCb, errorCb) {
+            var me = this;
+            jQuery.ajax({
+                type: 'GET',
+                url: me.urls.watchJob + jobId,
+                success: function (response, textStatus, jqXHR) {
+                    if (response.jobId) {
+                        me.watchJob(response.jobId, successCb, errorCb);
+                        return;
+                    }
+                    successCb(response, textStatus, jqXHR);
+                },
+                error: function (jqXHR) {
+                    me.handleError(errorCb, jqXHR);
+                }
+            });
+        },
+        watchFileJob: function (jobId, successCb, errorCb) {
+            var me = this;
+            jQuery.ajax({
+                type: 'GET',
+                url: me.urls.watchJob + jobId,
+                success: function (response, textStatus, jqXHR) {
+                    if (response.jobId) {
+                        me.watchJob(response.jobId, successCb, errorCb);
+                        return;
+                    }
+                    var type = jqXHR.getResponseHeader('Content-Type');
+                    var filename = me.getFileNameFromResponse(jqXHR);
+                    successCb(response, filename, type);
+                },
+                error: function (jqXHR) {
+                    me.handleError(errorCb, jqXHR);
+                }
+            });
+        },
         transformArrayToArray: function (coords, crs, successCb, errorCb) {
             var me = this;
             var url = this.requestUrlBuilder(crs, 'A2A');
@@ -86,7 +125,7 @@ Oskari.clazz.define('Oskari.coordinatetransformation.TransformationService',
                 url: url,
                 data: JSON.stringify(coords),
                 success: function (response) {
-                    successCb(response);
+                    me.watchJob(response.jobId, successCb, errorCb);
                 },
                 error: function (jqXHR) {
                     me.handleError(errorCb, jqXHR);
@@ -105,7 +144,7 @@ Oskari.clazz.define('Oskari.coordinatetransformation.TransformationService',
                 url: url,
                 data: formData,
                 success: function (response) {
-                    successCb(response);
+                    me.watchJob(response.jobId, successCb, errorCb);
                 },
                 error: function (jqXHR) {
                     me.handleError(errorCb, jqXHR);
@@ -139,10 +178,8 @@ Oskari.clazz.define('Oskari.coordinatetransformation.TransformationService',
                 type: 'POST',
                 url: url,
                 data: JSON.stringify(coords),
-                success: function (response, textStatus, jqXHR) {
-                    var type = jqXHR.getResponseHeader('Content-Type');
-                    var filename = me.getFileNameFromResponse(jqXHR);
-                    successCb(response, filename, type);
+                success: function (response) {
+                    me.watchFileJob(response.jobId, successCb, errorCb);
                 },
                 error: function (jqXHR) {
                     me.handleError(errorCb, jqXHR);
@@ -161,9 +198,7 @@ Oskari.clazz.define('Oskari.coordinatetransformation.TransformationService',
                 url: url,
                 data: formData,
                 success: function (response, textStatus, jqXHR) {
-                    var type = jqXHR.getResponseHeader('Content-Type');
-                    var filename = me.getFileNameFromResponse(jqXHR);
-                    successCb(response, filename, type);
+                    me.watchFileJob(response.jobId, successCb, errorCb);
                 },
                 error: function (jqXHR) {
                     me.handleError(errorCb, jqXHR);
