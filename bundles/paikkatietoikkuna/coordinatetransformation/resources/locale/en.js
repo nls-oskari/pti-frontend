@@ -104,7 +104,8 @@ Oskari.registerLocalization(
                     "invalid_file_settings": "Error in file settings.",
                     "no_file": "No file matching the request could be found.",
                     "invalid_first_coord": "It was not possible to produce coordinates with these selections. Check that the coordinate separator, number of headers, geodetic coordinate and height system (dimension) selections as well as the option to use identifier or not match the contents of the file.",
-                    "transformation_error": "Coordinate transformation failed. Service responded with error:"
+                    "transformation_error": "Coordinate transformation failed. Service responded with error:",
+                    "service_busy": "The transformation service is busy right now. Please try again later."
                 },
                 "responseFile": {
                     "title": "Attention!",

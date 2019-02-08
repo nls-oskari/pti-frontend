@@ -104,7 +104,8 @@ Oskari.registerLocalization(
                     "invalid_file_settings": "Tiedoston asetukset virheelliset.",
                     "no_file": "Lähetetystä pyynnöstä ei löytynyt tiedostoa.",
                     "invalid_first_coord": "Tiedostosta ei saatu muodostettua koordinaattia annetuilla asetuksilla. Tarkasta, että koordinaattierotin, otsakerivien määrä, käytä tunnistetta sekä geodeettinen koordinaatti- ja korkeusjärjestelmä (dimensio) -valinnat vastaavat tiedoston sisältöä.",
-                    "transformation_error": "Koordinaattimuunnos epäonnistui. Koordinaattimuunnospalvelusta palautui virhe:"
+                    "transformation_error": "Koordinaattimuunnos epäonnistui. Koordinaattimuunnospalvelusta palautui virhe:",
+                    "service_busy": "Palvelussa on ruuhkaa juuri nyt, ole hyvä ja yritä myöhemmin uudelleen."
                 },
                 "responseFile": {
                     "title": "Huomio!",
