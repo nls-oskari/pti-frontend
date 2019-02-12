@@ -341,6 +341,17 @@ Oskari.clazz.define(
                     "src": "oskari-frontend/bundles/mapping/mapmodule/plugin/vectortilelayer/VectorTileLayerPlugin.js"
                 },
                 /**
+                 * Bing maps
+                 */ 
+                {
+                    "type": "text/javascript",
+                    "src": "oskari-frontend//bundles/mapping/mapmodule/plugin/bingmapslayer/BingMapsLayer.js"
+                },
+                {
+                    "type": "text/javascript",
+                    "src": "oskari-frontend//bundles/mapping/mapmodule/plugin/bingmapslayer/BingMapsLayerPlugin.js"
+                },
+                /**
                  * GeoLocation plugin
                  */
                 {
