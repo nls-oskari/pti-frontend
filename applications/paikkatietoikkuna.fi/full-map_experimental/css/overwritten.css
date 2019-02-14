@@ -12,3 +12,11 @@ table {
 	background: #fff;
 	padding-left: 40px;
 }
+
+/**
+ * logoplugin with pti logo
+ */
+ .logoplugin .icon {
+    background-image: url('../logo.png') !important;
+    float: left;
+}
