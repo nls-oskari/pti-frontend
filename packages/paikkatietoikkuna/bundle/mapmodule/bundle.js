@@ -192,6 +192,15 @@ Oskari.clazz.define(
                     "type": "text/css",
                     "src": "oskari-frontend/bundles/mapping/mapmodule/resources/scss/scalebar.ol.scss"
                 },
+                // Attribution
+                {
+                    "type": "text/css",
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/resources/scss/attribution.ol.scss"
+                },
+                {
+                    "type": "text/css",
+                    "src": "../../../../bundles/paikkatietoikkuna/mapmodule/resources/scss/attribution.cs.scss"
+                },
                 // Markers plugin
                 {
                     "type": "text/javascript",
