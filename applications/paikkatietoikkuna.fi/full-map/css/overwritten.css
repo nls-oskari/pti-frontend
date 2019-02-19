@@ -16,6 +16,6 @@ table {
  * logoplugin with pti logo
  */
  .logoplugin .icon {
-    background-image: url('../logo.png') !important;
+    background-image: url('../../../../override-assets/logo.png') !important;
     float: left;
 }
