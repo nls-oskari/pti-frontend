@@ -245,15 +245,6 @@
                 }
             }
         }, {
-            "bundlename" : "routesearch",
-            "metadata" : {
-                "Import-Bundle" : {
-                    "routesearch" : {
-                        "bundlePath" : "../../../packages/paikkatietoikkuna/bundle/"
-                    }
-                }
-            }
-        }, {
             "bundlename" : "register",
             "metadata" : {
                 "Import-Bundle" : {
