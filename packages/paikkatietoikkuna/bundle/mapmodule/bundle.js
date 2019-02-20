@@ -192,6 +192,15 @@ Oskari.clazz.define(
                     "type": "text/css",
                     "src": "oskari-frontend/bundles/mapping/mapmodule/resources/scss/scalebar.ol.scss"
                 },
+                // Attribution
+                {
+                    "type": "text/css",
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/resources/scss/attribution.ol.scss"
+                },
+                {
+                    "type": "text/css",
+                    "src": "../../../../bundles/paikkatietoikkuna/mapmodule/resources/scss/attribution.cs.scss"
+                },
                 // Markers plugin
                 {
                     "type": "text/javascript",
@@ -339,6 +348,17 @@ Oskari.clazz.define(
                 {
                     "type": "text/javascript",
                     "src": "oskari-frontend/bundles/mapping/mapmodule/plugin/vectortilelayer/VectorTileLayerPlugin.js"
+                },
+                /**
+                 * Bing maps
+                 */ 
+                {
+                    "type": "text/javascript",
+                    "src": "oskari-frontend//bundles/mapping/mapmodule/plugin/bingmapslayer/BingMapsLayer.js"
+                },
+                {
+                    "type": "text/javascript",
+                    "src": "oskari-frontend//bundles/mapping/mapmodule/plugin/bingmapslayer/BingMapsLayerPlugin.js"
                 },
                 /**
                  * GeoLocation plugin
