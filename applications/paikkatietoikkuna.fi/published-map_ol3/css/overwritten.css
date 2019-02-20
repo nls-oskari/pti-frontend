@@ -11,6 +11,18 @@ table {
  * logoplugin with pti logo
  */
  .logoplugin .icon {
-    background-image: url('../logo.png') !important;
+    background-image: url('../../../../override-assets/logo.png') !important;
     float: left;
+}
+
+div.mapplugin.indexmap .indexmapToggle div.icon {
+	background-size: 38px 38px;
+}
+
+div.mapplugin.indexmap .indexmapToggle[class$=-default] div.icon,
+div.mapplugin.indexmap .indexmapToggle[class$=-dark] div.icon {
+	background-image: url('../../../../override-assets/suomi_dark.svg') !important;
+}
+div.mapplugin.indexmap .indexmapToggle[class$=-light] div.icon {
+	background-image: url('../../../../override-assets/suomi_light.svg') !important;
 }
