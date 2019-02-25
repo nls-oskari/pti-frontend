@@ -104,7 +104,7 @@ Oskari.clazz.define('Oskari.coordinatetransformation.TransformationService',
                 url: me.urls.watchJob + jobId,
                 success: function (response, textStatus, jqXHR) {
                     if (response.jobId) {
-                        me.watchJob(response.jobId, successCb, errorCb);
+                        me.watchFileJob(response.jobId, successCb, errorCb);
                         return;
                     }
                     var type = jqXHR.getResponseHeader('Content-Type');
