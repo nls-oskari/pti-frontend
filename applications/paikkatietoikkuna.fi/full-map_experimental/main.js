@@ -6,6 +6,7 @@ import 'oskari-loader!../../../packages/paikkatietoikkuna/bundle/mapmodule/bundl
 import 'oskari-loader!oskari-frontend/packages/framework/bundle/oskariui/bundle.js';
 import 'oskari-loader!oskari-frontend/packages/mapping/ol3/mapwfs2/bundle.js';
 import 'oskari-loader!oskari-frontend/packages/mapping/ol3/wfsmvt/bundle.js';
+import 'oskari-loader!oskari-frontend/packages/mapping/ol3/wfsvector/bundle.js';
 import 'oskari-loader!oskari-frontend/packages/mapping/ol3/mapuserlayers/bundle.js';
 import 'oskari-loader!oskari-frontend/packages/framework/bundle/ui-components/bundle.js';
 import 'oskari-loader!oskari-frontend/packages/framework/bundle/mapfull/bundle.js';
