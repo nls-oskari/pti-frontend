@@ -3,6 +3,11 @@ sudo: false
 language: node_js
 node_js: "8"
 
+notifications:
+  webhooks:
+    urls:
+      - secure: "EI/BDTc7xhrJU2ciGTWNioPVlGuRvMjfYyT+Owm3lIODPWpy0MKBp5X5jbTWLU09XguhFZe14Ps3WfUosDxSzzs6leCk4nMyE22hoqTPP1jme0XOWxkZzh4KIfs4sAczCSTmyRMord6gGOrfi4BSC8qV2y6KwBOB2+GqCO5wOCESPVk0khUh3wNWw5Ke6vnZNTc9sQ5rNYLzTEas1pVkJrNDRwkgxygXwew+R5mZZFYZOsrMiRUll6+i6FOfhOYxOkqbl4Mv9yvV8Z9GjimefQelwxyS/et+wZ6zCevCyk3zkxxM/UZ+/TBaJCC89zM1CSD2LJBOdJisepTczrGwU9wFb1yy2Y/0rFC5fNEvevdf7Z2oQVupwIpQDKfB9cWnyYJ+gQgxe5bSVpoMpzmYBp8dNYn16V47sk23oNgLXZD4Lq67QmhrXT3rZuCbDCaj4rxhWxFAs6Z4VhnNDqrpheWcLaXvqu5yQb0/LgV9QcG686vk+QJuzuMcSWQukFLPpjG7pfQYAIqNeoeVc7foOKxeKto5DM6TlZ6W+UhkNlwI4DX1wkOv6mRLAcUiCtlcere2tBXqMTXrpJqW1k9wyTp7g7NFuycl1fH1xzHwm687J2pFiy/0eI4TlVLXpPzKFqH10xBwfx/RtFkSeqfFZM/l8sMMZzYe2UQDrCqpOFI="
+
 cache:
   directories:
     - "node_modules"
