@@ -487,6 +487,18 @@ Oskari.clazz.define(
                 }, {
                     "type": "text/javascript",
                     "src": "oskari-frontend/bundles/mapping/mapmodule/request/VectorLayerRequestHandler.js"
+                }, {
+                    "type": "text/javascript",
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/request/StartUserLocationTrackingRequest.js"
+                }, {
+                    "type": "text/javascript",
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/request/StartUserLocationTrackingRequestHandler.js"
+                }, {
+                    "type": "text/javascript",
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/request/StopUserLocationTrackingRequest.js"
+                }, {
+                    "type": "text/javascript",
+                    "src": "oskari-frontend/bundles/mapping/mapmodule/request/StopUserLocationTrackingRequestHandler.js"
                 },
 
                 /**
