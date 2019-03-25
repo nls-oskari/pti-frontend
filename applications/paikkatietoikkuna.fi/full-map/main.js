@@ -27,8 +27,8 @@ import 'oskari-loader!oskari-frontend/packages/framework/bundle/search/bundle.js
 
 import 'oskari-loader!oskari-frontend/packages/catalogue/metadatacatalogue/bundle.js';
 
-import 'oskari-lazy-loader?oskari-frontend/packages/framework/bundle/layerselector2/bundle.js';
-import 'oskari-lazy-loader?oskari-frontend/packages/framework/layerlist/bundle.js';
+import 'oskari-lazy-loader?layerselector2!oskari-frontend/packages/framework/bundle/layerselector2/bundle.js';
+import 'oskari-lazy-loader?layerlist!oskari-frontend/packages/framework/layerlist/bundle.js';
 
 import 'oskari-loader!oskari-frontend/packages/framework/bundle/layerselection2/bundle.js';
 
