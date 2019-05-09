@@ -39,10 +39,21 @@ jQuery(document).ready(function () {
                 jQuery('#mapdiv').append('Unable to start');
                 return;
             }
+
             app.init(appSetup);
             app.startApplication(function () {
                 var sb = Oskari.getSandbox();
                 gfiParamHandler(sb);
+
+                // pti 10
+                var cookieName = 'pti10v';
+                var shownCount = parseInt(jQuery.cookie(cookieName) || '0');
+                if(shownCount < 7) {
+                    shownCount++;
+                    toastr.info('Paikkis 10-v \o/ Vastaa kyselyyn <a href="#">täällä</a>');
+                    jQuery.cookie(cookieName, '' + shownCount, { expires: 22 });
+                }
+                // /pti 10v
             });
         },
         error: function (jqXHR, textStatus) {
