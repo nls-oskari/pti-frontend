@@ -73,8 +73,6 @@ import 'oskari-loader!oskari-frontend/packages/mapping/ol3/heatmap/bundle.js';
 
 import 'oskari-loader!oskari-frontend/packages/framework/bundle/coordinatetool/bundle.js';
 
-import 'oskari-loader!oskari-frontend/packages/framework/bundle/routingUI/bundle.js';
-
 import 'oskari-loader!oskari-frontend/packages/framework/bundle/routingService/bundle.js';
 
 import 'oskari-loader!oskari-frontend/packages/framework/bundle/feedbackService/bundle.js';
@@ -100,4 +98,6 @@ import 'oskari-lazy-loader?coordinatetransformation!../../../packages/paikkatiet
 
 import 'oskari-loader!../../../packages/paikkatietoikkuna/bundle/demo-link/bundle.js';
 
+import './kysely';
+import './css/toastr.min.css';
 import './css/overwritten.css';
