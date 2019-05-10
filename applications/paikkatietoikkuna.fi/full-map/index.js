@@ -50,12 +50,12 @@ jQuery(document).ready(function () {
                 var shownCount = parseInt(jQuery.cookie(cookieName) || '0');
                 if(shownCount < 7) {
                     shownCount++;
-                    var msg = 'Vastaa Paikkatietoikkunan <a href="#">10-vuotiskyselyyn</a>';
+                    var msg = 'Vastaa Paikkatietoikkunan <a href="https://www.paikkatietoikkuna.fi" target="_blank">10-vuotiskyselyyn</a>';
                     var lang = appSetup.env.lang || 'fi';
                     if (lang === 'sv') {
-                        msg = 'Svara på geoportalens <a href="#">10-årsanvändarenkät</a>';
+                        msg = 'Svara på geoportalens <a href="https://www.paikkatietoikkuna.fi" target="_blank">10-årsanvändarenkät</a>';
                     } else if (lang === 'en') {
-                        msg = 'Paikkatietoikkuna 10 years - <a href="#">user survey</a>';
+                        msg = 'Paikkatietoikkuna 10 years - <a href="https://www.paikkatietoikkuna.fi" target="_blank">user survey</a>';
                     }
 
                     toastr.info(msg);
