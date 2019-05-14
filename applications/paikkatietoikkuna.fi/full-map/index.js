@@ -50,12 +50,12 @@ jQuery(document).ready(function () {
                 var shownCount = parseInt(jQuery.cookie(cookieName) || '0');
                 if(shownCount < 7) {
                     shownCount++;
-                    var msg = 'Vastaa Paikkatietoikkunan <a href="https://www.paikkatietoikkuna.fi" target="_blank">10-vuotiskyselyyn</a>';
+                    var msg = 'Vastaa Paikkatietoikkunan <a href="https://www.webropolsurveys.com/S/95DA4555779B4E91.par" target="_blank">10-vuotiskyselyyn</a>';
                     var lang = appSetup.env.lang || 'fi';
                     if (lang === 'sv') {
-                        msg = 'Svara på geoportalens <a href="https://www.paikkatietoikkuna.fi" target="_blank">10-årsanvändarenkät</a>';
+                        msg = 'Svara på geoportalens <a href="https://www.webropolsurveys.com/S/A198188659407312.par" target="_blank">10-årsanvändarenkät</a>';
                     } else if (lang === 'en') {
-                        msg = 'Paikkatietoikkuna 10 years - <a href="https://www.paikkatietoikkuna.fi" target="_blank">user survey</a>';
+                        msg = 'Paikkatietoikkuna 10 years - <a href="https://www.webropolsurveys.com/S/8F095C742396905C.par" target="_blank">user survey</a>';
                     }
 
                     toastr.info(msg);
