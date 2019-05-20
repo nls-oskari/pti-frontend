@@ -55,7 +55,7 @@ jQuery(document).ready(function () {
     if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
             // Service worker is resource in servlet-map
-            navigator.serviceWorker.register('/service-worker.js').then(function(registration) {
+            navigator.serviceWorker.register('/xhr-priorizer.js').then(function(registration) {
             // Registration was successful
             console.log('ServiceWorker registration successful with scope: ', registration.scope);
             }, function(err) {
