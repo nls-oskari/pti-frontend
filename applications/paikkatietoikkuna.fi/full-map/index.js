@@ -32,7 +32,7 @@ jQuery(document).ready(function () {
         type: 'POST',
         dataType: 'json',
         data: getAppSetupParams,
-        url: '/action?action_route=GetAppSetup',
+        url: '/map/action?action_route=GetAppSetup',
         success: function (appSetup) {
             var app = Oskari.app;
             if (!appSetup.startupSequence) {
@@ -51,4 +51,16 @@ jQuery(document).ready(function () {
             }
         }
     });
+
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('../service-worker.js').then(function(registration) {
+            // Registration was successful
+            console.log('ServiceWorker registration successful with scope: ', registration.scope);
+            }, function(err) {
+            // registration failed :(
+            console.log(err.message);
+            });
+        });
+    }
 });
