@@ -32,7 +32,7 @@ jQuery(document).ready(function () {
         type: 'POST',
         dataType: 'json',
         data: getAppSetupParams,
-        url: '/map/action?action_route=GetAppSetup',
+        url: '/action?action_route=GetAppSetup',
         success: function (appSetup) {
             var app = Oskari.app;
             if (!appSetup.startupSequence) {
@@ -54,7 +54,8 @@ jQuery(document).ready(function () {
 
     if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
-            navigator.serviceWorker.register('../service-worker.js').then(function(registration) {
+            // Service worker is resource in servlet-map
+            navigator.serviceWorker.register('/service-worker.js').then(function(registration) {
             // Registration was successful
             console.log('ServiceWorker registration successful with scope: ', registration.scope);
             }, function(err) {
