@@ -54,13 +54,11 @@ jQuery(document).ready(function () {
 
     if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
-            // Service worker is resource in servlet-map
-            navigator.serviceWorker.register('/xhr-priorizer.js').then(function(registration) {
-            // Registration was successful
-            console.log('ServiceWorker registration successful with scope: ', registration.scope);
-            }, function(err) {
-            // registration failed :(
-            console.log(err.message);
+                // Service worker is resource in servlet-map
+                navigator.serviceWorker.register('/xhr-prioritizer.js').then(function (registration) {
+                console.debug('ServiceWorker registration successful with scope: ', registration.scope);
+            }, function (err) {
+                console.debug(err.message);
             });
         });
     }
