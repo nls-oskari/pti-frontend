@@ -8,8 +8,7 @@
   "dependencies": {
     "olcs": "^2.7.2",
     "oskari-frontend": "file:../oskari-frontend",
-    "oskari-frontend-contrib": "file:../oskari-frontend-contrib",
-    "toastr": "2.1.4"
+    "oskari-frontend-contrib": "file:../oskari-frontend-contrib"
   },
   "scripts": {
     "build": "node ./node_modules/oskari-frontend/node_modules/webpack/bin/webpack.js --config ./node_modules/oskari-frontend/webpack.config.js --mode production",
