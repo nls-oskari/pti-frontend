@@ -33,9 +33,7 @@ import 'oskari-loader!oskari-frontend/packages/framework/bundle/maplegend/bundle
 import 'oskari-loader!oskari-frontend/packages/framework/bundle/userguide/bundle.js';
 import 'oskari-loader!oskari-frontend/packages/catalogue/bundle/metadataflyout/bundle.js';
 import 'oskari-loader!oskari-frontend/packages/framework/featuredata2/bundle.js';
-// commented out so we don't have 2 popups for the user to close 
-// resume after 10v quiz is taken out
-//import 'oskari-loader!oskari-frontend/packages/framework/bundle/guidedtour/bundle.js';
+import 'oskari-loader!oskari-frontend/packages/framework/bundle/guidedtour/bundle.js';
 import 'oskari-loader!oskari-frontend/packages/framework/bundle/backendstatus/bundle.js';
 import 'oskari-loader!oskari-frontend/packages/framework/bundle/printout/bundle.js';
 import 'oskari-loader!oskari-frontend/packages/framework/bundle/postprocessor/bundle.js';
@@ -63,6 +61,4 @@ import 'oskari-lazy-loader?appsetup!oskari-frontend/packages/admin/bundle/appset
 import 'oskari-lazy-loader?coordinatetransformation!../../../packages/paikkatietoikkuna/bundle/coordinatetransformation/bundle.js';
 import 'oskari-loader!../../../packages/paikkatietoikkuna/bundle/demo-link/bundle.js';
 
-import './kysely';
-import './css/toastr.min.css';
 import './css/overwritten.css';

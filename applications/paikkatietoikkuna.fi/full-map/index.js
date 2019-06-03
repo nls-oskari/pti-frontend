@@ -44,24 +44,6 @@ jQuery(document).ready(function () {
             app.startApplication(function () {
                 var sb = Oskari.getSandbox();
                 gfiParamHandler(sb);
-
-                // pti 10
-                var cookieName = 'pti10v';
-                var shownCount = parseInt(jQuery.cookie(cookieName) || '0');
-                if(shownCount < 7) {
-                    shownCount++;
-                    var msg = 'Vastaa Paikkatietoikkunan <a href="https://www.webropolsurveys.com/S/95DA4555779B4E91.par" target="_blank">10-vuotiskyselyyn</a>';
-                    var lang = appSetup.env.lang || 'fi';
-                    if (lang === 'sv') {
-                        msg = 'Svara på geoportalens <a href="https://www.webropolsurveys.com/S/A198188659407312.par" target="_blank">10-årsanvändarenkät</a>';
-                    } else if (lang === 'en') {
-                        msg = 'Paikkatietoikkuna 10 years - <a href="https://www.webropolsurveys.com/S/8F095C742396905C.par" target="_blank">user survey</a>';
-                    }
-
-                    toastr.info(msg);
-                    jQuery.cookie(cookieName, '' + shownCount, { expires: 22 });
-                }
-                // /pti 10v
             });
         },
         error: function (jqXHR, textStatus) {
@@ -70,4 +52,13 @@ jQuery(document).ready(function () {
             }
         }
     });
+
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            // Service worker is resource in servlet-map
+            navigator.serviceWorker.register('/xhr-prioritizer.js').then(null, function (err) {
+                Oskari.log('ServiceWorker').warn(err);
+            });
+        });
+    }
 });

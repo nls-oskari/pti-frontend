@@ -64,4 +64,13 @@ jQuery(document).ready(function () {
             }
         }
     });
+
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            // Service worker is resource in servlet-map
+            navigator.serviceWorker.register('/xhr-prioritizer.js').then(null, function (err) {
+                Oskari.log('ServiceWorker').warn(err);
+            });
+        });
+    }
 });

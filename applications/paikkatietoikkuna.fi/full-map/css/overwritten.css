@@ -31,19 +31,3 @@ div.mapplugin.indexmap .indexmapToggle[class$=-dark] div.icon {
 div.mapplugin.indexmap .indexmapToggle[class$=-light] div.icon {
 	background-image: url('../../../../override-assets/suomi_light.svg') !important;
 }
-
-/**
-* 10-v kysely!!
-*/
-.toast-info {
-    background-color: #ffd400;
-    opacity: 1 !important;
- }
-
- .toast-message {
-    color: black;
-    font-weight: bold;
- }
- .toast-message a {
-	color: white;
- }
