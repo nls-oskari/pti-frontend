@@ -6,7 +6,7 @@
     "Oskari"
   ],
   "dependencies": {
-    "olcs": "^2.7.2",
+    "olcs": "^2.9.0",
     "oskari-frontend": "file:../oskari-frontend",
     "oskari-frontend-contrib": "file:../oskari-frontend-contrib",
     "toastr": "2.1.4"
