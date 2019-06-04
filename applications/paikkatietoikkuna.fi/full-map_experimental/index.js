@@ -3,13 +3,15 @@
 /**
  * Loads Cesium-library and holds jQuery document ready until loaded.
  */
-var CESIUM_LIB_URL = '/Oskari/libraries/ol-cesium/Cesium/Cesium.js';
-var script = document.createElement('script');
-script.src = CESIUM_LIB_URL;
-script.onload = function () {
-    jQuery.holdReady(false);
-};
-document.head.appendChild(script);
+(function() {
+    var CESIUM_LIB_URL = '/Oskari/libraries/ol-cesium/Cesium/Cesium.js';
+    var script = document.createElement('script');
+    script.src = CESIUM_LIB_URL;
+    script.onload = function () {
+        jQuery.holdReady(false);
+    };
+    document.head.appendChild(script);
+}());
 
 /**
  * Start when dom ready
