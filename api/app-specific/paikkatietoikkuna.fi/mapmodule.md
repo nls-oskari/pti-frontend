@@ -6,7 +6,7 @@ Ol Cesium implementation of the mapmodule bundle.
 
 ## Bundle configuration
 
-Configuration can be given when constructing the mapmodule through constructor call. Usually its passed through the mapfull bundle configuration:
+Configuration can be given when through `mapfull's` bundle configuration under `mapOptions`.
 
 ```javascript
 {
