@@ -1,0 +1,34 @@
+table td {
+	text-align: left;
+	vertical-align: top;
+}
+
+table {
+	border-top-width: 0px;
+}
+
+.mml-map #wrapper {
+	padding-left: 182px;	
+	background: #fff;
+	padding-left: 40px;
+}
+
+/**
+ * logoplugin with pti logo
+ */
+ .logoplugin .icon {
+    background-image: url('../../../../override-assets/logo.png') !important;
+    float: left;
+}
+
+div.mapplugin.indexmap .indexmapToggle div.icon {
+	background-size: 38px 38px;
+}
+
+div.mapplugin.indexmap .indexmapToggle[class$=-default] div.icon,
+div.mapplugin.indexmap .indexmapToggle[class$=-dark] div.icon {
+	background-image: url('../../../../override-assets/suomi_dark.svg') !important;
+}
+div.mapplugin.indexmap .indexmapToggle[class$=-light] div.icon {
+	background-image: url('../../../../override-assets/suomi_light.svg') !important;
+}
