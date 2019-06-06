@@ -1,13 +1,13 @@
 /**
- * @class Oskari.mapframework.bundle.demo-link.DemoLinkBundle
+ * @class Oskari.mapframework.bundle.dimension-change.DimensionChangeBundle
  *
  * Definition for bundle. See source for details.
  */
 Oskari.clazz.define(
-    "Oskari.mapframework.bundle.demo-link.DemoLinkBundle",
+    "Oskari.mapframework.bundle.dimension-change.DimensionChangeBundle",
     function () {}, {
         "create": function () {
-            return Oskari.clazz.create("Oskari.mapframework.bundle.demo-link.DemoLinkBundleInstance");
+            return Oskari.clazz.create("Oskari.mapframework.bundle.dimension-change.DimensionChangeBundleInstance");
         },
         "update": function (manager, bundle, bi, info) {}
     }, {
@@ -15,35 +15,35 @@ Oskari.clazz.define(
         "source": {
             "scripts": [{
                 "type": "text/javascript",
-                "src": "../../../../bundles/paikkatietoikkuna/demo-link/instance.js"
+                "src": "../../../../bundles/paikkatietoikkuna/dimension-change/instance.js"
             }, {
                 "type": "text/css",
-                "src": "../../../../bundles/paikkatietoikkuna/demo-link/resources/css/demolink.css"
+                "src": "../../../../bundles/paikkatietoikkuna/dimension-change/resources/css/dimension-change.css"
             }],
             "locales": [{
                 "lang": "en",
                 "type": "text/javascript",
-                "src": "../../../../bundles/paikkatietoikkuna/demo-link/resources/locale/en.js"
+                "src": "../../../../bundles/paikkatietoikkuna/dimension-change/resources/locale/en.js"
             }, {
                 "lang": "fi",
                 "type": "text/javascript",
-                "src": "../../../../bundles/paikkatietoikkuna/demo-link/resources/locale/fi.js"
+                "src": "../../../../bundles/paikkatietoikkuna/dimension-change/resources/locale/fi.js"
             }, {
                 "lang": "sv",
                 "type": "text/javascript",
-                "src": "../../../../bundles/paikkatietoikkuna/demo-link/resources/locale/sv.js"
+                "src": "../../../../bundles/paikkatietoikkuna/dimension-change/resources/locale/sv.js"
             }]
         },
         "bundle": {
             "manifest": {
-                "Bundle-Identifier": "demo-link",
-                "Bundle-Name": "demo-link",
+                "Bundle-Identifier": "dimension-change",
+                "Bundle-Name": "dimension-change",
                 "Bundle-Author": [{
                     "Name": "Joonas Heijari",
-                    "Organisation": "PHZ FullStack Oy",
+                    "Organisation": "Meco Oy",
                     "Temporal": {
-                        "Start": "2018",
-                        "End": "2018"
+                        "Start": "2019",
+                        "End": "2025"
                     },
                     "Copyleft": {
                         "License": {
@@ -52,13 +52,6 @@ Oskari.clazz.define(
                         }
                     }
                 }],
-                "Bundle-Name-Locale": {
-                    "fi": {
-                        "Name": " style-1",
-                        "Title": " style-1"
-                    },
-                    "en": {}
-                },
                 "Bundle-Version": "1.0.0",
                 "Import-Namespace": ["Oskari"],
                 "Import-Bundle": {}
@@ -66,4 +59,4 @@ Oskari.clazz.define(
         }
     });
 
-Oskari.bundle_manager.installBundleClass("demo-link", "Oskari.mapframework.bundle.demo-link.DemoLinkBundle");
+Oskari.bundle_manager.installBundleClass("dimension-change", "Oskari.mapframework.bundle.dimension-change.DimensionChangeBundle");

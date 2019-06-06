@@ -1,10 +1,10 @@
 /**
- * @class Oskari.mapframework.bundle.demo-link.DemoLinkBundleInstance
+ * @class Oskari.mapframework.bundle.dimension-change.DimensionChangeBundleInstance
  */
-Oskari.clazz.define('Oskari.mapframework.bundle.demo-link.DemoLinkBundleInstance', function () {
-    this.loc = Oskari.getMsg.bind(null, 'DemoLink');
+Oskari.clazz.define('Oskari.mapframework.bundle.dimension-change.DimensionChangeBundleInstance', function () {
+    this.loc = Oskari.getMsg.bind(null, 'dimensionchange');
 }, {
-    __name: 'DemoLinkBundleInstance',
+    __name: 'DimensionChangeBundleInstance',
     /**
      * @method _startImpl bundle start hook. Called from superclass start()
      * @param sandbox
@@ -13,7 +13,7 @@ Oskari.clazz.define('Oskari.mapframework.bundle.demo-link.DemoLinkBundleInstance
         var me = this;
         var addToolButtonBuilder = Oskari.requestBuilder('Toolbar.AddToolButtonRequest');
         var tooltip = me.conf.uuid ? me.loc('to3Dview') : me.loc('backTo2Dview');
-        var iconCls = me.conf.uuid ? 'demo-3D-view-tool' : 'demo-3D-view-tool-back';
+        var iconCls = me.conf.uuid ? 'dimension-tool' : 'dimension-tool-back';
         var buttonConf = {
             iconCls: iconCls,
             tooltip: tooltip,
@@ -29,7 +29,7 @@ Oskari.clazz.define('Oskari.mapframework.bundle.demo-link.DemoLinkBundleInstance
                 window.location.href = url;
             }
         };
-        sandbox.request(me, addToolButtonBuilder('DemoLink', 'demoviews', buttonConf));
+        sandbox.request(me, addToolButtonBuilder('DimensionChange', 'dimensionviews', buttonConf));
     }
 }, {
     'extend': ['Oskari.BasicBundle'],
