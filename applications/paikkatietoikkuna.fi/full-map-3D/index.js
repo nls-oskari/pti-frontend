@@ -5,7 +5,7 @@
  */
 (function() {
     jQuery.holdReady(true);
-    var CESIUM_LIB_URL = '/Oskari/libraries/ol-cesium/Cesium/Cesium.js';
+    var CESIUM_LIB_URL = '/Oskari/libraries/Cesium/Cesium.js';
     var script = document.createElement('script');
     script.src = CESIUM_LIB_URL;
     script.onload = function () {
