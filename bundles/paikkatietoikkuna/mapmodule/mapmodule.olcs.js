@@ -5,6 +5,7 @@ import olMap from 'ol/Map';
 import { defaults as olControlDefaults } from 'ol/control';
 import OLCesium from 'olcs/OLCesium';
 import { MapModule as MapModuleOl } from 'oskari-frontend/bundles/mapping/mapmodule/MapModuleClass.ol';
+import { LAYER_ID } from 'oskari-frontend/bundles/mapping/mapmodule/domain/constants';
 import 'olcs/olcs.css';
 
 const TILESET_DEFAULT_COLOR = '#ffd2a6';
@@ -158,6 +159,34 @@ class MapModuleOlCesium extends MapModuleOl {
         });
     }
 
+    /**
+     * @method _getFeaturesAtPixelImpl
+     * To get feature properties at given mouse location on screen / div element.
+     * @param  {Float} x
+     * @param  {Float} y
+     * @return {Array} list containing objects with props `properties` and  `layerId`
+     */
+    _getFeaturesAtPixelImpl (x, y) {
+        if (!this._map3d.getEnabled()) {
+            return super._getFeaturesAtPixelImpl(x, y);
+        }
+        const hits = [];
+        const picked = this._map3d.getCesiumScene().pick(new Cesium.Cartesian2(x, y));
+        if (!picked) {
+            return hits;
+        }
+        const feature = picked.primitive.olFeature;
+        const layer = picked.primitive.olLayer;
+        if (!feature || !layer) {
+            return hits;
+        }
+        hits.push({
+            featureProperties: feature.getProperties(),
+            layerId: layer.get(LAYER_ID)
+        });
+        return hits;
+    }
+
     getMapZoom () {
         var zoomlevel = this.getMap().getView().getZoom();
         if (typeof (zoomlevel) === 'undefined') {
@@ -297,18 +326,18 @@ class MapModuleOlCesium extends MapModuleOl {
      * Camera location in map projection coordinates (EPSG:3857)
      * Orientation values in degrees
      * {
-            location: {
-                x: 2776460.39,
-                y: 8432972.40,
-                altitude: 1000.0 //meters
-            },
-            orientation: {
-                heading: 90.0,  // east, default value is 0.0 (north)
-                pitch: -90,     // default value (looking down)
-                roll: 0.0       // default value
-            }
-        * }
-        */
+        location: {
+            x: 2776460.39,
+            y: 8432972.40,
+            altitude: 1000.0 //meters
+        },
+        orientation: {
+            heading: 90.0,  // east, default value is 0.0 (north)
+            pitch: -90,     // default value (looking down)
+            roll: 0.0       // default value
+        }
+    * }
+    */
     setCamera (options) {
         this.set3dEnabled(true);
         if (this._mapReady) {
