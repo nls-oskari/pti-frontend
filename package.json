@@ -7,13 +7,15 @@
   ],
   "dependencies": {
     "olcs": "^2.9.0",
+    "cesium": "^1.58.0",
     "oskari-frontend": "file:../oskari-frontend",
     "oskari-frontend-contrib": "file:../oskari-frontend-contrib"
   },
   "scripts": {
     "build": "node ./node_modules/oskari-frontend/node_modules/webpack/bin/webpack.js --config ./node_modules/oskari-frontend/webpack.config.js --progress --mode production",
     "start": "node ./node_modules/oskari-frontend/node_modules/webpack-dev-server/bin/webpack-dev-server.js --config ./node_modules/oskari-frontend/webpack.config.js --hot --env.appdef=applications/paikkatietoikkuna.fi",
-    "test": "eslint ."
+    "test": "eslint .",
+    "postinstall": "node ./scripts/postinstall.js"
   },
   "private": true,
   "devDependencies": {
@@ -22,6 +24,7 @@
     "eslint-plugin-import": "2.16.0",
     "eslint-plugin-node": "8.0.1",
     "eslint-plugin-promise": "4.0.1",
-    "eslint-plugin-standard": "4.0.0"
+    "eslint-plugin-standard": "4.0.0",
+    "fs-extra": "^8.0.1"
   }
 }

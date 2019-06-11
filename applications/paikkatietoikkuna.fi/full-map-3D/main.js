@@ -5,8 +5,8 @@ import 'oskari-loader!oskari-frontend/packages/framework/bundle/mapfull/bundle.j
 import 'oskari-loader!oskari-frontend/packages/framework/bundle/oskariui/bundle.js';
 import 'oskari-loader!oskari-frontend/packages/framework/bundle/divmanazer/bundle.js';
 
-// Then import mapmodule and rest of the application
-import 'oskari-loader!oskari-frontend/packages/mapping/ol3/mapmodule/bundle.js';
+// Then import mapmodule (3D) and rest of the application 
+import 'oskari-loader!../../../packages/paikkatietoikkuna/bundle/mapmodule/bundle.js';
 
 import 'oskari-loader!oskari-frontend/packages/catalogue/bundle/metadataflyout/bundle.js';
 import 'oskari-loader!oskari-frontend/packages/catalogue/metadatacatalogue/bundle.js';
@@ -63,7 +63,7 @@ import 'oskari-loader!../../../packages/paikkatietoikkuna/bundle/map3dtiles/bund
 import 'oskari-lazy-loader?layerselector2!oskari-frontend/packages/framework/bundle/layerselector2/bundle.js';
 import 'oskari-lazy-loader?layerlist!oskari-frontend/packages/framework/layerlist/bundle.js';
 import 'oskari-lazy-loader?admin-layerselector!oskari-frontend/packages/integration/bundle/admin-layerselector/bundle.js';
-import 'oskari-lazy-loader?admin-layerselector!oskari-frontend/packages/integration/bundle/bb/bundle.js';
+import 'oskari-lazy-loader?admin-layerselector!oskari-frontend/packages/integration/bundle/bb/bundle.js'
 import 'oskari-lazy-loader?admin-layerrights!oskari-frontend/packages/framework/bundle/admin-layerrights/bundle.js';
 import 'oskari-lazy-loader?admin!oskari-frontend/packages/admin/bundle/admin/bundle.js';
 import 'oskari-lazy-loader?metrics!oskari-frontend/packages/admin/bundle/metrics/bundle.js';
