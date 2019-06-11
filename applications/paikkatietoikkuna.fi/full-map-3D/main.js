@@ -51,11 +51,11 @@ import 'oskari-loader!oskari-frontend-contrib/packages/mapping/ol/mapanalysis/bu
 
 // pti
 import 'oskari-loader!../../../packages/paikkatietoikkuna/lang-overrides/bundle.js';
-import 'oskari-loader!../../../packages/paikkatietoikkuna/bundle/map3dtiles/bundle.js';
 import 'oskari-loader!../../../packages/paikkatietoikkuna/bundle/register/bundle.js';
 import 'oskari-loader!../../../packages/paikkatietoikkuna/bundle/telemetry/bundle.js';
 import 'oskari-loader!../../../packages/paikkatietoikkuna/bundle/terrain-profile/bundle.js';
 import 'oskari-loader!../../../packages/paikkatietoikkuna/bundle/dimension-change/bundle.js';
+import 'oskari-loader!../../../packages/paikkatietoikkuna/bundle/map3dtiles/bundle.js';
 
 // lazy
 import 'oskari-lazy-loader?layerselector2!oskari-frontend/packages/framework/bundle/layerselector2/bundle.js';
