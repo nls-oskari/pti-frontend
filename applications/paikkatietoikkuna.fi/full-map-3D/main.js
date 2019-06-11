@@ -1,15 +1,25 @@
 import './index.js';
 
+// These framework bundles have to be imported first
+import 'oskari-loader!oskari-frontend/packages/framework/bundle/mapfull/bundle.js';
+import 'oskari-loader!oskari-frontend/packages/framework/bundle/oskariui/bundle.js';
+import 'oskari-loader!oskari-frontend/packages/framework/bundle/divmanazer/bundle.js';
+
+// Then import mapmodule (3D) and rest of the application 
+import 'oskari-loader!../../../packages/paikkatietoikkuna/bundle/mapmodule/bundle.js';
+
+import 'oskari-loader!oskari-frontend/packages/catalogue/bundle/metadataflyout/bundle.js';
+import 'oskari-loader!oskari-frontend/packages/catalogue/metadatacatalogue/bundle.js';
+
+import 'oskari-loader!oskari-frontend/packages/framework/bundle/backendstatus/bundle.js';
 import 'oskari-loader!oskari-frontend/packages/framework/bundle/coordinatetool/bundle.js';
 import 'oskari-loader!oskari-frontend/packages/framework/bundle/feedbackService/bundle.js';
 import 'oskari-loader!oskari-frontend/packages/framework/bundle/findbycoordinates/bundle.js';
 import 'oskari-loader!oskari-frontend/packages/framework/bundle/guidedtour/bundle.js';
 import 'oskari-loader!oskari-frontend/packages/framework/bundle/layerselection2/bundle.js';
-import 'oskari-loader!oskari-frontend/packages/framework/bundle/mapfull/bundle.js';
 import 'oskari-loader!oskari-frontend/packages/framework/bundle/maplegend/bundle.js';
 import 'oskari-loader!oskari-frontend/packages/framework/bundle/myplaces3/bundle.js';
 import 'oskari-loader!oskari-frontend/packages/framework/bundle/myplacesimport/bundle.js';
-import 'oskari-loader!oskari-frontend/packages/framework/bundle/oskariui/bundle.js';
 import 'oskari-loader!oskari-frontend/packages/framework/bundle/personaldata/bundle.js';
 import 'oskari-loader!oskari-frontend/packages/framework/bundle/publisher2/bundle.js';
 import 'oskari-loader!oskari-frontend/packages/framework/bundle/printout/bundle.js';
@@ -21,9 +31,6 @@ import 'oskari-loader!oskari-frontend/packages/framework/bundle/timeseries/bundl
 import 'oskari-loader!oskari-frontend/packages/framework/bundle/ui-components/bundle.js';
 import 'oskari-loader!oskari-frontend/packages/framework/bundle/userguide/bundle.js';
 import 'oskari-loader!oskari-frontend/packages/framework/featuredata2/bundle.js';
-
-// 3D mapmodule
-import 'oskari-loader!../../../packages/paikkatietoikkuna/bundle/mapmodule/bundle.js';
 
 import 'oskari-loader!oskari-frontend/packages/mapping/ol3/heatmap/bundle.js';
 import 'oskari-loader!oskari-frontend/packages/mapping/ol3/mapwmts/bundle.js';
@@ -39,23 +46,18 @@ import 'oskari-loader!oskari-frontend/packages/mapping/ol3/toolbar/bundle.js';
 
 import 'oskari-loader!oskari-frontend/packages/statistics/statsgrid/bundle.js';
 
-// These have dependencies that have to be imported first
-import 'oskari-loader!oskari-frontend/packages/framework/bundle/divmanazer/bundle.js';
-import 'oskari-loader!oskari-frontend/packages/framework/bundle/backendstatus/bundle.js';
-import 'oskari-loader!oskari-frontend/packages/catalogue/metadatacatalogue/bundle.js';
-import 'oskari-loader!oskari-frontend/packages/catalogue/bundle/metadataflyout/bundle.js';
-
 // contrib
 import 'oskari-loader!oskari-frontend-contrib/packages/analysis/ol3/analyse/bundle.js';
 import 'oskari-loader!oskari-frontend-contrib/packages/mapping/ol/mapanalysis/bundle.js';
 
 // pti
-import 'oskari-loader!../../../packages/paikkatietoikkuna/lang-overrides/bundle.js';
-import 'oskari-loader!../../../packages/paikkatietoikkuna/bundle/map3dtiles/bundle.js';
+import 'oskari-loader!../../../packages/paikkatietoikkuna/bundle/dimension-change/bundle.js';
 import 'oskari-loader!../../../packages/paikkatietoikkuna/bundle/register/bundle.js';
 import 'oskari-loader!../../../packages/paikkatietoikkuna/bundle/telemetry/bundle.js';
 import 'oskari-loader!../../../packages/paikkatietoikkuna/bundle/terrain-profile/bundle.js';
-import 'oskari-loader!../../../packages/paikkatietoikkuna/bundle/dimension-change/bundle.js';
+import 'oskari-loader!../../../packages/paikkatietoikkuna/lang-overrides/bundle.js';
+// 3D layer support
+import 'oskari-loader!../../../packages/paikkatietoikkuna/bundle/map3dtiles/bundle.js';
 
 // lazy
 import 'oskari-lazy-loader?layerselector2!oskari-frontend/packages/framework/bundle/layerselector2/bundle.js';
