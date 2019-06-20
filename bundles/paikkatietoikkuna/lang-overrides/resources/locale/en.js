@@ -3,6 +3,7 @@ Oskari.registerLocalization(
     "lang": "en",
     "key": "MapModule",
     "value": {
+        "unsupportedProj": "Some layers added to this map view cannot be shown with {dimension} map view.",
         "plugin": {
             "SearchPlugin" : {
                 "column_region": "Municipality"

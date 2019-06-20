@@ -3,6 +3,7 @@ Oskari.registerLocalization(
     "lang": "fi",
     "key": "MapModule",
     "value": {
+        "unsupportedProj": "Joitain karttatasoja ei voida näyttää {dimension}-karttanäkymässä.",
         "plugin": {
             "SearchPlugin" : {
                 "column_region": "Kunta"
