@@ -17,9 +17,6 @@ Oskari.clazz.define(
                 "type": "text/javascript",
                 "src": "../../../../bundles/paikkatietoikkuna/dimension-change/instance.js"
             }, {
-                "type": "text/javascript",
-                "src": "../../../../bundles/paikkatietoikkuna/dimension-change/request/DimensionChangeRequest.js"
-            }, {
                 "type": "text/css",
                 "src": "../../../../bundles/paikkatietoikkuna/dimension-change/resources/css/dimension-change.css"
             }],
