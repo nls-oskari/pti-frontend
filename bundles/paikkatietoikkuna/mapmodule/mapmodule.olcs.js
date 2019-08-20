@@ -59,8 +59,6 @@ class MapModuleOlCesium extends MapModuleOl {
             resolutions: this.getResolutionArray()
         }));
 
-        me._setupMapEvents(map);
-
         var time = Cesium.JulianDate.fromIso8601('2017-07-11T12:00:00Z');
         const creditContainer = document.createElement('div');
         creditContainer.className = 'cesium-credit-container';
@@ -80,7 +78,8 @@ class MapModuleOlCesium extends MapModuleOl {
 
         var scene = this._map3D.getCesiumScene();
         // Vector features sink in the ground. This allows sunken features to be visible through the ground.
-        // This should be enabled when 3D-tiles (buildings) are visible.
+        // Setting olcs property 'altitudeMode': 'clampToGround' to vector layer had some effect but wasn't good enough.
+        // DepthTestAgainstTerrain should be enabled when 3D-tiles (buildings) are visible.
         scene.globe.depthTestAgainstTerrain = false;
         scene.shadowMap.darkness = 0.7;
         scene.skyBox = this._createSkyBox();
@@ -92,7 +91,9 @@ class MapModuleOlCesium extends MapModuleOl {
 
         // Fix dark imagery
         scene.highDynamicRange = false;
+
         this._initTerrainProvider();
+        this._setupMapEvents(map);
 
         var updateReadyStatus = function () {
             scene.postRender.removeEventListener(updateReadyStatus);
@@ -159,6 +160,61 @@ class MapModuleOlCesium extends MapModuleOl {
         var me = this;
         this._mapReadySubscribers.forEach(function (fireOperation) {
             fireOperation.operation.apply(me, fireOperation.arguments);
+        });
+    }
+
+    /**
+     * Add map event handlers
+     * @method @private _setupMapEvents
+     */
+    _setupMapEvents (map) {
+        const cam = this.getCesiumScene().camera;
+        cam.moveStart.addEventListener(this.notifyStartMove.bind(this));
+        cam.moveEnd.addEventListener(this.notifyMoveEnd.bind(this));
+
+        map.on('singleclick', evt => {
+            if (this.getDrawingMode()) {
+                return;
+            }
+            const { pixel, originalEvent } = evt;
+            const position = Cesium.Cartesian2.fromArray(pixel);
+            const lonlat = this.getMouseLocation(position);
+            if (!lonlat) {
+                return;
+            }
+            const mapClickedEvent = Oskari.eventBuilder('MapClickedEvent')(lonlat, ...evt.pixel, originalEvent.ctrlKey);
+            this._sandbox.notifyAll(mapClickedEvent);
+        });
+
+        map.on('dblclick', function () {
+            if (this.getDrawingMode()) {
+                return false;
+            }
+        });
+
+        const notifyMouseHover = (lonlat, pixel, paused) => {
+            var hoverEvent = Oskari.eventBuilder('MouseHoverEvent')(
+                lonlat.lon,
+                lonlat.lat,
+                paused,
+                ...pixel,
+                this.getDrawingMode()
+            );
+            this._sandbox.notifyAll(hoverEvent);
+        };
+
+        let mouseMoveTimer;
+        map.on('pointermove', evt => {
+            const { pixel } = evt;
+            const position = Cesium.Cartesian2.fromArray(pixel);
+            const lonlat = this.getMouseLocation(position);
+            if (!lonlat) {
+                return;
+            }
+            notifyMouseHover(lonlat, pixel, false);
+            clearTimeout(mouseMoveTimer);
+            // No mouse move in 1000 ms - mouse move paused
+            mouseMoveTimer = setTimeout(notifyMouseHover.bind(this, lonlat, pixel, true), 1000);
         });
     }
 
@@ -508,12 +564,15 @@ class MapModuleOlCesium extends MapModuleOl {
      * @return lonlat in map projection
      */
     getMouseLocation (position) {
-        const ellipsoid = this.getCesiumScene().globe.ellipsoid;
-        const cartesian = this.getCesiumScene().camera.pickEllipsoid(position, ellipsoid);
+        const scene = this.getCesiumScene();
+        const { camera, globe } = scene;
+
+        const ray = camera.getPickRay(position);
+        const cartesian = globe.pick(ray, scene);
         if (!cartesian) {
             return;
         }
-        const cartographic = ellipsoid.cartesianToCartographic(cartesian);
+        const cartographic = Cesium.Ellipsoid.WGS84.cartesianToCartographic(cartesian);
         let location = [
             Cesium.Math.toDegrees(cartographic.longitude),
             Cesium.Math.toDegrees(cartographic.latitude)
