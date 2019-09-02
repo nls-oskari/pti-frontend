@@ -10,6 +10,7 @@ dist/
 oskari.org/
 !applications/oskari.org/
 node_modules/
+libraries/Cesium
 tools/node_modules
 tools/validation
 tools/coverage

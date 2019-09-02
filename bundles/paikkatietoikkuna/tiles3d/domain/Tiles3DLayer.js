@@ -1,9 +1,9 @@
 /**
- * @class Oskari.map3dtiles.bundle.tiles3d.domain.Tiles3DLayer
+ * @class Oskari.mapframework.domain.Tiles3DLayer
  *
  * 3D-tile tileset layer
  */
-Oskari.clazz.define('Oskari.map3dtiles.bundle.tiles3d.domain.Tiles3DLayer',
+Oskari.clazz.define('Oskari.mapframework.mapmodule.Tiles3DLayer',
 
     /**
      * @method create called automatically on construction
@@ -47,6 +47,12 @@ Oskari.clazz.define('Oskari.map3dtiles.bundle.tiles3d.domain.Tiles3DLayer',
                 };
                 return style;
             }
+        },
+        /**
+         * @method isSupported
+         */
+        isSupported: function () {
+            return Oskari.getSandbox().getMap().getSupports3D();
         }
     }, {
         'extend': ['Oskari.mapframework.domain.AbstractLayer']

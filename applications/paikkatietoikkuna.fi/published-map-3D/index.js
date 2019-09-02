@@ -1,5 +1,18 @@
 'use strict';
 /**
+ * Loads Cesium-library and holds jQuery document ready until loaded.
+ */
+(function() {
+    jQuery.holdReady(true);
+    var CESIUM_LIB_URL = '/Oskari/libraries/Cesium/Cesium.js';
+    var script = document.createElement('script');
+    script.src = CESIUM_LIB_URL;
+    script.onload = function () {
+        jQuery.holdReady(false);
+    };
+    document.head.appendChild(script);
+}());
+/**
  * Start when dom ready
  */
 jQuery(document).ready(function () {
@@ -39,7 +52,6 @@ jQuery(document).ready(function () {
                 jQuery('#mapdiv').append('Unable to start');
                 return;
             }
-
             app.init(appSetup);
             app.startApplication(function () {
                 var sb = Oskari.getSandbox();

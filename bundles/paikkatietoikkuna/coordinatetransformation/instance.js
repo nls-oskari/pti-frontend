@@ -1,21 +1,7 @@
-/*
-Ways to start the bundle in console:
-* Oskari.app.playBundle(
-    {
-    bundlename : 'coordinatetransformation'
-});
-       var obj = {
-            "bundlename":"coordinatetransformation"
-        }
-        appSetup.startupSequence.push(obj);
-*/
 Oskari.clazz.define('Oskari.coordinatetransformation.instance',
     function () {
-        var conf = this.getConfiguration();
-        conf.name = 'coordinatetransformation';
-        conf.flyoutClazz = 'Oskari.coordinatetransformation.Flyout';
-        this.plugins = {};
-        // this._mapmodule = null;
+        this.defaultConf.name = 'coordinatetransformation';
+        this.defaultConf.flyoutClazz = 'Oskari.coordinatetransformation.Flyout';
         this.transformationService = null;
         this.dataHandler = null;
         this.views = null;
