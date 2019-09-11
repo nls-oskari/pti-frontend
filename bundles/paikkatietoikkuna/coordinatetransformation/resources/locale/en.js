@@ -90,7 +90,7 @@ Oskari.registerLocalization(
                     "noDecimalSeparator": "Decimal separator must be selected."
                 },
                 "responseErrors": {
-                    "title": "Error in transformation!",
+                    "titleTransform": "Error in transformation!",
                     "titleRead": "Error in reading file!",
                     "readFileError" : "Not all rows of the file were read successfully.",
                     "transformFileError": "The transformation of coordinates failed.",
