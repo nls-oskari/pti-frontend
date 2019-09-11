@@ -18,12 +18,8 @@ Oskari.clazz.define('Oskari.coordinatetransformation.Flyout',
         setEl: function (el, flyout, width, height) {
             this.container = jQuery(el[0]);
             this.flyout = flyout;
-            if (!this.container.hasClass('coordinatetransformation')) {
-                this.container.addClass('coordinatetransformation');
-            }
-            if (!this.flyout.hasClass('coordinatetransformation')) {
-                this.flyout.addClass('coordinatetransformation');
-            }
+            this.container.addClass('coordinatetransformation');
+            this.flyout.addClass('coordinatetransformation');
         },
         createUi: function () {
             this.instance.getViews().transformation.createUI(this.container);
