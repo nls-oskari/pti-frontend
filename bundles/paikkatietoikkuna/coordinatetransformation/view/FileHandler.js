@@ -218,7 +218,7 @@ Oskari.clazz.define('Oskari.coordinatetransformation.view.FileHandler',
                 lineSeparator: element.find('.lineSeparator option:checked').val(),
                 decimalPrecision: element.find('.decimalPrecision option:checked').val(),
                 writeHeader: element.find('.writeHeader input').is(':checked'),
-                writeLineEndings: element.find('.lineEnds').is(':checked'),
+                writeLineEndings: element.find('.lineEnds input').is(':checked'),
                 writeCardinals: element.find('.useCardinals input').is(':checked')
             };
             return settings;
