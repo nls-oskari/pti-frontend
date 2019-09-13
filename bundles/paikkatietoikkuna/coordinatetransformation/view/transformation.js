@@ -7,6 +7,7 @@ Oskari.clazz.define('Oskari.coordinatetransformation.view.transformation',
         // me.sourceSelection = null; //TODO move
         me.helper = helper;
         me.dataHandler = dataHandler;
+        me.messageDialog = null;
         // TODO remove fileInput here if is ok to move it to importfilehandler
         /* me.fileInput = Oskari.clazz.create('Oskari.userinterface.component.FileInput', {
             'allowMultipleFiles': false,
@@ -198,10 +199,16 @@ Oskari.clazz.define('Oskari.coordinatetransformation.view.transformation',
         },
         setVisible: function (visible) {
             if (!visible) {
-                Oskari.getSandbox().postRequestByName('userinterface.UpdateExtensionRequest', [this.instance, 'minimize']);
+                Oskari.getSandbox().postRequestByName('userinterface.UpdateExtensionRequest', [this.instance, 'hide']);
             } else {
-                Oskari.getSandbox().postRequestByName('userinterface.UpdateExtensionRequest', [this.instance, 'restore']);
+                Oskari.getSandbox().postRequestByName('userinterface.UpdateExtensionRequest', [this.instance, 'attach']);
             }
+        },
+        closePopups: function () {
+            this.importFileHandler.closeFileDialogue();
+            this.exportFileHandler.closeFileDialogue();
+            this.inputSystem.systemInfo.close();
+            this.outputSystem.systemInfo.close();
         },
         // TODO do we need this??
         getTable: function (type) {
@@ -235,10 +242,15 @@ Oskari.clazz.define('Oskari.coordinatetransformation.view.transformation',
             };
         },
         showMessage: function (title, message) {
+            if (this.messageDialog) {
+                this.messageDialog.close();
+                this.messageDialog = null;
+            }
             var dialog = Oskari.clazz.create('Oskari.userinterface.component.Popup');
             var btn = dialog.createCloseButton(this.loc('actions.close'));
             dialog.show(title, message, [btn]);
             dialog.fadeout(5000);
+            this.messageDialog = dialog;
         },
         showConfirm: function (title, message, confirmedCb) {
             var dialog = Oskari.clazz.create('Oskari.userinterface.component.Popup');
