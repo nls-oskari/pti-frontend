@@ -361,7 +361,7 @@ Oskari.clazz.define('Oskari.coordinatetransformation.view.transformation',
             var tableElem = me.inputTable.getContainer();
 
             if (blnBind === true) {
-                jQuery(tableElem).find('.oskari-table-content').on('focusout', {meRef: me}, me.inputTableHandler); // tbody //focus, focusout,
+                jQuery(tableElem).find('.oskari-table-content').on('focusout', { meRef: me }, me.inputTableHandler); // tbody //focus, focusout,
             } else {
                 jQuery(tableElem).find('.oskari-table-content').off('focusout', me.inputTableHandler);
             }
@@ -477,7 +477,7 @@ Oskari.clazz.define('Oskari.coordinatetransformation.view.transformation',
                     me.instance.toggleViews('mapmarkers');
                 }
                 if (response.hasMoreCoordinates === true) {
-                    me.showMessage(this.loc('flyout.transform.responseFile.title'), this.loc('flyout.transform.responseFile.hasMoreCoordinates', {maxCoordsToArray: 100}));
+                    me.showMessage(this.loc('flyout.transform.responseFile.title'), this.loc('flyout.transform.responseFile.hasMoreCoordinates', { maxCoordsToArray: 100 }));
                 }
             };
             if (srs === '') {
@@ -591,7 +591,7 @@ Oskari.clazz.define('Oskari.coordinatetransformation.view.transformation',
             if (error) {
                 this.handleErrorResponse(error, true);
             } else if (hasMoreCoordinates === true) {
-                this.showMessage(this.loc('flyout.transform.responseFile.title'), this.loc('flyout.transform.responseFile.hasMoreCoordinates', {maxCoordsToArray: 100}));
+                this.showMessage(this.loc('flyout.transform.responseFile.title'), this.loc('flyout.transform.responseFile.hasMoreCoordinates', { maxCoordsToArray: 100 }));
             }
         },
         handleArrayResponse: function (response) {
@@ -606,7 +606,7 @@ Oskari.clazz.define('Oskari.coordinatetransformation.view.transformation',
                 this.dataHandler.setInputCoords(inputCoords);
             }
             if (hasMoreCoordinates === true) {
-                this.showMessage(this.loc('flyout.transform.responseFile.title'), this.loc('flyout.transform.responseFile.hasMoreCoordinates', {maxCoordsToArray: 100}));
+                this.showMessage(this.loc('flyout.transform.responseFile.title'), this.loc('flyout.transform.responseFile.hasMoreCoordinates', { maxCoordsToArray: 100 }));
             }
         },
         handleFileResponse: function (data, filename, type) {
@@ -622,9 +622,9 @@ Oskari.clazz.define('Oskari.coordinatetransformation.view.transformation',
             if (errorInfo && errorInfo.errorKey) {
                 code = errorInfo.errorKey;
                 if (code === 'invalid_coord_in_line') {
-                    errorMsg = errors.transformFileError + '<br>' + Oskari.getMsg('coordinatetransformation', 'flyout.transform.responseErrors.invalidLine', {line: errorInfo.line, index: errorInfo.lineIndex});
+                    errorMsg = errors.transformFileError + '<br>' + Oskari.getMsg('coordinatetransformation', 'flyout.transform.responseErrors.invalidLine', { line: errorInfo.line, index: errorInfo.lineIndex });
                 } else if (code === 'invalid_read_line') {
-                    errorMsg = errors.readFileError + '<br>' + Oskari.getMsg('coordinatetransformation', 'flyout.transform.responseErrors.invalidLine', {line: errorInfo.line, index: errorInfo.lineIndex});
+                    errorMsg = errors.readFileError + '<br>' + Oskari.getMsg('coordinatetransformation', 'flyout.transform.responseErrors.invalidLine', { line: errorInfo.line, index: errorInfo.lineIndex });
                 } else if (code === 'transformation_error') { // error message from transformation service
                     errorMsg = errors[code] + '<br>' + errorInfo.exception;
                 } else if (errors[code]) {

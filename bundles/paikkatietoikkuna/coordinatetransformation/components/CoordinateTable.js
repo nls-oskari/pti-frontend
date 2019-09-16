@@ -193,7 +193,7 @@ Oskari.clazz.define('Oskari.coordinatetransformation.component.CoordinateTable',
             if (coord.length === 3) {
                 rowData.elev = coord[2];
             }
-            row = jQuery(this.template.row({coords: rowData}));
+            row = jQuery(this.template.row({ coords: rowData }));
             this.bindHoverRow(row);
             table.prepend(row);
         }
@@ -246,7 +246,7 @@ Oskari.clazz.define('Oskari.coordinatetransformation.component.CoordinateTable',
         // this.getElements().table.trigger('RowCountChanged');
     },
     addEmptyRow: function () {
-        var newRow = jQuery(this.template.row({coords: {}}));
+        var newRow = jQuery(this.template.row({ coords: {} }));
         /* if(this.isEditable){
                 jQuery(newRow).find('td').attr("contenteditable", true);
             } else {

@@ -37,9 +37,9 @@ Oskari.clazz.define('Oskari.coordinatetransformation.view.CoordinateMapSelection
         show: function () {
             var me = this;
             var helper = me.instance.getHelper();
-            var dialog = Oskari.clazz.create('Oskari.userinterface.component.Popup'),
-                btn = dialog.createCloseButton(this.loc('actions.done')),
-                cancelBtn = Oskari.clazz.create('Oskari.userinterface.component.Button');
+            var dialog = Oskari.clazz.create('Oskari.userinterface.component.Popup');
+            var btn = dialog.createCloseButton(this.loc('actions.done'));
+            var cancelBtn = Oskari.clazz.create('Oskari.userinterface.component.Button');
             cancelBtn.setTitle(this.loc('actions.cancel'));
             btn.addClass('primary');
             me.dialog = dialog;

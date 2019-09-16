@@ -42,8 +42,8 @@ Oskari.clazz.define('Oskari.mapframework.bundle.routesearch.Flyout',
          * @param {Object} response Response
          */
         _getSearchSuggestions: function (field, request, response) {
-            var me = this,
-                fieldName = field.element[0].name;
+            var me = this;
+            var fieldName = field.element[0].name;
             me.state[fieldName] = {
                 'name': request.term
             };
@@ -72,13 +72,13 @@ Oskari.clazz.define('Oskari.mapframework.bundle.routesearch.Flyout',
          * @param {jQuery} ui    JQuery UI autocomplete object
          */
         _setSearchLocation: function (field, event, ui) {
-            var me = this,
-                fieldName = field.attr('name'),
-                a = jQuery('<a>'),
-                item = {
-                    name: a.html(ui.item.name).text(),
-                    village: a.html(ui.item.village).text()
-                };
+            var me = this;
+            var fieldName = field.attr('name');
+            var a = jQuery('<a>');
+            var item = {
+                name: a.html(ui.item.name).text(),
+                village: a.html(ui.item.village).text()
+            };
             me.state[fieldName] = item;
             field.val(item.name + ', ' + item.village);
             me.bindLocation(me.locations);
@@ -98,13 +98,13 @@ Oskari.clazz.define('Oskari.mapframework.bundle.routesearch.Flyout',
             var me = this;
 
             location.forEach(function (loc) {
-                if (typeof me.state.from != 'undefined') {
+                if (typeof me.state.from !== 'undefined') {
                     if (loc.name === me.state.from.name && loc.village === me.state.from.village) {
                         var fromLonLat = me._mapmodule.transformCoordinates({ lon: loc.lon, lat: loc.lat }, me._mapmodule.getProjection(), 'EPSG:4326');
                         me.fromLonLat = fromLonLat;
                     }
                 }
-                if (typeof me.state.to != 'undefined') {
+                if (typeof me.state.to !== 'undefined') {
                     if (loc.name === me.state.to.name && loc.village === me.state.to.village) {
                         var toLonLat = me._mapmodule.transformCoordinates({ lon: loc.lon, lat: loc.lat }, me._mapmodule.getProjection(), 'EPSG:4326');
                         me.toLonLat = toLonLat;
@@ -162,13 +162,13 @@ Oskari.clazz.define('Oskari.mapframework.bundle.routesearch.Flyout',
          * called by host to start flyout operations
          */
         startPlugin: function () {
-            var me = this,
-                ajaxUrl = null,
-                contents = jQuery(me._templates.main),
-                i,
-                field,
-                fields = me.fields,
-                tmp;
+            var me = this;
+            var ajaxUrl = null;
+            var contents = jQuery(me._templates.main);
+            var i;
+            var field;
+            var fields = me.fields;
+            var tmp;
 
             if (me.instance.conf && me.instance.conf.url) {
                 ajaxUrl = me.instance.conf.url;
@@ -215,8 +215,8 @@ Oskari.clazz.define('Oskari.mapframework.bundle.routesearch.Flyout',
             me._updateRoutingLinks(true);
         },
         _renderAutocompleteItem: function (ul, item) {
-            var li = jQuery('<li>'),
-                a = jQuery('<a href="#">');
+            var li = jQuery('<li>');
+            var a = jQuery('<a href="#">');
             a.html(item.name + ', ' + item.village);
             li.append(a);
             ul.append(li);
@@ -360,45 +360,45 @@ Oskari.clazz.define('Oskari.mapframework.bundle.routesearch.Flyout',
          * @param {Function} urlBuilder Function (fromLoc, toLoc)
          */
         _routingService: function (name, color, urlBuilder) {
-            var me = this,
-                ret = {
-                    name: name,
-                    color: color,
-                    urlBuilder: urlBuilder,
-                    getButton: function (fromLoc, toLoc) {
-                        var el = this.el;
+            var me = this;
+            var ret = {
+                name: name,
+                color: color,
+                urlBuilder: urlBuilder,
+                getButton: function (fromLoc, toLoc) {
+                    var el = this.el;
 
-                        if (!el) {
-                            el = jQuery(
-                                '<a class="button">' + this.name + '</a>'
-                            );
-                            this.el = el;
-                        }
-                        if (me._locationOk(fromLoc) && me._locationOk(toLoc)) {
-                            el
-                                .attr('href', this.urlBuilder(fromLoc, toLoc))
-                                .attr('target', '_blank')
-                                .removeClass('disabled')
-                                .css('background-color', this.color)
-                                .prop('title', this.name)
-                                .off('click');
-                        } else {
-                            el
-                                .attr('href', '#')
-                                .removeAttr('target')
-                                .addClass('disabled')
-                                .css('background-color', '')
-                                .prop('title', me.locale.selectLocations)
-                                .on('click',
-                                    function (event) {
-                                        event.preventDefault();
-                                        return false;
-                                    }
-                                );
-                        }
-                        return el;
+                    if (!el) {
+                        el = jQuery(
+                            '<a class="button">' + this.name + '</a>'
+                        );
+                        this.el = el;
                     }
-                };
+                    if (me._locationOk(fromLoc) && me._locationOk(toLoc)) {
+                        el
+                            .attr('href', this.urlBuilder(fromLoc, toLoc))
+                            .attr('target', '_blank')
+                            .removeClass('disabled')
+                            .css('background-color', this.color)
+                            .prop('title', this.name)
+                            .off('click');
+                    } else {
+                        el
+                            .attr('href', '#')
+                            .removeAttr('target')
+                            .addClass('disabled')
+                            .css('background-color', '')
+                            .prop('title', me.locale.selectLocations)
+                            .on('click',
+                                function (event) {
+                                    event.preventDefault();
+                                    return false;
+                                }
+                            );
+                    }
+                    return el;
+                }
+            };
             return ret;
         },
         /**
@@ -416,11 +416,11 @@ Oskari.clazz.define('Oskari.mapframework.bundle.routesearch.Flyout',
          * @param {Boolean} createButtons Should the buttons be appended to ui
          */
         _updateRoutingLinks: function (createButtons) {
-            var me = this,
-                button,
-                locations = [],
-                routingService,
-                i;
+            var me = this;
+            var button;
+            var locations = [];
+            var routingService;
+            var i;
 
             for (i = 0; i < me.fields.length; i++) {
                 locations.push(me.state[me.fields[i]]);
