@@ -6,7 +6,6 @@ import 'oskari-loader!oskari-frontend/packages/framework/bundle/ui-components/bu
 
 import 'oskari-loader!oskari-frontend/packages/mapping/ol3/mapmodule/bundle.js';
 import 'oskari-loader!oskari-frontend/packages/mapping/ol3/mapwmts/bundle.js';
-import 'oskari-loader!oskari-frontend/packages/mapping/ol3/mapwfs2/bundle.js';
 import 'oskari-loader!oskari-frontend/packages/mapping/ol3/wfsvector/bundle.js';
 import 'oskari-loader!oskari-frontend/packages/mapping/ol3/maparcgis/bundle.js';
 import 'oskari-loader!oskari-frontend-contrib/packages/mapping/ol/mapanalysis/bundle.js';
