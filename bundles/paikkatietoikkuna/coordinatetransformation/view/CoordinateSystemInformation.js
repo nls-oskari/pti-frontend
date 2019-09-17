@@ -29,7 +29,7 @@ Oskari.clazz.define('Oskari.coordinatetransformation.view.CoordinateSystemInform
         return this.element;
     },
     close: function () {
-        if (this.dialog){
+        if (this.dialog) {
             this.dialog.close(true);
         }
     },
