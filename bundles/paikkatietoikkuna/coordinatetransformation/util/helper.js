@@ -187,7 +187,7 @@ Oskari.clazz.define('Oskari.coordinatetransformation.helper', function () {
         return true;
     },
     exportToFile: function (data, filename, type) {
-        var blob = new Blob([data], {type: type});
+        var blob = new Blob([data], { type: type });
         if (window.navigator.msSaveOrOpenBlob) {
             window.navigator.msSaveBlob(blob, filename);
         } else {
@@ -644,7 +644,7 @@ Oskari.clazz.define('Oskari.coordinatetransformation.helper', function () {
                 'lonFirst': true
             },
             'EPSG:3386': {
-                'title': this.loc('flyout.coordinateSystem.geodeticCoordinateSystem.kkj', {'zone': 0}),
+                'title': this.loc('flyout.coordinateSystem.geodeticCoordinateSystem.kkj', { 'zone': 0 }),
                 'datum': 'DATUM_KKJ',
                 'proj': 'PROJECTION_KKJ',
                 'coord': 'COORD_PROJ_2D',
@@ -652,7 +652,7 @@ Oskari.clazz.define('Oskari.coordinatetransformation.helper', function () {
                 'lonFirst': false
             },
             'EPSG:2391': {
-                'title': this.loc('flyout.coordinateSystem.geodeticCoordinateSystem.kkj', {'zone': 1}),
+                'title': this.loc('flyout.coordinateSystem.geodeticCoordinateSystem.kkj', { 'zone': 1 }),
                 'datum': 'DATUM_KKJ',
                 'proj': 'PROJECTION_KKJ',
                 'coord': 'COORD_PROJ_2D',
@@ -660,7 +660,7 @@ Oskari.clazz.define('Oskari.coordinatetransformation.helper', function () {
                 'lonFirst': false
             },
             'EPSG:2392': {
-                'title': this.loc('flyout.coordinateSystem.geodeticCoordinateSystem.kkj', {'zone': 2}),
+                'title': this.loc('flyout.coordinateSystem.geodeticCoordinateSystem.kkj', { 'zone': 2 }),
                 'datum': 'DATUM_KKJ',
                 'proj': 'PROJECTION_KKJ',
                 'coord': 'COORD_PROJ_2D',
@@ -676,7 +676,7 @@ Oskari.clazz.define('Oskari.coordinatetransformation.helper', function () {
                 'lonFirst': false
             },
             'EPSG:2394': {
-                'title': this.loc('flyout.coordinateSystem.geodeticCoordinateSystem.kkj', {'zone': 4}),
+                'title': this.loc('flyout.coordinateSystem.geodeticCoordinateSystem.kkj', { 'zone': 4 }),
                 'datum': 'DATUM_KKJ',
                 'proj': 'PROJECTION_KKJ',
                 'coord': 'COORD_PROJ_2D',
@@ -684,7 +684,7 @@ Oskari.clazz.define('Oskari.coordinatetransformation.helper', function () {
                 'lonFirst': false
             },
             'EPSG:3387': {
-                'title': this.loc('flyout.coordinateSystem.geodeticCoordinateSystem.kkj', {'zone': 5}),
+                'title': this.loc('flyout.coordinateSystem.geodeticCoordinateSystem.kkj', { 'zone': 5 }),
                 'datum': 'DATUM_KKJ',
                 'proj': 'PROJECTION_KKJ',
                 'coord': 'COORD_PROJ_2D',

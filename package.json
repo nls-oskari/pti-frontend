@@ -1,12 +1,13 @@
 {
   "name": "oskari-frontend-paikkis",
-  "version": "1.8.0",
+  "version": "1.9.0",
   "description": "kartta.paikkatietoikkuna.fi bundles & app conf",
   "keywords": [
     "Oskari"
   ],
   "dependencies": {
     "cesium": "^1.58.0",
+    "fs-extra": "^8.1.0",
     "olcs": "^2.9.0",
     "oskari-frontend": "git+https://git@github.com/oskariorg/oskari-frontend.git#develop",
     "oskari-frontend-contrib": "git+https://git@github.com/oskariorg/oskari-frontend-contrib.git#develop"
@@ -24,17 +25,8 @@
     "build:dev": "npm run dev-mode:on && node ./node_modules/oskari-frontend/node_modules/webpack/bin/webpack.js --config ./node_modules/oskari-frontend/webpack.config.js --mode production --progress --env.appdef=applications/paikkatietoikkuna.fi --env.theme=theme.less",
     "start:dev": "npm run dev-mode:on && node ./node_modules/oskari-frontend/node_modules/webpack-dev-server/bin/webpack-dev-server.js --config ./node_modules/oskari-frontend/webpack.config.js --hot --env.appdef=applications/paikkatietoikkuna.fi --env.theme=theme.less",
     "sprite": "node ./node_modules/oskari-frontend/webpack/sprite.js",
-    "test": "eslint .",
+    "test": "eslint --config ./node_modules/oskari-frontend/.eslintrc.js bundles",
     "postinstall": "node ./scripts/postinstall.js"
   },
-  "private": true,
-  "devDependencies": {
-    "eslint": "5.15.3",
-    "eslint-config-standard": "12.0.0",
-    "eslint-plugin-import": "2.16.0",
-    "eslint-plugin-node": "8.0.1",
-    "eslint-plugin-promise": "4.0.1",
-    "eslint-plugin-standard": "4.0.0",
-    "fs-extra": "^8.0.1"
-  }
+  "private": true
 }

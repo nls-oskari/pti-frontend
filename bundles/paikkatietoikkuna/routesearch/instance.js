@@ -33,8 +33,8 @@ Oskari.clazz.define('Oskari.mapframework.bundle.routesearch.RouteSearchBundleIns
              * Fetch users when flyout is opened
              */
             'userinterface.ExtensionUpdatedEvent': function (event) {
-                var me = this,
-                    doOpen = event.getViewState() !== 'close';
+                var me = this;
+                var doOpen = event.getViewState() !== 'close';
                 if (event.getExtension().getName() !== me.getName()) {
                     // not me -> do nothing
                     return;

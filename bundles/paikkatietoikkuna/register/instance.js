@@ -66,9 +66,9 @@ Oskari.clazz.define('Oskari.mapframework.bundle.register.RegisterBundleInstance'
          * Handles tool button click -> opens selection tool dialog
          */
         showRegisterPopup: function () {
-            var me = this,
-                popup = Oskari.clazz.create('Oskari.userinterface.component.Popup'),
-                buttons = [];
+            var me = this;
+            var popup = Oskari.clazz.create('Oskari.userinterface.component.Popup');
+            var buttons = [];
 
             me.popupContent = me.wrapper.clone();
 
