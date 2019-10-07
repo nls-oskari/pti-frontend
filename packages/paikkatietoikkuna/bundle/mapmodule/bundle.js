@@ -780,6 +780,11 @@ Oskari.clazz.define(
                 {
                     type: 'text/javascript',
                     src:
+            'oskari-frontend/bundles/mapping/mapmodule/event/MapTourEvent.js'
+                },
+                {
+                    type: 'text/javascript',
+                    src:
             'oskari-frontend/bundles/mapping/mapmodule/event/GetInfoResultEvent.js'
                 },
                 {
