@@ -9,6 +9,8 @@ import { LAYER_ID } from 'oskari-frontend/bundles/mapping/mapmodule/domain/const
 import 'olcs/olcs.css';
 
 const TILESET_DEFAULT_COLOR = '#ffd2a6';
+const SCALE_ZOOM_MULTIPLIER = 500;
+const ZOOM_MULTIPLIER = 5000;
 
 class MapModuleOlCesium extends MapModuleOl {
     constructor (id, imageUrl, options, mapDivId) {
@@ -452,6 +454,124 @@ class MapModuleOlCesium extends MapModuleOl {
             state.camera = this.getCamera();
         }
         return state;
+    }
+
+    /**
+     *
+     * @method centerMap
+     * Moves the map to the given position and zoomlevel. Overrides 2d centerMap function.
+     * @param {Number[] | Object} lonlat coordinates to move the map to
+     * @param {Number/OpenLayers.Bounds/Object} zoomLevel zoomlevel to set the map to
+     * @param {Boolean} suppressEnd true to NOT send an event about the map move
+     *  (other components wont know that the map has moved, only use when chaining moves and
+     *     wanting to notify at end of the chain for performance reasons or similar) (optional)
+     * @param {Object} options  has values for heading, pitch, roll and duration
+     */
+    centerMap (lonlat, zoom, suppressEnd, options) {
+        lonlat = this.normalizeLonLat(lonlat);
+        const { top, bottom, left, right } = zoom.value;
+        const location = olProj.transform([lonlat.lon, lonlat.lat], this.getProjection(), 'EPSG:4326');
+        const cameraHeight = this.adjustZoom(zoom);
+        const duration = options && options.duration ? options.duration : 3000;
+        const animationDuration = duration / 1000;
+        const camera = options && options.heading && options.roll && options.pitch
+            ? { heading: options.heading,
+                roll: options.roll,
+                pitch: options.pitch } : undefined;
+        if (zoom && top && bottom && left && right) {
+            const zoomOut = top === bottom && left === right;
+            this.zoomToExtent(zoom, zoomOut, zoomOut);
+            this.getMap().getView().setCenter(lonlat);
+            return true;
+        }
+
+        if (options && options.animation) {
+            this._flyTo(location[0], location[1], cameraHeight, animationDuration, camera);
+            return true;
+        } else {
+            this.getMap().getView().setCenter([lonlat.lon, lonlat.lat]);
+            this.getMap().getView().setZoom(zoom.value);
+            this.notifyMoveEnd();
+        }
+    }
+
+    /**
+     * @method _flyTo fly to coords with options
+     *
+     * @param {Number} x longitude
+     * @param {Number} y latitude
+     * @param {Number} z zoom/cameraheight
+     * @param {Number} duration animation duration in seconds
+     * @param {Object} camera orientation of camera, heading pitch and roll
+     * @param {Function} complete function to run when animation is completed
+     * @param {Function} cancel function to run when animation is cancelled
+     */
+    _flyTo (x, y, z, duration, cameraAngles, complete, cancel) {
+        const camera = this.getCesiumScene().camera;
+        let flyToParams = { destination: Cesium.Cartesian3.fromDegrees(x, y, z) };
+        flyToParams = duration ? { ...flyToParams, duration: duration } : flyToParams;
+        flyToParams = cameraAngles ? { ...flyToParams, orientation: cameraAngles } : flyToParams;
+        flyToParams = complete ? { ...flyToParams, complete: complete } : flyToParams;
+        flyToParams = cancel ? { ...flyToParams, cancel: cancel } : flyToParams;
+        camera.flyTo(flyToParams);
+    }
+
+    adjustZoom (zoom) {
+        if (zoom === null || zoom === undefined) {
+            zoom = { type: 'zoom', value: this.getMapZoom() };
+        }
+        if (typeof zoom !== 'object') {
+            zoom = { type: 'zoom', value: zoom };
+        }
+        return zoom.type === 'scale' ? zoom.value * SCALE_ZOOM_MULTIPLIER : zoom.value * ZOOM_MULTIPLIER;
+    }
+
+    /**
+     * @method tourMap
+     * Moves the map from point to point. Overrides 2d tourMap function.
+     * @param {Object[]} coordinates array of coordinates to move the map along
+     * @param {Object | Number} zoom absolute zoomlevel to set the map to
+     * @param {Object} options options, such as animation and duration
+     *     Usable animations: fly/pan/zoomPan
+     */
+    tourMap (coordinates, zoom, options) {
+        const me = this;
+        const duration = options && options.duration ? options.duration : 3000;
+        const animationDuration = duration / 1000;
+        const delayOption = options && options.delay ? options.delay : 750;
+        const cameraHeight = this.adjustZoom(zoom);
+        const coords = coordinates.map(coord => olProj.transform([coord.lon, coord.lat], this.getProjection(), 'EPSG:4326'));
+        const camera = options && options.heading && options.roll && options.pitch
+            ? { heading: options.heading,
+                roll: options.roll,
+                pitch: options.pitch } : undefined;
+        let index = -1;
+        let delay = 0;
+        let status = { steps: coordinates.length, step: 0 };
+
+        const next = (more) => {
+            me.notifyTourEvent(status, !more);
+            if (!more) {
+                // if we are done we can stop here
+                return;
+            }
+            ++index;
+            if (index < coordinates.length) {
+                const location = coords[index];
+                const locOptions = coordinates[index];
+                const cameraValues = locOptions.camera || camera;
+                const heightValue = locOptions.zoom ? me.adjustZoom(locOptions.zoom) : cameraHeight;
+                status = { ...status, step: index + 1 };
+                let cancelled = () => me.notifyTourEvent(status, true);
+                setTimeout(function () {
+                    me._flyTo(location[0], location[1], heightValue, animationDuration, cameraValues, next, cancelled);
+                }, delay);
+
+                // set Delay for next point
+                delay = coordinates.delay || delayOption;
+            }
+        };
+        next(true);
     }
 
     /**
