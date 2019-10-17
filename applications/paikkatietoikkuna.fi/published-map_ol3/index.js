@@ -53,7 +53,7 @@ jQuery(document).ready(function () {
     });
 
     if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
+        window.addEventListener('load', function () {
             // Service worker is resource in servlet-map
             navigator.serviceWorker.register('/xhr-prioritizer.js').then(null, function (err) {
                 Oskari.log('ServiceWorker').warn(err);
