@@ -46,7 +46,7 @@ import 'oskari-loader!oskari-frontend/packages/mapping/ol/toolbar/bundle.js';
 import 'oskari-loader!oskari-frontend/packages/statistics/statsgrid/bundle.js';
 
 // contrib
-import 'oskari-loader!oskari-frontend-contrib/packages/analysis/ol3/analyse/bundle.js';
+import 'oskari-loader!oskari-frontend-contrib/packages/analysis/ol/analyse/bundle.js';
 import 'oskari-loader!oskari-frontend-contrib/packages/mapping/ol/mapanalysis/bundle.js';
 
 // pti
