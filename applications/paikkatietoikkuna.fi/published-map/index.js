@@ -13,7 +13,7 @@ jQuery(document).ready(function () {
         if (Oskari.util.getRequestParam('showGetFeatureInfo', false) !== 'true') {
             return;
         }
-        // getPixelFromCoordinate should be part of mapmodule instead of doing ol3-specific code here
+        // getPixelFromCoordinate should be part of mapmodule instead of doing ol-specific code here
         // for some reason a timeout is required, but this is a hacky feature anyway
         // TODO: refactor to be more useful.GetFeatureInfoRequest shouldn't take both coordinates and pixels but one or the other
         // otherwise we should check if the pixels and coordinates do actually match
