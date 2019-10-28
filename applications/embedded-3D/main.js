@@ -1,12 +1,12 @@
-import 'oskari-loader!../../../packages/paikkatietoikkuna/lang-overrides/bundle.js';
+import 'oskari-loader!../../packages/paikkatietoikkuna/lang-overrides/bundle.js';
 
 import 'oskari-loader!oskari-frontend/packages/framework/bundle/mapfull/bundle.js';
 import 'oskari-loader!oskari-frontend/packages/framework/bundle/oskariui/bundle.js';
 import 'oskari-loader!oskari-frontend/packages/framework/bundle/ui-components/bundle.js';
 
 // 3D support
-import 'oskari-loader!../../../packages/paikkatietoikkuna/bundle/mapmodule/bundle.js';
-import 'oskari-loader!../../../packages/paikkatietoikkuna/bundle/map3dtiles/bundle.js';
+import 'oskari-loader!../../packages/paikkatietoikkuna/bundle/mapmodule/bundle.js';
+import 'oskari-loader!../../packages/paikkatietoikkuna/bundle/map3dtiles/bundle.js';
 
 import 'oskari-loader!oskari-frontend/packages/mapping/ol/mapwmts/bundle.js';
 import 'oskari-loader!oskari-frontend/packages/mapping/ol/wfsvector/bundle.js';

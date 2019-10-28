@@ -50,13 +50,13 @@ import 'oskari-loader!oskari-frontend-contrib/packages/analysis/ol/analyse/bundl
 import 'oskari-loader!oskari-frontend-contrib/packages/mapping/ol/mapanalysis/bundle.js';
 
 // pti
-import 'oskari-loader!../../../packages/paikkatietoikkuna/bundle/dimension-change/bundle.js';
-import 'oskari-loader!../../../packages/paikkatietoikkuna/bundle/register/bundle.js';
-import 'oskari-loader!../../../packages/paikkatietoikkuna/bundle/telemetry/bundle.js';
-import 'oskari-loader!../../../packages/paikkatietoikkuna/bundle/terrain-profile/bundle.js';
-import 'oskari-loader!../../../packages/paikkatietoikkuna/lang-overrides/bundle.js';
+import 'oskari-loader!../../packages/paikkatietoikkuna/bundle/dimension-change/bundle.js';
+import 'oskari-loader!../../packages/paikkatietoikkuna/bundle/register/bundle.js';
+import 'oskari-loader!../../packages/paikkatietoikkuna/bundle/telemetry/bundle.js';
+import 'oskari-loader!../../packages/paikkatietoikkuna/bundle/terrain-profile/bundle.js';
+import 'oskari-loader!../../packages/paikkatietoikkuna/lang-overrides/bundle.js';
 // 3D layer support
-import 'oskari-loader!../../../packages/paikkatietoikkuna/bundle/map3dtiles/bundle.js';
+import 'oskari-loader!../../packages/paikkatietoikkuna/bundle/map3dtiles/bundle.js';
 
 // lazy
 import 'oskari-lazy-loader?layerselector2!oskari-frontend/packages/framework/bundle/layerselector2/bundle.js';
@@ -68,6 +68,6 @@ import 'oskari-lazy-loader?admin!oskari-frontend/packages/admin/bundle/admin/bun
 import 'oskari-lazy-loader?metrics!oskari-frontend/packages/admin/bundle/metrics/bundle.js';
 import 'oskari-lazy-loader?appsetup!oskari-frontend/packages/admin/bundle/appsetup/bundle.js';
 import 'oskari-lazy-loader?admin-layereditor!oskari-frontend/packages/admin/bundle/admin-layereditor/bundle.js';
-import 'oskari-lazy-loader?coordinatetransformation!../../../packages/paikkatietoikkuna/bundle/coordinatetransformation/bundle.js';
+import 'oskari-lazy-loader?coordinatetransformation!../../packages/paikkatietoikkuna/bundle/coordinatetransformation/bundle.js';
 
 import './css/overwritten.css';
