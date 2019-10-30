@@ -5,15 +5,14 @@ import 'oskari-loader!oskari-frontend/packages/framework/bundle/oskariui/bundle.
 import 'oskari-loader!oskari-frontend/packages/framework/bundle/ui-components/bundle.js';
 
 // 3D support
-import 'oskari-loader!../../packages/paikkatietoikkuna/bundle/mapmodule/bundle.js';
-import 'oskari-loader!../../packages/paikkatietoikkuna/bundle/map3dtiles/bundle.js';
+import 'oskari-loader!oskari-frontend/packages/mapping/olcs/mapmodule/bundle.js';
+import 'oskari-loader!oskari-frontend/packages/mapping/olcs/map3dtiles/bundle.js';
 
 import 'oskari-loader!oskari-frontend/packages/mapping/ol/mapwmts/bundle.js';
 import 'oskari-loader!oskari-frontend/packages/mapping/ol/wfsvector/bundle.js';
 import 'oskari-loader!oskari-frontend/packages/mapping/ol/maparcgis/bundle.js';
 import 'oskari-loader!oskari-frontend-contrib/packages/mapping/ol/mapanalysis/bundle.js';
 import 'oskari-loader!oskari-frontend/packages/mapping/ol/mapuserlayers/bundle.js';
-
 
 import 'oskari-loader!oskari-frontend/packages/mapping/ol/infobox/bundle.js';
 import 'oskari-loader!oskari-frontend/packages/mapping/ol/drawtools/bundle.js';
