@@ -6,9 +6,7 @@
     "Oskari"
   ],
   "dependencies": {
-    "cesium": "^1.58.0",
     "fs-extra": "^8.1.0",
-    "olcs": "^2.9.0",
     "oskari-frontend": "git+https://git@github.com/oskariorg/oskari-frontend.git#develop",
     "oskari-frontend-contrib": "git+https://git@github.com/oskariorg/oskari-frontend-contrib.git#develop"
   },
