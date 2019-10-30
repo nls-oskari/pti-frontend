@@ -43,20 +43,21 @@ import 'oskari-loader!oskari-frontend/packages/mapping/ol3/drawtools/bundle.js';
 import 'oskari-loader!oskari-frontend/packages/mapping/ol3/infobox/bundle.js';
 import 'oskari-loader!oskari-frontend/packages/mapping/ol3/toolbar/bundle.js';
 
+import 'oskari-loader!oskari-frontend/packages/mapping/dimension-change/bundle.js';
 import 'oskari-loader!oskari-frontend/packages/statistics/statsgrid/bundle.js';
+
+// 3D layer support
+import 'oskari-loader!oskari-frontend/packages/mapping/olcs/map3dtiles/bundle.js';
 
 // contrib
 import 'oskari-loader!oskari-frontend-contrib/packages/analysis/ol3/analyse/bundle.js';
 import 'oskari-loader!oskari-frontend-contrib/packages/mapping/ol/mapanalysis/bundle.js';
 
 // pti
-import 'oskari-loader!../../../packages/paikkatietoikkuna/bundle/dimension-change/bundle.js';
 import 'oskari-loader!../../../packages/paikkatietoikkuna/bundle/register/bundle.js';
 import 'oskari-loader!../../../packages/paikkatietoikkuna/bundle/telemetry/bundle.js';
 import 'oskari-loader!../../../packages/paikkatietoikkuna/bundle/terrain-profile/bundle.js';
 import 'oskari-loader!../../../packages/paikkatietoikkuna/lang-overrides/bundle.js';
-// 3D layer support
-import 'oskari-loader!../../../packages/paikkatietoikkuna/bundle/map3dtiles/bundle.js';
 
 // lazy
 import 'oskari-lazy-loader?layerselector2!oskari-frontend/packages/framework/bundle/layerselector2/bundle.js';
