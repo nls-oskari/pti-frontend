@@ -47,7 +47,7 @@ import 'oskari-loader!oskari-frontend/packages/mapping/dimension-change/bundle.j
 import 'oskari-loader!oskari-frontend/packages/statistics/statsgrid/bundle.js';
 
 // 3D layer support
-import 'oskari-loader!oskari-frontend/packages/mapping/map3dtiles/bundle.js';
+import 'oskari-loader!oskari-frontend/packages/mapping/olcs/map3dtiles/bundle.js';
 
 // contrib
 import 'oskari-loader!oskari-frontend-contrib/packages/analysis/ol3/analyse/bundle.js';

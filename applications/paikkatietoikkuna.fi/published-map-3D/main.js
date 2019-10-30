@@ -6,7 +6,7 @@ import 'oskari-loader!oskari-frontend/packages/framework/bundle/ui-components/bu
 
 // 3D support
 import 'oskari-loader!oskari-frontend/packages/mapping/olcs/mapmodule/bundle.js';
-import 'oskari-loader!oskari-frontend/packages/mapping/map3dtiles/bundle.js';
+import 'oskari-loader!oskari-frontend/packages/mapping/olcs/map3dtiles/bundle.js';
 
 import 'oskari-loader!oskari-frontend/packages/mapping/ol3/mapwmts/bundle.js';
 import 'oskari-loader!oskari-frontend/packages/mapping/ol3/wfsvector/bundle.js';
