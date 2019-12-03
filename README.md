@@ -20,7 +20,9 @@ If the library isn't included in `oskari-frontend` repo, you can add it into thi
 
 ## Building Paikkis
 
- Check out the right branches in the above repos and make sure you have run `npm install` in all three (this one included). Then you can build the app with `npm run build -- --env.appdef=1.48:applications/paikkatietoikkuna.fi`. The output will be under `dist/`. See the main [oskari-frontend repo](https://github.com/oskariorg/oskari-frontend#readme) for detailed instructions about the build parameters.
+ Check out the right branches in the above repos and make sure you have run `npm install` in all three (this one included). Then you can build the app with `npm run build`. The output will be under `dist/`. See the main [oskari-frontend repo](https://github.com/oskariorg/oskari-frontend#readme) for detailed instructions about the build parameters.
+
+ The build requires more memory than is allocated for node by default and you will have to so `set NODE_OPTIONS=--max_old_space_size=4096` on windows before running the build or `NODE_OPTIONS=--max_old_space_size=4096 npm run build`.
  
  ## Development server
 
