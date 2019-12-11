@@ -1,13 +1,13 @@
 {
   "name": "oskari-frontend-paikkis",
-  "version": "1.11.0",
+  "version": "1.11.1",
   "description": "kartta.paikkatietoikkuna.fi bundles & app conf",
   "keywords": [
     "Oskari"
   ],
   "dependencies": {
     "fs-extra": "^8.1.0",
-    "oskari-frontend": "git+https://git@github.com/oskariorg/oskari-frontend.git#1.54.0",
+    "oskari-frontend": "git+https://git@github.com/oskariorg/oskari-frontend.git#1.54.1",
     "oskari-frontend-contrib": "git+https://git@github.com/oskariorg/oskari-frontend-contrib.git#1.54.0"
   },
   "scripts": {
