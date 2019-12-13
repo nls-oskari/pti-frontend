@@ -8,6 +8,7 @@ import 'oskari-loader!oskari-frontend/packages/framework/bundle/ui-components/bu
 import 'oskari-loader!oskari-frontend/packages/mapping/olcs/mapmodule/bundle.js';
 import 'oskari-loader!oskari-frontend/packages/mapping/olcs/map3dtiles/bundle.js';
 import 'oskari-loader!oskari-frontend/packages/mapping/olcs/shadowplugin/bundle.js';
+import 'oskari-loader!oskari-frontend/packages/mapping/camera-controls-3d/bundle.js';
 
 import 'oskari-loader!oskari-frontend/packages/mapping/ol/mapwmts/bundle.js';
 import 'oskari-loader!oskari-frontend/packages/mapping/ol/wfsvector/bundle.js';

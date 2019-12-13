@@ -9,6 +9,7 @@ import 'oskari-loader!oskari-frontend/packages/framework/bundle/divmanazer/bundl
 import 'oskari-loader!oskari-frontend/packages/mapping/olcs/mapmodule/bundle.js';
 import 'oskari-loader!oskari-frontend/packages/mapping/olcs/map3dtiles/bundle.js';
 import 'oskari-loader!oskari-frontend/packages/mapping/olcs/shadowplugin/bundle.js';
+import 'oskari-loader!oskari-frontend/packages/mapping/camera-controls-3d/bundle.js';
 
 import 'oskari-loader!oskari-frontend/packages/catalogue/bundle/metadataflyout/bundle.js';
 import 'oskari-loader!oskari-frontend/packages/catalogue/metadatacatalogue/bundle.js';
