@@ -3,7 +3,7 @@ import 'oskari-loader!../../packages/paikkatietoikkuna/lang-overrides/bundle.js'
 import 'oskari-loader!oskari-frontend/packages/framework/bundle/mapfull/bundle.js';
 import 'oskari-loader!oskari-frontend/packages/framework/bundle/oskariui/bundle.js';
 import 'oskari-loader!oskari-frontend/packages/framework/bundle/ui-components/bundle.js';
-import 'oskari-loader?divmanazer!oskari-frontend/packages/framework/bundle/divmanazer/bundle.js';
+import 'oskari-loader!oskari-frontend/packages/framework/bundle/divmanazer/bundle.js';
 
 // 3D support
 import 'oskari-loader!oskari-frontend/packages/mapping/olcs/mapmodule/bundle.js';
