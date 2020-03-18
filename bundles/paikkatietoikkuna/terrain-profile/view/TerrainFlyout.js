@@ -204,8 +204,8 @@ Oskari.clazz.define('Oskari.mapframework.bundle.terrain-profile.TerrainFlyout',
                     text = me.loc('noValue');
                 }
                 cursor.select('text').text(text);
-
-                me.markerHandler.showAt(d.coords[0], d.coords[1], text);
+                // replace no-break space
+                me.markerHandler.showAt(d.coords[0], d.coords[1], text.replace(/\u00A0/, ' '));
             }
 
             var processed;
