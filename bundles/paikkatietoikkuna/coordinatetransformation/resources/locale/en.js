@@ -163,7 +163,7 @@ Oskari.registerLocalization(
         "fileSettings": {
             "options": {
                 "decimalSeparator": "Decimal separator",
-                "coordinateSeparator": "Coordinate separator",
+                "coordinateSeparator": "Field separator",
                 "headerCount": "Number of header rows",
                 "decimalPrecision": "Decimal precision",
                 "reverseCoordinates": "Coordinates reversed",
@@ -294,10 +294,10 @@ Oskari.registerLocalization(
                 }
             },
             "coordinateSeparator":{
-                "title":"Coordinate separator",
-                "info": "Coordinate separator", // TODO
+                "title":"Field separator",
+                "info": "Defines by which delimeter the columns are separated from each other",
                 "paragraphs": [
-                    "This property is used to show the column separator in the input file that is used to separate coordinate values. The input data cannot contain more than one such separator between two coordinate values.",
+                    "Defines by which delimeter the columns are separated from each other in the file.",
                     "If the coordinates are preceded by an identifier or followed by a character string, these must also be separated from the coordinates using the same separator."
                 ],
                 "listItems" : []

@@ -8,6 +8,8 @@ import 'oskari-loader!oskari-frontend/packages/framework/bundle/divmanazer/bundl
 // Then import mapmodule (3D) and rest of the application 
 import 'oskari-loader!oskari-frontend/packages/mapping/olcs/mapmodule/bundle.js';
 import 'oskari-loader!oskari-frontend/packages/mapping/olcs/map3dtiles/bundle.js';
+import 'oskari-loader!oskari-frontend/packages/mapping/time-control-3d/bundle.js';
+import 'oskari-loader!oskari-frontend/packages/mapping/camera-controls-3d/bundle.js';
 
 import 'oskari-loader!oskari-frontend/packages/catalogue/bundle/metadataflyout/bundle.js';
 import 'oskari-loader!oskari-frontend/packages/catalogue/metadatacatalogue/bundle.js';

@@ -3,6 +3,7 @@ import 'oskari-loader!../../packages/paikkatietoikkuna/lang-overrides/bundle.js'
 import 'oskari-loader!oskari-frontend/packages/framework/bundle/mapfull/bundle.js';
 import 'oskari-loader!oskari-frontend/packages/framework/bundle/oskariui/bundle.js';
 import 'oskari-loader!oskari-frontend/packages/framework/bundle/ui-components/bundle.js';
+import 'oskari-loader!oskari-frontend/packages/framework/bundle/divmanazer/bundle.js';
 
 import 'oskari-loader!oskari-frontend/packages/mapping/ol/mapmodule/bundle.js';
 import 'oskari-loader!oskari-frontend/packages/mapping/ol/mapwmts/bundle.js';
@@ -23,7 +24,6 @@ import 'oskari-loader!oskari-frontend/packages/framework/bundle/postprocessor/bu
 import 'oskari-loader!oskari-frontend/packages/framework/bundle/rpc/bundle.js';
 
 import 'oskari-lazy-loader?maplegend!oskari-frontend/packages/framework/bundle/maplegend/bundle.js';
-import 'oskari-lazy-loader?divmanazer!oskari-frontend/packages/framework/bundle/divmanazer/bundle.js';
 import 'oskari-lazy-loader?featuredata2!oskari-frontend/packages/framework/featuredata2/bundle.js';
 import 'oskari-lazy-loader?routingService!oskari-frontend/packages/framework/bundle/routingService/bundle.js';
 import 'oskari-lazy-loader?feedbackService!oskari-frontend/packages/framework/bundle/feedbackService/bundle.js';

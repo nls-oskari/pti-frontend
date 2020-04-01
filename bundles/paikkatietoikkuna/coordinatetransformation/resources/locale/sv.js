@@ -163,12 +163,12 @@ Oskari.registerLocalization(
         "fileSettings": {
             "options": {
                 "decimalSeparator": "Skiljetecken för decimaler",
-                "coordinateSeparator": "Skiljetecken för koordinater",
+                "coordinateSeparator": "Skiljetecken för fält",
                 "headerCount": "Antal rubrikrader",
                 "decimalCount": "Decimalernas precision",
                 "reverseCoordinates": "Omvända koordinater",
                 "useId": { // Använd identifierare
-                    "input": "Koordinater innehåller identiferare",
+                    "input": "Koordinater innehåller identifierare",
                     "generate": "Skapa identifierare",
                     "add": "Lägg till identifierare",
                     "fromFile": "Lägg till utgångsfilens identifierare"
@@ -294,10 +294,10 @@ Oskari.registerLocalization(
                 }
             },
             "coordinateSeparator":{
-                "title":"Skiljetecken för koordinater",
-                "info": "Skiljetecken för koordinater", // TODO
+                "title":"Skiljetecken för fält",
+                "info": "Definierar med vilket skiljetecken fält separeras",
                 "paragraphs": [
-                    "Med denna egenskap anges vilket skiljetecken som använts för kolumner i utgångsmaterialet mellan koordinatvärden. I utgångsmaterialet får det finnas endast ett sådant skiljetecken mellan två koordinatvärden.",
+                    "Definierar med vilket skiljetecken fält separeras i filen.",
                     "Om koordinaterna föregås av en identifierare eller följs av en teckensträng, ska även dessa vara åtskilda med samma skiljetecken."
                 ],
                 "listItems" : []

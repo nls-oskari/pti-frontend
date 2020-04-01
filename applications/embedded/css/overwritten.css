@@ -3,7 +3,7 @@ table td {
 	vertical-align: top;
 }
 
-table {
+table:not([class*="ant-"]) {
 	border-top-width: 0px;
 }
 

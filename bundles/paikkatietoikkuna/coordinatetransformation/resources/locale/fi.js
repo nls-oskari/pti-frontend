@@ -163,7 +163,7 @@ Oskari.registerLocalization(
         "fileSettings": {
             "options": {
                 "decimalSeparator": "Desimaalierotin",
-                "coordinateSeparator": "Koordinaattierotin",
+                "coordinateSeparator": "Sarake-erotin",
                 "headerCount": "Otsakerivien määrä",
                 "decimalPrecision": "Desimaalien tarkkuus",
                 "reverseCoordinates": "Koordinaatit käänteisesti",
@@ -295,9 +295,9 @@ Oskari.registerLocalization(
             },
             "coordinateSeparator":{
                 "title":"Sarake-erotin",
-                "info": "Koordinaattien erottamiseen käytetty merkki",
+                "info": "Sarakkeiden erottamiseen käytetty merkki",
                 "paragraphs": [
-                    "Ominaisuuden avulla määritetään millainen merkkijono erottaa syötteessä koordinaattiarvot toisistaan.",
+                    "Määrittää millä erotinmerkillä sarakkeet on eroteltu tiedostossa toisistaan.",
                     "Jos koordinaatteja edeltää jokin tunniste tai seuraa jokin merkkijono, tulee nämäkin olla erotettuna samalla erottimella."
                 ],
                 "listItems" : []
