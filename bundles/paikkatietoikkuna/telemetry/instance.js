@@ -46,10 +46,10 @@ Oskari.clazz.define('Oskari.mapframework.bundle.telemetry.TelemetryBundleInstanc
         _paq.push(['enableLinkTracking']);
         (function () {
             var u = '//' + endpoint + '/';
-            _paq.push(['setTrackerUrl', u + 'piwik.php']);
+            _paq.push(['setTrackerUrl', u + 'matomo.php']);
             _paq.push(['setSiteId', 9]);
             var d = document; var g = d.createElement('script'); var s = d.getElementsByTagName('script')[0];
-            g.type = 'text/javascript'; g.async = true; g.defer = true; g.src = u + 'piwik.js'; s.parentNode.insertBefore(g, s);
+            g.type = 'text/javascript'; g.async = true; g.defer = true; g.src = u + 'matomo.js'; s.parentNode.insertBefore(g, s);
         })();
     },
     _pushEvent: function (/* variadic */) {
