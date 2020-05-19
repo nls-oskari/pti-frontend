@@ -11,11 +11,11 @@ Oskari.clazz.define('Oskari.coordinatetransformation.view.CoordinateMapSelection
                 '   <div class="coordinateSelectionOptions">' +
                 '       <input id="add-coordinate-to-map" type="radio" name="coordinate-map-select" value="add" checked/>' +
                 '       <label for="add-coordinate-to-map" class="source-select">' +
-                '           <span/>' +
+                '           <span></span>' +
                 '       </label>' +
                 '       <input id="remove-coordinate-from-map" type="radio" name="coordinate-map-select" value="remove"/>' +
                 '       <label for="remove-coordinate-from-map" class="source-select">' +
-                '            <span/>' +
+                '            <span></span>' +
                 '       </label>' +
                 '    </div>' +
                 '</div>'

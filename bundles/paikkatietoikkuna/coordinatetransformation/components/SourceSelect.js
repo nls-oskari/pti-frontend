@@ -16,7 +16,7 @@ Oskari.clazz.define('Oskari.coordinatetransformation.component.SourceSelect',
                     '<div class="source-select">' +
                         '<input type="radio" id="clipboard" name="load" value="keyboard">' +
                         '<label for="keyboard">' +
-                            '<span/>' +
+                            '<span></span>' +
                             '${keyboard}' +
                         '</label>' +
                         '<div class="infolink icon-info" data-source="keyboard" title="${keyboardInfo}"></div>' +
@@ -24,7 +24,7 @@ Oskari.clazz.define('Oskari.coordinatetransformation.component.SourceSelect',
                     '<div class="source-select">' +
                         '<input type="radio" id="file" name="load" value="file">' +
                         '<label for="file">' +
-                            '<span/>' +
+                            '<span></span>' +
                             '${file}' +
                         '</label>' +
                         '<div class="infolink icon-info" data-source="file" title="${fileInfo}"></div>' +
@@ -32,7 +32,7 @@ Oskari.clazz.define('Oskari.coordinatetransformation.component.SourceSelect',
                     '<div class="source-select">' +
                         '<input type="radio" id="mapselection" name="load" value="map">' +
                         '<label for="mapselection">' +
-                            '<span/>' +
+                            '<span></span>' +
                             '${map}' +
                         '</label>' +
                         '<div class="infolink icon-info" data-source="map" title="${mapInfo}"></div>' +
@@ -52,7 +52,7 @@ Oskari.clazz.define('Oskari.coordinatetransformation.component.SourceSelect',
                         // '<input type="radio" id="source-${type}" value="${type}">' +
                         // '<label for="source-${type}">' +
                         '<label>' +
-                            '<span/>' +
+                            '<span></span>' +
                             '${label}' +
                         '</label>' +
                         '<% if (obj.action) { %> ' +
