@@ -691,7 +691,7 @@ Oskari.clazz.define('Oskari.coordinatetransformation.helper', function () {
                 'bounds': [5423705.81, 6970442.95, 5428707.25, 6989284.23],
                 'lonFirst': false
             },
-            'EPSG:4123': {// KKJ_GEO
+            'EPSG:4123': { // KKJ_GEO
                 'title': 'KKJ-Hayford',
                 'datum': 'DATUM_KKJ',
                 'proj': '',
