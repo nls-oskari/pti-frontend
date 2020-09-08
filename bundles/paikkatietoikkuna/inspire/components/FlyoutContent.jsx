@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 function createHTMLContent(textContent) {
     return {
@@ -6,6 +7,10 @@ function createHTMLContent(textContent) {
     };
 }
 
-export const FlyoutContent = (props) => {
-    return <div dangerouslySetInnerHTML={createHTMLContent(props.textContent)}/>
+export const FlyoutContent = ({textContent}) => {
+    return <div dangerouslySetInnerHTML={createHTMLContent(textContent)}/>
+};
+
+FlyoutContent.propTypes = {
+    textContent: PropTypes.string
 };

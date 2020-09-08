@@ -13,14 +13,9 @@ Oskari.clazz.define(
     }, {
         "protocol": ["Oskari.bundle.Bundle"],
         "source": {
-
             "scripts": [{
                 "type": "text/javascript",
                 "src": "../../../../bundles/paikkatietoikkuna/inspire/instance.js"
-            },
-            {
-                "type": "text/javascript",
-                "src": "../../../../bundles/paikkatietoikkuna/inspire/Flyout.js"
             }],
             "locales": [{
                 "lang": "fi",
@@ -36,8 +31,7 @@ Oskari.clazz.define(
                 "lang": "en",
                 "type": "text/javascript",
                 "src": "../../../../bundles/paikkatietoikkuna/inspire/resources/locale/en.js"
-            }
-            ]
+            }]
         },
         "bundle": {
             "manifest": {

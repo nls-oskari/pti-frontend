@@ -1,3 +1,5 @@
+import './Flyout.js';
+
 const BasicBundle = Oskari.clazz.get('Oskari.BasicBundle');
 
 Oskari.clazz.define('Oskari.mapframework.bundle.inspire.instance',
