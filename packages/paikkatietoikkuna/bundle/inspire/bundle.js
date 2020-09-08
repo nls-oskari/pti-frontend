@@ -82,5 +82,5 @@ Oskari.clazz.define(
         "dependencies": ["jquery"]
 
     });
-console.log('defining bundle');
+
 Oskari.bundle_manager.installBundleClass("inspire", "Oskari.mapframework.bundle.inspire.InspireBundle");
