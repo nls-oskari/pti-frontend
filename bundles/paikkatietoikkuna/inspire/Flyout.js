@@ -9,7 +9,7 @@ Oskari.clazz.define('Oskari.inspire.Flyout',
         this.loc = Oskari.getMsg.bind(null, 'inspire');
         this.container = null;
         this.flyout = null;
-        this.flyoutContent = this.loc('flyoutContent')['content'];
+        this.flyoutContent = this.loc('flyoutContent').content;
     }, {
         getName: function () {
             return 'Oskari.inspire.Flyout';
@@ -24,7 +24,7 @@ Oskari.clazz.define('Oskari.inspire.Flyout',
             this.flyout.addClass('inspire');
         },
         /**
-         * Renders content for flyout UI  
+         * Renders content for flyout UI
          * @method createContent
          */
         createContent: function () {

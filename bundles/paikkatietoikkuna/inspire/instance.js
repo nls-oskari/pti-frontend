@@ -1,15 +1,10 @@
 import './Flyout.js';
 
-const BasicBundle = Oskari.clazz.get('Oskari.BasicBundle');
-
 Oskari.clazz.define('Oskari.mapframework.bundle.inspire.instance',
-    function() {
-
+    function () {
         this.plugins = {};
-        
         this.defaultConf.flyoutClazz = 'Oskari.inspire.Flyout';
         this.defaultConf.name = 'inspire';
-
         this.loc = Oskari.getMsg.bind(null, 'inspire');
     },
     {
@@ -26,7 +21,6 @@ Oskari.clazz.define('Oskari.mapframework.bundle.inspire.instance',
         createUi: function () {
             this.plugins['Oskari.userinterface.Flyout'].createContent();
         }
-        
     },
     {
         extend: ['Oskari.userinterface.extension.DefaultExtension']
