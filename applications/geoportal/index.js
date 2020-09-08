@@ -40,6 +40,8 @@ jQuery(document).ready(function () {
                 return;
             }
 
+            appSetup.startupSequence.push({ bundlename: 'inspire' });
+
             app.init(appSetup);
             app.startApplication(function () {
                 var sb = Oskari.getSandbox();
