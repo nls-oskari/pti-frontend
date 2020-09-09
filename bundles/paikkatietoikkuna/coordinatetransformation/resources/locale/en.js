@@ -244,7 +244,7 @@ Oskari.registerLocalization(
                 "title": "Coordinate system",
                 "info": "A set of mathematical rules defining how coordinates are assigned to points.",
                 "listItems" : [
-                    "Diferent types of coordinate systems include cartesian coordinate systems, projected coordinate systems, polar coordinate systems, geodetic coordinate systems, spherical coordinate systems and cylindrical coordinate systems."
+                    "Different types of coordinate systems include cartesian coordinate systems, projected coordinate systems, polar coordinate systems, geodetic coordinate systems, spherical coordinate systems and cylindrical coordinate systems."
                 ]
             },
             "mapProjection":{
