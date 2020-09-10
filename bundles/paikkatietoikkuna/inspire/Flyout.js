@@ -9,18 +9,18 @@ Oskari.clazz.define('Oskari.inspire.Flyout',
         this.loc = Oskari.getMsg.bind(null, 'inspire');
         this.container = null;
         this.flyout = null;
-        this.flyoutContent = this.loc('flyoutContent').content;
     }, {
+        __name: 'Oskari.inspire.Flyout',
         getName: function () {
-            return 'Oskari.inspire.Flyout';
+            return this.__name;
         },
         getTitle: function () {
-            return this.loc('flyout.title');
+            return this.instance.loc('flyout.title');
         },
         setEl: function (el, flyout, width, height) {
-            this.container = jQuery(el[0]);
+            this.container = el[0];
             this.flyout = flyout;
-            this.container.addClass('inspire');
+            this.container.classList.add('inspire');
             this.flyout.addClass('inspire');
         },
         /**
@@ -28,14 +28,11 @@ Oskari.clazz.define('Oskari.inspire.Flyout',
          * @method createContent
          */
         createContent: function () {
-            const root = document.getElementsByClassName('oskari-flyoutcontent inspire')[0];
+            const root = this.container;
             if (!root) {
                 return;
             }
-
-            ReactDOM.render(<Message bundleKey="flyoutContentMessage" messageKey={ this.flyoutContent } allowHTML={true} />, root);
+            ReactDOM.render(<Message bundleKey={ this.instance.getName() } messageKey="flyoutContent.content" allowHTML={true} />, root);
         },
-        startPlugin: function () {
-            this.template = jQuery();
-        }
+        startPlugin: function () {}
     });
