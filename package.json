@@ -7,7 +7,7 @@
   ],
   "dependencies": {
     "fs-extra": "^8.1.0",
-    "oskari-frontend": "file:../oskari-frontend",
+    "oskari-frontend": "https://git@github.com/oskariorg/oskari-frontend.git#develop",
     "oskari-frontend-contrib": "https://git@github.com/oskariorg/oskari-frontend-contrib.git#develop"
   },
   "scripts": {
