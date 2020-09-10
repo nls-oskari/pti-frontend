@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { FlyoutContent } from './components/FlyoutContent';
+import { Message } from 'oskari-ui';
 
 Oskari.clazz.define('Oskari.inspire.Flyout',
 
@@ -33,10 +33,7 @@ Oskari.clazz.define('Oskari.inspire.Flyout',
                 return;
             }
 
-            ReactDOM.render(
-                <FlyoutContent textContent={ this.flyoutContent } />,
-                root
-            );
+            ReactDOM.render(<Message bundleKey="flyoutContentMessage" messageKey={ this.flyoutContent } allowHTML={true} />, root);
         },
         startPlugin: function () {
             this.template = jQuery();
