@@ -3,7 +3,7 @@ const flyoutTextContent = `
 med geodataportaltjänsten som presenterar geografiska datamängder och tjänster som omfattar Finland.<br><br>
 
 INSPIRE har som mål att skapa en europeisk geodatainfrastruktur som underlättar tillgången på geografisk information över hela Europa och 
-främjar dess interoperabilitet. Läs mer på Vad är INSPIRE?<br><br>
+främjar dess interoperabilitet. Läs mer på <a target="_blank" href="https://www.maanmittauslaitos.fi/kartat-ja-paikkatieto/paikkatietojen-yhteentoimivuus/inspire/mika-inspire">Vad är INSPIRE?</a><br><br>
 
 Följ INSPIRE:s sociala mediekanaler så får du snabbt information om aktuella 
 utbildningar och evenemang samt frågor som berör Karttjänsten: <a target="_blank" href="https://twitter.com/geoportal_fi"> Twitter</a>
