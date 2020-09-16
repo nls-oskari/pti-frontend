@@ -7,12 +7,7 @@ främjar dess interoperabilitet. Läs mer på <a target="_blank" href="https://w
 
 Följ INSPIRE:s sociala mediekanaler så får du snabbt information om aktuella 
 utbildningar och evenemang samt frågor som berör Karttjänsten: <a target="_blank" href="https://twitter.com/geoportal_fi"> Twitter</a>
-<a target="_blank" href="https://fi-fi.facebook.com/paikkatietoikkuna/"> och Facebook</a><br><br>
-
-Abonnera på <a target="_blank" href="https://maanmittauslaitos.mailpv.net/">Geodatanätverkets nyhetsbrev</a> (på finska), där du i koncentrerad form får 
-information om aktuella frågor i geodatabranschen. Du ansluter dig samtidigt till Geodatanätverket där du är med och påverkar och diskuterar 
-frågor i anslutning till den nationella geodatainfrastrukturen och genomförandet av INSPIRE.  Nätverket är ett öppet forum för alla som är 
-intresserade av geodatafrågor. Vi har redan över 400 medlemmar! Tidigare publicerade nyhetsbrev hittar du på Geodatabranschens nätverk.
+<a target="_blank" href="https://fi-fi.facebook.com/paikkatietoikkuna/"> och Facebook</a>
 `;
 
 Oskari.registerLocalization({
