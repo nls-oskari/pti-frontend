@@ -7,11 +7,6 @@ everywhere in Europe while promoting their interoperability. Read more: <a href=
 
 Follow our INSPIRE social media channels (in Finnish) to get information on workshops and events as well as things related to Paikkatietoikkuna 
 geoportal:Paikkatietoikkuna <a target="_blank" href="https://twitter.com/geoportal_fi">Twitter</a><br> and <a target="_blank" href="https://fi-fi.facebook.com/paikkatietoikkuna/">Facebook</a><br><br>
-
-Subscribe to the newsletter of Paikkatietoverkosto, “Spatial data network” (in Finnish only), to get up-to-date information on what is happening 
-in the field of geoinformatics. By subscribing, you join the Spatial data network and get to discuss and share your view on issues related to 
-INSPIRE-implementation and national spatial data infrastructure. The network is an open forum for everybody interested in spatial data and 
-geoinformatics. We already have 400 members! Earlier newsletters can be found here: Networks in the field of GIS and spatial data.
 `;
 
 Oskari.registerLocalization({
@@ -22,7 +17,7 @@ Oskari.registerLocalization({
             'title': 'INSPIRE'
         },
         'flyout': {
-            'title': 'INSPIRE'
+            'title': 'INSPIRE brings spatial data available to all'
         },
         'flyoutContent': {
             'content': flyoutTextContent
