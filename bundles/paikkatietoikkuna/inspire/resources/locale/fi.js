@@ -1,10 +1,7 @@
 const flyoutTextContent = `
-<a target="_blank" href="https://www.maanmittauslaitos.fi/asioi-verkossa/paikkatietoikkuna">Paikkatietoikkuna</a> on keskeinen osa Suomen INSPIRE-toimeenpanoa. Se on 
-Suomea koskevia paikkatietoaineistoja ja -palveluita esittelevä paikkatietoportaali.<br><br>
+<a target="_blank" href="https://www.maanmittauslaitos.fi/asioi-verkossa/paikkatietoikkuna">Paikkatietoikkuna</a> on keskeinen osa Suomen INSPIRE-toimeenpanoa ja kansallisten aineistojen näyteikkuna. Kannustamme kaikkia tiedontuottajia tuomaan aineistojaan ja palveluitaan saataville Paikkatietoikkunaan sekä kertomaan muutoksista rajapintapalveluissaan.<br>
 
-INSPIREn tavoitteena on luoda 
-eurooppalainen paikkatietoinfrastruktuuri, joka helpottaa paikkatietojen saatavuutta kaikkialla Euroopassa ja edistää niiden 
-yhteentoimivuutta. Lue lisää sivulta 
+<br>INSPIREn tavoitteena on luoda eurooppalainen paikkatietoinfrastruktuuri, joka helpottaa paikkatietojen saatavuutta kaikkialla Euroopassa ja edistää niiden yhteentoimivuutta. Lue lisää sivulta 
 <a target="_blank" href="https://www.maanmittauslaitos.fi/kartat-ja-paikkatieto/paikkatietojen-yhteentoimivuus/inspire/mika-inspire">Mikä INSPIRE?</a><br>
 
 <br>Seuraa INSPIRE-somekanavia, niin saat nopeasti tietoa ajankohtaisista koulutuksista ja tapahtumista sekä Paikkatietoikkunaan liittyvistä asioista: 
