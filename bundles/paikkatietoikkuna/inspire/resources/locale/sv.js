@@ -6,8 +6,8 @@ INSPIRE har som mål att skapa en europeisk geodatainfrastruktur som underlätta
 främjar dess interoperabilitet. Läs mer på <a target="_blank" href="https://www.maanmittauslaitos.fi/kartat-ja-paikkatieto/paikkatietojen-yhteentoimivuus/inspire/mika-inspire">Vad är INSPIRE?</a><br><br>
 
 Följ INSPIRE:s sociala mediekanaler så får du snabbt information om aktuella 
-utbildningar och evenemang samt frågor som berör Karttjänsten: <a target="_blank" href="https://twitter.com/geoportal_fi"> Twitter</a>
-<a target="_blank" href="https://fi-fi.facebook.com/paikkatietoikkuna/"> och Facebook</a>
+utbildningar och evenemang samt frågor som berör Karttjänsten: <a target="_blank" href="https://twitter.com/geoportal_fi"> Twitter</a>  och
+<a target="_blank" href="https://fi-fi.facebook.com/paikkatietoikkuna/"> Facebook</a>
 `;
 
 Oskari.registerLocalization({
