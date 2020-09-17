@@ -18,7 +18,7 @@ Oskari.registerLocalization({
             'title': 'INSPIRE'
         },
         'flyout': {
-            'title': 'INSPIRE för fram geodata för alla'
+            'title': 'INSPIRE gör geodata tillgängliga för alla'
         },
         'flyoutContent': {
             'content': flyoutTextContent
