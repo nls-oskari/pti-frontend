@@ -17,6 +17,7 @@ Oskari.registerLocalization(
     "lang": "en",
     "key": "Search",
     "value": {
+        "searchDescription": "Search location by placename, address or real estate unit identifier.",
         "grid": {
             "region": "Municipality"
         }
