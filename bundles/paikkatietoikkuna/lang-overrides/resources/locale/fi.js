@@ -17,6 +17,7 @@ Oskari.registerLocalization(
     "lang": "fi",
     "key": "Search",
     "value": {
+        "searchDescription": "Hae paikkoja paikannimen, osoitteen tai kiinteistötunnuksen perusteella.",
         "grid": {
             "region": "Kunta"
         }
