@@ -184,10 +184,7 @@ Oskari.registerLocalization(
                     "radian": "Radian"
                 },
                 "lineSeparator": {
-                    "label": "Radavskiljare",
-                    "win": "Windows / DOS",
-                    "unix": "Unix",
-                    "mac": "MacOS"
+                    "label": "Radavskiljare"
                 },
                 "delimeters":{
                     "point": "Punkt",

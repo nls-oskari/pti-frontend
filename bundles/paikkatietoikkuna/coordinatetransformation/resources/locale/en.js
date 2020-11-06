@@ -184,10 +184,7 @@ Oskari.registerLocalization(
                     "radian": "Radian"
                 },
                 "lineSeparator": {
-                    "label": "Line separator", // Row separator
-                    "win": "Windows / DOS",
-                    "unix": "Unix",
-                    "mac": "MacOS"
+                    "label": "Line separator" // Row separator
                 },
                 "delimeters":{
                     "point": "Point",
