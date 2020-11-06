@@ -88,8 +88,7 @@ Oskari.clazz.define('Oskari.coordinatetransformation.view.FileHandler',
                                             '<div class="settingsSelect">' +
                                                 '<select>' +
                                                     '<option value="win">Windows / DOS</option>' +
-                                                    '<option value="unix">Unix</option>' +
-                                                    '<option value="mac">MacOS</option>' +
+                                                    '<option value="unix">UNIX / Mac</option>' +
                                                 '</select>' +
                                             '</div>' +
                                             '<div class="infolink icon-info" data-selection="lineSeparator"></div>' +

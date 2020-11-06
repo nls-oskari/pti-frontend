@@ -184,10 +184,7 @@ Oskari.registerLocalization(
                     "radian": "Radiaani"
                 },
                 "lineSeparator": {
-                    "label": "Rivierotin",
-                    "win": "Windows / DOS",
-                    "unix": "Unix",
-                    "mac": "MacOS"
+                    "label": "Rivierotin"
                 },
                 "delimeters":{
                     "point": "Piste",
