@@ -1,5 +1,5 @@
 /**
- * @class Oskari.mapframework.bundle.telemetry.TelemetryBundle
+ * @class Oskari.pti.layerstatus.StatusBundle
  *
  * Definition for bundle. See source for details.
  */
