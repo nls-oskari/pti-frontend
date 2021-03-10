@@ -59,6 +59,7 @@ import 'oskari-loader!../../packages/paikkatietoikkuna/bundle/telemetry/bundle.j
 import 'oskari-loader!../../packages/paikkatietoikkuna/bundle/terrain-profile/bundle.js';
 import 'oskari-loader!../../packages/paikkatietoikkuna/lang-overrides/bundle.js';
 import 'oskari-loader!../../packages/paikkatietoikkuna/bundle/inspire/bundle.js';
+import 'oskari-loader!../../bundles/paikkatietoikkuna/layerstatus/bundle.js';
 
 // lazy
 import 'oskari-lazy-loader?admin-layerselector!oskari-frontend/packages/integration/bundle/admin-layerselector/bundle.js';
