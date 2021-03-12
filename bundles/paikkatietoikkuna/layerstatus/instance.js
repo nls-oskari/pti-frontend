@@ -12,7 +12,7 @@ Oskari.clazz.define('Oskari.pti.layerstatus.StatusBundleInstance', function () {
 }, {
     __name: 'LayerStatusBundleInstance',
     __loadingStatus: {},
-    _startImpl: function (sandbox) {    
+    _startImpl: function (sandbox) {
         const map = sandbox.findRegisteredModuleInstance('MainMapModule');
         map.on('layer.loading', (event) => {
             // event: {layer: 801, started: true, errored: false}
@@ -22,28 +22,28 @@ Oskari.clazz.define('Oskari.pti.layerstatus.StatusBundleInstance', function () {
             }
             this._handleLoadingEvent(event.layer, event.errored);
         });
-        
+
         window.addEventListener('beforeunload', () => {
             // just fire and forget when the user leaves the page
             this._sendStatus();
         });
     },
     _handleLoadingEvent: function (layer, wasError) {
-        let stats = this._getLayerStatus(layer);
+        const stats = this._getLayerStatus(layer);
         let currentState = STATE.SUCCESS;
         if (wasError) {
-            stats.errors++
+            stats.errors++;
             currentState = STATE.ERROR;
         } else {
             stats.success++;
         }
-        
+
         if (stats.previous !== currentState) {
             stats.previous = currentState;
             // for the first 10 state changes:
             // save stack for current state with center coord and zoom level
             if (stats.stack.length < 10) {
-                const mapState = sandbox.getMap();
+                const mapState = this.sandbox.getMap();
                 stats.stack.push({
                     x: mapState.getX(),
                     y: mapState.getY(),
@@ -61,7 +61,7 @@ Oskari.clazz.define('Oskari.pti.layerstatus.StatusBundleInstance', function () {
 
         let stats = this.__loadingStatus[layerId];
         if (stats) {
-             return stats;
+            return stats;
         }
         this.__loadingStatus[layerId] = {
             errors: 0,
@@ -75,9 +75,9 @@ Oskari.clazz.define('Oskari.pti.layerstatus.StatusBundleInstance', function () {
         fetch(Oskari.urls.getRoute('LayerStatus'), {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
+                'Content-Type': 'application/json'
             },
-            body: JSON.stringify(this._getLayerStatus()),
+            body: JSON.stringify(this._getLayerStatus())
         });
     }
 }, {
