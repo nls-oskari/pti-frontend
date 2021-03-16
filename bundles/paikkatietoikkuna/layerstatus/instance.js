@@ -54,22 +54,39 @@ Oskari.clazz.define('Oskari.pti.layerstatus.StatusBundleInstance', function () {
             }
         }
     },
-    _getLayerStatus: function (layerId) {
+    _getLayerStatus: function (layerId, includeVector = false) {
+        const NON_TRACKED_LAYER = 'runtimeVector';
         if (!layerId) {
-            return this.__loadingStatus;
+            const status = {
+                ...this.__loadingStatus
+            };
+            if (!includeVector) {
+                delete status[NON_TRACKED_LAYER];
+            }
+            return status;
+        }
+        let id = '' + layerId;
+        // combine results for recognized layer ids from same (internal) service
+        if (typeof layerId !== 'number') {
+            if (id.startsWith('myplaces_') || id.startsWith('userlayer_') || id.startsWith('analysis_')) {
+                id = 'usercontent';
+            } else {
+                // STATS_LAYER and other runtime vector layers
+                id = NON_TRACKED_LAYER;
+            }
         }
 
-        let stats = this.__loadingStatus[layerId];
+        let stats = this.__loadingStatus[id];
         if (stats) {
             return stats;
         }
-        this.__loadingStatus[layerId] = {
+        this.__loadingStatus[id] = {
             errors: 0,
             success: 0,
             stack: [],
             previous: STATE.SUCCESS
         };
-        return this.__loadingStatus[layerId];
+        return this.__loadingStatus[id];
     },
     _sendStatus: function () {
         fetch(Oskari.urls.getRoute('LayerStatus'), {
