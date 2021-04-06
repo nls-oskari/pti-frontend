@@ -72,4 +72,6 @@ import 'oskari-lazy-loader?coordinatetransformation!../../packages/paikkatietoik
 import 'oskari-lazy-loader?announcements!oskari-frontend/packages/framework/bundle/announcements/bundle.js';
 import 'oskari-lazy-loader?admin-announcements!oskari-frontend/packages/admin/bundle/admin-announcements/bundle.js';
 
+import 'oskari-lazy-loader?layerswipe!oskari-frontend/packages/mapping/ol/layerswipe/bundle.js';
+
 import './css/overwritten.css';
