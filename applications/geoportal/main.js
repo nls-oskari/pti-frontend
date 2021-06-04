@@ -73,5 +73,12 @@ import 'oskari-lazy-loader?announcements!oskari-frontend/packages/framework/bund
 import 'oskari-lazy-loader?admin-announcements!oskari-frontend/packages/admin/bundle/admin-announcements/bundle.js';
 
 import 'oskari-lazy-loader?layerswipe!oskari-frontend/packages/mapping/ol/layerswipe/bundle.js';
+import { PTIOrtophotoTimeseriesGFIformatter } from '../../util/PTIOrtophotoTimeseriesGFIformatter';
 
 import './css/overwritten.css';
+
+Oskari.on('app.start', () => {
+    Oskari.getSandbox()
+        .findRegisteredModuleInstance('MainMapModuleGetInfoPlugin')
+        .addLayerFormatter(new PTIOrtophotoTimeseriesGFIformatter());
+});
