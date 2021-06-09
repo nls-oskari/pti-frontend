@@ -7,8 +7,8 @@ const columnSettings = [
     {
         align: 'left',
         title: <Message messageKey='flyout.idTitle' />,
-        dataIndex: 'id',
-        key: 'id'
+        dataIndex: 'title',
+        key: 'title'
     },
     {
         align: 'left',
