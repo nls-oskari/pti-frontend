@@ -11,7 +11,7 @@ Oskari.clazz.define('Oskari.framework.admin-layeranalytics.AdminLayerAnalyticsBu
      * @contructor
      * @static
      */
-    function() {
+    function () {
 
     }, {
         /*
@@ -19,7 +19,7 @@ Oskari.clazz.define('Oskari.framework.admin-layeranalytics.AdminLayerAnalyticsBu
         *
         * @method create
         */
-        create : function() {
+        create: function () {
             return Oskari.clazz.create(
                 'Oskari.framework.bundle.admin-layeranalytics.AdminLayerAnalyticsBundleInstance'
             );
@@ -30,7 +30,7 @@ Oskari.clazz.define('Oskari.framework.admin-layeranalytics.AdminLayerAnalyticsBu
          * @method update
          * bundle
          */
-        update: function(manager, bundle, bi, info) {
+        update: function (manager, bundle, bi, info) {
         }
     },
 
@@ -40,9 +40,10 @@ Oskari.clazz.define('Oskari.framework.admin-layeranalytics.AdminLayerAnalyticsBu
     {
         protocol: ['Oskari.bundle.Bundle', 'Oskari.mapframework.bundle.extension.ExtensionBundle'],
         source: {
-            scripts: [{
-                    type : 'text/javascript',
-                    src : './instance.js'
+            scripts: [
+                {
+                    type: 'text/javascript',
+                    src: './instance.js'
                 },
                 {
                     type: 'text/javascript',
@@ -53,11 +54,13 @@ Oskari.clazz.define('Oskari.framework.admin-layeranalytics.AdminLayerAnalyticsBu
                     src: './Flyout.js'
                 }
             ],
-            locales: [{
-                lang: 'fi',
-                type: 'text/javascript',
-                src: './resources/locale/fi.js'
-            }]
+            locales: [
+                {
+                    lang: 'fi',
+                    type: 'text/javascript',
+                    src: './resources/locale/fi.js'
+                }
+            ]
         }
     }
 );
