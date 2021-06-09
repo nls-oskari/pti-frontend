@@ -40,6 +40,8 @@ jQuery(document).ready(function () {
                 return;
             }
 
+            appSetup.startupSequence.push({ bundlename: 'admin-layeranalytics'});
+
             app.init(appSetup);
             app.startApplication(function () {
                 Oskari.app.playBundle({ bundlename: 'pti_layerstatus'});
