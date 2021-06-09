@@ -21,6 +21,7 @@ Oskari.clazz.define('Oskari.framework.bundle.admin-layeranalytics.AdminLayerAnal
         this.sandbox = null;
         this.isLoading = true;
         this.analyticsData = [];
+        this.mapLayerService = Oskari.getSandbox().getService('Oskari.mapframework.service.MapLayerService');
     }, {
         __name: 'admin-layeranalytics',
         /**
@@ -178,7 +179,12 @@ Oskari.clazz.define('Oskari.framework.bundle.admin-layeranalytics.AdminLayerAnal
             this.fetchLayerAnalytics(null, (result) => {
                 for (const item in result) {
                     this.fetchLayerAnalytics(item, (itemData) => {
-                        this.analyticsData.push(itemData);
+                        const itemLayer = this.mapLayerService.findMapLayer(itemData.id);
+                        const title = itemLayer !== null ? itemLayer.getName() : itemData.id;
+                        this.analyticsData.push({
+                            ...itemData,
+                            title: title
+                        });
                         this.plugins['Oskari.userinterface.Flyout'].updateListing();
                     });
                 }
