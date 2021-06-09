@@ -8,9 +8,7 @@ const columnSettings = [
         align: 'left',
         title: <Message messageKey='flyout.idTitle' />,
         dataIndex: 'id',
-        key: 'id',
-        // eslint-disable-this-line react/display-name
-        render: text => <a>{text}</a>
+        key: 'id'
     },
     {
         align: 'left',
