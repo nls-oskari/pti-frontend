@@ -9,7 +9,6 @@ Oskari.clazz.define('Oskari.framework.bundle.admin-layeranalytics.Flyout',
         this.instance = instance;
         this.container = null;
         this.flyout = null;
-        this.progressSpinner = Oskari.clazz.create('Oskari.userinterface.component.ProgressSpinner');
     }, {
         __name: 'Oskari.framework.bundle.admin-layeranalytics.Flyout',
         getName: function () {
@@ -34,25 +33,16 @@ Oskari.clazz.define('Oskari.framework.bundle.admin-layeranalytics.Flyout',
                 return;
             }
 
-            this.progressSpinner.insertTo(root);
-
             this.updateListing();
         },
         updateListing: function () {
             ReactDOM.render(
                 <LocaleProvider value={{ bundleKey: this.instance.getName() }}>
-                    <LayerAnalyticsContent analyticsData={[...this.instance.getAnalyticsData()]} />
+                    <LayerAnalyticsContent analyticsData={[...this.instance.getAnalyticsData()]} isLoading={ this.instance.getLoadingState() } />
                 </LocaleProvider>,
                 this.container
             );
         },
-        startPlugin: function () {},
-        setSpinnerState: function (spinnerState) {
-            if (!spinnerState) {
-                this.progressSpinner.stop();
-            } else {
-                this.progressSpinner.start();
-            }
-        }
+        startPlugin: function () {}
     }
 );

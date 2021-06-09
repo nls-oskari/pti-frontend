@@ -147,7 +147,7 @@ Oskari.clazz.define('Oskari.framework.bundle.admin-layeranalytics.AdminLayerAnal
          * @param {*} callback
          * @returns
          */
-        fetchLayerAnalytics: function (layerId, callback) {
+        fetchLayerAnalytics (layerId, callback) {
             this.updateLoadingState(true);
             const route = layerId ? Oskari.urls.getRoute('LayerStatus', { id: layerId }) : Oskari.urls.getRoute('LayerStatus');
 
@@ -174,7 +174,7 @@ Oskari.clazz.define('Oskari.framework.bundle.admin-layeranalytics.AdminLayerAnal
          * @method produceAnalyticsData
          * Produce analytics by fetching data for all layers and layer specific data
          */
-        produceAnalyticsData: function () {
+        produceAnalyticsData () {
             this.fetchLayerAnalytics(null, (result) => {
                 for (const item in result) {
                     this.fetchLayerAnalytics(item, (itemData) => {
@@ -185,7 +185,7 @@ Oskari.clazz.define('Oskari.framework.bundle.admin-layeranalytics.AdminLayerAnal
             });
         },
 
-        getAnalyticsData: function () {
+        getAnalyticsData () {
             return this.analyticsData;
         },
 
@@ -195,7 +195,10 @@ Oskari.clazz.define('Oskari.framework.bundle.admin-layeranalytics.AdminLayerAnal
          */
         updateLoadingState (loadingState = false) {
             this.isLoading = loadingState;
-            this.plugins['Oskari.userinterface.Flyout'].setSpinnerState(loadingState);
+        },
+
+        getLoadingState () {
+            return this.isLoading;
         }
     }, {
         protocol: [

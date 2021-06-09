@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Table } from 'antd';
+import { Table, Spin } from 'antd';
 import { Message } from 'oskari-ui';
 
 const columnSettings = [
@@ -26,7 +26,11 @@ const columnSettings = [
     }
 ];
 
-export const LayerAnalyticsContent = ({ analyticsData }) => {
+export const LayerAnalyticsContent = ({ analyticsData, isLoading }) => {
+    if (isLoading) {
+        return ( <Spin/> );
+    }
+
     return (
         <Table
             columns={ columnSettings }
