@@ -1,6 +1,6 @@
 Oskari.registerLocalization(
     {
-        "lang": "fi",
+        "lang": "en",
         "key": "admin-layeranalytics",
         "value": {
             "title": "A: Layer monitor",

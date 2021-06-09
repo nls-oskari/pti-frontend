@@ -1,6 +1,6 @@
 Oskari.registerLocalization(
     {
-        "lang": "fi",
+        "lang": "sv",
         "key": "admin-layeranalytics",
         "value": {
             "title": "A: Lager monitor",
