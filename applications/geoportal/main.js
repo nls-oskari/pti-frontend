@@ -68,6 +68,7 @@ import 'oskari-lazy-loader?metrics!oskari-frontend/packages/admin/bundle/metrics
 import 'oskari-lazy-loader?appsetup!oskari-frontend/packages/admin/bundle/appsetup/bundle.js';
 import 'oskari-lazy-loader?admin-layereditor!oskari-frontend/packages/admin/bundle/admin-layereditor/bundle.js';
 import 'oskari-lazy-loader?coordinatetransformation!../../packages/paikkatietoikkuna/bundle/coordinatetransformation/bundle.js';
+import 'oskari-lazy-loader?admin-layeranalytics!../../bundles/paikkatietoikkuna/admin/admin-layeranalytics/bundle.js';
 
 import 'oskari-lazy-loader?announcements!oskari-frontend/packages/framework/bundle/announcements/bundle.js';
 import 'oskari-lazy-loader?admin-announcements!oskari-frontend/packages/admin/bundle/admin-announcements/bundle.js';
