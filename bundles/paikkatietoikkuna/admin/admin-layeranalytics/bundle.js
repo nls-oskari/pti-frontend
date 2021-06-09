@@ -3,7 +3,7 @@
  *
  * @class Oskari.framework.admin-layeranalytics.AdminLayerAnalyticsBundle
  */
-Oskari.clazz.define("Oskari.framework.admin-layeranalytics.AdminLayerAnalyticsBundle",
+Oskari.clazz.define('Oskari.framework.admin-layeranalytics.AdminLayerAnalyticsBundle',
 
 /**
  * Called automatically on construction. At this stage bundle sources have been
@@ -20,9 +20,9 @@ function() {
     *
     * @method create
     */
-    "create" : function() {
+    create : function() {
         return Oskari.clazz.create(
-            "Oskari.framework.bundle.admin-layeranalytics.AdminLayerAnalyticsBundleInstance"
+            'Oskari.framework.bundle.admin-layeranalytics.AdminLayerAnalyticsBundleInstance'
         );
     },
     /**
@@ -31,7 +31,7 @@ function() {
      * @method update
      * bundle
      */
-    "update" : function(manager, bundle, bi, info) {
+    update: function(manager, bundle, bi, info) {
     }
 },
 
@@ -39,29 +39,28 @@ function() {
  * metadata
  */
 {
-    "protocol" : ["Oskari.bundle.Bundle", "Oskari.mapframework.bundle.extension.ExtensionBundle"],
-    "source" : {
-
-        "scripts" : [{
-                "type" : "text/javascript",
-                "src" : "./instance.js"
+    protocol: ['Oskari.bundle.Bundle', 'Oskari.mapframework.bundle.extension.ExtensionBundle'],
+    source: {
+        scripts: [{
+                type : 'text/javascript',
+                src : './instance.js'
             },
             {
-                "type" : "text/javascript",
-                "src" : "./Tile.js"
+                type: 'text/javascript',
+                src: './Tile.js'
             },
             {
-                "type" : "text/javascript",
-                "src" : "./Flyout.js"
+                type: 'text/javascript',
+                src: './Flyout.js'
             }
         ],
-        "locales": [{
-            "lang": "fi",
-            "type": "text/javascript",
-            "src": "./resources/locale/fi.js"
+        locales: [{
+            lang: 'fi',
+            type: 'text/javascript',
+            src: './resources/locale/fi.js'
         }]
     }
 });
 
 // Install this bundle by instantating the Bundle Class
-Oskari.bundle_manager.installBundleClass("admin-layeranalytics", "Oskari.framework.admin-layeranalytics.AdminLayerAnalyticsBundle");
+Oskari.bundle_manager.installBundleClass('admin-layeranalytics', 'Oskari.framework.admin-layeranalytics.AdminLayerAnalyticsBundle');
