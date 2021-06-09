@@ -11,13 +11,13 @@ Oskari.clazz.define('Oskari.framework.bundle.admin-layeranalytics.Flyout',
         this.flyout = null;
     }, {
         __name: 'Oskari.framework.bundle.admin-layeranalytics.Flyout',
-        getName: function () {
+        getName () {
             return this.__name;
         },
-        getTitle: function () {
+        getTitle () {
             return this.instance.getLocalization('flyout.title');
         },
-        setEl: function (el, flyout, width, height) {
+        setEl (el, flyout, width, height) {
             this.container = el[0];
             this.flyout = flyout;
             this.container.classList.add('admin-layeranalytics');
@@ -27,7 +27,7 @@ Oskari.clazz.define('Oskari.framework.bundle.admin-layeranalytics.Flyout',
          * Renders content for flyout UI
          * @method createContent
          */
-        createContent: function () {
+        createContent () {
             const root = this.container;
             if (!root) {
                 return;
@@ -35,7 +35,7 @@ Oskari.clazz.define('Oskari.framework.bundle.admin-layeranalytics.Flyout',
 
             this.updateListing();
         },
-        updateListing: function () {
+        updateListing () {
             ReactDOM.render(
                 <LocaleProvider value={{ bundleKey: this.instance.getName() }}>
                     <LayerAnalyticsContent analyticsData={[...this.instance.getAnalyticsData()]} isLoading={ this.instance.getLoadingState() } />
@@ -43,6 +43,6 @@ Oskari.clazz.define('Oskari.framework.bundle.admin-layeranalytics.Flyout',
                 this.container
             );
         },
-        startPlugin: function () {}
+        startPlugin () {}
     }
 );

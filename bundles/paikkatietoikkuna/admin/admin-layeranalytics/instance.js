@@ -28,7 +28,7 @@ Oskari.clazz.define('Oskari.framework.bundle.admin-layeranalytics.AdminLayerAnal
          * @param {Oskari.Sandbox} sandbox
          * Sets the sandbox reference to this component
          */
-        setSandbox: function (sandbox) {
+        setSandbox (sandbox) {
             this.sandbox = sandbox;
         },
 
@@ -36,7 +36,7 @@ Oskari.clazz.define('Oskari.framework.bundle.admin-layeranalytics.AdminLayerAnal
          * @method getSandbox
          * @return {Oskari.Sandbox}
          */
-        getSandbox: function () {
+        getSandbox () {
             return this.sandbox;
         },
         /**
@@ -52,7 +52,7 @@ Oskari.clazz.define('Oskari.framework.bundle.admin-layeranalytics.AdminLayerAnal
          *      JSON object for complete data depending on localization
          *      structure and if parameter key is given
          */
-        getLocalization: function (key) {
+        getLocalization (key) {
             if (!this._localization) {
                 this._localization = Oskari.getLocalization(this.getName());
             }
@@ -65,7 +65,7 @@ Oskari.clazz.define('Oskari.framework.bundle.admin-layeranalytics.AdminLayerAnal
          * @method start
          * implements BundleInstance protocol start method
          */
-        start: function () {
+        start () {
             const me = this;
 
             const sandboxName = 'sandbox';
@@ -89,17 +89,17 @@ Oskari.clazz.define('Oskari.framework.bundle.admin-layeranalytics.AdminLayerAnal
          * @method init
          * implements Module protocol init method - does nothing atm
          */
-        init: function () {
+        init () {
             return null;
         },
         /**
          * @method update
          * implements BundleInstance protocol update method - does nothing atm
          */
-        update: function () {
+        update () {
 
         },
-        getName: function () {
+        getName () {
             return this.__name;
         },
         /**
@@ -110,7 +110,7 @@ Oskari.clazz.define('Oskari.framework.bundle.admin-layeranalytics.AdminLayerAnal
          * Oskari.mapframework.bundle.publisher.Flyout
          * Oskari.mapframework.bundle.publisher.Tile
          */
-        startExtension: function () {
+        startExtension () {
             this.plugins['Oskari.userinterface.Flyout'] = Oskari.clazz.create('Oskari.framework.bundle.admin-layeranalytics.Flyout', this);
             this.plugins['Oskari.userinterface.Tile'] = Oskari.clazz.create('Oskari.framework.bundle.admin-layeranalytics.Tile', this);
         },
@@ -121,7 +121,7 @@ Oskari.clazz.define('Oskari.framework.bundle.admin-layeranalytics.AdminLayerAnal
          * stopExtension method
          * Clears references to flyout and tile
          */
-        stopExtension: function () {
+        stopExtension () {
             this.plugins['Oskari.userinterface.Tile'] = null;
         },
 
@@ -131,11 +131,11 @@ Oskari.clazz.define('Oskari.framework.bundle.admin-layeranalytics.AdminLayerAnal
          * method
          * @return {Object} references to flyout and tile
          */
-        getPlugins: function () {
+        getPlugins () {
             return this.plugins;
         },
 
-        createUi: function () {
+        createUi () {
             this.plugins['Oskari.userinterface.Tile'].refresh();
             this.plugins['Oskari.userinterface.Flyout'].createContent();
         },
