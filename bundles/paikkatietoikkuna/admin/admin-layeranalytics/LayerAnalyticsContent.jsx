@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { Table, Spin } from 'antd';
 import { Message } from 'oskari-ui';
 
+import 'antd/es/table/style/index.js';
+
 const columnSettings = [
     {
         align: 'left',
@@ -11,7 +13,7 @@ const columnSettings = [
         key: 'title',
         defaultSortOrder: 'ascend',
         sortDirections: ['descend', 'ascend', 'descend'],
-        sorter: (a, b) => Oskari.util.naturalSort(a.title - b.title),
+        sorter: (a, b) => Oskari.util.naturalSort(a.title, b.title),
     },
     {
         align: 'left',
