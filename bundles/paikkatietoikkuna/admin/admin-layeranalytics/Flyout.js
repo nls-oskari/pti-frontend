@@ -38,10 +38,15 @@ Oskari.clazz.define('Oskari.framework.bundle.admin-layeranalytics.Flyout',
         updateListing () {
             ReactDOM.render(
                 <LocaleProvider value={{ bundleKey: this.instance.getName() }}>
-                    <LayerAnalyticsContent analyticsData={[...this.instance.getAnalyticsData()]} isLoading={ this.instance.getLoadingState() } />
+                    <LayerAnalyticsContent analyticsData={[...this.instance.getAnalyticsData()]} isLoading={ this.instance.getLoadingState() } layerEditorCallback={ this.openLayerEditor } />
                 </LocaleProvider>,
                 this.container
             );
+        },
+        openLayerEditor (id) {
+            if (id) {
+                Oskari.getSandbox().postRequestByName('ShowLayerEditorRequest', [id]);
+            }
         },
         startPlugin () {}
     }
