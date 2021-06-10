@@ -45,7 +45,7 @@ Oskari.clazz.define('Oskari.framework.bundle.admin-layeranalytics.Flyout',
         },
         openLayerEditor (id) {
             if (id) {
-                Oskari.getSandbox().postRequestByName('ShowLayerEditorRequest', [id])
+                Oskari.getSandbox().postRequestByName('ShowLayerEditorRequest', [id]);
             }
         },
         startPlugin () {}
