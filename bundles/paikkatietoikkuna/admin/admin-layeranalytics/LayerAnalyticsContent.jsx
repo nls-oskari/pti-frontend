@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { Table, Spin } from 'antd';
 import { Message } from 'oskari-ui';
 
+import 'antd/es/table/style/index.js';
+
 const columnSettings = [
     {
         align: 'left',
