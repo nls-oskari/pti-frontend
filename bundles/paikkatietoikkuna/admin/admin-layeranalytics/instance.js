@@ -95,11 +95,7 @@ Oskari.clazz.define('Oskari.framework.bundle.admin-layeranalytics.AdminLayerAnal
             const request = reqBuilder(this);
             sandbox.request(this, request);
 
-            for (const handler in this.eventHandlers) {
-                if (this.eventHandlers.hasOwnProperty(handler)) {
-                    sandbox.registerForEventByName(this, handler);
-                }
-            }
+            Object.keys(this.eventHandlers).forEach(eventName => sandbox.registerForEventByName(this, eventName));
 
             me.createUi();
         },
