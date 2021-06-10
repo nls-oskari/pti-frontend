@@ -8,19 +8,26 @@ const columnSettings = [
         align: 'left',
         title: <Message messageKey='flyout.idTitle' />,
         dataIndex: 'title',
-        key: 'title'
+        key: 'title',
+        defaultSortOrder: 'ascend',
+        sortDirections: ['descend', 'ascend', 'descend'],
+        sorter: (a, b) => Oskari.util.naturalSort(a.title - b.title),
     },
     {
         align: 'left',
         title: <Message messageKey='flyout.successTitle' />,
         dataIndex: 'success',
-        key: 'success'
+        key: 'success',
+        sortDirections: ['descend', 'ascend', 'descend'],
+        sorter: (a, b) => a.success - b.success,
     },
     {
         align: 'left',
         title: <Message messageKey='flyout.failureTitle' />,
         dataIndex: 'errors',
-        key: 'errors'
+        key: 'errors',
+        sortDirections: ['descend', 'ascend', 'descend'],
+        sorter: (a, b) => a.errors - b.errors,
     }
 ];
 
