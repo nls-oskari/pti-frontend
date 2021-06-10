@@ -13,7 +13,7 @@ const columnSettings = [
         key: 'title',
         defaultSortOrder: 'ascend',
         sortDirections: ['descend', 'ascend', 'descend'],
-        sorter: (a, b) => Oskari.util.naturalSort(a.title - b.title),
+        sorter: (a, b) => Oskari.util.naturalSort(a.title, b.title),
     },
     {
         align: 'left',
