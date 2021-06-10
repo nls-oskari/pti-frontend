@@ -40,6 +40,18 @@ Oskari.clazz.define('Oskari.framework.bundle.admin-layeranalytics.AdminLayerAnal
         getSandbox () {
             return this.sandbox;
         },
+        eventHandlers: {
+            'userinterface.ExtensionUpdatedEvent': function (event) {
+                // Not handle other extension update events
+                if (event.getExtension().getName() !== this.getName()) {
+                    return;
+                }
+
+                if (event.getViewState() !== 'close') {
+                    this.produceAnalyticsData();
+                }
+            }
+        },
         /**
          * @method getLocalization
          * Returns JSON presentation of bundles localization data for
@@ -83,8 +95,24 @@ Oskari.clazz.define('Oskari.framework.bundle.admin-layeranalytics.AdminLayerAnal
             const request = reqBuilder(this);
             sandbox.request(this, request);
 
-            me.produceAnalyticsData();
+            for (const handler in this.eventHandlers) {
+                if (this.eventHandlers.hasOwnProperty(handler)) {
+                    sandbox.registerForEventByName(this, handler);
+                }
+            }
+
             me.createUi();
+        },
+        /**
+         * @memberof BasicBundle
+         * @param {Oskari.mapframework.event.Event} event A Oskari event object.
+         */
+        onEvent (event) {
+            const handler = this.eventHandlers[event.getName()];
+            if (!handler) {
+                return;
+            }
+            return handler.call(this, event);
         },
         /**
          * @method init
