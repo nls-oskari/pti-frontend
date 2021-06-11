@@ -1,10 +1,18 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Table, Spin } from 'antd';
 import { Message } from 'oskari-ui';
 import { EditOutlined } from '@ant-design/icons';
+import styled from 'styled-components';
 
 import 'antd/es/table/style/index.js';
+
+const TitleArea = styled.span`
+    & {
+        display: flex;
+        justify-content: space-between;
+    }
+`;
 
 export const LayerAnalyticsContent = ({ analyticsData, isLoading, layerEditorCallback }) => {
 
@@ -19,10 +27,10 @@ export const LayerAnalyticsContent = ({ analyticsData, isLoading, layerEditorCal
             sorter: (a, b) => Oskari.util.naturalSort(a.title, b.title),
             render: (title, item) => {
                 return (
-                    <Fragment>
+                    <TitleArea>
                         <a>{ title }</a>
                         <EditOutlined onClick={ () => layerEditorCallback(item.id) } />
-                    </Fragment>
+                    </TitleArea>
                 );
             }
         },
