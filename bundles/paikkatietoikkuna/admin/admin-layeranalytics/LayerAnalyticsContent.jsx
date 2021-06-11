@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Table, Spin } from 'antd';
 import { Message } from 'oskari-ui';
+import { EditOutlined } from '@ant-design/icons';
 
 import 'antd/es/table/style/index.js';
 
@@ -17,7 +18,12 @@ export const LayerAnalyticsContent = ({ analyticsData, isLoading, layerEditorCal
             sortDirections: ['descend', 'ascend', 'descend'],
             sorter: (a, b) => Oskari.util.naturalSort(a.title, b.title),
             render: (title, item) => {
-                return <a onClick={ () => layerEditorCallback(item.id) }>{ title }</a>;
+                return (
+                    <Fragment>
+                        <a>{ title }</a>
+                        <EditOutlined onClick={ () => layerEditorCallback(item.id) } />
+                    </Fragment>
+                );
             }
         },
         {
