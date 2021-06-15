@@ -219,6 +219,10 @@ Oskari.clazz.define('Oskari.framework.bundle.admin-layeranalytics.AdminLayerAnal
             return this.analyticsData;
         },
 
+        getSingleLayerData (id) {
+            return this.analyticsData.find((data) => data.id = id);
+        },
+
         /**
          * @method updateLoadingState
          * Updates loading state of bundle for progress spinner usage

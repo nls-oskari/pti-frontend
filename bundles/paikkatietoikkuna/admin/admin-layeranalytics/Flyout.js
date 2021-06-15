@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { LocaleProvider } from 'oskari-ui/util';
-import { LayerAnalyticsContent } from './LayerAnalyticsContent';
+import { LayerAnalyticsList } from './LayerAnalyticsList';
+import { LayerAnalyticsDetails } from './LayerAnalyticsDetails';
 
 Oskari.clazz.define('Oskari.framework.bundle.admin-layeranalytics.Flyout',
 
@@ -9,6 +10,7 @@ Oskari.clazz.define('Oskari.framework.bundle.admin-layeranalytics.Flyout',
         this.instance = instance;
         this.container = null;
         this.flyout = null;
+        this.selectedLayerId = null;
     }, {
         __name: 'Oskari.framework.bundle.admin-layeranalytics.Flyout',
         getName () {
@@ -38,7 +40,17 @@ Oskari.clazz.define('Oskari.framework.bundle.admin-layeranalytics.Flyout',
         updateListing () {
             ReactDOM.render(
                 <LocaleProvider value={{ bundleKey: this.instance.getName() }}>
-                    <LayerAnalyticsContent analyticsData={[...this.instance.getAnalyticsData()]} isLoading={ this.instance.getLoadingState() } layerEditorCallback={ this.openLayerEditor } />
+                    { !this.selectedLayerId &&
+                        <LayerAnalyticsList
+                            analyticsData={[...this.instance.getAnalyticsData()]}
+                            isLoading={ this.instance.getLoadingState() }
+                            layerEditorCallback={ this.openLayerEditor }
+                            layerDetailsCallback={ (id) => this.openLayerDetails(id) }
+                        />
+                    }
+                    { this.selectedLayerId &&
+                        <LayerAnalyticsDetails layerData={ this.instance.getSingleLayerData(this.selectedLayerId) } />
+                    }
                 </LocaleProvider>,
                 this.container
             );
@@ -47,6 +59,11 @@ Oskari.clazz.define('Oskari.framework.bundle.admin-layeranalytics.Flyout',
             if (id) {
                 Oskari.getSandbox().postRequestByName('ShowLayerEditorRequest', [id]);
             }
+        },
+        openLayerDetails (selectedId) {
+            console.log(selectedId);
+            this.selectedLayerId = selectedId;
+            this.updateListing();
         },
         startPlugin () {}
     }

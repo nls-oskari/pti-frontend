@@ -14,7 +14,7 @@ const TitleArea = styled.span`
     }
 `;
 
-export const LayerAnalyticsContent = ({ analyticsData, isLoading, layerEditorCallback }) => {
+export const LayerAnalyticsList = ({ analyticsData, isLoading, layerEditorCallback, layerDetailsCallback }) => {
 
     const columnSettings = [
         {
@@ -28,7 +28,7 @@ export const LayerAnalyticsContent = ({ analyticsData, isLoading, layerEditorCal
             render: (title, item) => {
                 return (
                     <TitleArea>
-                        <a>{ title }</a>
+                        <a onClick={ () => layerDetailsCallback(item.id) } >{ title }</a>
                         <EditOutlined onClick={ () => layerEditorCallback(item.id) } />
                     </TitleArea>
                 );
@@ -65,6 +65,9 @@ export const LayerAnalyticsContent = ({ analyticsData, isLoading, layerEditorCal
     );
 };
 
-LayerAnalyticsContent.propTypes = {
-    analyticsData: PropTypes.array.isRequired
+LayerAnalyticsList.propTypes = {
+    analyticsData: PropTypes.array.isRequired,
+    isLoading: PropTypes.bool.isRequired,
+    layerEditorCallback: PropTypes.func.isRequired,
+    layerDetailsCallback: PropTypes.func.isRequired
 };
