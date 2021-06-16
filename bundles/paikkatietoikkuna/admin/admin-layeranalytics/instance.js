@@ -66,13 +66,13 @@ Oskari.clazz.define('Oskari.framework.bundle.admin-layeranalytics.AdminLayerAnal
          *      structure and if parameter key is given
          */
         getLocalization (key) {
-            if (!this._localization) {
-                this._localization = Oskari.getLocalization(this.getName());
+            if (!this.localization) {
+                this.localization = Oskari.getLocalization(this.getName());
             }
             if (key) {
-                return this._localization[key];
+                return this.localization[key];
             }
-            return this._localization;
+            return this.localization;
         },
         /**
          * @method start
@@ -86,8 +86,6 @@ Oskari.clazz.define('Oskari.framework.bundle.admin-layeranalytics.AdminLayerAnal
 
             this.sandbox = sandbox;
             this.sandbox.register(me);
-
-            me.localization = Oskari.getLocalization(me.getName());
 
             // Let's extend UI
             const reqName = 'userinterface.AddExtensionRequest';
@@ -220,7 +218,7 @@ Oskari.clazz.define('Oskari.framework.bundle.admin-layeranalytics.AdminLayerAnal
         },
 
         getSingleLayerData (id) {
-            return this.analyticsData.find((data) => data.id = id);
+            return this.analyticsData.find((data) => data.id === id);
         },
 
         /**
