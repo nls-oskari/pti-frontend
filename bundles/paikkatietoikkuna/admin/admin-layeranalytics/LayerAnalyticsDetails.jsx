@@ -1,21 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Card } from 'antd';
+import { Card, Button } from 'antd';
 import { Message } from 'oskari-ui';
-// import { EditOutlined } from '@ant-design/icons';
+import { ArrowLeftOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
 
 import 'antd/es/card/style/index.js';
 
-export const LayerAnalyticsList = ({ layerData }) => {
-
-    console.log(layerData);
+export const LayerAnalyticsDetails = ({ layerData, closeDetailsCallback }) => {
 
     return (
-        <Card />
+        <Card>
+            <Button onClick={ () => closeDetailsCallback() } ><ArrowLeftOutlined /></Button>
+            { layerData.id }
+        </Card>
     );
 };
 
-LayerAnalyticsList.propTypes = {
-    layerData: PropTypes.object.isRequired
+LayerAnalyticsDetails.propTypes = {
+    layerData: PropTypes.object.isRequired,
+    closeDetailsCallback: PropTypes.func.isRequired
 };

@@ -40,16 +40,18 @@ Oskari.clazz.define('Oskari.framework.bundle.admin-layeranalytics.Flyout',
         updateListing () {
             ReactDOM.render(
                 <LocaleProvider value={{ bundleKey: this.instance.getName() }}>
-                    { !this.selectedLayerId &&
+                    { !this.selectedLayerId ?
                         <LayerAnalyticsList
                             analyticsData={[...this.instance.getAnalyticsData()]}
                             isLoading={ this.instance.getLoadingState() }
                             layerEditorCallback={ this.openLayerEditor }
-                            layerDetailsCallback={ (id) => this.openLayerDetails(id) }
+                            layerDetailsCallback={ (id) => this.toggleLayerDetails(id) }
                         />
-                    }
-                    { this.selectedLayerId &&
-                        <LayerAnalyticsDetails layerData={ this.instance.getSingleLayerData(this.selectedLayerId) } />
+                    :
+                        <LayerAnalyticsDetails
+                            layerData={ this.instance.getSingleLayerData(this.selectedLayerId) }
+                            closeDetailsCallback={ () => this.toggleLayerDetails() }
+                        />
                     }
                 </LocaleProvider>,
                 this.container
@@ -60,9 +62,8 @@ Oskari.clazz.define('Oskari.framework.bundle.admin-layeranalytics.Flyout',
                 Oskari.getSandbox().postRequestByName('ShowLayerEditorRequest', [id]);
             }
         },
-        openLayerDetails (selectedId) {
-            console.log(selectedId);
-            this.selectedLayerId = selectedId;
+        toggleLayerDetails (selectedId) {
+            this.selectedLayerId = typeof selectedId !== 'undefined' ? selectedId : null;
             this.updateListing();
         },
         startPlugin () {}
