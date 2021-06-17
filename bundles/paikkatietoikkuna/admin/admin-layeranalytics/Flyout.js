@@ -40,7 +40,8 @@ Oskari.clazz.define('Oskari.framework.bundle.admin-layeranalytics.Flyout',
         generateToScaleURL (details) {
             const stack = details.stack[0];
             let toScaleURL = '/?coord=' + stack.x + '_' + stack.y;
-            toScaleURL += '&mapLayers='
+            toScaleURL += '&mapLayers=';
+
             for (const [index, value] of stack.layers.entries()) {
                 toScaleURL += value; // add layer id
                 toScaleURL += '+100'; // add layer opacity
@@ -49,6 +50,7 @@ Oskari.clazz.define('Oskari.framework.bundle.admin-layeranalytics.Flyout',
                     toScaleURL += ','; // add layer separator if not last layer in stack
                 }
             }
+
             return toScaleURL;
         },
         updateListing () {
