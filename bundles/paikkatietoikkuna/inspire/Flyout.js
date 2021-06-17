@@ -6,7 +6,6 @@ Oskari.clazz.define('Oskari.inspire.Flyout',
 
     function (instance) {
         this.instance = instance;
-        this.loc = Oskari.getMsg.bind(null, 'inspire');
         this.container = null;
         this.flyout = null;
     }, {
