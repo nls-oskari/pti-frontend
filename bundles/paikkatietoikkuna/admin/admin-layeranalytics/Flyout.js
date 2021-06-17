@@ -35,9 +35,9 @@ Oskari.clazz.define('Oskari.framework.bundle.admin-layeranalytics.Flyout',
                 return;
             }
 
-            this.updateListing();
+            this.updateUI();
         },
-        updateListing () {
+        updateUI () {
             ReactDOM.render(
                 <LocaleProvider value={{ bundleKey: this.instance.getName() }}>
                     { !this.selectedLayerId ?
@@ -64,7 +64,7 @@ Oskari.clazz.define('Oskari.framework.bundle.admin-layeranalytics.Flyout',
         },
         toggleLayerDetails (selectedId) {
             this.selectedLayerId = typeof selectedId !== 'undefined' ? selectedId : null;
-            this.updateListing();
+            this.updateUI();
         },
         startPlugin () {}
     }
