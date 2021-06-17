@@ -34,7 +34,23 @@ const formatTime = (date) => {
     return date.toLocaleTimeString(dateLocale).replace(/\./g, ':');
 };
 
-export const LayerAnalyticsDetails = ({ layerData, closeDetailsCallback, toScaleCallback }) => {
+const generateToScaleURL = (stack) => {
+    let toScaleURL = '/?coord=' + stack.x + '_' + stack.y;
+    toScaleURL += '&mapLayers=';
+
+    for (const [index, value] of stack.layers.entries()) {
+        toScaleURL += value; // add layer id
+        toScaleURL += '+100'; // add layer opacity
+        toScaleURL += '+'; // add layer default style as empty string
+        if (index !== (stack.layers.length - 1)) {
+            toScaleURL += ','; // add layer separator if not last layer in stack
+        }
+    }
+
+    return toScaleURL;
+};
+
+export const LayerAnalyticsDetails = ({ layerData, closeDetailsCallback }) => {
 
     const columnSettings = [
         {
@@ -58,7 +74,7 @@ export const LayerAnalyticsDetails = ({ layerData, closeDetailsCallback, toScale
             key: 'action',
             render: (text, entry) => (
               <Space size="middle">
-                <a href={ toScaleCallback(entry) } target='_blank'><Message messageKey='flyout.moveToScale' /></a>
+                <a href={ generateToScaleURL(entry.stack[0]) } target='_blank'><Message messageKey='flyout.moveToScale' /></a>
               </Space>
             )
         }
@@ -87,6 +103,5 @@ export const LayerAnalyticsDetails = ({ layerData, closeDetailsCallback, toScale
 
 LayerAnalyticsDetails.propTypes = {
     layerData: PropTypes.object.isRequired,
-    closeDetailsCallback: PropTypes.func.isRequired,
-    toScaleCallback: PropTypes.func.isRequired
+    closeDetailsCallback: PropTypes.func.isRequired
 };

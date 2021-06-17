@@ -37,22 +37,6 @@ Oskari.clazz.define('Oskari.framework.bundle.admin-layeranalytics.Flyout',
 
             this.updateListing();
         },
-        generateToScaleURL (details) {
-            const stack = details.stack[0];
-            let toScaleURL = '/?coord=' + stack.x + '_' + stack.y;
-            toScaleURL += '&mapLayers=';
-
-            for (const [index, value] of stack.layers.entries()) {
-                toScaleURL += value; // add layer id
-                toScaleURL += '+100'; // add layer opacity
-                toScaleURL += '+'; // add layer default style as empty string
-                if (index !== (stack.layers.length - 1)) {
-                    toScaleURL += ','; // add layer separator if not last layer in stack
-                }
-            }
-
-            return toScaleURL;
-        },
         updateListing () {
             ReactDOM.render(
                 <LocaleProvider value={{ bundleKey: this.instance.getName() }}>
@@ -67,7 +51,6 @@ Oskari.clazz.define('Oskari.framework.bundle.admin-layeranalytics.Flyout',
                         <LayerAnalyticsDetails
                             layerData={ this.instance.getSingleLayerData(this.selectedLayerId) }
                             closeDetailsCallback={ () => this.toggleLayerDetails() }
-                            toScaleCallback={ this.generateToScaleURL }
                         />
                     }
                 </LocaleProvider>,
