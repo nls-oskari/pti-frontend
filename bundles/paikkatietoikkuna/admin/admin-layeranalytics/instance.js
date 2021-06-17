@@ -207,7 +207,7 @@ Oskari.clazz.define('Oskari.framework.bundle.admin-layeranalytics.AdminLayerAnal
                             ...itemData,
                             title: title
                         });
-                        this.plugins['Oskari.userinterface.Flyout'].updateListing();
+                        this.plugins['Oskari.userinterface.Flyout'].updateUI();
                     });
                 }
             });
