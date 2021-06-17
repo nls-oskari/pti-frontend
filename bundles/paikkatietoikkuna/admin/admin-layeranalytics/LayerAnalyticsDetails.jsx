@@ -48,6 +48,9 @@ export const LayerAnalyticsDetails = ({ layerData, closeDetailsCallback, toScale
             title: 'Aika',
             dataIndex: 'time',
             key: 'time',
+            defaultSortOrder: 'descend',
+            sortDirections: ['descend', 'ascend', 'descend'],
+            sorter: (a, b) => a.time - b.time,
             render: (text) => <Space>{ formatTimestamp(text) }</Space>
         },
         {
@@ -64,10 +67,13 @@ export const LayerAnalyticsDetails = ({ layerData, closeDetailsCallback, toScale
     return (
         <Space direction='vertical' style={{ width: '100%' }}>
             <Button onClick={ () => closeDetailsCallback() } >
-                <ArrowLeftOutlined />
-                <Message messageKey='flyout.backToList' />
+                <ArrowLeftOutlined /> <Message messageKey='flyout.backToList' />
             </Button>
             <b>{ layerData.title }</b>
+            <p>
+                <Message messageKey='flyout.successTitle' />: { layerData.success }<br/>
+                <Message messageKey='flyout.failureTitle' />: { layerData.errors }
+            </p>
             { layerData.details.length > 0 &&
                 <Table
                     columns={ columnSettings }
