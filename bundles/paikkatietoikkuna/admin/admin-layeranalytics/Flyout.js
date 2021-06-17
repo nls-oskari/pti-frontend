@@ -73,7 +73,7 @@ Oskari.clazz.define('Oskari.framework.bundle.admin-layeranalytics.Flyout',
             );
         },
         openLayerEditor (id) {
-            if (id) {
+            if (typeof id !== 'undefined') {
                 Oskari.getSandbox().postRequestByName('ShowLayerEditorRequest', [id]);
             }
         },
