@@ -39,6 +39,7 @@ const formatTime = (date) => {
 
 const generateToScaleURL = (stack) => {
     let toScaleURL = '/?coord=' + stack.x + '_' + stack.y;
+    toScaleURL += '&zoomLevel="' + stack.z;
     toScaleURL += '&mapLayers=';
 
     for (const [index, value] of stack.layers.entries()) {
