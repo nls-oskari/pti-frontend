@@ -93,8 +93,8 @@ export const LayerAnalyticsDetails = ({ layerData, isLoading, closeDetailsCallba
                 <ArrowLeftOutlined /> <Message messageKey='flyout.backToList' />
             </Button>
             <b>{ layerData.title }</b>
-            <Message messageKey='flyout.successTitle' />: { layerData.success }<br/>
-            <Message messageKey='flyout.failureTitle' />: { layerData.errors }
+            <div><Message messageKey='flyout.successTitle' />: { layerData.success }</div>
+            <div><Message messageKey='flyout.failureTitle' />: { layerData.errors }</div>
             { layerData.details.length > 0 &&
                 <Table
                     columns={ columnSettings }
