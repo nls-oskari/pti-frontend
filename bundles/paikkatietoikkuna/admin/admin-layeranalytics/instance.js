@@ -189,8 +189,6 @@ Oskari.clazz.define('Oskari.framework.bundle.admin-layeranalytics.AdminLayerAnal
                 if (callback) {
                     callback(json);
                 }
-
-                // this.updateLoadingState();
             });
         },
 
