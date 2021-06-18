@@ -42,14 +42,15 @@ Oskari.clazz.define('Oskari.framework.bundle.admin-layeranalytics.Flyout',
                 <LocaleProvider value={{ bundleKey: this.instance.getName() }}>
                     { !this.selectedLayerId ?
                         <LayerAnalyticsList
-                            analyticsData={[...this.instance.getAnalyticsData()]}
+                            analyticsData={[...this.instance.getAnalyticsListData()]}
                             isLoading={ this.instance.getLoadingState() }
                             layerEditorCallback={ this.openLayerEditor }
                             layerDetailsCallback={ (id) => this.toggleLayerDetails(id) }
                         />
                     :
                         <LayerAnalyticsDetails
-                            layerData={ this.instance.getSingleLayerData(this.selectedLayerId) }
+                            layerData={ this.instance.getAnalyticsDetailsData() }
+                            isLoading={ this.instance.getLoadingState() }
                             closeDetailsCallback={ () => this.toggleLayerDetails() }
                         />
                     }
@@ -63,7 +64,12 @@ Oskari.clazz.define('Oskari.framework.bundle.admin-layeranalytics.Flyout',
             }
         },
         toggleLayerDetails (selectedId) {
-            this.selectedLayerId = typeof selectedId !== 'undefined' ? selectedId : null;
+            if (typeof selectedId !== 'undefined') {
+                this.selectedLayerId = selectedId;
+                this.instance.produceAnalyticsDetailsData(selectedId);
+            } else {
+                this.selectedLayerId = null;
+            }
             this.updateUI();
         },
         startPlugin () {}

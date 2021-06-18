@@ -20,7 +20,8 @@ Oskari.clazz.define('Oskari.framework.bundle.admin-layeranalytics.AdminLayerAnal
         this.plugins = {};
         this.sandbox = null;
         this.isLoading = true;
-        this.analyticsData = [];
+        this.analyticsListData = [];
+        this.selectedLayerData = {};
         this.mapLayerService = Oskari.getSandbox().getService('Oskari.mapframework.service.MapLayerService');
     }, {
         __name: 'admin-layeranalytics',
@@ -48,7 +49,7 @@ Oskari.clazz.define('Oskari.framework.bundle.admin-layeranalytics.AdminLayerAnal
                 }
 
                 if (event.getViewState() !== 'close') {
-                    this.produceAnalyticsData();
+                    this.produceAnalyticsListData();
                 }
             }
         },
@@ -166,7 +167,7 @@ Oskari.clazz.define('Oskari.framework.bundle.admin-layeranalytics.AdminLayerAnal
         /**
          * @method fetchLayerAnalytics
          * Fetches data for layer analytics
-         * @param {*} layerId null or layerId as a number. If null only overall list will be fetched
+         * @param {*} layerId null or layerId as a number. If null only list view data will be fetched
          * @param {*} callback
          * @returns
          */
@@ -189,36 +190,55 @@ Oskari.clazz.define('Oskari.framework.bundle.admin-layeranalytics.AdminLayerAnal
                     callback(json);
                 }
 
-                this.updateLoadingState();
+                // this.updateLoadingState();
             });
         },
 
         /**
-         * @method produceAnalyticsData
-         * Produce analytics by fetching data for all layers and layer specific data
+         * @method produceAnalyticsListData
+         * Produce data for analytics list view
          */
-        produceAnalyticsData () {
+        produceAnalyticsListData () {
             this.fetchLayerAnalytics(null, (result) => {
                 for (const item in result) {
-                    this.fetchLayerAnalytics(item, (itemData) => {
-                        const itemLayer = this.mapLayerService.findMapLayer(itemData.id);
-                        const title = itemLayer !== null ? itemLayer.getName() : itemData.id;
-                        this.analyticsData.push({
-                            ...itemData,
-                            title: title
-                        });
-                        this.plugins['Oskari.userinterface.Flyout'].updateUI();
+                    const itemLayer = this.mapLayerService.findMapLayer(item);
+                    const title = itemLayer !== null ? itemLayer.getName() : item;
+                    this.analyticsListData.push({
+                        ...result[item],
+                        id: item,
+                        title: title
                     });
                 }
+                this.updateLoadingState();
+                this.plugins['Oskari.userinterface.Flyout'].updateUI();
             });
         },
 
-        getAnalyticsData () {
-            return this.analyticsData;
+        /**
+         * @method produceAnalyticsDetailsData
+         * Produce analytics details view data by fetching data with id as parameter
+         */
+        produceAnalyticsDetailsData (id) {
+            this.updateLoadingState(true);
+
+            this.fetchLayerAnalytics(id, (itemData) => {
+                const itemLayer = this.mapLayerService.findMapLayer(id);
+                const title = typeof itemLayer !== 'undefined' ? itemLayer.getName() : id;
+                this.selectedLayerData = {
+                    ...itemData,
+                    title: title
+                };
+                this.updateLoadingState();
+                this.plugins['Oskari.userinterface.Flyout'].updateUI();
+            });
         },
 
-        getSingleLayerData (id) {
-            return this.analyticsData.find((data) => data.id === id);
+        getAnalyticsListData () {
+            return this.analyticsListData;
+        },
+
+        getAnalyticsDetailsData () {
+            return this.selectedLayerData;
         },
 
         /**

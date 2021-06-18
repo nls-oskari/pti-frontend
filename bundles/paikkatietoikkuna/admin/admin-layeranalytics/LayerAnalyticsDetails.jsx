@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, Table, Space } from 'antd';
+import { Button, Table, Space, Spin } from 'antd';
 import { Message } from 'oskari-ui';
 import { ArrowLeftOutlined } from '@ant-design/icons';
 
@@ -13,6 +13,9 @@ const localeDateOptions = {
     day: '2-digit'
 };
 
+
+// timestamp formatting copied from admin-layereditor in oskari-frontend
+// TO-DO: Move both to helper class
 const formatTimestamp = (timestamp) => {
     let date;
     if (typeof timestamp !== 'undefined') {
@@ -50,7 +53,7 @@ const generateToScaleURL = (stack) => {
     return toScaleURL;
 };
 
-export const LayerAnalyticsDetails = ({ layerData, closeDetailsCallback }) => {
+export const LayerAnalyticsDetails = ({ layerData, isLoading, closeDetailsCallback }) => {
 
     const columnSettings = [
         {
@@ -80,16 +83,18 @@ export const LayerAnalyticsDetails = ({ layerData, closeDetailsCallback }) => {
         }
     ];
 
+    if (isLoading) {
+        return ( <Spin/> );
+    }
+
     return (
         <Space direction='vertical' style={{ width: '100%' }}>
             <Button onClick={ () => closeDetailsCallback() } >
                 <ArrowLeftOutlined /> <Message messageKey='flyout.backToList' />
             </Button>
             <b>{ layerData.title }</b>
-            <p>
-                <Message messageKey='flyout.successTitle' />: { layerData.success }<br/>
-                <Message messageKey='flyout.failureTitle' />: { layerData.errors }
-            </p>
+            <Message messageKey='flyout.successTitle' />: { layerData.success }<br/>
+            <Message messageKey='flyout.failureTitle' />: { layerData.errors }
             { layerData.details.length > 0 &&
                 <Table
                     columns={ columnSettings }
