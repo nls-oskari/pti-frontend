@@ -37,17 +37,17 @@ const formatTime = (date) => {
     return date.toLocaleTimeString(dateLocale).replace(/\./g, ':');
 };
 
-const generateToScaleURL = (stack) => {
-    let toScaleURL = '/?coord=' + stack.x + '_' + stack.y;
-    toScaleURL += '&zoomLevel="' + stack.z;
+const generateLink = (item) => {
+    let toScaleURL = '/?coord=' + item.x + '_' + item.y;
     toScaleURL += '&mapLayers=';
+    toScaleURL += '&zoomLevel="' + item.z;
 
-    for (const [index, value] of stack.layers.entries()) {
+    for (const [index, value] of item.layers.entries()) {
         toScaleURL += value; // add layer id
         toScaleURL += '+100'; // add layer opacity
         toScaleURL += '+'; // add layer default style as empty string
-        if (index !== (stack.layers.length - 1)) {
-            toScaleURL += ','; // add layer separator if not last layer in stack
+        if (index !== (item.layers.length - 1)) {
+            toScaleURL += ','; // add layer separator if not last layer in item
         }
     }
 
@@ -76,11 +76,9 @@ export const LayerAnalyticsDetails = ({ layerData, isLoading, closeDetailsCallba
         {
             title: '',
             key: 'action',
-            render: (text, entry) => (
-              <Space size="middle">
-                <a href={ generateToScaleURL(entry.stack[0]) } target='_blank'><Message messageKey='flyout.moveToScale' /></a>
-              </Space>
-            )
+            render: (text, entry) => entry.stack.map((item) => (
+                <a href={ generateLink(item) } target='_blank'><Message messageKey='flyout.moveToScale' /></a>
+            )) 
         }
     ];
 
