@@ -52,6 +52,7 @@ Oskari.clazz.define('Oskari.framework.bundle.admin-layeranalytics.Flyout',
                             layerData={ this.instance.getAnalyticsDetailsData() }
                             isLoading={ this.instance.getLoadingState() }
                             closeDetailsCallback={ () => this.toggleLayerDetails() }
+                            removeAnalyticsCallback={ (id, dataId) => this.instance.removeAnalyticsData(id, dataId) }
                         />
                     }
                 </LocaleProvider>,

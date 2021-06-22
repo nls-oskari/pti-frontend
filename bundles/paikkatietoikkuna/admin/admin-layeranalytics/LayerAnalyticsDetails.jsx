@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, Table, Space, Spin } from 'antd';
 import { Message } from 'oskari-ui';
-import { ArrowLeftOutlined } from '@ant-design/icons';
+import { ArrowLeftOutlined, DeleteOutlined } from '@ant-design/icons';
 
 import 'antd/es/table/style/index.js';
 
@@ -39,9 +39,8 @@ const formatTime = (date) => {
 
 const generateLink = (item) => {
     let toScaleURL = '/?coord=' + item.x + '_' + item.y;
+    
     toScaleURL += '&mapLayers=';
-    toScaleURL += '&zoomLevel="' + item.z;
-
     for (const [index, value] of item.layers.entries()) {
         toScaleURL += value; // add layer id
         toScaleURL += '+100'; // add layer opacity
@@ -51,14 +50,16 @@ const generateLink = (item) => {
         }
     }
 
+    toScaleURL += '&zoomLevel=' + item.z;
+
     return toScaleURL;
 };
 
-export const LayerAnalyticsDetails = ({ layerData, isLoading, closeDetailsCallback }) => {
+export const LayerAnalyticsDetails = ({ layerData, isLoading, closeDetailsCallback, removeAnalyticsCallback }) => {
 
     const columnSettings = [
         {
-            title: <Message messageKey='flyout.failureTitle' />,
+            title: <b><Message messageKey='flyout.failureTitle' /></b>,
             dataIndex: 'errors',
             key: 'errors',
             sortDirections: ['descend', 'ascend', 'descend'],
@@ -75,10 +76,15 @@ export const LayerAnalyticsDetails = ({ layerData, isLoading, closeDetailsCallba
         },
         {
             title: '',
-            key: 'action',
-            render: (text, entry) => entry.stack.map((item) => (
-                <a href={ generateLink(item) } target='_blank'><Message messageKey='flyout.moveToScale' /></a>
+            key: 'movetoscale',
+            render: (text, entry) => entry.stack.map((item, index) => (
+                <a key={ item.x + '_' + item.y } href={ generateLink(item) } target='_blank'><Message messageKey='flyout.moveToScale' /> { index + 1 }</a>
             )) 
+        },
+        {
+            title: '',
+            key: 'remove',
+            render: (text, entry, index) => (<a key={ 'remove_' + entry.id + '_' + entry.time } onClick={ () => removeAnalyticsCallback(layerData.id, entry.time) } target='_blank'><DeleteOutlined /></a>)
         }
     ];
 
@@ -107,5 +113,7 @@ export const LayerAnalyticsDetails = ({ layerData, isLoading, closeDetailsCallba
 
 LayerAnalyticsDetails.propTypes = {
     layerData: PropTypes.object.isRequired,
-    closeDetailsCallback: PropTypes.func.isRequired
+    isLoading: PropTypes.bool.isRequired,
+    closeDetailsCallback: PropTypes.func.isRequired,
+    removeAnalyticsCallback: PropTypes.func.isRequired
 };
