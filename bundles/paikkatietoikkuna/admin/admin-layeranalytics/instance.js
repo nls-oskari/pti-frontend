@@ -194,6 +194,7 @@ Oskari.clazz.define('Oskari.framework.bundle.admin-layeranalytics.AdminLayerAnal
 
         removeAnalyticsData (layerId, dataId) {
             this.updateLoadingState(true);
+            this.plugins['Oskari.userinterface.Flyout'].updateUI(); // show spinner
             const route = dataId ? Oskari.urls.getRoute('LayerStatus', { id: layerId, dataId: dataId }) : Oskari.urls.getRoute('LayerStatus', { id: layerId });
 
             fetch(route, {
@@ -206,7 +207,7 @@ Oskari.clazz.define('Oskari.framework.bundle.admin-layeranalytics.AdminLayerAnal
                     Messaging.error(getMessage('messages.errorDeletingLayerAnalytics'));
                 }
                 this.updateLoadingState();
-                this.plugins['Oskari.userinterface.Flyout'].updateUI();
+                this.produceAnalyticsDetailsData(this.plugins['Oskari.userinterface.Flyout'].getSelectedLayerId())
             });
         },
 

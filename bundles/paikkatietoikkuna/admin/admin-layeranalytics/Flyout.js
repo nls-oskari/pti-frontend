@@ -73,6 +73,9 @@ Oskari.clazz.define('Oskari.framework.bundle.admin-layeranalytics.Flyout',
             }
             this.updateUI();
         },
+        getSelectedLayerId () {
+            return this.selectedLayerId;
+        },
         startPlugin () {}
     }
 );
