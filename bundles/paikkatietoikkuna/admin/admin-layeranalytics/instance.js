@@ -192,6 +192,25 @@ Oskari.clazz.define('Oskari.framework.bundle.admin-layeranalytics.AdminLayerAnal
             });
         },
 
+        removeAnalyticsData (layerId, dataId) {
+            this.updateLoadingState(true);
+            this.plugins['Oskari.userinterface.Flyout'].updateUI(); // show spinner
+            const route = dataId ? Oskari.urls.getRoute('LayerStatus', { id: layerId, dataId: dataId }) : Oskari.urls.getRoute('LayerStatus', { id: layerId });
+
+            fetch(route, {
+                method: 'DELETE',
+                headers: {
+                    'Accept': 'application/json'
+                }
+            }).then(response => {
+                if (!response.ok) {
+                    Messaging.error(getMessage('messages.errorDeletingLayerAnalytics'));
+                }
+                this.updateLoadingState();
+                this.produceAnalyticsDetailsData(this.plugins['Oskari.userinterface.Flyout'].getSelectedLayerId())
+            });
+        },
+
         /**
          * @method produceAnalyticsListData
          * Produce data for analytics list view
@@ -224,6 +243,7 @@ Oskari.clazz.define('Oskari.framework.bundle.admin-layeranalytics.AdminLayerAnal
                 const title = typeof itemLayer !== 'undefined' ? itemLayer.getName() : id;
                 this.selectedLayerData = {
                     ...itemData,
+                    id: id,
                     title: title
                 };
                 this.updateLoadingState();
