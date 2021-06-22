@@ -10,10 +10,11 @@ Oskari.registerLocalization(
             },
             "flyout": {
                 "title": "Tasoseuranta",
-                "successTitle": "Successes",
-                "failureTitle": "Failures",
-                "idTitle": "Id"
-
+                "successTitle": "Onnistuneet näytöt",
+                "failureTitle": "Virheelliset näytöt",
+                "idTitle": "Nimi",
+                "moveToScale": "Siirry mittakaavalle",
+                "backToList": "Paluu listausnäkymään"
             },
             "messages": {
                 "errorFetchingLayerAnalytics": "Tason analytiikka tietoja ei voitu hakea."
