@@ -40,6 +40,7 @@ import 'oskari-loader!oskari-frontend/packages/mapping/ol/wfsvector/bundle.js';
 import 'oskari-loader!oskari-frontend/packages/mapping/ol/mapmyplaces/bundle.js';
 import 'oskari-loader!oskari-frontend/packages/mapping/ol/mapuserlayers/bundle.js';
 import 'oskari-loader!oskari-frontend/packages/mapping/ol/maparcgis/bundle.js';
+import 'oskari-loader!oskari-frontend/packages/mapping/ol/userstyle/bundle.js';
 import 'oskari-loader!oskari-frontend/packages/mapping/ol/drawtools/bundle.js';
 import 'oskari-loader!oskari-frontend/packages/mapping/ol/infobox/bundle.js';
 import 'oskari-loader!oskari-frontend/packages/mapping/ol/toolbar/bundle.js';
