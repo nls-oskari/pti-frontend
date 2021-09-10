@@ -3,10 +3,10 @@ Oskari.registerLocalization(
         "lang": "sv",
         "key": "admin-layeranalytics",
         "value": {
-            "title": "Övervakning för kartlager",
+            "title": "A: Övervakning för kartlager",
             "desc": "",
             "tile": {
-                "title": "Övervakning för kartlager"
+                "title": "A: Övervakning för kartlager"
             },
             "flyout": {
                 "title": "Övervakning för kartlager",
