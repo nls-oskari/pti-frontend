@@ -14,6 +14,12 @@ const TitleArea = styled.span`
     }
 `;
 
+const StyledTable = styled(Table)`
+    .ant-table-column-sorter {
+        margin: 0 0 0 5px;
+    }
+`;
+
 export const LayerAnalyticsList = ({ analyticsData, isLoading, layerEditorCallback, layerDetailsCallback }) => {
 
     const columnSettings = [
@@ -48,10 +54,13 @@ export const LayerAnalyticsList = ({ analyticsData, isLoading, layerEditorCallba
             key: 'errors',
             sortDirections: ['descend', 'ascend', 'descend'],
             sorter: (a, b) => a.errors - b.errors,
+        },
+        {
+            align: 'left',
+            key: 'edit',
             render: (title, item) => {
                 return (
                     <TitleArea>
-                        { title }
                         <EditOutlined onClick={ () => layerEditorCallback(item.id) } />
                     </TitleArea>
                 );
@@ -64,7 +73,7 @@ export const LayerAnalyticsList = ({ analyticsData, isLoading, layerEditorCallba
     }
 
     return (
-        <Table
+        <StyledTable
             columns={ columnSettings }
             dataSource={ analyticsData }
             pagination={{ position: ['none', 'bottomCenter'] }}
