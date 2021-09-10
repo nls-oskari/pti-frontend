@@ -29,7 +29,6 @@ export const LayerAnalyticsList = ({ analyticsData, isLoading, layerEditorCallba
                 return (
                     <TitleArea>
                         <a onClick={ () => layerDetailsCallback(item.id) } >{ title }</a>
-                        <EditOutlined onClick={ () => layerEditorCallback(item.id) } />
                     </TitleArea>
                 );
             }
@@ -49,6 +48,14 @@ export const LayerAnalyticsList = ({ analyticsData, isLoading, layerEditorCallba
             key: 'errors',
             sortDirections: ['descend', 'ascend', 'descend'],
             sorter: (a, b) => a.errors - b.errors,
+            render: (title, item) => {
+                return (
+                    <TitleArea>
+                        { title }
+                        <EditOutlined onClick={ () => layerEditorCallback(item.id) } />
+                    </TitleArea>
+                );
+            }
         }
     ];
 
@@ -60,7 +67,7 @@ export const LayerAnalyticsList = ({ analyticsData, isLoading, layerEditorCallba
         <Table
             columns={ columnSettings }
             dataSource={ analyticsData }
-            pagination={{ position: ['none', 'none'] }}
+            pagination={{ position: ['none', 'bottomCenter'] }}
         />
     );
 };
