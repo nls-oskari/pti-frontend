@@ -3,10 +3,10 @@ Oskari.registerLocalization(
         "lang": "fi",
         "key": "admin-layeranalytics",
         "value": {
-            "title": "A: Tasoseuranta",
+            "title": "Tasoseuranta",
             "desc": "",
             "tile": {
-                "title": "A: Tasoseuranta"
+                "title": "Tasoseuranta"
             },
             "flyout": {
                 "title": "Tasoseuranta",

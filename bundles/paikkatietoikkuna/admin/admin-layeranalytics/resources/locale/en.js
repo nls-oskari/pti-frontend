@@ -3,10 +3,10 @@ Oskari.registerLocalization(
         "lang": "en",
         "key": "admin-layeranalytics",
         "value": {
-            "title": "A: Layer monitor",
+            "title": "Layer monitor",
             "desc": "",
             "tile": {
-                "title": "A: Layer monitor"
+                "title": "Layer monitor"
             },
             "flyout": {
                 "title": "Layer monitor",

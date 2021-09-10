@@ -3,13 +3,13 @@ Oskari.registerLocalization(
         "lang": "sv",
         "key": "admin-layeranalytics",
         "value": {
-            "title": "A: Lager monitor",
+            "title": "Övervakning för kartlager",
             "desc": "",
             "tile": {
-                "title": "A: Lager monitor"
+                "title": "Övervakning för kartlager"
             },
             "flyout": {
-                "title": "Lager monitor",
+                "title": "Övervakning för kartlager",
                 "successTitle": "Successes",
                 "failureTitle": "Failures",
                 "idTitle": "Id"
