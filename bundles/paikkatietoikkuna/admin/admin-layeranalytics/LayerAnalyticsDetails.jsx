@@ -59,6 +59,13 @@ export const LayerAnalyticsDetails = ({ layerData, isLoading, closeDetailsCallba
 
     const columnSettings = [
         {
+            title: <b><Message messageKey='flyout.successTitle' /></b>,
+            dataIndex: 'success',
+            key: 'success',
+            sortDirections: ['descend', 'ascend', 'descend'],
+            sorter: (a, b) => a.success - b.success
+        },
+        {
             title: <b><Message messageKey='flyout.failureTitle' /></b>,
             dataIndex: 'errors',
             key: 'errors',
@@ -91,6 +98,8 @@ export const LayerAnalyticsDetails = ({ layerData, isLoading, closeDetailsCallba
     if (isLoading) {
         return ( <Spin/> );
     }
+
+    console.log(layerData);
 
     return (
         <Space direction='vertical' style={{ width: '100%' }}>
