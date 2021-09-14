@@ -38,6 +38,7 @@ import 'oskari-loader!oskari-frontend/packages/mapping/ol/maprotator/bundle.js';
 import 'oskari-loader!oskari-frontend/packages/mapping/ol/wfsvector/bundle.js';
 import 'oskari-loader!oskari-frontend/packages/mapping/ol/mapmyplaces/bundle.js';
 import 'oskari-loader!oskari-frontend/packages/mapping/ol/mapuserlayers/bundle.js';
+import 'oskari-loader!oskari-frontend/packages/mapping/ol/userstyle/bundle.js';
 import 'oskari-loader!oskari-frontend/packages/mapping/ol/maparcgis/bundle.js';
 import 'oskari-loader!oskari-frontend/packages/mapping/ol/drawtools/bundle.js';
 import 'oskari-loader!oskari-frontend/packages/mapping/ol/infobox/bundle.js';
@@ -60,6 +61,8 @@ import 'oskari-loader!../../packages/paikkatietoikkuna/bundle/terrain-profile/bu
 import 'oskari-loader!../../packages/paikkatietoikkuna/lang-overrides/bundle.js';
 import 'oskari-loader!../../packages/paikkatietoikkuna/bundle/inspire/bundle.js';
 import 'oskari-loader!../../bundles/paikkatietoikkuna/layerstatus/bundle.js';
+import 'oskari-loader!../../packages/paikkatietoikkuna/bundle/coordinatetransformation/bundle.js';
+import 'oskari-loader!oskari-frontend/packages/mapping/ol/layerswipe/bundle.js';
 
 // lazy
 import 'oskari-lazy-loader?admin-layerrights!oskari-frontend/packages/framework/bundle/admin-layerrights/bundle.js';
@@ -67,13 +70,11 @@ import 'oskari-lazy-loader?admin!oskari-frontend/packages/admin/bundle/admin/bun
 import 'oskari-lazy-loader?metrics!oskari-frontend/packages/admin/bundle/metrics/bundle.js';
 import 'oskari-lazy-loader?appsetup!oskari-frontend/packages/admin/bundle/appsetup/bundle.js';
 import 'oskari-lazy-loader?admin-layereditor!oskari-frontend/packages/admin/bundle/admin-layereditor/bundle.js';
-import 'oskari-lazy-loader?coordinatetransformation!../../packages/paikkatietoikkuna/bundle/coordinatetransformation/bundle.js';
 import 'oskari-lazy-loader?admin-layeranalytics!../../bundles/paikkatietoikkuna/admin/admin-layeranalytics/bundle.js';
 
 import 'oskari-lazy-loader?announcements!oskari-frontend/packages/framework/bundle/announcements/bundle.js';
 import 'oskari-lazy-loader?admin-announcements!oskari-frontend/packages/admin/bundle/admin-announcements/bundle.js';
 
-import 'oskari-lazy-loader?layerswipe!oskari-frontend/packages/mapping/ol/layerswipe/bundle.js';
 import { PTIOrtophotoTimeseriesGFIformatter } from '../../util/PTIOrtophotoTimeseriesGFIformatter';
 
 import './css/overwritten.css';

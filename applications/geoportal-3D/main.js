@@ -40,6 +40,7 @@ import 'oskari-loader!oskari-frontend/packages/mapping/ol/wfsvector/bundle.js';
 import 'oskari-loader!oskari-frontend/packages/mapping/ol/mapmyplaces/bundle.js';
 import 'oskari-loader!oskari-frontend/packages/mapping/ol/mapuserlayers/bundle.js';
 import 'oskari-loader!oskari-frontend/packages/mapping/ol/maparcgis/bundle.js';
+import 'oskari-loader!oskari-frontend/packages/mapping/ol/userstyle/bundle.js';
 import 'oskari-loader!oskari-frontend/packages/mapping/ol/drawtools/bundle.js';
 import 'oskari-loader!oskari-frontend/packages/mapping/ol/infobox/bundle.js';
 import 'oskari-loader!oskari-frontend/packages/mapping/ol/toolbar/bundle.js';
@@ -64,6 +65,5 @@ import 'oskari-lazy-loader?admin!oskari-frontend/packages/admin/bundle/admin/bun
 import 'oskari-lazy-loader?metrics!oskari-frontend/packages/admin/bundle/metrics/bundle.js';
 import 'oskari-lazy-loader?appsetup!oskari-frontend/packages/admin/bundle/appsetup/bundle.js';
 import 'oskari-lazy-loader?admin-layereditor!oskari-frontend/packages/admin/bundle/admin-layereditor/bundle.js';
-import 'oskari-lazy-loader?coordinatetransformation!../../packages/paikkatietoikkuna/bundle/coordinatetransformation/bundle.js';
 
 import './css/overwritten.css';
