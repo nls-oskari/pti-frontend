@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Button, Table, Space, Spin } from 'antd';
 import { Message } from 'oskari-ui';
@@ -85,7 +85,7 @@ export const LayerAnalyticsDetails = ({ layerData, isLoading, closeDetailsCallba
             title: '',
             key: 'movetoscale',
             render: (text, entry) => entry.stack.map((item, index) => (
-                <a key={ item.x + '_' + item.y } href={ generateLink(item) } target='_blank'><Message messageKey='flyout.moveToScale' /> { index + 1 }</a>
+                <Fragment><a key={ item.x + '_' + item.y } href={ generateLink(item) } target='_blank'><Message messageKey='flyout.moveToScale' /> { index + 1 }</a><br/></Fragment>
             )) 
         },
         {
@@ -98,8 +98,6 @@ export const LayerAnalyticsDetails = ({ layerData, isLoading, closeDetailsCallba
     if (isLoading) {
         return ( <Spin/> );
     }
-
-    console.log(layerData);
 
     return (
         <Space direction='vertical' style={{ width: '100%' }}>
