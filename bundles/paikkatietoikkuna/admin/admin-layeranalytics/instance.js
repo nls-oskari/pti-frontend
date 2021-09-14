@@ -240,7 +240,7 @@ Oskari.clazz.define('Oskari.framework.bundle.admin-layeranalytics.AdminLayerAnal
 
             this.fetchLayerAnalytics(id, (itemData) => {
                 const itemLayer = this.mapLayerService.findMapLayer(id);
-                const title = typeof itemLayer !== 'undefined' ? itemLayer.getName() : id;
+                const title = typeof itemLayer !== 'undefined' && itemLayer !== null ? itemLayer.getName() : id;
                 this.selectedLayerData = {
                     ...itemData,
                     id: id,
