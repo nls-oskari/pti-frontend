@@ -10,11 +10,11 @@ Oskari.registerLocalization(
             },
             "flyout": {
                 "title": "Övervakning för kartlager",
-                "successTitle": "Successes",
-                "failureTitle": "Failures",
+                "successTitle": "Framgångsrika vyn",
+                "failureTitle": "Misslyckade vyn",
                 "idTitle": "Id",
-                "moveToScale": "Tilanne",
-                "backToList": "Paluu listausnäkymään",
+                "moveToScale": "Situation",
+                "backToList": "Återgå till listvyn",
                 "layerDataProvider": "Dataproducent"
             },
             "messages": {
