@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Button, Table, Space, Spin } from 'antd';
 import { Message } from 'oskari-ui';
 import { ArrowLeftOutlined, DeleteOutlined } from '@ant-design/icons';
+import { red } from '@ant-design/colors'
 
 import 'antd/es/table/style/index.js';
 
@@ -13,6 +14,9 @@ const localeDateOptions = {
     day: '2-digit'
 };
 
+const iconStyle = {
+    color: red.primary
+};
 
 // timestamp formatting copied from admin-layereditor in oskari-frontend
 // TO-DO: Move both to helper class
@@ -21,7 +25,7 @@ const formatTimestamp = (timestamp) => {
     if (typeof timestamp !== 'undefined') {
         date = new Date(timestamp);
     }
-    return formatTime(date) + ' ' + formatDate(date);
+    return  formatDate(date) + ' ' + formatTime(date);
 };
 const formatDate = (date) => {
     if (typeof date === 'undefined') {
@@ -91,7 +95,7 @@ export const LayerAnalyticsDetails = ({ layerData, isLoading, closeDetailsCallba
         {
             title: '',
             key: 'remove',
-            render: (text, entry, index) => (<a key={ 'remove_' + entry.id + '_' + entry.time } onClick={ () => removeAnalyticsCallback(layerData.id, entry.time) } target='_blank'><DeleteOutlined /></a>)
+            render: (text, entry, index) => (<a key={ 'remove_' + entry.id + '_' + entry.time } onClick={ () => removeAnalyticsCallback(layerData.id, entry.time) } target='_blank'><DeleteOutlined style={ iconStyle } /></a>)
         }
     ];
 
