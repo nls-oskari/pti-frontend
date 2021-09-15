@@ -48,11 +48,11 @@ export const LayerAnalyticsList = ({ analyticsData, isLoading, layerEditorCallba
         },
         {
             align: 'left',
-            title: <Message messageKey='flyout.successTitle' />,
-            dataIndex: 'success',
-            key: 'success',
+            title: <Message messageKey='flyout.totalDisplaysTitle' />,
+            dataIndex: 'total',
+            key: 'total',
             sortDirections: ['descend', 'ascend', 'descend'],
-            sorter: (a, b) => a.success - b.success,
+            sorter: (a, b) => a.total - b.total,
             showSorterTooltip: sorterTooltipOptions
         },
         {

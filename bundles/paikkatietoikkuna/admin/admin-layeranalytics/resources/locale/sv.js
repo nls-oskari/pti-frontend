@@ -10,6 +10,7 @@ Oskari.registerLocalization(
             },
             "flyout": {
                 "title": "Övervakning för kartlager",
+                "totalDisplaysTitle": "Totala vyn",
                 "successTitle": "Framgångsrika vyn",
                 "failureTitle": "Misslyckade vyn",
                 "idTitle": "Id",

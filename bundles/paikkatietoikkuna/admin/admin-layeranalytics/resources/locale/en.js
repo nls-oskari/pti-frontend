@@ -10,6 +10,7 @@ Oskari.registerLocalization(
             },
             "flyout": {
                 "title": "Layer monitor",
+                "totalDisplaysTitle": "Total displays",
                 "successTitle": "Successes",
                 "failureTitle": "Failures",
                 "idTitle": "Id",

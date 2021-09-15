@@ -10,6 +10,7 @@ Oskari.registerLocalization(
             },
             "flyout": {
                 "title": "Tasoseuranta",
+                "totalDisplaysTitle": "Näytöt yhteensä",
                 "successTitle": "Onnistuneet näytöt",
                 "failureTitle": "Virheelliset näytöt",
                 "idTitle": "Nimi",

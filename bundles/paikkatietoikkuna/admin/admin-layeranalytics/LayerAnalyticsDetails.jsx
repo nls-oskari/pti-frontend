@@ -120,7 +120,9 @@ export const LayerAnalyticsDetails = ({ layerData, isLoading, closeDetailsCallba
                 <ArrowLeftOutlined /> <Message messageKey='flyout.backToList' />
             </Button>
             <b>{ layerData.title }</b>
-            <div><Message messageKey='flyout.layerDataProvider' />: { layerData.layerOrganization }</div>
+            { layerData.layerOrganization && 
+                <div><Message messageKey='flyout.layerDataProvider' />: { layerData.layerOrganization }</div>
+            }
             <div><Message messageKey='flyout.successTitle' />: { layerData.success }</div>
             <div><Message messageKey='flyout.failureTitle' />: { layerData.errors }</div>
             { layerData.details.length > 0 &&

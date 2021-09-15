@@ -220,8 +220,10 @@ Oskari.clazz.define('Oskari.framework.bundle.admin-layeranalytics.AdminLayerAnal
                 for (const item in result) {
                     const itemLayer = this.mapLayerService.findMapLayer(item);
                     const title = itemLayer !== null ? itemLayer.getName() : item;
+                    const totalDisplays = result[item].success + result[item].errors;
                     this.analyticsListData.push({
                         ...result[item],
+                        total: totalDisplays,
                         id: item,
                         title: title
                     });
@@ -240,7 +242,7 @@ Oskari.clazz.define('Oskari.framework.bundle.admin-layeranalytics.AdminLayerAnal
 
             this.fetchLayerAnalytics(id, (itemData) => {
                 const itemLayer = this.mapLayerService.findMapLayer(id);
-                const layerOrganization = itemLayer.getOrganizationName() || null;
+                const layerOrganization = itemLayer !== 'undefined' && itemLayer !== null ? itemLayer.getOrganizationName() : null;
                 const title = typeof itemLayer !== 'undefined' && itemLayer !== null ? itemLayer.getName() : id;
                 this.selectedLayerData = {
                     ...itemData,
