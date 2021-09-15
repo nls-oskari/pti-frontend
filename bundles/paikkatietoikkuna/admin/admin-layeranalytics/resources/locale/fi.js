@@ -14,7 +14,8 @@ Oskari.registerLocalization(
                 "failureTitle": "Virheelliset näytöt",
                 "idTitle": "Nimi",
                 "moveToScale": "Tilanne",
-                "backToList": "Paluu listausnäkymään"
+                "backToList": "Paluu listausnäkymään",
+                "layerDataProvider": "Tiedontuottaja"
             },
             "messages": {
                 "errorFetchingLayerAnalytics": "Tason analytiikka tietoja ei voitu hakea.",

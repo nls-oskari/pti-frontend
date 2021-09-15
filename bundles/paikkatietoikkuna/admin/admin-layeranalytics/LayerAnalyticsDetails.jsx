@@ -99,12 +99,15 @@ export const LayerAnalyticsDetails = ({ layerData, isLoading, closeDetailsCallba
         return ( <Spin/> );
     }
 
+    console.log(layerData);
+
     return (
         <Space direction='vertical' style={{ width: '100%' }}>
             <Button onClick={ () => closeDetailsCallback() } >
                 <ArrowLeftOutlined /> <Message messageKey='flyout.backToList' />
             </Button>
             <b>{ layerData.title }</b>
+            <div><Message messageKey='flyout.layerDataProvider' />: { layerData.layerOrganization }</div>
             <div><Message messageKey='flyout.successTitle' />: { layerData.success }</div>
             <div><Message messageKey='flyout.failureTitle' />: { layerData.errors }</div>
             { layerData.details.length > 0 &&
