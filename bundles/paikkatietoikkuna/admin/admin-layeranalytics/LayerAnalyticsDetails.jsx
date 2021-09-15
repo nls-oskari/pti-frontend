@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Button, Table, Space, Spin } from 'antd';
-import { Message } from 'oskari-ui';
+import { Message, Tooltip } from 'oskari-ui';
 import { ArrowLeftOutlined, DeleteOutlined } from '@ant-design/icons';
 import { red } from '@ant-design/colors'
 
@@ -16,6 +16,10 @@ const localeDateOptions = {
 
 const iconStyle = {
     color: red.primary
+};
+
+const sorterTooltipOptions = {
+    title: <Message messageKey='flyout.sorterTooltip' />
 };
 
 // timestamp formatting copied from admin-layereditor in oskari-frontend
@@ -67,14 +71,16 @@ export const LayerAnalyticsDetails = ({ layerData, isLoading, closeDetailsCallba
             dataIndex: 'success',
             key: 'success',
             sortDirections: ['descend', 'ascend', 'descend'],
-            sorter: (a, b) => a.success - b.success
+            sorter: (a, b) => a.success - b.success,
+            showSorterTooltip: sorterTooltipOptions
         },
         {
             title: <b><Message messageKey='flyout.failureTitle' /></b>,
             dataIndex: 'errors',
             key: 'errors',
             sortDirections: ['descend', 'ascend', 'descend'],
-            sorter: (a, b) => a.errors - b.errors
+            sorter: (a, b) => a.errors - b.errors,
+            showSorterTooltip: sorterTooltipOptions
         },
         {
             title: 'Aika',
@@ -83,13 +89,18 @@ export const LayerAnalyticsDetails = ({ layerData, isLoading, closeDetailsCallba
             defaultSortOrder: 'descend',
             sortDirections: ['descend', 'ascend', 'descend'],
             sorter: (a, b) => a.time - b.time,
+            showSorterTooltip: sorterTooltipOptions,
             render: (text) => <Space>{ formatTimestamp(text) }</Space>
         },
         {
             title: '',
             key: 'movetoscale',
             render: (text, entry) => entry.stack.map((item, index) => (
-                <Fragment><a key={ item.x + '_' + item.y } href={ generateLink(item) } target='_blank'><Message messageKey='flyout.moveToScale' /> { index + 1 }</a><br/></Fragment>
+                <Fragment>
+                    <Tooltip title={ <Message messageKey='flyout.moveToScaleTooltip' /> }>
+                        <a key={ item.x + '_' + item.y } href={ generateLink(item) } target='_blank'><Message messageKey='flyout.moveToScale' /> { index + 1 }</a><br/>
+                    </Tooltip>
+                </Fragment>
             )) 
         },
         {

@@ -14,11 +14,16 @@ Oskari.registerLocalization(
                 "failureTitle": "Misslyckade vyn",
                 "idTitle": "Id",
                 "moveToScale": "Situation",
+                "moveToScaleTooltip": "Öppna kartvy som förorsakade misslyckad funktion.",
                 "backToList": "Återgå till listvyn",
-                "layerDataProvider": "Dataproducent"
+                "layerDataProvider": "Dataproducent",
+                "sorterTooltip": "Sortera fallande / stigande",
+                "showDetailsTooltip": "Öppna detaljvyn",
+                "editLayerTooltip": "Editera kartlager"
             },
             "messages": {
-                "errorFetchingLayerAnalytics": "Layer analytics couldn't be fetched."
+                "errorFetchingLayerAnalytics": "Layer analytics couldn't be fetched.",
+                "errorDeletingLayerAnalytics": "Layer monitor data couldn't be deleted."
             }
         }
     });

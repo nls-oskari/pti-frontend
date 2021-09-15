@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Table, Spin } from 'antd';
-import { Message } from 'oskari-ui';
+import { Message, Tooltip } from 'oskari-ui';
 import { EditOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
 
@@ -20,6 +20,10 @@ const StyledTable = styled(Table)`
     }
 `;
 
+const sorterTooltipOptions = {
+    title: <Message messageKey='flyout.sorterTooltip' />
+};
+
 export const LayerAnalyticsList = ({ analyticsData, isLoading, layerEditorCallback, layerDetailsCallback }) => {
 
     const columnSettings = [
@@ -31,10 +35,13 @@ export const LayerAnalyticsList = ({ analyticsData, isLoading, layerEditorCallba
             defaultSortOrder: 'ascend',
             sortDirections: ['descend', 'ascend', 'descend'],
             sorter: (a, b) => Oskari.util.naturalSort(a.title, b.title),
+            showSorterTooltip: sorterTooltipOptions,
             render: (title, item) => {
                 return (
                     <TitleArea>
-                        <a onClick={ () => layerDetailsCallback(item.id) } >{ title }</a>
+                        <Tooltip title={ <Message messageKey='flyout.showDetailsTooltip' /> }>
+                            <a onClick={ () => layerDetailsCallback(item.id) } >{ title }</a>
+                        </Tooltip>
                     </TitleArea>
                 );
             }
@@ -46,6 +53,7 @@ export const LayerAnalyticsList = ({ analyticsData, isLoading, layerEditorCallba
             key: 'success',
             sortDirections: ['descend', 'ascend', 'descend'],
             sorter: (a, b) => a.success - b.success,
+            showSorterTooltip: sorterTooltipOptions
         },
         {
             align: 'left',
@@ -54,6 +62,7 @@ export const LayerAnalyticsList = ({ analyticsData, isLoading, layerEditorCallba
             key: 'errors',
             sortDirections: ['descend', 'ascend', 'descend'],
             sorter: (a, b) => a.errors - b.errors,
+            showSorterTooltip: sorterTooltipOptions
         },
         {
             align: 'left',
