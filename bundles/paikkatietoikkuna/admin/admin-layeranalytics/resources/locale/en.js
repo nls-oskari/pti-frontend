@@ -12,8 +12,10 @@ Oskari.registerLocalization(
                 "title": "Layer monitor",
                 "successTitle": "Successes",
                 "failureTitle": "Failures",
-                "idTitle": "Id"
-
+                "idTitle": "Id",
+                "moveToScale": "Situation",
+                "backToList": "Back to list",
+                "layerDataProvider": "Dataprovider"
             },
             "messages": {
                 "errorFetchingLayerAnalytics": "Layer monitor data couldn't be fetched."

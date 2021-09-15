@@ -12,8 +12,10 @@ Oskari.registerLocalization(
                 "title": "Övervakning för kartlager",
                 "successTitle": "Successes",
                 "failureTitle": "Failures",
-                "idTitle": "Id"
-
+                "idTitle": "Id",
+                "moveToScale": "Tilanne",
+                "backToList": "Paluu listausnäkymään",
+                "layerDataProvider": "Dataproducent"
             },
             "messages": {
                 "errorFetchingLayerAnalytics": "Layer analytics couldn't be fetched."
