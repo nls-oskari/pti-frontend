@@ -114,8 +114,6 @@ export const LayerAnalyticsDetails = ({ layerData, isLoading, closeDetailsCallba
         return ( <Spin/> );
     }
 
-    console.log(layerData);
-
     return (
         <Space direction='vertical' style={{ width: '100%' }}>
             <Button onClick={ () => closeDetailsCallback() } >
