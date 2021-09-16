@@ -221,11 +221,12 @@ Oskari.clazz.define('Oskari.framework.bundle.admin-layeranalytics.AdminLayerAnal
                     const itemLayer = this.mapLayerService.findMapLayer(item);
                     const title = itemLayer !== null ? itemLayer.getName() : item;
                     const totalDisplays = result[item].success + result[item].errors;
-                    const failurePercentage = Math.round(result[item].errors / totalDisplays * 100); 
+                    const failurePercentage = Math.round(result[item].errors / totalDisplays * 100);
+
                     this.analyticsListData.push({
                         ...result[item],
                         total: totalDisplays,
-                        failurePercentage,
+                        failurePercentage: failurePercentage,
                         id: item,
                         title: title
                     });
@@ -246,9 +247,13 @@ Oskari.clazz.define('Oskari.framework.bundle.admin-layeranalytics.AdminLayerAnal
                 const itemLayer = this.mapLayerService.findMapLayer(id);
                 const layerOrganization = itemLayer !== 'undefined' && itemLayer !== null ? itemLayer.getOrganizationName() : null;
                 const title = typeof itemLayer !== 'undefined' && itemLayer !== null ? itemLayer.getName() : id;
+                const totalDisplays = itemData.success + itemData.errors;
+                const successPercentage = Math.round(itemData.success / totalDisplays * 100);
+
                 this.selectedLayerData = {
                     ...itemData,
                     id: id,
+                    successPercentage: successPercentage,
                     title: title,
                     layerOrganization: layerOrganization
                 };
