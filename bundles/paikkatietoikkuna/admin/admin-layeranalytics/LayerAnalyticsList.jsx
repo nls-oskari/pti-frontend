@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Table, Spin } from 'antd';
 import { Message, Tooltip } from 'oskari-ui';
@@ -57,12 +57,13 @@ export const LayerAnalyticsList = ({ analyticsData, isLoading, layerEditorCallba
         },
         {
             align: 'left',
-            title: <Message messageKey='flyout.failureTitle' />,
-            dataIndex: 'errors',
-            key: 'errors',
+            title: <Message messageKey='flyout.failurePercentage' />,
+            dataIndex: 'failurePercentage',
+            key: 'failurePercentage',
             sortDirections: ['descend', 'ascend', 'descend'],
-            sorter: (a, b) => a.errors - b.errors,
-            showSorterTooltip: sorterTooltipOptions
+            sorter: (a, b) => a.failurePercentage - b.failurePercentage,
+            showSorterTooltip: sorterTooltipOptions,
+            render: (title) => <Fragment>{ title }%</Fragment>
         },
         {
             align: 'left',

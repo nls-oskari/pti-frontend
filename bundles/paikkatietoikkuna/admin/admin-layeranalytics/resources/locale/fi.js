@@ -11,6 +11,7 @@ Oskari.registerLocalization(
             "flyout": {
                 "title": "Tasoseuranta",
                 "totalDisplaysTitle": "Näytöt yhteensä",
+                "failurePercentage": "Virheelliset näytöt %",
                 "successTitle": "Onnistuneet näytöt",
                 "failureTitle": "Virheelliset näytöt",
                 "idTitle": "Nimi",

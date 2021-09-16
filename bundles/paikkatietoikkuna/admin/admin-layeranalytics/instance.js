@@ -221,9 +221,11 @@ Oskari.clazz.define('Oskari.framework.bundle.admin-layeranalytics.AdminLayerAnal
                     const itemLayer = this.mapLayerService.findMapLayer(item);
                     const title = itemLayer !== null ? itemLayer.getName() : item;
                     const totalDisplays = result[item].success + result[item].errors;
+                    const failurePercentage = Math.round(result[item].errors / totalDisplays * 100); 
                     this.analyticsListData.push({
                         ...result[item],
                         total: totalDisplays,
+                        failurePercentage,
                         id: item,
                         title: title
                     });
