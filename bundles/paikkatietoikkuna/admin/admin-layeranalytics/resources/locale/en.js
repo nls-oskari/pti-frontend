@@ -10,13 +10,22 @@ Oskari.registerLocalization(
             },
             "flyout": {
                 "title": "Layer monitor",
+                "totalDisplaysTitle": "Total displays",
+                "failurePercentage": "Failed displays %",
                 "successTitle": "Successes",
                 "failureTitle": "Failures",
-                "idTitle": "Id"
-
+                "idTitle": "Id",
+                "moveToScale": "Situation",
+                "moveToScaleTooltip": "Open the map view in which the problem occured.",
+                "backToList": "Back to list",
+                "layerDataProvider": "Dataprovider",
+                "sorterTooltip": "Click to sort descending/ascending",
+                "showDetailsTooltip": "Open detailed view",
+                "editLayerTooltip": "Edit layer"
             },
             "messages": {
-                "errorFetchingLayerAnalytics": "Layer monitor data couldn't be fetched."
+                "errorFetchingLayerAnalytics": "Layer monitor data couldn't be fetched.",
+                "errorDeletingLayerAnalytics": "Layer monitor data couldn't be deleted."
             }
         }
     });

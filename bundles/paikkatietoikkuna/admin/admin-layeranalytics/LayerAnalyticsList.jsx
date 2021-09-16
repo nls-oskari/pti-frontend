@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Table, Spin } from 'antd';
-import { Message } from 'oskari-ui';
+import { Message, Tooltip } from 'oskari-ui';
 import { EditOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
 
@@ -14,6 +14,16 @@ const TitleArea = styled.span`
     }
 `;
 
+const StyledTable = styled(Table)`
+    .ant-table-column-sorter {
+        margin: 0 0 0 5px;
+    }
+`;
+
+const sorterTooltipOptions = {
+    title: <Message messageKey='flyout.sorterTooltip' />
+};
+
 export const LayerAnalyticsList = ({ analyticsData, isLoading, layerEditorCallback, layerDetailsCallback }) => {
 
     const columnSettings = [
@@ -25,30 +35,46 @@ export const LayerAnalyticsList = ({ analyticsData, isLoading, layerEditorCallba
             defaultSortOrder: 'ascend',
             sortDirections: ['descend', 'ascend', 'descend'],
             sorter: (a, b) => Oskari.util.naturalSort(a.title, b.title),
+            showSorterTooltip: sorterTooltipOptions,
             render: (title, item) => {
                 return (
                     <TitleArea>
-                        <a onClick={ () => layerDetailsCallback(item.id) } >{ title }</a>
-                        <EditOutlined onClick={ () => layerEditorCallback(item.id) } />
+                        <Tooltip title={ <Message messageKey='flyout.showDetailsTooltip' /> }>
+                            <a onClick={ () => layerDetailsCallback(item.id) } >{ title }</a>
+                        </Tooltip>
                     </TitleArea>
                 );
             }
         },
         {
             align: 'left',
-            title: <Message messageKey='flyout.successTitle' />,
-            dataIndex: 'success',
-            key: 'success',
+            title: <Message messageKey='flyout.totalDisplaysTitle' />,
+            dataIndex: 'total',
+            key: 'total',
             sortDirections: ['descend', 'ascend', 'descend'],
-            sorter: (a, b) => a.success - b.success,
+            sorter: (a, b) => a.total - b.total,
+            showSorterTooltip: sorterTooltipOptions
         },
         {
             align: 'left',
-            title: <Message messageKey='flyout.failureTitle' />,
-            dataIndex: 'errors',
-            key: 'errors',
+            title: <Message messageKey='flyout.failurePercentage' />,
+            dataIndex: 'failurePercentage',
+            key: 'failurePercentage',
             sortDirections: ['descend', 'ascend', 'descend'],
-            sorter: (a, b) => a.errors - b.errors,
+            sorter: (a, b) => a.failurePercentage - b.failurePercentage,
+            showSorterTooltip: sorterTooltipOptions,
+            render: (title) => <Fragment>{ title }%</Fragment>
+        },
+        {
+            align: 'left',
+            key: 'edit',
+            render: (title, item) => {
+                return (
+                    <TitleArea>
+                        <EditOutlined onClick={ () => layerEditorCallback(item.id) } />
+                    </TitleArea>
+                );
+            }
         }
     ];
 
@@ -57,10 +83,10 @@ export const LayerAnalyticsList = ({ analyticsData, isLoading, layerEditorCallba
     }
 
     return (
-        <Table
+        <StyledTable
             columns={ columnSettings }
             dataSource={ analyticsData }
-            pagination={{ position: ['none', 'none'] }}
+            pagination={{ position: ['none', 'bottomCenter'] }}
         />
     );
 };

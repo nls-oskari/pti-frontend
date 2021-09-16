@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Button, Table, Space, Spin } from 'antd';
-import { Message } from 'oskari-ui';
+import { Message, Tooltip } from 'oskari-ui';
 import { ArrowLeftOutlined, DeleteOutlined } from '@ant-design/icons';
+import { red } from '@ant-design/colors'
 
 import 'antd/es/table/style/index.js';
 
@@ -13,6 +14,13 @@ const localeDateOptions = {
     day: '2-digit'
 };
 
+const iconStyle = {
+    color: red.primary
+};
+
+const sorterTooltipOptions = {
+    title: <Message messageKey='flyout.sorterTooltip' />
+};
 
 // timestamp formatting copied from admin-layereditor in oskari-frontend
 // TO-DO: Move both to helper class
@@ -21,7 +29,7 @@ const formatTimestamp = (timestamp) => {
     if (typeof timestamp !== 'undefined') {
         date = new Date(timestamp);
     }
-    return formatTime(date) + ' ' + formatDate(date);
+    return  formatDate(date) + ' ' + formatTime(date);
 };
 const formatDate = (date) => {
     if (typeof date === 'undefined') {
@@ -59,11 +67,20 @@ export const LayerAnalyticsDetails = ({ layerData, isLoading, closeDetailsCallba
 
     const columnSettings = [
         {
+            title: <b><Message messageKey='flyout.successTitle' /></b>,
+            dataIndex: 'success',
+            key: 'success',
+            sortDirections: ['descend', 'ascend', 'descend'],
+            sorter: (a, b) => a.success - b.success,
+            showSorterTooltip: sorterTooltipOptions
+        },
+        {
             title: <b><Message messageKey='flyout.failureTitle' /></b>,
             dataIndex: 'errors',
             key: 'errors',
             sortDirections: ['descend', 'ascend', 'descend'],
-            sorter: (a, b) => a.errors - b.errors
+            sorter: (a, b) => a.errors - b.errors,
+            showSorterTooltip: sorterTooltipOptions
         },
         {
             title: 'Aika',
@@ -72,19 +89,24 @@ export const LayerAnalyticsDetails = ({ layerData, isLoading, closeDetailsCallba
             defaultSortOrder: 'descend',
             sortDirections: ['descend', 'ascend', 'descend'],
             sorter: (a, b) => a.time - b.time,
+            showSorterTooltip: sorterTooltipOptions,
             render: (text) => <Space>{ formatTimestamp(text) }</Space>
         },
         {
             title: '',
             key: 'movetoscale',
             render: (text, entry) => entry.stack.map((item, index) => (
-                <a key={ item.x + '_' + item.y } href={ generateLink(item) } target='_blank'><Message messageKey='flyout.moveToScale' /> { index + 1 }</a>
+                <Fragment>
+                    <Tooltip title={ <Message messageKey='flyout.moveToScaleTooltip' /> }>
+                        <a key={ item.x + '_' + item.y } href={ generateLink(item) } target='_blank'><Message messageKey='flyout.moveToScale' /> { index + 1 }</a><br/>
+                    </Tooltip>
+                </Fragment>
             )) 
         },
         {
             title: '',
             key: 'remove',
-            render: (text, entry, index) => (<a key={ 'remove_' + entry.id + '_' + entry.time } onClick={ () => removeAnalyticsCallback(layerData.id, entry.time) } target='_blank'><DeleteOutlined /></a>)
+            render: (text, entry, index) => (<a key={ 'remove_' + entry.id + '_' + entry.time } onClick={ () => removeAnalyticsCallback(layerData.id, entry.time) } target='_blank'><DeleteOutlined style={ iconStyle } /></a>)
         }
     ];
 
@@ -98,7 +120,10 @@ export const LayerAnalyticsDetails = ({ layerData, isLoading, closeDetailsCallba
                 <ArrowLeftOutlined /> <Message messageKey='flyout.backToList' />
             </Button>
             <b>{ layerData.title }</b>
-            <div><Message messageKey='flyout.successTitle' />: { layerData.success }</div>
+            { layerData.layerOrganization && 
+                <div><Message messageKey='flyout.layerDataProvider' />: { layerData.layerOrganization }</div>
+            }
+            <div><Message messageKey='flyout.successTitle' />: { layerData.success } ({ layerData.successPercentage }%)</div>
             <div><Message messageKey='flyout.failureTitle' />: { layerData.errors }</div>
             { layerData.details.length > 0 &&
                 <Table
