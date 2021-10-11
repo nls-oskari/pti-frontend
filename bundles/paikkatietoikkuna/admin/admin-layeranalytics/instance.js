@@ -220,6 +220,8 @@ Oskari.clazz.define('Oskari.framework.bundle.admin-layeranalytics.AdminLayerAnal
                 for (const item in result) {
                     const itemLayer = this.mapLayerService.findMapLayer(item);
                     const title = itemLayer !== null ? itemLayer.getName() : item;
+                    const dataProducer = itemLayer !== null ? itemLayer.getOrganizationName() : '';
+                    const layerType = itemLayer !== null ? itemLayer.getLayerType() : '';
                     const totalDisplays = result[item].success + result[item].errors;
                     const failurePercentage = Math.round(result[item].errors / totalDisplays * 100);
 
@@ -228,7 +230,9 @@ Oskari.clazz.define('Oskari.framework.bundle.admin-layeranalytics.AdminLayerAnal
                         total: totalDisplays,
                         failurePercentage: failurePercentage,
                         id: item,
-                        title: title
+                        title: title,
+                        dataProducer,
+                        layerType
                     });
                 }
                 this.updateLoadingState();

@@ -25,7 +25,7 @@ const sorterTooltipOptions = {
 };
 
 export const LayerAnalyticsList = ({ analyticsData, isLoading, layerEditorCallback, layerDetailsCallback }) => {
-
+    
     const columnSettings = [
         {
             align: 'left',
@@ -44,6 +44,32 @@ export const LayerAnalyticsList = ({ analyticsData, isLoading, layerEditorCallba
                         </Tooltip>
                     </TitleArea>
                 );
+            }
+        },
+        {
+            align: 'left',
+            title: <Message messageKey='flyout.layerDataProvider' />,
+            dataIndex: 'dataProducer',
+            key: 'dataProducer',
+            defaultSortOrder: 'ascend',
+            sortDirections: ['descend', 'ascend', 'descend'],
+            sorter: (a, b) => Oskari.util.naturalSort(a.title, b.title),
+            showSorterTooltip: sorterTooltipOptions,
+            render: (title, item) => {
+                return (<TitleArea>{ title }</TitleArea>);
+            }
+        },
+        {
+            align: 'left',
+            title: 'Type',
+            dataIndex: 'layerType',
+            key: 'layerType',
+            defaultSortOrder: 'ascend',
+            sortDirections: ['descend', 'ascend', 'descend'],
+            sorter: (a, b) => Oskari.util.naturalSort(a.title, b.title),
+            showSorterTooltip: sorterTooltipOptions,
+            render: (title, item) => {
+                return (<TitleArea>{ title }</TitleArea>);
             }
         },
         {
