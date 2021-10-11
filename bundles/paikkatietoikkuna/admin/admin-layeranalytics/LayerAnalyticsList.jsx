@@ -53,7 +53,7 @@ export const LayerAnalyticsList = ({ analyticsData, isLoading, layerEditorCallba
             key: 'dataProducer',
             defaultSortOrder: 'ascend',
             sortDirections: ['descend', 'ascend', 'descend'],
-            sorter: (a, b) => Oskari.util.naturalSort(a.title, b.title),
+            sorter: (a, b) => Oskari.util.naturalSort(a.dataProducer, b.dataProducer),
             showSorterTooltip: sorterTooltipOptions,
             render: (title, item) => {
                 return (<TitleArea>{ title }</TitleArea>);
@@ -66,7 +66,7 @@ export const LayerAnalyticsList = ({ analyticsData, isLoading, layerEditorCallba
             key: 'layerType',
             defaultSortOrder: 'ascend',
             sortDirections: ['descend', 'ascend', 'descend'],
-            sorter: (a, b) => Oskari.util.naturalSort(a.title, b.title),
+            sorter: (a, b) => Oskari.util.naturalSort(a.layerType, b.layerType),
             showSorterTooltip: sorterTooltipOptions,
             render: (title, item) => {
                 return (<TitleArea>{ title }</TitleArea>);
