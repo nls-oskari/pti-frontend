@@ -59,6 +59,16 @@ Oskari.clazz.define('Oskari.framework.admin-layeranalytics.AdminLayerAnalyticsBu
                     lang: 'fi',
                     type: 'text/javascript',
                     src: './resources/locale/fi.js'
+                },
+                {
+                    lang: 'en',
+                    type: 'text/javascript',
+                    src: './resources/locale/en.js'
+                },
+                {
+                    lang: 'sv',
+                    type: 'text/javascript',
+                    src: './resources/locale/sv.js'
                 }
             ]
         }
