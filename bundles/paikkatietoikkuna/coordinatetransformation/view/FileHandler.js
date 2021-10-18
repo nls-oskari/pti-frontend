@@ -178,11 +178,11 @@ Oskari.clazz.define('Oskari.coordinatetransformation.view.FileHandler',
             element = jQuery(this._template.settings(fileSettings));
             if (this.type === 'import') {
                 this.fileInput = Oskari.clazz.create('Oskari.userinterface.component.FileInput', {
-                    'allowMultipleFiles': false,
-                    'maxFileSize': 50,
-                    'allowedFileTypes': ['text/plain', 'text/csv'],
-                    'allowedFileExtensions': ['txt', 'csv'],
-                    'showNoFile': false
+                    allowMultipleFiles: false,
+                    maxFileSize: 50,
+                    allowedFileTypes: ['text/plain', 'text/csv'],
+                    allowedFileExtensions: ['txt', 'csv'],
+                    showNoFile: false
                 });
                 element.find('.fileInput').append(this.fileInput.getElement());
             }

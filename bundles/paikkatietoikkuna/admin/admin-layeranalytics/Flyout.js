@@ -40,15 +40,14 @@ Oskari.clazz.define('Oskari.framework.bundle.admin-layeranalytics.Flyout',
         updateUI () {
             ReactDOM.render(
                 <LocaleProvider value={{ bundleKey: this.instance.getName() }}>
-                    { !this.selectedLayerId ?
-                        <LayerAnalyticsList
+                    { !this.selectedLayerId
+                        ? <LayerAnalyticsList
                             analyticsData={[...this.instance.getAnalyticsListData()]}
                             isLoading={ this.instance.getLoadingState() }
                             layerEditorCallback={ this.openLayerEditor }
                             layerDetailsCallback={ (id) => this.toggleLayerDetails(id) }
                         />
-                    :
-                        <LayerAnalyticsDetails
+                        : <LayerAnalyticsDetails
                             layerData={ this.instance.getAnalyticsDetailsData() }
                             isLoading={ this.instance.getLoadingState() }
                             closeDetailsCallback={ () => this.toggleLayerDetails() }

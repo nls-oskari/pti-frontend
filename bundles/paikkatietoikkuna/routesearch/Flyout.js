@@ -45,7 +45,7 @@ Oskari.clazz.define('Oskari.mapframework.bundle.routesearch.Flyout',
             var me = this;
             var fieldName = field.element[0].name;
             me.state[fieldName] = {
-                'name': request.term
+                name: request.term
             };
 
             me._updateRoutingLinks();
@@ -444,6 +444,6 @@ Oskari.clazz.define('Oskari.mapframework.bundle.routesearch.Flyout',
             }
         }
     }, {
-        'extend': ['Oskari.userinterface.extension.DefaultFlyout']
+        extend: ['Oskari.userinterface.extension.DefaultFlyout']
     }
 );

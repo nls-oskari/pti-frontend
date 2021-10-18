@@ -104,6 +104,6 @@ Oskari.clazz.define('Oskari.framework.bundle.admin-layeranalytics.Tile',
          * @property {String[]} protocol
          * @static
          */
-        'protocol': ['Oskari.userinterface.Tile']
+        protocol: ['Oskari.userinterface.Tile']
     }
 );

@@ -50,10 +50,10 @@ Oskari.clazz.define('Oskari.coordinatetransformation.component.CoordinateTable',
     },
     getElements: function () { // TODO: store references
         var elements = {
-            'table': this.getContainer().find('.oskari-coordinate-table'),
-            'rows': this.getContainer().find('.oskari-coordinate-table tr'),
-            'header': this.getContainer().find('.oskari-tbl-header'),
-            'tableContent': this.getContainer().find('.oskari-table-content')
+            table: this.getContainer().find('.oskari-coordinate-table'),
+            rows: this.getContainer().find('.oskari-coordinate-table tr'),
+            header: this.getContainer().find('.oskari-tbl-header'),
+            tableContent: this.getContainer().find('.oskari-table-content')
         };
         return elements;
     },
