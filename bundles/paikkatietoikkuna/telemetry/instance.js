@@ -58,6 +58,6 @@ Oskari.clazz.define('Oskari.mapframework.bundle.telemetry.TelemetryBundleInstanc
         window._paq.push(args);
     }
 }, {
-    'extend': ['Oskari.BasicBundle'],
-    'protocol': ['Oskari.bundle.BundleInstance', 'Oskari.mapframework.module.Module']
+    extend: ['Oskari.BasicBundle'],
+    protocol: ['Oskari.bundle.BundleInstance', 'Oskari.mapframework.module.Module']
 });

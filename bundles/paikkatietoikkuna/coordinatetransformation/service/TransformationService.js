@@ -217,5 +217,5 @@ Oskari.clazz.define('Oskari.coordinatetransformation.TransformationService',
             return 'results.txt';
         }
     }, {
-        'protocol': ['Oskari.mapframework.service.Service']
+        protocol: ['Oskari.mapframework.service.Service']
     });

@@ -103,7 +103,7 @@ Oskari.clazz.define('Oskari.coordinatetransformation.component.CoordinateSystemS
             var select = Oskari.clazz.create('Oskari.userinterface.component.SelectList', dropdownId);
             var dropdown;
             var options = {
-                placeholder_text: json['DEFAULT'].title,
+                placeholder_text: json.DEFAULT.title,
                 allow_single_deselect: true,
                 disable_search_threshold: 50,
                 width: '100%'

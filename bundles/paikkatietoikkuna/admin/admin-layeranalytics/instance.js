@@ -178,7 +178,7 @@ Oskari.clazz.define('Oskari.framework.bundle.admin-layeranalytics.AdminLayerAnal
             return fetch(route, {
                 method: 'GET',
                 headers: {
-                    'Accept': 'application/json'
+                    Accept: 'application/json'
                 }
             }).then(response => {
                 if (!response.ok) {
@@ -200,14 +200,14 @@ Oskari.clazz.define('Oskari.framework.bundle.admin-layeranalytics.AdminLayerAnal
             fetch(route, {
                 method: 'DELETE',
                 headers: {
-                    'Accept': 'application/json'
+                    Accept: 'application/json'
                 }
             }).then(response => {
                 if (!response.ok) {
                     Messaging.error(getMessage('messages.errorDeletingLayerAnalytics'));
                 }
                 this.updateLoadingState();
-                this.produceAnalyticsDetailsData(this.plugins['Oskari.userinterface.Flyout'].getSelectedLayerId())
+                this.produceAnalyticsDetailsData(this.plugins['Oskari.userinterface.Flyout'].getSelectedLayerId());
             });
         },
 

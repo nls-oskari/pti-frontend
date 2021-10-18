@@ -118,5 +118,5 @@ Oskari.clazz.define('Oskari.mapframework.bundle.register.RegisterBundleInstance'
          * @property {String[]} extend
          * @static
          */
-        'extend': ['Oskari.userinterface.extension.DefaultExtension']
+        extend: ['Oskari.userinterface.extension.DefaultExtension']
     });

@@ -76,7 +76,7 @@ Oskari.clazz.define('Oskari.pti.layerstatus.StatusBundleInstance', function () {
             }
         }
 
-        let stats = this.__loadingStatus[id];
+        const stats = this.__loadingStatus[id];
         if (stats) {
             return stats;
         }
@@ -98,6 +98,6 @@ Oskari.clazz.define('Oskari.pti.layerstatus.StatusBundleInstance', function () {
         });
     }
 }, {
-    'extend': ['Oskari.BasicBundle'],
-    'protocol': ['Oskari.bundle.BundleInstance', 'Oskari.mapframework.module.Module']
+    extend: ['Oskari.BasicBundle'],
+    protocol: ['Oskari.bundle.BundleInstance', 'Oskari.mapframework.module.Module']
 });

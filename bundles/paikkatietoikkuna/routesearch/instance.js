@@ -75,5 +75,5 @@ Oskari.clazz.define('Oskari.mapframework.bundle.routesearch.RouteSearchBundleIns
          * @property {String[]} extend
          * @static
          */
-        'extend': ['Oskari.userinterface.extension.DefaultExtension']
+        extend: ['Oskari.userinterface.extension.DefaultExtension']
     });
