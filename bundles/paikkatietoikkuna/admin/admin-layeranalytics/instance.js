@@ -205,8 +205,8 @@ Oskari.clazz.define('Oskari.framework.bundle.admin-layeranalytics.AdminLayerAnal
             }).then(response => {
                 if (!response.ok) {
                     Messaging.error(getMessage('messages.errorDeletingLayerAnalytics'));
-                } 
-                
+                }
+
                 this.updateLoadingState();
                 if (!dataId) {
                     // removed whole layer data
