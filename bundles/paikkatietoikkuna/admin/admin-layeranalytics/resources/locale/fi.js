@@ -21,7 +21,11 @@ Oskari.registerLocalization(
                 "layerDataProvider": "Tiedontuottaja",
                 "sorterTooltip": "Järjestä laskevasti/nousevasti",
                 "showDetailsTooltip": "Avaa yksityiskohtaiset tiedot",
-                "editLayerTooltip": "Muokkaa tasoa"
+                "editLayerTooltip": "Muokkaa tasoa",
+                "removeAllDataForLayer": "Poista tason kaikki seurantatiedot",
+                "removeSingleDataForLayer": "Poista yksittäisen käyttäjän raportoimat seurantatiedot",
+                "delete": "Poista",
+                "cancel": "Peruuta"
             },
             "messages": {
                 "errorFetchingLayerAnalytics": "Tason analytiikka tietoja ei voitu hakea.",

@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Button, Table, Space, Spin } from 'antd';
-import { Message, Tooltip } from 'oskari-ui';
+import { Confirm, Message, Tooltip } from 'oskari-ui';
 import { ArrowLeftOutlined, DeleteOutlined } from '@ant-design/icons';
 import { red } from '@ant-design/colors'
 
@@ -14,7 +14,7 @@ const localeDateOptions = {
     day: '2-digit'
 };
 
-const iconStyle = {
+export const DELETE_ICON_STYLE = {
     color: red.primary
 };
 
@@ -69,7 +69,6 @@ export const LayerAnalyticsDetails = ({ layerData, isLoading, closeDetailsCallba
         {
             title: <b><Message messageKey='flyout.successTitle' /></b>,
             dataIndex: 'success',
-            key: 'success',
             sortDirections: ['descend', 'ascend', 'descend'],
             sorter: (a, b) => a.success - b.success,
             showSorterTooltip: sorterTooltipOptions
@@ -77,7 +76,6 @@ export const LayerAnalyticsDetails = ({ layerData, isLoading, closeDetailsCallba
         {
             title: <b><Message messageKey='flyout.failureTitle' /></b>,
             dataIndex: 'errors',
-            key: 'errors',
             sortDirections: ['descend', 'ascend', 'descend'],
             sorter: (a, b) => a.errors - b.errors,
             showSorterTooltip: sorterTooltipOptions
@@ -85,7 +83,6 @@ export const LayerAnalyticsDetails = ({ layerData, isLoading, closeDetailsCallba
         {
             title: 'Aika',
             dataIndex: 'time',
-            key: 'time',
             defaultSortOrder: 'descend',
             sortDirections: ['descend', 'ascend', 'descend'],
             sorter: (a, b) => a.time - b.time,
@@ -95,18 +92,28 @@ export const LayerAnalyticsDetails = ({ layerData, isLoading, closeDetailsCallba
         {
             title: '',
             key: 'movetoscale',
-            render: (text, entry) => entry.stack.map((item, index) => (
-                <Fragment>
-                    <Tooltip title={ <Message messageKey='flyout.moveToScaleTooltip' /> }>
-                        <a key={ item.x + '_' + item.y } href={ generateLink(item) } target='_blank'><Message messageKey='flyout.moveToScale' /> { index + 1 }</a><br/>
-                    </Tooltip>
-                </Fragment>
-            )) 
+            render: (text, entry) => entry.stack.map((item, index) => {
+                const link = generateLink(item);
+                return (
+                    <Fragment key={ link }>
+                        <Tooltip title={ <Message messageKey='flyout.moveToScaleTooltip' /> }>
+                            <a href={ link } target='_blank'><Message messageKey='flyout.moveToScale' /> { index + 1 }</a><br/>
+                        </Tooltip>
+                    </Fragment>
+                )})
         },
         {
             title: '',
             key: 'remove',
-            render: (text, entry, index) => (<a key={ 'remove_' + entry.id + '_' + entry.time } onClick={ () => removeAnalyticsCallback(layerData.id, entry.time) } target='_blank'><DeleteOutlined style={ iconStyle } /></a>)
+            render: (text, entry, index) => (
+                <Confirm
+                    title={<Message messageKey='flyout.removeSingleDataForLayer' />}
+                    onConfirm={() => removeAnalyticsCallback(layerData.id, entry.time)}
+                    okText={<Message messageKey='flyout.delete' />}
+                    cancelText={<Message messageKey='flyout.cancel' />}
+                    placement='bottomLeft'>
+                    <DeleteOutlined style={ DELETE_ICON_STYLE } />
+                </Confirm>)
         }
     ];
 
@@ -128,7 +135,12 @@ export const LayerAnalyticsDetails = ({ layerData, isLoading, closeDetailsCallba
             { layerData.details.length > 0 &&
                 <Table
                     columns={ columnSettings }
-                    dataSource={ layerData.details }
+                    dataSource={ layerData.details.map(item => {
+                        return {
+                            key: item.time,
+                            ...item
+                        };
+                    }) }
                     pagination={{ position: ['none', 'none'] }}
                 />
             }

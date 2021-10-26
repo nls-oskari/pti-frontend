@@ -45,6 +45,7 @@ Oskari.clazz.define('Oskari.framework.bundle.admin-layeranalytics.Flyout',
                             analyticsData={[...this.instance.getAnalyticsListData()]}
                             isLoading={ this.instance.getLoadingState() }
                             layerEditorCallback={ this.openLayerEditor }
+                            removeAnalyticsCallback={ (id) => this.instance.removeAnalyticsData(id) }
                             layerDetailsCallback={ (id) => this.toggleLayerDetails(id) }
                         />
                         : <LayerAnalyticsDetails
