@@ -21,7 +21,11 @@ Oskari.registerLocalization(
                 "layerDataProvider": "Dataprovider",
                 "sorterTooltip": "Click to sort descending/ascending",
                 "showDetailsTooltip": "Open detailed view",
-                "editLayerTooltip": "Edit layer"
+                "editLayerTooltip": "Edit layer",
+                "removeAllDataForLayer": "Remove all tracking data for layer",
+                "removeSingleDataForLayer": "Remove tracking data from single user report",
+                "delete": "Delete",
+                "cancel": "Cancel"
             },
             "messages": {
                 "errorFetchingLayerAnalytics": "Layer monitor data couldn't be fetched.",

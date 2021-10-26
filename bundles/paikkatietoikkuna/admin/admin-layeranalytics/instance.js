@@ -206,8 +206,16 @@ Oskari.clazz.define('Oskari.framework.bundle.admin-layeranalytics.AdminLayerAnal
                 if (!response.ok) {
                     Messaging.error(getMessage('messages.errorDeletingLayerAnalytics'));
                 }
+
                 this.updateLoadingState();
-                this.produceAnalyticsDetailsData(this.plugins['Oskari.userinterface.Flyout'].getSelectedLayerId());
+                if (!dataId) {
+                    // removed whole layer data
+                    this.analyticsListData = this.analyticsListData.filter(item => item.id !== layerId);
+                    this.plugins['Oskari.userinterface.Flyout'].updateUI();
+                } else {
+                    // removed single usage data
+                    this.produceAnalyticsDetailsData(this.plugins['Oskari.userinterface.Flyout'].getSelectedLayerId());
+                }
             });
         },
 

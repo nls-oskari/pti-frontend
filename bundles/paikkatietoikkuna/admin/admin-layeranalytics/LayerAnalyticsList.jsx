@@ -1,8 +1,9 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-import { Table, Spin } from 'antd';
-import { Message, Tooltip } from 'oskari-ui';
-import { EditOutlined } from '@ant-design/icons';
+import { Table } from 'antd';
+import { Confirm, Message, Space, Spin, Tooltip } from 'oskari-ui';
+import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import { DELETE_ICON_STYLE } from './LayerAnalyticsDetails';
 import styled from 'styled-components';
 
 import 'antd/es/table/style/index.js';
@@ -24,14 +25,13 @@ const sorterTooltipOptions = {
     title: <Message messageKey='flyout.sorterTooltip' />
 };
 
-export const LayerAnalyticsList = ({ analyticsData, isLoading, layerEditorCallback, layerDetailsCallback }) => {
+export const LayerAnalyticsList = ({ analyticsData, isLoading, layerEditorCallback, layerDetailsCallback, removeAnalyticsCallback }) => {
     
     const columnSettings = [
         {
             align: 'left',
             title: <Message messageKey='flyout.idTitle' />,
             dataIndex: 'title',
-            key: 'title',
             defaultSortOrder: 'ascend',
             sortDirections: ['descend', 'ascend', 'descend'],
             sorter: (a, b) => Oskari.util.naturalSort(a.title, b.title),
@@ -50,7 +50,6 @@ export const LayerAnalyticsList = ({ analyticsData, isLoading, layerEditorCallba
             align: 'left',
             title: <Message messageKey='flyout.layerDataProvider' />,
             dataIndex: 'dataProducer',
-            key: 'dataProducer',
             defaultSortOrder: 'ascend',
             sortDirections: ['descend', 'ascend', 'descend'],
             sorter: (a, b) => Oskari.util.naturalSort(a.dataProducer, b.dataProducer),
@@ -63,7 +62,6 @@ export const LayerAnalyticsList = ({ analyticsData, isLoading, layerEditorCallba
             align: 'left',
             title: 'Type',
             dataIndex: 'layerType',
-            key: 'layerType',
             defaultSortOrder: 'ascend',
             sortDirections: ['descend', 'ascend', 'descend'],
             sorter: (a, b) => Oskari.util.naturalSort(a.layerType, b.layerType),
@@ -76,7 +74,6 @@ export const LayerAnalyticsList = ({ analyticsData, isLoading, layerEditorCallba
             align: 'left',
             title: <Message messageKey='flyout.totalDisplaysTitle' />,
             dataIndex: 'total',
-            key: 'total',
             sortDirections: ['descend', 'ascend', 'descend'],
             sorter: (a, b) => a.total - b.total,
             showSorterTooltip: sorterTooltipOptions
@@ -85,20 +82,44 @@ export const LayerAnalyticsList = ({ analyticsData, isLoading, layerEditorCallba
             align: 'left',
             title: <Message messageKey='flyout.failurePercentage' />,
             dataIndex: 'failurePercentage',
-            key: 'failurePercentage',
             sortDirections: ['descend', 'ascend', 'descend'],
-            sorter: (a, b) => a.failurePercentage - b.failurePercentage,
+            sorter: (a, b, sortOrder) => {
+                const rate = a.failurePercentage - b.failurePercentage;
+                if (rate !== 0) {
+                    return rate;
+                }
+                if (sortOrder === 'ascend') {
+                    // most used, least failures
+                    return b.total - a.total;
+                }
+                // most used, most failures
+                return a.total - b.total;
+            },
             showSorterTooltip: sorterTooltipOptions,
             render: (title) => <Fragment>{ title }%</Fragment>
         },
         {
             align: 'left',
-            key: 'edit',
+            key: 'tools',
             render: (title, item) => {
                 return (
-                    <TitleArea>
-                        <EditOutlined onClick={ () => layerEditorCallback(item.id) } />
-                    </TitleArea>
+                    <React.Fragment>
+                        <TitleArea>
+                            <Space>
+                                <Tooltip title={ <Message messageKey='flyout.editLayerTooltip' /> }>
+                                    <EditOutlined onClick={ () => layerEditorCallback(item.id) } />
+                                </Tooltip>
+                                <Confirm
+                                    title={<Message messageKey='flyout.removeAllDataForLayer' />}
+                                    onConfirm={() => removeAnalyticsCallback(item.id)}
+                                    okText={<Message messageKey='flyout.delete' />}
+                                    cancelText={<Message messageKey='flyout.cancel' />}
+                                    placement='bottomLeft'>
+                                    <DeleteOutlined style={ DELETE_ICON_STYLE } />
+                                </Confirm>
+                            </Space>
+                        </TitleArea>
+                    </React.Fragment>
                 );
             }
         }
@@ -111,7 +132,12 @@ export const LayerAnalyticsList = ({ analyticsData, isLoading, layerEditorCallba
     return (
         <StyledTable
             columns={ columnSettings }
-            dataSource={ analyticsData }
+            dataSource={ analyticsData.map(item => {
+                return {
+                    key: item.id,
+                    ...item
+                };
+            }) }
             pagination={{ position: ['none', 'bottomCenter'] }}
         />
     );
@@ -121,5 +147,6 @@ LayerAnalyticsList.propTypes = {
     analyticsData: PropTypes.array.isRequired,
     isLoading: PropTypes.bool.isRequired,
     layerEditorCallback: PropTypes.func.isRequired,
-    layerDetailsCallback: PropTypes.func.isRequired
+    layerDetailsCallback: PropTypes.func.isRequired,
+    removeAnalyticsCallback: PropTypes.func.isRequired
 };
