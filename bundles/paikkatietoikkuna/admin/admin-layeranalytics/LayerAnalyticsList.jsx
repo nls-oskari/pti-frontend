@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Table } from 'antd';
-import { Confirm, Message, Spin, Tooltip } from 'oskari-ui';
+import { Confirm, Message, Space, Spin, Tooltip } from 'oskari-ui';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { DELETE_ICON_STYLE } from './LayerAnalyticsDetails';
 import styled from 'styled-components';
@@ -83,11 +83,16 @@ export const LayerAnalyticsList = ({ analyticsData, isLoading, layerEditorCallba
             title: <Message messageKey='flyout.failurePercentage' />,
             dataIndex: 'failurePercentage',
             sortDirections: ['descend', 'ascend', 'descend'],
-            sorter: (a, b) => {
+            sorter: (a, b, sortOrder) => {
                 const rate = a.failurePercentage - b.failurePercentage;
                 if (rate !== 0) {
                     return rate;
                 }
+                if (sortOrder === 'ascend') {
+                    // most used, least failures
+                    return b.total - a.total;
+                }
+                // most used, most failures
                 return a.total - b.total;
             },
             showSorterTooltip: sorterTooltipOptions,
@@ -100,17 +105,19 @@ export const LayerAnalyticsList = ({ analyticsData, isLoading, layerEditorCallba
                 return (
                     <React.Fragment>
                         <TitleArea>
-                            <EditOutlined onClick={ () => layerEditorCallback(item.id) } />
-                        </TitleArea>
-                        <TitleArea>
-                            <Confirm
-                                title={<Message messageKey='flyout.removeAllDataForLayer' />}
-                                onConfirm={() => removeAnalyticsCallback(item.id)}
-                                okText={<Message messageKey='flyout.delete' />}
-                                cancelText={<Message messageKey='flyout.cancel' />}
-                                placement='bottomLeft'>
-                                <DeleteOutlined style={ DELETE_ICON_STYLE } />
-                            </Confirm>
+                            <Space>
+                                <Tooltip title={ <Message messageKey='flyout.editLayerTooltip' /> }>
+                                    <EditOutlined onClick={ () => layerEditorCallback(item.id) } />
+                                </Tooltip>
+                                <Confirm
+                                    title={<Message messageKey='flyout.removeAllDataForLayer' />}
+                                    onConfirm={() => removeAnalyticsCallback(item.id)}
+                                    okText={<Message messageKey='flyout.delete' />}
+                                    cancelText={<Message messageKey='flyout.cancel' />}
+                                    placement='bottomLeft'>
+                                    <DeleteOutlined style={ DELETE_ICON_STYLE } />
+                                </Confirm>
+                            </Space>
                         </TitleArea>
                     </React.Fragment>
                 );
