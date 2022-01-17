@@ -47,7 +47,11 @@ Oskari.registerLocalization(
                 },
                 "heightSystem":{
                     "label": "Korkeusjärjestelmä",
-                    "none": "Ei mitään"
+                    "none": "Ei mitään",
+                    "n43": {
+                        "info": "Huomaa, että N43 kolmioverkko ei kata koko Pohjois-Suomea, eikä muunnosta siksi voida välttämättä tehdä. Katso lisätietoja N60-N43 muunnospisteistön kolmioverkon kattavuudesta: JHS163 Suomen korkeusjärjestelmä N2000 Liite 2 (kuva 3):",
+                        "url": "https://www.suomidigi.fi/ohjeet-ja-tuki/jhs-suositukset/jhs-163-suomen-korkeusjarjestelma-n2000"
+                    }
                 }
             },
             "coordinateTable": {
