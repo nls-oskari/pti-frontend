@@ -335,7 +335,7 @@ Oskari.clazz.define('Oskari.coordinatetransformation.component.CoordinateSystemS
         showN43Info: function () {
             const { info, url = '' } = this.loc('flyout.coordinateSystem.heightSystem.n43');
             const link = `<a href=${url} target="_blank">${url}</a>`;
-            const content = info + ' ' + link  + '.';
+            const content = info + ' ' + link + '.';
             this.helper.showPopup(this.loc('flyout.coordinateSystem.heightSystem.label'), content);
         },
         disableAllSelections: function (disable) {
