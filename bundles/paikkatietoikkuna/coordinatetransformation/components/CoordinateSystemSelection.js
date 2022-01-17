@@ -301,7 +301,10 @@ Oskari.clazz.define('Oskari.coordinatetransformation.component.CoordinateSystemS
                 this.resetAndUpdateCoordSelect();
                 break;
             case 'elevation':
-                // do common stuff
+                // Show info popup if N43 is selected
+                if (currentValue === 'N43') {
+                    this.helper.showPopup(this.loc('flyout.coordinateSystem.heightSystem.label'), this.loc('flyout.coordinateSystem.heightSystem.n43'));
+                }
                 break;
             case 'geodetic-coordinate':
                 this.setEpsgInputValue(currentValue);
