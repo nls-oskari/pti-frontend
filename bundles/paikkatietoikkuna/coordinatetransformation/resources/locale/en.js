@@ -48,7 +48,10 @@ Oskari.registerLocalization(
                 "heightSystem":{
                     "label": "Vertical coordinate reference system", // Height system
                     "none": "None",
-                    "n43" : "Please be aware that the N43 triangular network does not cover all of Northern Finland and therefore the transformation might not be possible to complete. For more details about N60-N43 transformation and triangulation (only in Finnish): JHS163 Finland's elevation system N2000, attachment 2 (figure 3): https://www.suomidigi.fi/ohjeet-ja-tuki/jhs-suositukset/jhs-163-suomen-korkeusjarjestelma-n2000."
+                    "n43" : {
+                        "info": "Please be aware that the N43 triangular network does not cover all of Northern Finland and therefore the transformation might not be possible to complete. For more details about N60-N43 transformation and triangulation (only in Finnish): JHS163 Finland's elevation system N2000, attachment 2 (figure 3):",
+                        "url": "https://www.suomidigi.fi/ohjeet-ja-tuki/jhs-suositukset/jhs-163-suomen-korkeusjarjestelma-n2000"
+                    }
                 }
             },
             "coordinateTable": {

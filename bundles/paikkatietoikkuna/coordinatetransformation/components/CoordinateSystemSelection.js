@@ -303,7 +303,7 @@ Oskari.clazz.define('Oskari.coordinatetransformation.component.CoordinateSystemS
             case 'elevation':
                 // Show info popup if N43 is selected
                 if (currentValue === 'N43') {
-                    this.helper.showPopup(this.loc('flyout.coordinateSystem.heightSystem.label'), this.loc('flyout.coordinateSystem.heightSystem.n43'));
+                    this.showN43Info();
                 }
                 break;
             case 'geodetic-coordinate':
@@ -331,6 +331,12 @@ Oskari.clazz.define('Oskari.coordinatetransformation.component.CoordinateSystemS
             } else {
                 select.setEnabled(true, true);
             }
+        },
+        showN43Info: function () {
+            const { info, url = '' } = this.loc('flyout.coordinateSystem.heightSystem.n43');
+            const link = `<a href=${url} target="_blank">${url}</a>`;
+            const content = info + ' ' + link  + '.';
+            this.helper.showPopup(this.loc('flyout.coordinateSystem.heightSystem.label'), content);
         },
         disableAllSelections: function (disable) {
             var selects = this.selectInstances;
