@@ -35,7 +35,9 @@ import { PTIOrtophotoTimeseriesGFIformatter } from '../../util/PTIOrtophotoTimes
 import './css/overwritten.css';
 
 Oskari.on('app.start', () => {
-    Oskari.getSandbox()
-        .findRegisteredModuleInstance('MainMapModuleGetInfoPlugin')
-        .addLayerFormatter(new PTIOrtophotoTimeseriesGFIformatter());
+    var plugin = Oskari.getSandbox().findRegisteredModuleInstance('MainMapModuleGetInfoPlugin');
+    if (plugin) {
+        // not all embedded maps have the plugin
+        plugin.addLayerFormatter(new PTIOrtophotoTimeseriesGFIformatter());
+    }
 });
