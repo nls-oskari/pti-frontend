@@ -1,6 +1,6 @@
 {
   "name": "oskari-frontend-paikkis",
-  "version": "1.20.0-dev",
+  "version": "1.20.0",
   "description": "kartta.paikkatietoikkuna.fi bundles & app conf",
   "license": "(MIT OR EUPL-1.1)",
   "keywords": [
@@ -8,8 +8,8 @@
   ],
   "dependencies": {
     "fs-extra": "^8.1.0",
-    "oskari-frontend": "https://git@github.com/oskariorg/oskari-frontend.git#develop",
-    "oskari-frontend-contrib": "https://git@github.com/oskariorg/oskari-frontend-contrib.git#develop"
+    "oskari-frontend": "https://git@github.com/oskariorg/oskari-frontend.git#2.6.0",
+    "oskari-frontend-contrib": "https://git@github.com/oskariorg/oskari-frontend-contrib.git#2.6.0"
   },
   "scripts": {
     "dev-mode": "node ./node_modules/oskari-frontend/scripts/oskari-dev-mode",
