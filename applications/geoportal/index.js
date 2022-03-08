@@ -41,7 +41,7 @@ jQuery(document).ready(function () {
 
             app.init(appSetup);
             app.startApplication(function () {
-                Oskari.app.playBundle({ bundlename: 'pti_layerstatus'});
+                Oskari.app.playBundle({ bundlename: 'layeranalytics'});
                 var sb = Oskari.getSandbox();
                 gfiParamHandler(sb);
             });
