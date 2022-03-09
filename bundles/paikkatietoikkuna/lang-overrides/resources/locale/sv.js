@@ -17,7 +17,7 @@ Oskari.registerLocalization(
     "lang": "sv",
     "key": "Search",
     "value": {
-        "searchDescription": "Sök ortnamn, adress eller fastighetsbeteckning.",
+        "searchDescription": "Sök ortnamn, adress, fastighetsbeteckning eller TM35-bladindelning.",
         "grid": {
             "region": "Kommun"
         }
