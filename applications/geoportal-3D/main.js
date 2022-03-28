@@ -56,7 +56,7 @@ import 'oskari-loader!oskari-frontend-contrib/packages/mapping/ol/mapanalysis/bu
 // pti
 import 'oskari-loader!../../packages/paikkatietoikkuna/bundle/register/bundle.js';
 import 'oskari-loader!../../packages/paikkatietoikkuna/bundle/telemetry/bundle.js';
-import 'oskari-loader!../../packages/paikkatietoikkuna/bundle/terrain-profile/bundle.js';
+import 'oskari-loader!oskari-frontend-contrib/packages/terrain-profile/bundle.js';
 import 'oskari-loader!../../packages/paikkatietoikkuna/lang-overrides/bundle.js';
 
 // lazy
