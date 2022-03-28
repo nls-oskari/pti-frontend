@@ -29,9 +29,9 @@ Oskari.clazz.define('Oskari.coordinatetransformation.Flyout',
         },
         setContainerMaxHeight: function (mapHeight) {
             // calculate max-height based on map size
-            var container = this.flyout.find('.oskari-flyoutcontentcontainer');
-            var toolbarHeight = this.flyout.find('.oskari-flyouttoolbar').outerHeight(true);
-            var maxHeight = mapHeight - toolbarHeight;
+            const container = this.flyout.find('.oskari-flyoutcontentcontainer');
+            const toolbarHeight = this.flyout.find('.oskari-flyouttoolbar').outerHeight(true);
+            const maxHeight = mapHeight - toolbarHeight;
             if (container) {
                 container.css('max-height', maxHeight + 'px');
             }

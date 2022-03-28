@@ -49,7 +49,7 @@ Oskari.clazz.define('Oskari.coordinatetransformation.component.CoordinateTable',
         return jQuery(this.container);
     },
     getElements: function () { // TODO: store references
-        var elements = {
+        const elements = {
             table: this.getContainer().find('.oskari-coordinate-table'),
             rows: this.getContainer().find('.oskari-coordinate-table tr'),
             header: this.getContainer().find('.oskari-tbl-header'),
@@ -66,8 +66,8 @@ Oskari.clazz.define('Oskari.coordinatetransformation.component.CoordinateTable',
          * @desc handle hiding and showing the elevation row in the table
          */
     handleDisplayingElevationRows: function (dimension) {
-        var elevationCells = this.getElements().rows.find('.elevation');
-        var table = this.getElements().table;
+        const elevationCells = this.getElements().rows.find('.elevation');
+        const table = this.getElements().table;
         if (dimension === 2) {
             // elevationCells.attr("contenteditable", false); //TODO always??
             // check if elevationcells have value, if true don't hide but grey out
@@ -101,9 +101,9 @@ Oskari.clazz.define('Oskari.coordinatetransformation.component.CoordinateTable',
     },
     // bind to all rows if row is not given
     bindHoverRow: function (row) {
-        var me = this;
-        var data = {};
-        var rows = row || this.getElements().rows;
+        const me = this;
+        const data = {};
+        const rows = row || this.getElements().rows;
         rows.on('mouseenter', function () {
             data.index = jQuery(this).index();
             data.highlight = true;
@@ -116,8 +116,8 @@ Oskari.clazz.define('Oskari.coordinatetransformation.component.CoordinateTable',
         });
     },
     bindTableScroll: function () {
-        var me = this;
-        var content = this.getElements().tableContent;
+        const me = this;
+        const content = this.getElements().tableContent;
         content.on('scroll', function (evt) {
             clearTimeout(me.scrollTimer);
             me.scrollTimer = setTimeout(function () {
@@ -126,13 +126,13 @@ Oskari.clazz.define('Oskari.coordinatetransformation.component.CoordinateTable',
         });
     },
     scrollTable: function (value) {
-        var content = this.getElements().tableContent;
+        const content = this.getElements().tableContent;
         content.scrollTop(value);
     },
     highlightRow: function (data) {
-        var index = data.index + 1;
-        var selector = 'tr:nth-child(' + index + ')';
-        var table = this.getElements().table;
+        const index = data.index + 1;
+        const selector = 'tr:nth-child(' + index + ')';
+        const table = this.getElements().table;
         if (data.highlight) {
             table.find(selector).addClass('highlighted');
         } else {
@@ -140,20 +140,20 @@ Oskari.clazz.define('Oskari.coordinatetransformation.component.CoordinateTable',
         }
     },
     create: function () {
-        var title;
+        let title;
         if (this.type === 'input') {
             title = this.loc('flyout.coordinateTable.input');
         } else {
             title = this.loc('flyout.coordinateTable.output');
         }
-        var tableWrapper = jQuery(this.template.tableWrapper({
+        const tableWrapper = jQuery(this.template.tableWrapper({
             title: title,
             type: this.type
         }));
-        var rowcounter = this.template.rowcounter({
+        const rowcounter = this.template.rowcounter({
             rows: this.loc('flyout.coordinateTable.rows')
         });
-        var table = this.template.table();
+        const table = this.template.table();
         /* title: "title",
                 north:this.loc('flyout.coordinateTable.north'),
                 east:this.loc('flyout.coordinateTable.east'),
@@ -169,7 +169,7 @@ Oskari.clazz.define('Oskari.coordinatetransformation.component.CoordinateTable',
         // var coords = {};
         // var tableRef = tableWrapper.find(".oskari-coordinate-table");
 
-        for (var i = 0; i < this.defaultTableRows; i++) {
+        for (let i = 0; i < this.defaultTableRows; i++) {
             // tableRef.append(this.template.row( { coords: coords } ) );
             this.addEmptyRow();
         }
@@ -181,12 +181,12 @@ Oskari.clazz.define('Oskari.coordinatetransformation.component.CoordinateTable',
          * @param { Array } coords, array of coordinate arrays
          */
     render: function (coords, dimension) {
-        var table = this.getElements().table;
-        var row;
-        var rowData = {};
-        var coord;
+        const table = this.getElements().table;
+        let row;
+        const rowData = {};
+        let coord;
         this.emptyTableCells();
-        for (var i = coords.length - 1; i >= 0; i--) {
+        for (let i = coords.length - 1; i >= 0; i--) {
             coord = coords[i];
             rowData.col1 = coord[0];
             rowData.col2 = coord[1];
@@ -206,16 +206,16 @@ Oskari.clazz.define('Oskari.coordinatetransformation.component.CoordinateTable',
     },
     setIsEditable: function (editable) {
         this.isEditable = editable;
-        var rows = this.getElements().rows;
+        const rows = this.getElements().rows;
         rows.each(function () {
             jQuery(this).find('.cellContent').attr('contenteditable', editable);
         });
     },
     emptyTableCells: function () {
-        var isEditable = this.isEditable;
-        var cell;
-        var rows = this.getElements().rows;
-        for (var i = 0; i < rows.length; i++) {
+        const isEditable = this.isEditable;
+        let cell;
+        const rows = this.getElements().rows;
+        for (let i = 0; i < rows.length; i++) {
             jQuery(rows[i]).find('.cellContent').each(function () {
                 cell = jQuery(this);
                 cell.text('');// empty();
@@ -226,15 +226,15 @@ Oskari.clazz.define('Oskari.coordinatetransformation.component.CoordinateTable',
     },
     handleTableSize: function (dataRows, isRender) {
         // TODO event??
-        var i = this.defaultTableRows;
-        var rows = this.getElements().rows;
+        let i = this.defaultTableRows;
+        const rows = this.getElements().rows;
         // remove empty rows
         if (isRender === true) {
             if (dataRows > this.defaultTableRows) {
                 i = dataRows;
             }
             for (i; i < rows.length; i++) {
-                var indexRow = jQuery(rows[i]);
+                const indexRow = jQuery(rows[i]);
                 indexRow.remove();
             }
             // add empty row (keyboard/table input)
@@ -246,7 +246,7 @@ Oskari.clazz.define('Oskari.coordinatetransformation.component.CoordinateTable',
         // this.getElements().table.trigger('RowCountChanged');
     },
     addEmptyRow: function () {
-        var newRow = jQuery(this.template.row({ coords: {} }));
+        const newRow = jQuery(this.template.row({ coords: {} }));
         /* if(this.isEditable){
                 jQuery(newRow).find('td').attr("contenteditable", true);
             } else {
@@ -276,13 +276,13 @@ Oskari.clazz.define('Oskari.coordinatetransformation.component.CoordinateTable',
         if (!epsgValues || !epsgValues.coord) {
             return;
         }
-        var x = '';
-        var y = '';
-        var z = '';
-        var lonFirst = isAxisFlip === true ? !epsgValues.lonFirst : epsgValues.lonFirst;
-        var coordSystem = epsgValues.coord;
-        var header;
-        var temp;
+        let x = '';
+        let y = '';
+        let z = '';
+        const lonFirst = isAxisFlip === true ? !epsgValues.lonFirst : epsgValues.lonFirst;
+        const coordSystem = epsgValues.coord;
+        let header;
+        let temp;
 
         switch (coordSystem) {
         case 'COORD_PROJ_3D':
@@ -326,20 +326,19 @@ Oskari.clazz.define('Oskari.coordinatetransformation.component.CoordinateTable',
         this.getContainer().find('.oskari-table-header').append(header);
     },
     handleClipboardPasteEvent: function () {
-        var me = this;
-        var cells = document.getElementsByClassName('cell');
+        const me = this;
+        const cells = document.getElementsByClassName('cell');
 
-        for (var i = 0; i < cells.length; i++) {
+        for (let i = 0; i < cells.length; i++) {
             cells[i].addEventListener('paste', function (e) {
                 e.stopPropagation();
                 e.preventDefault();
 
-                var clipboardData, pastedData;
                 // Get pasted data via clipboard API
-                clipboardData = e.clipboardData || window.clipboardData;
-                pastedData = clipboardData.getData('Text');
+                const clipboardData = e.clipboardData || window.clipboardData;
+                const pastedData = clipboardData.getData('Text');
 
-                var dataJson = me.transformView.dataHandler.validateData(pastedData);
+                const dataJson = me.transformView.dataHandler.validateData(pastedData);
                 me.transformView.updateCoordinateData('input', dataJson);
             });
         }

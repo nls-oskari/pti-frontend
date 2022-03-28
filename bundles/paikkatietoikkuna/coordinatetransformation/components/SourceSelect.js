@@ -92,11 +92,11 @@ Oskari.clazz.define('Oskari.coordinatetransformation.component.SourceSelect',
             if (this.element !== null) {
                 return;
             }
-            var me = this;
-            var loc = this.loc('dataSource');
-            var container = this._template.sourceWrapper2.clone();
+            const me = this;
+            const loc = this.loc('dataSource');
+            const container = this._template.sourceWrapper2.clone();
             container.find('h4').text(loc.title);
-            var sourceWrapper = container.find('.coordinate-datasources-wrapper');
+            const sourceWrapper = container.find('.coordinate-datasources-wrapper');
             /* var source = this._template.source({
                 title: this.loc('flyout.dataSource.title'),
                 file: this.loc('flyout.dataSource.file.label'),
@@ -115,13 +115,13 @@ Oskari.clazz.define('Oskari.coordinatetransformation.component.SourceSelect',
                 mapButton: this.loc('actions.selectFromMap')
             }); */
             this.sources.forEach(function (source) {
-                var elem = jQuery(me._template.source2({
+                const elem = jQuery(me._template.source2({
                     type: source,
                     label: loc[source].label,
                     tooltip: loc[source].info,
                     action: loc[source].action
                 }));
-                var sourceSelect = elem.find('.source-select');
+                const sourceSelect = elem.find('.source-select');
                 me.bindClickHandler(sourceSelect, source);
                 me.sourceElems[source] = sourceSelect;
                 sourceWrapper.append(elem);
@@ -137,7 +137,7 @@ Oskari.clazz.define('Oskari.coordinatetransformation.component.SourceSelect',
             this.bindInfoLinks();
         },
         bindClickHandler: function (elem, value) {
-            var me = this;
+            const me = this;
             elem.on('click', function () {
                 // elem.find('input').trigger('click');
                 if (me.sourceSelection !== value) {
@@ -154,14 +154,14 @@ Oskari.clazz.define('Oskari.coordinatetransformation.component.SourceSelect',
             });
         },
         bindInfoLinks: function () {
-            var me = this;
+            const me = this;
             this.getElement().find('.infolink').on('click', function (event) {
-                var key = this.dataset.source;
+                const key = this.dataset.source;
                 me.systemInfo.show(jQuery(this), key, true);
             });
         },
         selectSource: function (value) {
-            var currentValue = this.sourceSelection;
+            const currentValue = this.sourceSelection;
             if (currentValue !== null) {
                 this.sourceElems[currentValue].removeClass('selected');
             }
@@ -174,11 +174,11 @@ Oskari.clazz.define('Oskari.coordinatetransformation.component.SourceSelect',
          */
         // TODO if source + radiobuttons are used then fix this -> trigger SourceSelectChange
         handleRadioButtons: function () {
-            var me = this;
-            var elem = this.getElement();
+            const me = this;
+            const elem = this.getElement();
             elem.find('input[type=radio][name=load]').on('click', function (evt) {
                 if (me.sourceSelection !== this.value && me.dataHandler.hasInputCoords()) {
-                    var selectCb = function () {
+                    const selectCb = function () {
                         jQuery(evt.target).prop('checked', true);
                         me.handleSourceSelection(evt.target.value);
                     };

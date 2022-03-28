@@ -47,8 +47,8 @@ Oskari.clazz.define('Oskari.coordinatetransformation.instance',
             this.bindListeners();
         },
         bindListeners: function () {
-            var me = this;
-            var dimensions = this.getDimensions();
+            const me = this;
+            const dimensions = this.getDimensions();
             this.dataHandler.on('InputCoordAdded', function (coords) {
                 me.views.transformation.inputTable.render(coords, dimensions.input);
             });
@@ -76,7 +76,7 @@ Oskari.clazz.define('Oskari.coordinatetransformation.instance',
             };
         },
         toggleViews: function (view) {
-            var views = this.getViews();
+            const views = this.getViews();
             if (views[view]) {
                 views[view].setVisible(true);
             }
@@ -127,23 +127,21 @@ Oskari.clazz.define('Oskari.coordinatetransformation.instance',
                 if (!this.isMapSelection || this.isRemoveMarkers) {
                     return;
                 }
-                var lonlat = event.getLonLat();
-                var label;
-                var markerId;
-                var roundedLonLat = {
+                const lonlat = event.getLonLat();
+                const roundedLonLat = {
                     lon: parseInt(lonlat.lon),
                     lat: parseInt(lonlat.lat)
                 };
                 // add coords to map coords
-                markerId = this.dataHandler.addMapCoord(roundedLonLat);
-                label = this.helper.getLabelForMarker(roundedLonLat);
+                const markerId = this.dataHandler.addMapCoord(roundedLonLat);
+                const label = this.helper.getLabelForMarker(roundedLonLat);
                 this.helper.addMarkerForCoords(markerId, roundedLonLat, label);
             },
             'MarkerClickEvent': function (event) {
                 if (!this.isMapSelection) {
                     return;
                 }
-                var markerId = event.getID();
+                const markerId = event.getID();
                 if (this.isRemoveMarkers === true) {
                     this.dataHandler.removeMapCoord(markerId);
                     this.sandbox.postRequestByName('MapModulePlugin.RemoveMarkersRequest', [markerId]);
@@ -153,7 +151,7 @@ Oskari.clazz.define('Oskari.coordinatetransformation.instance',
                 if (event.getExtension().getName() !== this.getName()) {
                     return;
                 }
-                var state = event.getViewState();
+                const state = event.getViewState();
                 if (state === 'attach') {
                     this.plugins['Oskari.userinterface.Flyout'].setContainerMaxHeight(Oskari.getSandbox().getMap().getHeight());
                     this.sandbox.postRequestByName('DisableMapKeyboardMovementRequest');

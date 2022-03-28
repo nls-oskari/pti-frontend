@@ -1,6 +1,6 @@
 Oskari.clazz.define('Oskari.coordinatetransformation.component.select',
     function (instance) {
-        var me = this;
+        const me = this;
         me.instance = instance;
         me.selectInstances = {};
         me.dropdowns = {};
@@ -12,19 +12,19 @@ Oskari.clazz.define('Oskari.coordinatetransformation.component.select',
             return this.dropdowns;
         },
         create: function () {
-            var json = this.instance.helper.getOptionsJSON();
+            const json = this.instance.helper.getOptionsJSON();
 
-            var selections = [];
-            var dropdowns = {};
-            var selects = {};
-            var options = {};
+            let selections = [];
+            const dropdowns = {};
+            const selects = {};
+            let options = {};
             Object.keys(json).forEach(function (key) {
-                var instanceKey = key;
-                var value = json[key];
-                var size = Object.keys(value).length;
+                const instanceKey = key;
+                const value = json[key];
+                const size = Object.keys(value).length;
                 Object.keys(value).forEach(function (key) {
-                    var obj = value[key];
-                    var valObject = {
+                    const obj = value[key];
+                    const valObject = {
                         id: obj.id,
                         title: obj.title,
                         cls: obj.cls
@@ -40,8 +40,8 @@ Oskari.clazz.define('Oskari.coordinatetransformation.component.select',
                         };
                     }
                     if ('' + key === '' + (size - 1)) {
-                        var select = Oskari.clazz.create('Oskari.userinterface.component.SelectList', 'id');
-                        var dropdown = select.create(selections, options);
+                        const select = Oskari.clazz.create('Oskari.userinterface.component.SelectList', 'id');
+                        const dropdown = select.create(selections, options);
                         selections = [];
                         options = {};
                         dropdown.css({ width: '180px' });
