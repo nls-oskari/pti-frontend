@@ -13,7 +13,7 @@ Oskari.clazz.define('Oskari.mapframework.bundle.telemetry.TelemetryBundleInstanc
         }
     },
     _startImpl: function (sandbox) {
-        var endpoint = this.conf.endpoint;
+        const endpoint = this.conf.endpoint;
         if (!endpoint) {
             Oskari.log(this.getName()).warn('No "endpoint" in conf. Telemetry bundle will not start.');
             this.stop(sandbox);
@@ -24,9 +24,9 @@ Oskari.clazz.define('Oskari.mapframework.bundle.telemetry.TelemetryBundleInstanc
             return;
         }
         this._initTelemetry(endpoint);
-        var me = this;
+        const me = this;
         jQuery('#maptools').on('click', '#toolbar .toolrow .tool', function (event) {
-            var el = jQuery(this);
+            const el = jQuery(this);
             if (el.hasClass('disabled')) {
                 return;
             }
@@ -40,20 +40,20 @@ Oskari.clazz.define('Oskari.mapframework.bundle.telemetry.TelemetryBundleInstanc
         });
     },
     _initTelemetry: function (endpoint) {
-        var _paq = window._paq = window._paq || [];
+        const _paq = window._paq = window._paq || [];
         _paq.push(['setDomains', ['*.kartta.paikkatietoikkuna.fi']]);
         _paq.push(['trackPageView']);
         _paq.push(['enableLinkTracking']);
         (function () {
-            var u = '//' + endpoint + '/';
+            const u = '//' + endpoint + '/';
             _paq.push(['setTrackerUrl', u + 'matomo.php']);
             _paq.push(['setSiteId', 9]);
-            var d = document; var g = d.createElement('script'); var s = d.getElementsByTagName('script')[0];
+            const d = document; const g = d.createElement('script'); const s = d.getElementsByTagName('script')[0];
             g.type = 'text/javascript'; g.async = true; g.defer = true; g.src = u + 'matomo.js'; s.parentNode.insertBefore(g, s);
         })();
     },
     _pushEvent: function (/* variadic */) {
-        var args = Array.prototype.slice.call(arguments);
+        const args = Array.prototype.slice.call(arguments);
         args.unshift('trackEvent');
         window._paq.push(args);
     }

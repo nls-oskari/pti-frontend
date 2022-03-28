@@ -1,6 +1,6 @@
 Oskari.clazz.define('Oskari.coordinatetransformation.view.mapmarkers',
     function (instance) {
-        var me = this;
+        const me = this;
         me.instance = instance;
         me.loc = Oskari.getMsg.bind(null, 'coordinatetransformation');
         me.dialog = null;
@@ -19,10 +19,10 @@ Oskari.clazz.define('Oskari.coordinatetransformation.view.mapmarkers',
             }
         },
         show: function () {
-            var me = this;
-            var helper = me.instance.getHelper();
-            var dialog = Oskari.clazz.create('Oskari.userinterface.component.Popup');
-            var btn = dialog.createCloseButton(this.loc('actions.done'));
+            const me = this;
+            const helper = me.instance.getHelper();
+            const dialog = Oskari.clazz.create('Oskari.userinterface.component.Popup');
+            const btn = dialog.createCloseButton(this.loc('actions.done'));
             dialog.addClass('showMapMarkers');
             dialog.makeDraggable();
             me.dialog = dialog;

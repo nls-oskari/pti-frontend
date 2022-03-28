@@ -23,7 +23,7 @@ Oskari.clazz.define('Oskari.coordinatetransformation.helper', function () {
     addMarkerForCoords: function (id, lonlat, label, color) {
         color = color || 'ff0000';
         if (this.addMarkerReq) {
-            var data = {
+            const data = {
                 x: lonlat.lon,
                 y: lonlat.lat,
                 color: color,
@@ -33,20 +33,20 @@ Oskari.clazz.define('Oskari.coordinatetransformation.helper', function () {
             if (label) {
                 data.msg = label;
             }
-            var request = this.addMarkerReq(data, id);
+            const request = this.addMarkerReq(data, id);
             this.sb.request('MainMapModule', request);
         }
     },
 
     showMarkersOnMap: function (mapCoords, inputCoords, srs, isAxisFlip) {
-        var coords = mapCoords;
-        var coordsForLabel = inputCoords;
-        var epsgValuesForLabel;
-        var label;
-        var addLabelFromInput = false;
-        var mapEpsgValues = this.getMapEpsgValues();
-        var lonlat;
-        var labelLonLat;
+        const coords = mapCoords;
+        const coordsForLabel = inputCoords;
+        let epsgValuesForLabel;
+        let label;
+        let addLabelFromInput = false;
+        const mapEpsgValues = this.getMapEpsgValues();
+        let lonlat;
+        let labelLonLat;
 
         if (srs) {
             epsgValuesForLabel = this.getEpsgValues(srs);
@@ -54,7 +54,7 @@ Oskari.clazz.define('Oskari.coordinatetransformation.helper', function () {
         if (coordsForLabel && epsgValuesForLabel && coords.length === coordsForLabel.length) {
             addLabelFromInput = true;
         }
-        for (var i = 0; i < coords.length; i++) {
+        for (let i = 0; i < coords.length; i++) {
             lonlat = this.getLonLatObj(coords[i], isAxisFlip ? !mapEpsgValues.lonFirst : mapEpsgValues.lonFirst);
             if (addLabelFromInput) {
                 labelLonLat = this.getLonLatObj(coordsForLabel[i], isAxisFlip ? !epsgValuesForLabel.lonFirst : epsgValuesForLabel.lonFirst);
@@ -67,14 +67,14 @@ Oskari.clazz.define('Oskari.coordinatetransformation.helper', function () {
         this.moveMapToMarkers(coords, isAxisFlip);
     },
     moveMapToMarkers: function (points, isAxisFlip) {
-        var closestZoom = 6;
-        var lonFirst = isAxisFlip ? !this.mapEpsgValues.lonFirst : this.mapEpsgValues.lonFirst;
+        const closestZoom = 6;
+        const lonFirst = isAxisFlip ? !this.mapEpsgValues.lonFirst : this.mapEpsgValues.lonFirst;
         if (!Array.isArray(points) || points.length === 0) {
-
+            // Nothing to do here
         } else if (points.length === 1) {
-            var x;
-            var y;
-            var point = points[0];
+            let x;
+            let y;
+            const point = points[0];
             if (lonFirst) {
                 x = point[0];
                 y = point[1];
@@ -84,7 +84,7 @@ Oskari.clazz.define('Oskari.coordinatetransformation.helper', function () {
             }
             this.sb.postRequestByName('MapMoveRequest', [x, y, closestZoom]);
         } else {
-            var extent = this.mapmodule.getExtentForPointsArray(points);
+            const extent = this.mapmodule.getExtentForPointsArray(points);
             this.mapmodule.zoomToExtent(extent);
             if (this.mapmodule.getMapZoom() > closestZoom) {
                 this.mapmodule.setZoomLevel(closestZoom);
@@ -92,7 +92,7 @@ Oskari.clazz.define('Oskari.coordinatetransformation.helper', function () {
         }
     },
     getLonLatObj: function (coord, lonFirst) {
-        var lonlat = {};
+        const lonlat = {};
         if (lonFirst === true) {
             lonlat.lon = coord[0];
             lonlat.lat = coord[1];
@@ -106,10 +106,10 @@ Oskari.clazz.define('Oskari.coordinatetransformation.helper', function () {
         return lonlat;
     },
     getLabelForMarker: function (lonlat, epsgValues, isAxisFlip) {
-        var lonLabel;
-        var latLabel;
-        var val = epsgValues || this.mapEpsgValues;
-        var lonFirst = isAxisFlip ? !val.lonFirst : val.lonFirst;
+        let lonLabel;
+        let latLabel;
+        const val = epsgValues || this.mapEpsgValues;
+        const lonFirst = isAxisFlip ? !val.lonFirst : val.lonFirst;
         if (val.coord === 'COORD_PROJ_3D') {
             return 'X: ' + lonlat.lon + ', Y: ' + lonlat.lat + ', Z: ' + lonlat.height;
         }
@@ -148,10 +148,10 @@ Oskari.clazz.define('Oskari.coordinatetransformation.helper', function () {
             return false;
         }
 
-        var selects = settings.selects;
+        const selects = settings.selects;
         // var type = settings.type;
         // var file = settings.file;
-        var errors = [];
+        const errors = [];
         if (selects.decimalSeparator === ',' && selects.coordinateSeparator === 'comma') {
             errors.push(this.loc('flyout.transform.validateErrors.doubleComma'));
         }
@@ -187,11 +187,11 @@ Oskari.clazz.define('Oskari.coordinatetransformation.helper', function () {
         return true;
     },
     exportToFile: function (data, filename, type) {
-        var blob = new Blob([data], { type: type });
+        const blob = new Blob([data], { type: type });
         if (window.navigator.msSaveOrOpenBlob) {
             window.navigator.msSaveBlob(blob, filename);
         } else {
-            var elem = window.document.createElement('a');
+            const elem = window.document.createElement('a');
             elem.href = window.URL.createObjectURL(blob);
             elem.download = filename;
             document.body.appendChild(elem);
@@ -200,10 +200,10 @@ Oskari.clazz.define('Oskari.coordinatetransformation.helper', function () {
         }
     },
     checkDimensions: function (crs, callback) {
-        var message;
-        var dialog = Oskari.clazz.create('Oskari.userinterface.component.Popup');
-        var cancelBtn = dialog.createCloseButton(this.loc('actions.cancel'));
-        var okBtn = Oskari.clazz.create('Oskari.userinterface.component.Button');
+        let message;
+        const dialog = Oskari.clazz.create('Oskari.userinterface.component.Popup');
+        const cancelBtn = dialog.createCloseButton(this.loc('actions.cancel'));
+        const okBtn = Oskari.clazz.create('Oskari.userinterface.component.Button');
         okBtn.setTitle(this.loc('actions.ok'));
         okBtn.addClass('primary');
 
@@ -227,15 +227,15 @@ Oskari.clazz.define('Oskari.coordinatetransformation.helper', function () {
         }
     },
     showPopup: function (title, message, errorList) {
-        var me = this;
-        var dialog = Oskari.clazz.create('Oskari.userinterface.component.Popup');
-        var btn = dialog.createCloseButton(this.loc('actions.close'));
+        const me = this;
+        const dialog = Oskari.clazz.create('Oskari.userinterface.component.Popup');
+        const btn = dialog.createCloseButton(this.loc('actions.close'));
         if (errorList && errorList.length !== 0) {
-            var content = this._templates.content.clone();
+            const content = this._templates.content.clone();
             content.find('.error-message').html(message);
-            var list = content.find('.error-list');
+            const list = content.find('.error-list');
             errorList.forEach(function (error) {
-                var listItem = me._templates.listItem.clone();
+                const listItem = me._templates.listItem.clone();
                 listItem.text(error);
                 list.append(listItem);
             });
@@ -252,12 +252,12 @@ Oskari.clazz.define('Oskari.coordinatetransformation.helper', function () {
      * @return {Object} epsgValues, return null if not found
      */
     findEpsg: function (epsgNumber) {
-        var srs;
-        var compound;
+        let srs;
+        let compound;
         if (epsgNumber.length === 4 || epsgNumber.length === 5) {
             srs = 'EPSG:' + epsgNumber;
             // check dropdown's epsgs
-            if (this.epsgValues.hasOwnProperty(srs)) {
+            if (this.getEpsgValues(srs) !== null) {
                 return {
                     srs: srs
                 };
@@ -265,7 +265,7 @@ Oskari.clazz.define('Oskari.coordinatetransformation.helper', function () {
             // check compound systems
             compound = this.getCompoundSystem(srs);
             if (compound !== null) {
-                var compoundValues = {
+                const compoundValues = {
                     srs: compound.geodetic,
                     heightSrs: compound.height
                 };
@@ -281,17 +281,17 @@ Oskari.clazz.define('Oskari.coordinatetransformation.helper', function () {
         return null;
     },
     getEpsgValues: function (srs) {
-        if (srs && this.epsgValues.hasOwnProperty(srs)) {
-            return this.epsgValues[srs];
+        if (!srs) {
+            return null;
         }
-        return null;
+        return this.epsgValues[srs] || null;
     },
     // reversed or replaced epsgs aren't in the dropdown but can be used with find epsg
     getHiddenEpsg: function (srs) {
-        var epsgs = this.epsgValues;
+        const epsgs = this.epsgValues;
         // for (var key in epsgs) {
         for (const key of Object.keys(epsgs)) {
-            var epsg = epsgs[key];
+            const epsg = epsgs[key];
             if (srs === epsg.reversedEpsg) {
                 return {
                     srs: key,
@@ -308,12 +308,12 @@ Oskari.clazz.define('Oskari.coordinatetransformation.helper', function () {
         return null;
     },
     getMapEpsgValues: function () {
-        var epsg = this.mapEpsgValues;
+        const epsg = this.mapEpsgValues;
         epsg.srs = this.mapSrs;
         return epsg;
     },
     isGeogSystem: function (srs) {
-        var epsgValues = this.getEpsgValues(srs);
+        const epsgValues = this.getEpsgValues(srs);
         if (epsgValues.coord === 'COORD_GEOG_2D' || epsgValues.coord === 'COORD_GEOG_3D') {
             return true;
         } else {
@@ -321,7 +321,7 @@ Oskari.clazz.define('Oskari.coordinatetransformation.helper', function () {
         }
     },
     is3DSystem: function (srs) {
-        var epsgValues = this.getEpsgValues(srs);
+        const epsgValues = this.getEpsgValues(srs);
         if (epsgValues.coord === 'COORD_PROJ_3D' || epsgValues.coord === 'COORD_GEOG_3D') {
             return true;
         } else {
@@ -329,9 +329,9 @@ Oskari.clazz.define('Oskari.coordinatetransformation.helper', function () {
         }
     },
     isCoordInBounds: function (srs, coord) {
-        var epsgValues = this.getEpsgValues(srs);
-        var x;
-        var y;
+        const epsgValues = this.getEpsgValues(srs);
+        let x;
+        let y;
         if (!epsgValues) {
             return;
         }
@@ -345,19 +345,18 @@ Oskari.clazz.define('Oskari.coordinatetransformation.helper', function () {
         return this.mapmodule.isPointInExtent(epsgValues.bounds, x, y);
     },
     getDimension: function (srs, elevation) {
-        var srsValues = this.getEpsgValues(srs);
-        var dimension;
+        const srsValues = this.getEpsgValues(srs);
+        const hasElevation = Object.prototype.hasOwnProperty.call(this.elevationSystems, elevation);
         if (srsValues && (srsValues.coord === 'COORD_PROJ_3D' || srsValues.coord === 'COORD_GEOG_3D')) {
-            dimension = 3;
-        } else if (this.elevationSystems.hasOwnProperty(elevation)) {
-            dimension = 3;
+            return 3;
+        } else if (hasElevation) {
+            return 3;
         } else {
-            dimension = 2;
+            return 2;
         }
-        return dimension;
     },
     getOptionsJSON: function () {
-        var geoCoords = this.getGeodeticCoordinateOptions();
+        const geoCoords = this.getGeodeticCoordinateOptions();
         this.createCls(geoCoords);
         return {
             'datum': this.getDatumOptions(),
@@ -780,7 +779,7 @@ Oskari.clazz.define('Oskari.coordinatetransformation.helper', function () {
     },
     createCls: function (json) {
         Object.keys(json).forEach(function (key) {
-            var geoCoord = json[key];
+            const geoCoord = json[key];
             if (key === 'DEFAULT') {
                 geoCoord.cls = '';
             } else {

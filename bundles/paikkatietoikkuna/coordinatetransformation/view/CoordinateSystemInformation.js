@@ -38,10 +38,10 @@ Oskari.clazz.define('Oskari.coordinatetransformation.view.CoordinateSystemInform
             this.dialog.close(true);
             this.dialog = null;
         }
-        var title = this._getTitle(key);
-        var content = this._createContent(key, skipInfo);
-        var dialog = Oskari.clazz.create('Oskari.userinterface.component.Popup');
-        var btn = dialog.createCloseButton(this.loc('actions.close'));
+        const title = this._getTitle(key);
+        const content = this._createContent(key, skipInfo);
+        const dialog = Oskari.clazz.create('Oskari.userinterface.component.Popup');
+        const btn = dialog.createCloseButton(this.loc('actions.close'));
         btn.addClass('primary');
         dialog.createCloseIcon();
         // dialog.dialog.zIndex(parentElement.zIndex() + 1);
@@ -52,22 +52,22 @@ Oskari.clazz.define('Oskari.coordinatetransformation.view.CoordinateSystemInform
         this.dialog = dialog;
     },
     addPrecisionTable: function (toElem) {
-        var headers = this.loc('infoPopup.decimalPrecision.precisionTable');
-        var table = this._template.precisionTable(headers);
+        const headers = this.loc('infoPopup.decimalPrecision.precisionTable');
+        const table = this._template.precisionTable(headers);
         toElem.append(table);
     },
     _createContent: function (key, skipInfo) {
-        var me = this;
-        var content = this._template.content.clone();
-        var infoLoc = this.loc('infoPopup')[key];
-        var infoContent = content.find('.info-content');
+        const me = this;
+        const content = this._template.content.clone();
+        const infoLoc = this.loc('infoPopup')[key];
+        const infoContent = content.find('.info-content');
         content.find('.info-description').html(this.loc('infoPopup.description'));
         if (skipInfo !== true) {
             infoContent.html(infoLoc.info);
         }
         if (Array.isArray(infoLoc.paragraphs) && infoLoc.paragraphs.length !== 0) {
             infoLoc.paragraphs.forEach(function (item) {
-                var paragraph = me._template.paragraph.clone();
+                const paragraph = me._template.paragraph.clone();
                 paragraph.text(item);
                 infoContent.append(paragraph);
             });
@@ -81,10 +81,10 @@ Oskari.clazz.define('Oskari.coordinatetransformation.view.CoordinateSystemInform
         return content;
     },
     _createList: function (list) {
-        var me = this;
-        var listElem = this._template.list.clone();
+        const me = this;
+        const listElem = this._template.list.clone();
         list.forEach(function (item) {
-            var listItem = me._template.listItem.clone();
+            const listItem = me._template.listItem.clone();
             listItem.html(item);
             listElem.append(listItem);
         });

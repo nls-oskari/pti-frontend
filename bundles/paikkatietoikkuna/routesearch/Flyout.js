@@ -42,8 +42,8 @@ Oskari.clazz.define('Oskari.mapframework.bundle.routesearch.Flyout',
          * @param {Object} response Response
          */
         _getSearchSuggestions: function (field, request, response) {
-            var me = this;
-            var fieldName = field.element[0].name;
+            const me = this;
+            const fieldName = field.element[0].name;
             me.state[fieldName] = {
                 name: request.term
             };
@@ -55,7 +55,7 @@ Oskari.clazz.define('Oskari.mapframework.bundle.routesearch.Flyout',
                     request.term,
                     function (data) {
                         // onSuccess
-                        var value = data && data.totalCount ? data.locations : [];
+                        const value = data && data.totalCount ? data.locations : [];
                         me.locations = value;
                         response(value);
                     },
@@ -72,10 +72,10 @@ Oskari.clazz.define('Oskari.mapframework.bundle.routesearch.Flyout',
          * @param {jQuery} ui    JQuery UI autocomplete object
          */
         _setSearchLocation: function (field, event, ui) {
-            var me = this;
-            var fieldName = field.attr('name');
-            var a = jQuery('<a>');
-            var item = {
+            const me = this;
+            const fieldName = field.attr('name');
+            const a = jQuery('<a>');
+            const item = {
                 name: a.html(ui.item.name).text(),
                 village: a.html(ui.item.village).text()
             };
@@ -95,18 +95,18 @@ Oskari.clazz.define('Oskari.mapframework.bundle.routesearch.Flyout',
             // not implemented
         },
         bindLocation: function (location) {
-            var me = this;
+            const me = this;
 
             location.forEach(function (loc) {
                 if (typeof me.state.from !== 'undefined') {
                     if (loc.name === me.state.from.name && loc.village === me.state.from.village) {
-                        var fromLonLat = me._mapmodule.transformCoordinates({ lon: loc.lon, lat: loc.lat }, me._mapmodule.getProjection(), 'EPSG:4326');
+                        const fromLonLat = me._mapmodule.transformCoordinates({ lon: loc.lon, lat: loc.lat }, me._mapmodule.getProjection(), 'EPSG:4326');
                         me.fromLonLat = fromLonLat;
                     }
                 }
                 if (typeof me.state.to !== 'undefined') {
                     if (loc.name === me.state.to.name && loc.village === me.state.to.village) {
-                        var toLonLat = me._mapmodule.transformCoordinates({ lon: loc.lon, lat: loc.lat }, me._mapmodule.getProjection(), 'EPSG:4326');
+                        const toLonLat = me._mapmodule.transformCoordinates({ lon: loc.lon, lat: loc.lat }, me._mapmodule.getProjection(), 'EPSG:4326');
                         me.toLonLat = toLonLat;
                     }
                 }
@@ -117,7 +117,7 @@ Oskari.clazz.define('Oskari.mapframework.bundle.routesearch.Flyout',
          * @method disableMapClick
          */
         disableMapClick: function () {
-            var me = this;
+            const me = this;
             delete me.state.field;
             me.mapEl.removeClass('cursor-crosshair');
             me.instance.unregisterMapClickHandler();
@@ -128,7 +128,7 @@ Oskari.clazz.define('Oskari.mapframework.bundle.routesearch.Flyout',
          * @param {OpenLayers.LonLat} lonLat Click location
          */
         onMapClick: function (lonLat) {
-            var me = this;
+            const me = this;
             if (me.state.field) {
                 me._reverseGeoCode(me.state.field, lonLat);
                 me.disableMapClick();
@@ -142,7 +142,7 @@ Oskari.clazz.define('Oskari.mapframework.bundle.routesearch.Flyout',
          * @param {Event}  event Map click event
          */
         _fromMapButtonHandler: function (field, event) {
-            var me = this;
+            const me = this;
             if (me.state.field === field) {
                 // Deselect target on second click
                 me.disableMapClick();
@@ -162,13 +162,13 @@ Oskari.clazz.define('Oskari.mapframework.bundle.routesearch.Flyout',
          * called by host to start flyout operations
          */
         startPlugin: function () {
-            var me = this;
-            var ajaxUrl = null;
-            var contents = jQuery(me._templates.main);
-            var i;
-            var field;
-            var fields = me.fields;
-            var tmp;
+            const me = this;
+            let ajaxUrl = null;
+            const contents = jQuery(me._templates.main);
+            let i;
+            let field;
+            const fields = me.fields;
+            let tmp;
 
             if (me.instance.conf && me.instance.conf.url) {
                 ajaxUrl = me.instance.conf.url;
@@ -215,8 +215,8 @@ Oskari.clazz.define('Oskari.mapframework.bundle.routesearch.Flyout',
             me._updateRoutingLinks(true);
         },
         _renderAutocompleteItem: function (ul, item) {
-            var li = jQuery('<li>');
-            var a = jQuery('<a href="#">');
+            const li = jQuery('<li>');
+            const a = jQuery('<a href="#">');
             a.html(item.name + ', ' + item.village);
             li.append(a);
             ul.append(li);
@@ -227,7 +227,7 @@ Oskari.clazz.define('Oskari.mapframework.bundle.routesearch.Flyout',
          * @private
          */
         _initRoutingServices: function () {
-            var me = this;
+            const me = this;
             me.services.push(
                 me._routingService(
                     'Matka.fi',
@@ -267,8 +267,8 @@ Oskari.clazz.define('Oskari.mapframework.bundle.routesearch.Flyout',
          * @private
          */
         _matkaFiURLBuilder: function (fromLoc, toLoc) {
-            var me = this;
-            var url = 'http://opas.matka.fi/reitti/';
+            const me = this;
+            let url = 'http://opas.matka.fi/reitti/';
             url += fromLoc.name;
             if (fromLoc.village) {
                 url += '%2C%20' + fromLoc.village + '%3A%3A' + me.fromLonLat.lat + '%2C' + me.fromLonLat.lon;
@@ -301,7 +301,7 @@ Oskari.clazz.define('Oskari.mapframework.bundle.routesearch.Flyout',
          * @private
          */
         _googleMapsURLBuilder: function (fromLoc, toLoc) {
-            var url = 'https://www.google.fi/maps/dir/';
+            let url = 'https://www.google.fi/maps/dir/';
             url += encodeURIComponent(fromLoc.name);
             if (fromLoc.village) {
                 url += ',+' + encodeURIComponent(fromLoc.village);
@@ -320,7 +320,7 @@ Oskari.clazz.define('Oskari.mapframework.bundle.routesearch.Flyout',
          * @private
          */
         _hereURLBuilder: function (fromLoc, toLoc) {
-            var url = 'http://here.com/directions/drive/';
+            let url = 'http://here.com/directions/drive/';
             url += fromLoc.name.replace(' ', '_');
             if (fromLoc.village) {
                 url += ',_' + fromLoc.village.replace(' ', '_');
@@ -339,7 +339,7 @@ Oskari.clazz.define('Oskari.mapframework.bundle.routesearch.Flyout',
          * @private
          */
         _fonectaURLBuilder: function (fromLoc, toLoc) {
-            var url = 'https://www.fonecta.fi/kartat?';
+            let url = 'https://www.fonecta.fi/kartat?';
             url += 'from=' + encodeURIComponent(fromLoc.name);
             if (fromLoc.village) {
                 url += ',' + encodeURIComponent(fromLoc.village);
@@ -360,13 +360,13 @@ Oskari.clazz.define('Oskari.mapframework.bundle.routesearch.Flyout',
          * @param {Function} urlBuilder Function (fromLoc, toLoc)
          */
         _routingService: function (name, color, urlBuilder) {
-            var me = this;
-            var ret = {
+            const me = this;
+            const ret = {
                 name: name,
                 color: color,
                 urlBuilder: urlBuilder,
                 getButton: function (fromLoc, toLoc) {
-                    var el = this.el;
+                    let el = this.el;
 
                     if (!el) {
                         el = jQuery(
@@ -416,11 +416,11 @@ Oskari.clazz.define('Oskari.mapframework.bundle.routesearch.Flyout',
          * @param {Boolean} createButtons Should the buttons be appended to ui
          */
         _updateRoutingLinks: function (createButtons) {
-            var me = this;
-            var button;
-            var locations = [];
-            var routingService;
-            var i;
+            const me = this;
+            let button;
+            const locations = [];
+            let routingService;
+            let i;
 
             for (i = 0; i < me.fields.length; i++) {
                 locations.push(me.state[me.fields[i]]);

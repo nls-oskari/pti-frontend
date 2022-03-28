@@ -32,8 +32,8 @@ Oskari.clazz.define('Oskari.coordinatetransformation.TransformationService',
         init: function () {},
 
         requestUrlBuilder: function (crs, transformType, exportSettings) {
-            var urlBase = Oskari.urls.getRoute('CoordinateTransformation');
-            var urlParameterString =
+            const urlBase = Oskari.urls.getRoute('CoordinateTransformation');
+            let urlParameterString =
             '&sourceCrs=' + crs.sourceCrs +
             '&targetCrs=' + crs.targetCrs +
             '&targetDimension=' + crs.targetDimension +
@@ -52,7 +52,7 @@ Oskari.clazz.define('Oskari.coordinatetransformation.TransformationService',
             return urlBase + urlParameterString;
         },
         formDataBuilder: function (importSettings, exportSettings) {
-            var formData = new FormData();
+            const formData = new FormData();
             if (exportSettings && exportSettings.selects) {
                 formData.append('exportSettings', JSON.stringify(exportSettings.selects));
             }
@@ -68,7 +68,7 @@ Oskari.clazz.define('Oskari.coordinatetransformation.TransformationService',
             if (typeof callback !== 'function') {
                 return;
             }
-            var resp,
+            let resp,
                 errorInfo;
             try {
                 resp = JSON.parse(jqXHR.responseText);
@@ -81,7 +81,7 @@ Oskari.clazz.define('Oskari.coordinatetransformation.TransformationService',
             callback(errorInfo);
         },
         watchJob: function (jobId, successCb, errorCb) {
-            var me = this;
+            const me = this;
             jQuery.ajax({
                 type: 'GET',
                 url: me.urls.watchJob + jobId,
@@ -98,7 +98,7 @@ Oskari.clazz.define('Oskari.coordinatetransformation.TransformationService',
             });
         },
         watchFileJob: function (jobId, successCb, errorCb) {
-            var me = this;
+            const me = this;
             jQuery.ajax({
                 type: 'GET',
                 url: me.urls.watchJob + jobId,
@@ -107,8 +107,8 @@ Oskari.clazz.define('Oskari.coordinatetransformation.TransformationService',
                         me.watchFileJob(response.jobId, successCb, errorCb);
                         return;
                     }
-                    var type = jqXHR.getResponseHeader('Content-Type');
-                    var filename = me.getFileNameFromResponse(jqXHR);
+                    const type = jqXHR.getResponseHeader('Content-Type');
+                    const filename = me.getFileNameFromResponse(jqXHR);
                     successCb(response, filename, type);
                 },
                 error: function (jqXHR) {
@@ -117,8 +117,8 @@ Oskari.clazz.define('Oskari.coordinatetransformation.TransformationService',
             });
         },
         transformArrayToArray: function (coords, crs, successCb, errorCb) {
-            var me = this;
-            var url = this.requestUrlBuilder(crs, 'A2A');
+            const me = this;
+            const url = this.requestUrlBuilder(crs, 'A2A');
             jQuery.ajax({
                 contentType: 'application/json',
                 type: 'POST',
@@ -133,9 +133,9 @@ Oskari.clazz.define('Oskari.coordinatetransformation.TransformationService',
             });
         },
         transformFileToArray: function (crs, fileSettings, successCb, errorCb) {
-            var me = this;
-            var url = this.requestUrlBuilder(crs, 'F2A');
-            var formData = this.formDataBuilder(fileSettings);
+            const me = this;
+            const url = this.requestUrlBuilder(crs, 'F2A');
+            const formData = this.formDataBuilder(fileSettings);
             jQuery.ajax({
                 contentType: false, // multipart/form-data
                 type: 'POST',
@@ -152,9 +152,9 @@ Oskari.clazz.define('Oskari.coordinatetransformation.TransformationService',
             });
         },
         readFileToArray: function (crs, fileSettings, successCb, errorCb) {
-            var me = this;
-            var url = this.requestUrlBuilder(crs, 'F2R');
-            var formData = this.formDataBuilder(fileSettings);
+            const me = this;
+            const url = this.requestUrlBuilder(crs, 'F2R');
+            const formData = this.formDataBuilder(fileSettings);
             jQuery.ajax({
                 contentType: false, // multipart/form-data
                 type: 'POST',
@@ -171,8 +171,8 @@ Oskari.clazz.define('Oskari.coordinatetransformation.TransformationService',
             });
         },
         transformArrayToFile: function (coords, crs, fileSettings, successCb, errorCb) {
-            var me = this;
-            var url = this.requestUrlBuilder(crs, 'A2F', fileSettings);
+            const me = this;
+            const url = this.requestUrlBuilder(crs, 'A2F', fileSettings);
             jQuery.ajax({
                 contentType: 'application/json',
                 type: 'POST',
@@ -187,9 +187,9 @@ Oskari.clazz.define('Oskari.coordinatetransformation.TransformationService',
             });
         },
         transformFileToFile: function (crs, importSettings, exportSettings, successCb, errorCb) {
-            var me = this;
-            var url = this.requestUrlBuilder(crs, 'F2F');
-            var formData = this.formDataBuilder(importSettings, exportSettings);
+            const me = this;
+            const url = this.requestUrlBuilder(crs, 'F2F');
+            const formData = this.formDataBuilder(importSettings, exportSettings);
             jQuery.ajax({
                 contentType: false, // multipart/form-data
                 type: 'POST',
@@ -206,10 +206,10 @@ Oskari.clazz.define('Oskari.coordinatetransformation.TransformationService',
             });
         },
         getFileNameFromResponse: function (xhr) {
-            var disposition = xhr.getResponseHeader('Content-Disposition');
-            var filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
+            const disposition = xhr.getResponseHeader('Content-Disposition');
+            const filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
             if (disposition) {
-                var matches = filenameRegex.exec(disposition);
+                const matches = filenameRegex.exec(disposition);
                 if (matches[1]) {
                     return matches[1];
                 }
