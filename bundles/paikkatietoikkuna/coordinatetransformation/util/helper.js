@@ -70,7 +70,7 @@ Oskari.clazz.define('Oskari.coordinatetransformation.helper', function () {
         const closestZoom = 6;
         const lonFirst = isAxisFlip ? !this.mapEpsgValues.lonFirst : this.mapEpsgValues.lonFirst;
         if (!Array.isArray(points) || points.length === 0) {
-
+            // Nothing to do here
         } else if (points.length === 1) {
             let x;
             let y;
@@ -257,7 +257,7 @@ Oskari.clazz.define('Oskari.coordinatetransformation.helper', function () {
         if (epsgNumber.length === 4 || epsgNumber.length === 5) {
             srs = 'EPSG:' + epsgNumber;
             // check dropdown's epsgs
-            if (this.epsgValues.hasOwnProperty(srs)) {
+            if (this.getEpsgValues(srs) !== null) {
                 return {
                     srs: srs
                 };
@@ -281,10 +281,10 @@ Oskari.clazz.define('Oskari.coordinatetransformation.helper', function () {
         return null;
     },
     getEpsgValues: function (srs) {
-        if (srs && this.epsgValues.hasOwnProperty(srs)) {
-            return this.epsgValues[srs];
+        if (!srs) {
+            return null;
         }
-        return null;
+        return this.epsgValues[srs] || null;
     },
     // reversed or replaced epsgs aren't in the dropdown but can be used with find epsg
     getHiddenEpsg: function (srs) {
@@ -346,15 +346,14 @@ Oskari.clazz.define('Oskari.coordinatetransformation.helper', function () {
     },
     getDimension: function (srs, elevation) {
         const srsValues = this.getEpsgValues(srs);
-        let dimension;
+        const hasElevation = Object.prototype.hasOwnProperty.call(this.elevationSystems, elevation);
         if (srsValues && (srsValues.coord === 'COORD_PROJ_3D' || srsValues.coord === 'COORD_GEOG_3D')) {
-            dimension = 3;
-        } else if (this.elevationSystems.hasOwnProperty(elevation)) {
-            dimension = 3;
+            return 3;
+        } else if (hasElevation) {
+            return 3;
         } else {
-            dimension = 2;
+            return 2;
         }
-        return dimension;
     },
     getOptionsJSON: function () {
         const geoCoords = this.getGeodeticCoordinateOptions();

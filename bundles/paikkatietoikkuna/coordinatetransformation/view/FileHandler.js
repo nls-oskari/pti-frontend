@@ -153,9 +153,7 @@ Oskari.clazz.define('Oskari.coordinatetransformation.view.FileHandler',
             this.isFileInput = isFile;
         },
         create: function () {
-            let fileSettings,
-                element;
-            fileSettings = {
+            const fileSettings = {
                 export: false,
                 fileName: this.loc('fileSettings.export.fileName'),
                 options: this.loc('fileSettings.options'),
@@ -175,7 +173,7 @@ Oskari.clazz.define('Oskari.coordinatetransformation.view.FileHandler',
             if (this.type === 'export') {
                 fileSettings.export = true;
             }
-            element = jQuery(this._template.settings(fileSettings));
+            const element = jQuery(this._template.settings(fileSettings));
             if (this.type === 'import') {
                 this.fileInput = Oskari.clazz.create('Oskari.userinterface.component.FileInput', {
                     allowMultipleFiles: false,

@@ -81,8 +81,8 @@ Oskari.clazz.define('Oskari.coordinatetransformation.CoordinateDataHandler', fun
      * check different conditions if data matches to them
      */
     validateData: function (data) {
-        const lonlatKeyMatch = new RegExp(/(?:lon|lat)[:][0-9.]+[,].*,?/g);
-        const numericWhitespaceMatch = new RegExp(/^[0-9.]+,+\s[0-9.]+,/gmi);
+        const lonlatKeyMatch = /(?:lon|lat)[:][0-9.]+[,].*,?/g;
+        const numericWhitespaceMatch = /^[0-9.]+,+\s[0-9.]+,/gmi;
 
         const matched = data.match(lonlatKeyMatch);
         const numMatch = data.match(numericWhitespaceMatch);
@@ -100,9 +100,9 @@ Oskari.clazz.define('Oskari.coordinatetransformation.CoordinateDataHandler', fun
      * @description constructs a object from string with lon lat keys
      */
     constructObjectFromRegExpMatch: function (data, lonlat) {
-        const matchLonLat = new RegExp(/(lon|lat)[:][0-9.]+[,]?/g);
-        const matchNumericComma = new RegExp(/([0-9.])+\s*,?/g);
-        const numeric = new RegExp(/[0-9.]+/);
+        const matchLonLat = /(lon|lat)[:][0-9.]+[,]?/g;
+        const matchNumericComma = /([0-9.])+\s*,?/g;
+        const numeric = /[0-9.]+/;
         const array = [];
         let match;
         for (let i = 0; i < data.length; i++) {

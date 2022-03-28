@@ -334,10 +334,9 @@ Oskari.clazz.define('Oskari.coordinatetransformation.component.CoordinateTable',
                 e.stopPropagation();
                 e.preventDefault();
 
-                let clipboardData, pastedData;
                 // Get pasted data via clipboard API
-                clipboardData = e.clipboardData || window.clipboardData;
-                pastedData = clipboardData.getData('Text');
+                const clipboardData = e.clipboardData || window.clipboardData;
+                const pastedData = clipboardData.getData('Text');
 
                 const dataJson = me.transformView.dataHandler.validateData(pastedData);
                 me.transformView.updateCoordinateData('input', dataJson);

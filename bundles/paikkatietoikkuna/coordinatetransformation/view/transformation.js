@@ -277,12 +277,7 @@ Oskari.clazz.define('Oskari.coordinatetransformation.view.transformation',
             this.handleSourceSelection(value);
         },
         onSystemSelectionChange: function (type) {
-            let selections,
-                epsgValues,
-                srs,
-                table,
-                heightSystem,
-                dimension,
+            let table,
                 fileHandler,
                 systemSelection;
             if (type === 'input') {
@@ -294,11 +289,11 @@ Oskari.clazz.define('Oskari.coordinatetransformation.view.transformation',
                 table = this.outputTable;
                 fileHandler = this.exportFileHandler;
             }
-            selections = systemSelection.getSelections();
-            srs = selections['geodetic-coordinate'];
-            heightSystem = selections.elevation;
+            const selections = systemSelection.getSelections();
+            const srs = selections['geodetic-coordinate'];
+            const heightSystem = selections.elevation;
             this.instance.setDimension(type, srs, heightSystem);
-            epsgValues = this.helper.getEpsgValues(srs);
+            const epsgValues = this.helper.getEpsgValues(srs);
             if (epsgValues) {
                 table.updateHeader(epsgValues, heightSystem, selections.isAxisFlip);
                 if (this.helper.isGeogSystem(srs)) {
@@ -320,7 +315,7 @@ Oskari.clazz.define('Oskari.coordinatetransformation.view.transformation',
                 table.updateHeader(); // remove header
                 fileHandler.setIsMetricSystem(false); // show degree systems options
             }
-            dimension = this.instance.getDimension(type);
+            const dimension = this.instance.getDimension(type);
             table.handleDisplayingElevationRows(dimension);
         },
         handleSourceSelection: function (value) {

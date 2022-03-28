@@ -128,15 +128,13 @@ Oskari.clazz.define('Oskari.coordinatetransformation.instance',
                     return;
                 }
                 const lonlat = event.getLonLat();
-                let label;
-                let markerId;
                 const roundedLonLat = {
                     lon: parseInt(lonlat.lon),
                     lat: parseInt(lonlat.lat)
                 };
                 // add coords to map coords
-                markerId = this.dataHandler.addMapCoord(roundedLonLat);
-                label = this.helper.getLabelForMarker(roundedLonLat);
+                const markerId = this.dataHandler.addMapCoord(roundedLonLat);
+                const label = this.helper.getLabelForMarker(roundedLonLat);
                 this.helper.addMarkerForCoords(markerId, roundedLonLat, label);
             },
             'MarkerClickEvent': function (event) {

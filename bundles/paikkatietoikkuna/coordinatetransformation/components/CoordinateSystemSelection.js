@@ -101,7 +101,6 @@ Oskari.clazz.define('Oskari.coordinatetransformation.component.CoordinateSystemS
         createDropdown: function (container, json, dropdownId) {
             const me = this;
             const select = Oskari.clazz.create('Oskari.userinterface.component.SelectList', dropdownId);
-            let dropdown;
             const options = {
                 placeholder_text: json.DEFAULT.title,
                 allow_single_deselect: true,
@@ -125,7 +124,7 @@ Oskari.clazz.define('Oskari.coordinatetransformation.component.CoordinateSystemS
                 }
                 selections.push(valObj);
             });
-            dropdown = select.create(selections, options);
+            const dropdown = select.create(selections, options);
             dropdown.css({
                 width: '180px' // TODO to css
             });
