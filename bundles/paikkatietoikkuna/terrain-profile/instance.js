@@ -7,11 +7,11 @@ Oskari.clazz.define('Oskari.mapframework.bundle.terrain-profile.TerrainProfileBu
         this.loc = Oskari.getMsg.bind(null, 'TerrainProfile');
 
         function requestFunction (requestName, args) {
-            var builder = Oskari.requestBuilder(requestName);
+            const builder = Oskari.requestBuilder(requestName);
             if (!builder) {
                 return false;
             }
-            var request = builder.apply(null, args);
+            const request = builder.apply(null, args);
             this.sandbox.request(this, request);
             return true;
         }
@@ -24,8 +24,8 @@ Oskari.clazz.define('Oskari.mapframework.bundle.terrain-profile.TerrainProfileBu
          * @param sandbox
          */
         _startImpl: function (sandbox) {
-            var addToolButtonBuilder = Oskari.requestBuilder('Toolbar.AddToolButtonRequest');
-            var buttonConf = {
+            const addToolButtonBuilder = Oskari.requestBuilder('Toolbar.AddToolButtonRequest');
+            const buttonConf = {
                 iconCls: 'tool-terrainprofile',
                 tooltip: this.loc('terrainHeightProfile'),
                 sticky: true,
@@ -63,7 +63,7 @@ Oskari.clazz.define('Oskari.mapframework.bundle.terrain-profile.TerrainProfileBu
          * @method cancelTool deactivate terrain profile tool
          */
         cancelTool: function () {
-            var builder = Oskari.requestBuilder('Toolbar.SelectToolButtonRequest');
+            const builder = Oskari.requestBuilder('Toolbar.SelectToolButtonRequest');
             this.sandbox.request(this, builder());
         },
         /**
@@ -79,14 +79,14 @@ Oskari.clazz.define('Oskari.mapframework.bundle.terrain-profile.TerrainProfileBu
          * @method startDrawing starts DrawRequest drawing
          */
         startDrawing: function () {
-            var builder = Oskari.requestBuilder('DrawTools.StartDrawingRequest');
+            const builder = Oskari.requestBuilder('DrawTools.StartDrawingRequest');
             this.sandbox.request(this, builder(this.__name, 'LineString', { modifyControl: true, allowMultipleDrawing: false }));
         },
         /**
          * @method stopDrawing stops DrawRequest drawing
          */
         stopDrawing: function () {
-            var builder = Oskari.requestBuilder('DrawTools.StopDrawingRequest');
+            const builder = Oskari.requestBuilder('DrawTools.StopDrawingRequest');
             this.sandbox.request(this, builder(this.__name, true));
         },
         /**
@@ -97,7 +97,7 @@ Oskari.clazz.define('Oskari.mapframework.bundle.terrain-profile.TerrainProfileBu
                 return;
             }
             this.feature.properties = { numPoints: 100 };
-            var url = Oskari.urls.getRoute('TerrainProfile');
+            const url = Oskari.urls.getRoute('TerrainProfile');
             jQuery.ajax({
                 type: 'GET',
                 dataType: 'json',
@@ -122,9 +122,9 @@ Oskari.clazz.define('Oskari.mapframework.bundle.terrain-profile.TerrainProfileBu
             if (this.flyout) {
                 this.flyout.update(data);
             } else {
-                var p = jQuery('#mapdiv');
-                var position = p.position().left;
-                var offset = 40;
+                const p = jQuery('#mapdiv');
+                const position = p.position().left;
+                const offset = 40;
                 this.flyout = Oskari.clazz.create('Oskari.mapframework.bundle.terrain-profile.TerrainFlyout', this.loc('terrainHeightProfile'), {
                     width: 'auto',
                     cls: 'terrain-profile'
@@ -138,7 +138,7 @@ Oskari.clazz.define('Oskari.mapframework.bundle.terrain-profile.TerrainProfileBu
         },
         eventHandlers: {
             'DrawingEvent': function (event) {
-                var drawId = event.getId();
+                const drawId = event.getId();
                 if (drawId !== this.__name || !this.active) {
                     return;
                 }
@@ -146,12 +146,12 @@ Oskari.clazz.define('Oskari.mapframework.bundle.terrain-profile.TerrainProfileBu
                     this.feature = event.getGeoJson().features[0];
                     this.doQuery();
                 } else {
-                    var sketch = event.getGeoJson().features[0];
+                    const sketch = event.getGeoJson().features[0];
                     if (!sketch || sketch.geometry.coordinates.length <= 2) {
                         this.feature = null;
                         return;
                     }
-                    var feature = { type: 'Feature', geometry: { type: 'LineString' } };
+                    const feature = { type: 'Feature', geometry: { type: 'LineString' } };
                     feature.geometry.coordinates = sketch.geometry.coordinates.slice(0, sketch.geometry.coordinates.length - 1);
                     this.feature = feature;
                 }

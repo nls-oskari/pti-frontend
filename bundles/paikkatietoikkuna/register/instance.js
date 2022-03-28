@@ -33,16 +33,16 @@ Oskari.clazz.define('Oskari.mapframework.bundle.register.RegisterBundleInstance'
          * @method startPlugin
          */
         afterStart: function () {
-            var me = this;
+            const me = this;
 
-            var conf = me.getConfiguration() || {};
+            const conf = me.getConfiguration() || {};
             me.registerUrl = conf.registerUrl || 'https://omatili.maanmittauslaitos.fi/user/new/paikkatietoikkuna?lang=' + Oskari.getLang();
             me.loginUrl = conf.loginUrl || '/auth';
 
             me.loginbar = me.loginbarTemplate.clone();
             me.loginContainer = jQuery(me.loginContainerId);
             if (Oskari.user().isLoggedIn()) {
-                var logoutForm = me.loggedInTemplate.find('form');
+                const logoutForm = me.loggedInTemplate.find('form');
                 logoutForm.find('input').val(Oskari.app.getXSRFToken());
                 me.loggedInTemplate.find('a').on('click', function (e) {
                     e.stopPropagation();
@@ -66,18 +66,18 @@ Oskari.clazz.define('Oskari.mapframework.bundle.register.RegisterBundleInstance'
          * Handles tool button click -> opens selection tool dialog
          */
         showRegisterPopup: function () {
-            var me = this;
-            var popup = Oskari.clazz.create('Oskari.userinterface.component.Popup');
-            var buttons = [];
+            const me = this;
+            const popup = Oskari.clazz.create('Oskari.userinterface.component.Popup');
+            const buttons = [];
 
             me.popupContent = me.wrapper.clone();
 
-            var registerInfo = me.registerInfo.clone();
+            const registerInfo = me.registerInfo.clone();
             registerInfo.append(me.loc.popup.registerInfo);
 
-            var linkInfo = me.linkToTermsOfUse.clone();
-            var termsOfUseTemplate = jQuery('<a target="_blank" href=' + me.loc.popup.termsOfUseLink + '>' + me.loc.popup.termsOfUseLinkText + '</a>');
-            var dataProtectionTemplate = jQuery('<a target="_blank" href=' + me.loc.popup.dataProtectionLink + '>' + me.loc.popup.dataProtectionLinkText + '</a>');
+            const linkInfo = me.linkToTermsOfUse.clone();
+            const termsOfUseTemplate = jQuery('<a target="_blank" href=' + me.loc.popup.termsOfUseLink + '>' + me.loc.popup.termsOfUseLinkText + '</a>');
+            const dataProtectionTemplate = jQuery('<a target="_blank" href=' + me.loc.popup.dataProtectionLink + '>' + me.loc.popup.dataProtectionLinkText + '</a>');
             linkInfo.append(termsOfUseTemplate);
             linkInfo.append('</br>');
             linkInfo.append(dataProtectionTemplate);
@@ -86,7 +86,7 @@ Oskari.clazz.define('Oskari.mapframework.bundle.register.RegisterBundleInstance'
             me.popupContent.append(registerInfo);
             me.popupContent.append(linkInfo);
 
-            var cancelBtn = Oskari.clazz.create(
+            const cancelBtn = Oskari.clazz.create(
                 'Oskari.userinterface.component.buttons.CancelButton'
             );
 
@@ -96,7 +96,7 @@ Oskari.clazz.define('Oskari.mapframework.bundle.register.RegisterBundleInstance'
             });
             buttons.push(cancelBtn);
 
-            var continueBtn = Oskari.clazz.create(
+            const continueBtn = Oskari.clazz.create(
                 'Oskari.userinterface.component.Button'
             );
             continueBtn.addClass('primary');

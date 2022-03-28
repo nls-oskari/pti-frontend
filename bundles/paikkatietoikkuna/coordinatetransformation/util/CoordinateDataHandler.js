@@ -45,8 +45,8 @@ Oskari.clazz.define('Oskari.coordinatetransformation.CoordinateDataHandler', fun
     },
     // Select from map
     addMapCoord: function (lonlat) {
-        var id = 'coord_marker_' + this.mapCoordId;
-        var coord = {
+        const id = 'coord_marker_' + this.mapCoordId;
+        const coord = {
             lon: lonlat.lon,
             lat: lonlat.lat,
             id: id
@@ -56,19 +56,19 @@ Oskari.clazz.define('Oskari.coordinatetransformation.CoordinateDataHandler', fun
         return id;
     },
     removeMapCoord: function (id) {
-        var checkId = function (coord) {
+        const checkId = function (coord) {
             return coord.id !== id;
         };
         this.mapCoords = this.mapCoords.filter(checkId);
     },
     // add input coords as previously selected coordinates
     populateMapCoordsAndMarkers: function () {
-        var me = this;
-        var lonFirst = this.helper.getMapEpsgValues().lonFirst;
-        var color = '#00ff00'; // add existing coords with different color
-        var mapCoord;
-        var markerId;
-        var label;
+        const me = this;
+        const lonFirst = this.helper.getMapEpsgValues().lonFirst;
+        const color = '#00ff00'; // add existing coords with different color
+        let mapCoord;
+        let markerId;
+        let label;
         this.inputCoords.forEach(function (coord) {
             mapCoord = me.helper.getLonLatObj(coord, lonFirst);
             markerId = me.addMapCoord(mapCoord);
@@ -81,11 +81,11 @@ Oskari.clazz.define('Oskari.coordinatetransformation.CoordinateDataHandler', fun
      * check different conditions if data matches to them
      */
     validateData: function (data) {
-        var lonlatKeyMatch = new RegExp(/(?:lon|lat)[:][0-9.]+[,].*,?/g);
-        var numericWhitespaceMatch = new RegExp(/^[0-9.]+,+\s[0-9.]+,/gmi);
+        const lonlatKeyMatch = new RegExp(/(?:lon|lat)[:][0-9.]+[,].*,?/g);
+        const numericWhitespaceMatch = new RegExp(/^[0-9.]+,+\s[0-9.]+,/gmi);
 
-        var matched = data.match(lonlatKeyMatch);
-        var numMatch = data.match(numericWhitespaceMatch);
+        const matched = data.match(lonlatKeyMatch);
+        const numMatch = data.match(numericWhitespaceMatch);
 
         if (matched !== null) {
             return this.constructObjectFromRegExpMatch(matched, true);
@@ -100,21 +100,21 @@ Oskari.clazz.define('Oskari.coordinatetransformation.CoordinateDataHandler', fun
      * @description constructs a object from string with lon lat keys
      */
     constructObjectFromRegExpMatch: function (data, lonlat) {
-        var matchLonLat = new RegExp(/(lon|lat)[:][0-9.]+[,]?/g);
-        var matchNumericComma = new RegExp(/([0-9.])+\s*,?/g);
-        var numeric = new RegExp(/[0-9.]+/);
-        var array = [];
-        var match;
-        for (var i = 0; i < data.length; i++) {
-            var lonlatObject = {};
+        const matchLonLat = new RegExp(/(lon|lat)[:][0-9.]+[,]?/g);
+        const matchNumericComma = new RegExp(/([0-9.])+\s*,?/g);
+        const numeric = new RegExp(/[0-9.]+/);
+        const array = [];
+        let match;
+        for (let i = 0; i < data.length; i++) {
+            const lonlatObject = {};
 
             if (lonlat) {
                 match = data[i].match(matchLonLat);
             } else {
                 match = data[i].match(matchNumericComma);
             }
-            var lonValue = match[0].match(numeric);
-            var latValue = match[1].match(numeric);
+            const lonValue = match[0].match(numeric);
+            const latValue = match[1].match(numeric);
 
             lonlatObject.lon = lonValue[0];
             lonlatObject.lat = latValue[0];
@@ -127,11 +127,11 @@ Oskari.clazz.define('Oskari.coordinatetransformation.CoordinateDataHandler', fun
      * @description array -> object with lon lat keys
      */
     constructLonLatObjectFromArray: function (data) {
-        var obj = {};
+        const obj = {};
         if (Array.isArray(data)) {
-            for (var i in data) {
+            for (const i in data) {
                 if (Array.isArray(data[i])) {
-                    for (var j = 0; j < data[i].length; j++) {
+                    for (let j = 0; j < data[i].length; j++) {
                         obj[i] = {
                             lon: data[i][0],
                             lat: data[i][1]
@@ -146,7 +146,7 @@ Oskari.clazz.define('Oskari.coordinatetransformation.CoordinateDataHandler', fun
     // generic -> to helper??
     // lonLatCoordToArray or addLonLatCoordToArray (array,..)
     lonLatCoordToArray: function (coord, lonFirst) {
-        var arr = [];
+        const arr = [];
         if (typeof coord.lon !== 'number' && typeof coord.lat !== 'number') {
             return arr;
         }
@@ -161,7 +161,7 @@ Oskari.clazz.define('Oskari.coordinatetransformation.CoordinateDataHandler', fun
     },
     // generic -> to helper??
     arrayCoordToLonLat: function (coord, lonFirst) {
-        var obj = {};
+        const obj = {};
         if (lonFirst === true) {
             obj.lon = coord[0];
             obj.lat = coord[1];
@@ -172,11 +172,11 @@ Oskari.clazz.define('Oskari.coordinatetransformation.CoordinateDataHandler', fun
         return obj;
     },
     addMapCoordsToInput: function (addBln) {
-        var mapCoords = this.getMapCoords();
-        var coords = [];
-        var lonFirst = this.helper.getMapEpsgValues().lonFirst;
+        const mapCoords = this.getMapCoords();
+        const coords = [];
+        const lonFirst = this.helper.getMapEpsgValues().lonFirst;
         if (addBln === true) {
-            for (var i = 0; i < mapCoords.length; i++) {
+            for (let i = 0; i < mapCoords.length; i++) {
                 coords.push(this.lonLatCoordToArray(mapCoords[i], lonFirst));
             }
             this.setInputCoords(coords);
@@ -193,8 +193,8 @@ Oskari.clazz.define('Oskari.coordinatetransformation.CoordinateDataHandler', fun
         this.trigger('ResultCoordsChanged', this.resultCoords);
     },
     checkCoordsArrays: function () {
-        var input = this.inputCoords.length;
-        var result = this.resultCoords.length;
+        const input = this.inputCoords.length;
+        const result = this.resultCoords.length;
         if (input !== 0 && result !== 0) {
             return input === result;
         }

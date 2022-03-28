@@ -13,8 +13,8 @@ Oskari.clazz.define('Oskari.mapframework.bundle.terrain-profile.TerrainFlyout',
         update: function (data) {
             if (!data) {
                 this._updateGraph = null;
-                var spinnerHolder = jQuery('<div class="terrainprofile-spinnerholder"></div>');
-                var wrapper = jQuery('<div class="terrainprofile-spinnerwrapper"></div>');
+                const spinnerHolder = jQuery('<div class="terrainprofile-spinnerholder"></div>');
+                const wrapper = jQuery('<div class="terrainprofile-spinnerwrapper"></div>');
                 wrapper.append(spinnerHolder);
                 this.setContent(wrapper);
                 this._spinner.insertTo(spinnerHolder);
@@ -31,7 +31,7 @@ Oskari.clazz.define('Oskari.mapframework.bundle.terrain-profile.TerrainFlyout',
         },
         showError: function () {
             this._spinner.stop();
-            var error = jQuery('<div class="terrainprofile-errorwrapper"><p>' + this.loc('error') + '</p></div>');
+            const error = jQuery('<div class="terrainprofile-errorwrapper"><p>' + this.loc('error') + '</p></div>');
             this.setContent(error);
         },
         /**
@@ -39,12 +39,12 @@ Oskari.clazz.define('Oskari.mapframework.bundle.terrain-profile.TerrainFlyout',
          * @param {GeoJsonFeature} data visualization data
          */
         _initGraph: function (data) {
-            var graphMargin = { top: 25, bottom: 30, left: 45, right: 30 };
-            var graphHeight = 300;
-            var graphWidth = 600;
-            var wrapper = document.createElement('div');
+            const graphMargin = { top: 25, bottom: 30, left: 45, right: 30 };
+            const graphHeight = 300;
+            const graphWidth = 600;
+            const wrapper = document.createElement('div');
             wrapper.className = 'terrainprofile-graphwrapper';
-            var svg = d3.select(wrapper)
+            const svg = d3.select(wrapper)
                 .append('svg')
                 .attr('height', graphHeight)
                 .attr('width', graphWidth)
@@ -52,13 +52,13 @@ Oskari.clazz.define('Oskari.mapframework.bundle.terrain-profile.TerrainFlyout',
 
             // Set up scales & axes
 
-            var x = d3.scaleLinear()
+            const x = d3.scaleLinear()
                 .range([graphMargin.left, graphWidth - graphMargin.right]);
 
-            var y = d3.scaleLinear()
+            const y = d3.scaleLinear()
                 .range([graphHeight - graphMargin.bottom, graphMargin.top]);
 
-            var area = d3.area()
+            const area = d3.area()
                 .defined(function (d) { return d.height !== null; })
                 .x(function (d) {
                     return x(d.distance);
@@ -66,8 +66,8 @@ Oskari.clazz.define('Oskari.mapframework.bundle.terrain-profile.TerrainFlyout',
                 .y1(function (d) {
                     return y(d.height);
                 });
-            var me = this;
-            var xAxis = d3.axisBottom(x)
+            const me = this;
+            const xAxis = d3.axisBottom(x)
                 .tickSizeOuter(0)
                 .ticks(5)
                 .tickFormat(function (d) {
@@ -77,7 +77,7 @@ Oskari.clazz.define('Oskari.mapframework.bundle.terrain-profile.TerrainFlyout',
                         return me.loc('legendValue', { value: d }) + ' m';
                     }
                 });
-            var yAxis = d3.axisLeft(y)
+            const yAxis = d3.axisLeft(y)
                 .tickSizeOuter(0)
                 .ticks(4)
                 .tickSizeInner(-graphWidth + graphMargin.right + graphMargin.left)
@@ -85,7 +85,7 @@ Oskari.clazz.define('Oskari.mapframework.bundle.terrain-profile.TerrainFlyout',
 
             // Set up container groups (for draw ordering)
 
-            var pathContainer = svg.append('g');
+            const pathContainer = svg.append('g');
 
             svg.append('rect') // mask above graph
                 .attr('fill', '#fafafa')
@@ -94,7 +94,7 @@ Oskari.clazz.define('Oskari.mapframework.bundle.terrain-profile.TerrainFlyout',
                 .attr('width', graphWidth)
                 .attr('height', graphMargin.top + 10);
 
-            var cursor = svg.append('g');
+            const cursor = svg.append('g');
 
             svg.append('rect') // mask below graph
                 .attr('fill', '#fafafa')
@@ -103,15 +103,15 @@ Oskari.clazz.define('Oskari.mapframework.bundle.terrain-profile.TerrainFlyout',
                 .attr('width', graphWidth)
                 .attr('height', graphMargin.bottom + 10);
 
-            var xAxisContainer = svg.append('g')
+            const xAxisContainer = svg.append('g')
                 .attr('transform', 'translate(0 ' + (graphHeight - graphMargin.bottom) + ')');
-            var yAxisContainer = svg.append('g')
+            const yAxisContainer = svg.append('g')
                 .classed('y-axis', true)
                 .attr('transform', 'translate(' + (graphMargin.left) + ' 0)');
 
             // Set up Y-axis scaling
 
-            var resetScalingButton = svg.append('g').classed('reset-scaling', true);
+            const resetScalingButton = svg.append('g').classed('reset-scaling', true);
             resetScalingButton.append('path')
                 .attr('d', 'M -7 -1 L 7 -1 L 0 -7 Z');
             resetScalingButton.append('path')
@@ -128,21 +128,21 @@ Oskari.clazz.define('Oskari.mapframework.bundle.terrain-profile.TerrainFlyout',
                 .attr('transform', 'translate(' + graphMargin.left / 2 + ' ' + graphMargin.top / 2 + ')');
             resetScalingButton.style('display', 'none');
 
-            var brush = d3.brushY()
+            const brush = d3.brushY()
                 .extent([[graphMargin.left, graphMargin.top], [graphWidth - graphMargin.right, graphHeight - graphMargin.bottom]])
                 .on('end', brushed);
 
-            var brushGroup = svg.append('g')
+            const brushGroup = svg.append('g')
                 .classed('axis-brush', true)
                 .call(brush);
 
             function brushed () {
-                var selection = d3.event.selection;
+                const selection = d3.event.selection;
                 if (!selection) {
                     return;
                 }
-                var start = y.invert(selection[1]);
-                var end = y.invert(selection[0]);
+                const start = y.invert(selection[1]);
+                const end = y.invert(selection[0]);
                 brushGroup.call(brush.move, null);
                 y.domain([start, end]);
                 resetScalingButton.style('display', null);
@@ -161,7 +161,7 @@ Oskari.clazz.define('Oskari.mapframework.bundle.terrain-profile.TerrainFlyout',
                 .attr('y1', graphMargin.top)
                 .attr('y2', graphHeight - graphMargin.bottom);
 
-            var focus = cursor.append('g');
+            const focus = cursor.append('g');
 
             focus.append('circle')
                 .attr('r', 5);
@@ -181,14 +181,14 @@ Oskari.clazz.define('Oskari.mapframework.bundle.terrain-profile.TerrainFlyout',
                 })
                 .on('mousemove', mousemove);
 
-            var bisectX = d3.bisector(function (d) { return d.distance; }).left;
+            const bisectX = d3.bisector(function (d) { return d.distance; }).left;
 
             function mousemove () {
-                var x0 = x.invert(d3.mouse(this)[0]);
-                var i = bisectX(processed[0], x0, 1);
-                var d0 = processed[0][i - 1];
-                var d1 = processed[0][i];
-                var d = x0 - d0.distance > d1.distance - x0 ? d1 : d0;
+                const x0 = x.invert(d3.mouse(this)[0]);
+                const i = bisectX(processed[0], x0, 1);
+                const d0 = processed[0][i - 1];
+                const d1 = processed[0][i];
+                const d = x0 - d0.distance > d1.distance - x0 ? d1 : d0;
                 if (d.height < y.domain()[0]) { // below minimum
                     cursor.style('display', 'none');
                 } else {
@@ -197,7 +197,7 @@ Oskari.clazz.define('Oskari.mapframework.bundle.terrain-profile.TerrainFlyout',
                 cursor.attr('transform', 'translate(' + x(d.distance) + ' 0)');
                 cursor.select('line').attr('y1', y(d.height));
                 focus.attr('transform', 'translate(0 ' + y(d.height) + ')');
-                var text;
+                let text;
                 if (d.height !== null) {
                     text = me.numberFormatter.format(d.height);
                 } else {
@@ -208,10 +208,10 @@ Oskari.clazz.define('Oskari.mapframework.bundle.terrain-profile.TerrainFlyout',
                 me.markerHandler.showAt(d.coords[0], d.coords[1], text.replace(/\u00A0/, ' '));
             }
 
-            var processed;
+            let processed;
 
             function recalculateYDomain () {
-                var extent = d3.extent(processed[0], function (d) { return d.height; });
+                const extent = d3.extent(processed[0], function (d) { return d.height; });
                 if (extent[0] > 0) {
                     extent[0] = 0;
                 }
@@ -229,7 +229,7 @@ Oskari.clazz.define('Oskari.mapframework.bundle.terrain-profile.TerrainFlyout',
                 }
                 area.y0(y(0));
 
-                var paths = pathContainer
+                const paths = pathContainer
                     .selectAll('path')
                     .data(processed);
 
@@ -251,7 +251,7 @@ Oskari.clazz.define('Oskari.mapframework.bundle.terrain-profile.TerrainFlyout',
          * @param {GeoJsonFeature} data visualization data
          */
         _processData: function (data) {
-            var points = data.properties.distanceFromStart.map(function (d, i) {
+            const points = data.properties.distanceFromStart.map(function (d, i) {
                 return { distance: d, height: data.geometry.coordinates[i][2], coords: data.geometry.coordinates[i] };
             });
             return [points];

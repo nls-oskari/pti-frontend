@@ -1,6 +1,6 @@
 Oskari.clazz.define('Oskari.coordinatetransformation.view.CoordinateMapSelection',
     function (instance) {
-        var me = this;
+        const me = this;
         me.instance = instance;
         me.loc = Oskari.getMsg.bind(null, 'coordinatetransformation');
         // me.mapSelectionContainer = null;
@@ -35,11 +35,11 @@ Oskari.clazz.define('Oskari.coordinatetransformation.view.CoordinateMapSelection
             }
         },
         show: function () {
-            var me = this;
-            var helper = me.instance.getHelper();
-            var dialog = Oskari.clazz.create('Oskari.userinterface.component.Popup');
-            var btn = dialog.createCloseButton(this.loc('actions.done'));
-            var cancelBtn = Oskari.clazz.create('Oskari.userinterface.component.Button');
+            const me = this;
+            const helper = me.instance.getHelper();
+            const dialog = Oskari.clazz.create('Oskari.userinterface.component.Popup');
+            const btn = dialog.createCloseButton(this.loc('actions.done'));
+            const cancelBtn = Oskari.clazz.create('Oskari.userinterface.component.Button');
             cancelBtn.setTitle(this.loc('actions.cancel'));
             btn.addClass('primary');
             me.dialog = dialog;
@@ -59,7 +59,7 @@ Oskari.clazz.define('Oskari.coordinatetransformation.view.CoordinateMapSelection
                 me.instance.addMapCoordsToInput(true);
                 dialog.close();
             });
-            var content = this._template.clone();
+            const content = this._template.clone();
             content.find('.coordinateSelectionContent').append(this.loc('mapMarkers.select.info'));
             content.find('label[for=add-coordinate-to-map]').append(this.loc('mapMarkers.select.add'));
             content.find('label[for=remove-coordinate-from-map]').append(this.loc('mapMarkers.select.remove'));
@@ -67,7 +67,7 @@ Oskari.clazz.define('Oskari.coordinatetransformation.view.CoordinateMapSelection
             me.instance.setRemoveMarkers(false); // add markers radio button is pre-checked
 
             content.find('input[type=radio]').on('change', function (evt) {
-                var value = this.value;
+                const value = this.value;
                 if (value === 'remove') {
                     me.instance.setRemoveMarkers(true);
                 } else {

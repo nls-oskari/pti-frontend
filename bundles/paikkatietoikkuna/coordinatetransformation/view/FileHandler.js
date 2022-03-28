@@ -1,6 +1,6 @@
 Oskari.clazz.define('Oskari.coordinatetransformation.view.FileHandler',
     function (helper, loc, type) {
-        var me = this;
+        const me = this;
         Oskari.makeObservable(this);
         me.helper = helper;
         me.loc = loc;
@@ -153,7 +153,7 @@ Oskari.clazz.define('Oskari.coordinatetransformation.view.FileHandler',
             this.isFileInput = isFile;
         },
         create: function () {
-            var fileSettings,
+            let fileSettings,
                 element;
             fileSettings = {
                 export: false,
@@ -205,8 +205,8 @@ Oskari.clazz.define('Oskari.coordinatetransformation.view.FileHandler',
          */
         getFormSelections: function () {
             // var element = jQuery('.oskari-coordinate-form');
-            var element = this.getElement();
-            var settings = {
+            const element = this.getElement();
+            const settings = {
                 fileName: element.find('.fileName input').val(),
                 unit: element.find('.unitFormat option:checked').val(),
                 decimalSeparator: element.find('.decimalSeparator option:checked').val(),
@@ -233,20 +233,20 @@ Oskari.clazz.define('Oskari.coordinatetransformation.view.FileHandler',
                 this.dialog.close(true);
                 this.dialog = null;
             }
-            var me = this;
-            var elem = this.getElement();
-            var formatRow = elem.find('.unitFormat');
-            var dialog = Oskari.clazz.create('Oskari.userinterface.component.Popup');
-            var title = this.type === 'import' ? this.loc('fileSettings.import.title') : this.loc('fileSettings.export.title');
-            var btnText = this.type === 'import' ? this.loc('actions.done') : this.loc('actions.export');
-            var cancelBtn = dialog.createCloseButton(this.loc('actions.cancel'));
-            var btn = Oskari.clazz.create('Oskari.userinterface.component.Button');
-            var useId = elem.find('.prefixId span');
+            const me = this;
+            const elem = this.getElement();
+            const formatRow = elem.find('.unitFormat');
+            const dialog = Oskari.clazz.create('Oskari.userinterface.component.Popup');
+            const title = this.type === 'import' ? this.loc('fileSettings.import.title') : this.loc('fileSettings.export.title');
+            const btnText = this.type === 'import' ? this.loc('actions.done') : this.loc('actions.export');
+            const cancelBtn = dialog.createCloseButton(this.loc('actions.cancel'));
+            const btn = Oskari.clazz.create('Oskari.userinterface.component.Button');
+            const useId = elem.find('.prefixId span');
             // var decimalInput = elem.find('.decimalCount input');
             btn.addClass('primary');
             btn.setTitle(btnText);
             btn.setHandler(function () {
-                var settings = me.getSettings();
+                const settings = me.getSettings();
                 if (me.type === 'import') {
                     settings.file = me.fileInput.getFiles();
                 }
@@ -269,7 +269,7 @@ Oskari.clazz.define('Oskari.coordinatetransformation.view.FileHandler',
                 // decimalInput.val(8);
             }
             if (this.type === 'export') {
-                var lineEnds = elem.find('.lineEnds');
+                const lineEnds = elem.find('.lineEnds');
                 if (this.isFileInput) {
                     useId.text(this.loc('fileSettings.options.useId.add'));
                     lineEnds.css('display', '');
@@ -299,19 +299,19 @@ Oskari.clazz.define('Oskari.coordinatetransformation.view.FileHandler',
             // this.createEventHandlers( dialog );
         },
         bindInfoLinks: function () {
-            var me = this;
+            const me = this;
             this.getElement().find('.infolink').on('click', function (event) {
                 event.preventDefault();
-                var key = this.dataset.selection;
+                const key = this.dataset.selection;
                 me.infoPopup.show(jQuery(this), key, true);
             });
         },
         setTooltips: function () {
-            var infoElems = this.getElement().find('.infolink');
-            var infoLoc = this.loc('infoPopup');
+            const infoElems = this.getElement().find('.infolink');
+            const infoLoc = this.loc('infoPopup');
             infoElems.each(function () {
-                var key = this.dataset.selection;
-                var tooltip = infoLoc[key].info;
+                const key = this.dataset.selection;
+                const tooltip = infoLoc[key].info;
                 if (tooltip) {
                     jQuery(this).prop('title', tooltip);
                 }
