@@ -30,6 +30,8 @@ import 'oskari-lazy-loader?routingService!oskari-frontend/packages/framework/bun
 import 'oskari-lazy-loader?feedbackService!oskari-frontend/packages/framework/bundle/feedbackService/bundle.js';
 import 'oskari-lazy-loader?statsgrid!oskari-frontend/packages/statistics/statsgrid/bundle.js';
 
+import 'oskari-lazy-loader?metadataflyout!oskari-frontend/packages/catalogue/bundle/metadataflyout/bundle.js';
+
 import { PTIOrtophotoTimeseriesGFIformatter } from '../../util/PTIOrtophotoTimeseriesGFIformatter';
 
 import './css/overwritten.css';
