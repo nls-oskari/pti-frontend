@@ -7,18 +7,10 @@ table:not([class*="ant-"]) {
 	border-top-width: 0px;
 }
 
-/**
- * logoplugin with pti logo
- */
- .logoplugin .icon {
-    background-image: url('../../../override-assets/logo.png') !important;
-    float: left;
-}
-
+/* Index map icon override */
 div.mapplugin.indexmap .indexmapToggle div.icon {
 	background-size: 38px 38px;
 }
-
 div.mapplugin.indexmap .indexmapToggle[class$=-default] div.icon,
 div.mapplugin.indexmap .indexmapToggle[class$=-dark] div.icon {
 	background-image: url('../../../override-assets/suomi_dark.svg') !important;
