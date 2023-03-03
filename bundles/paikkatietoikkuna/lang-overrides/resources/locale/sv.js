@@ -3,7 +3,6 @@ Oskari.registerLocalization(
     "lang": "sv",
     "key": "MapModule",
     "value": {
-        "unsupportedProj": "Vissa kartlager i denna kartvy kan inte visas med {dimension}.",
         "plugin": {
             "SearchPlugin" : {
                 "column_region": "Kommun"
