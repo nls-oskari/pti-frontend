@@ -54,13 +54,17 @@ Oskari.registerLocalization(
                 "tags": "ohje_teemakartat"
             },
             {
-                "title": "Analyysi",
-                "tags": "ohje_analyysi"
+                "title": "Omat tiedot",
+                "tags": "ohje_omat_tiedot"
             },
             {
                 "title": "Koordinaattimuunnos",
                 "tags": "ohje_koordinaattimuunnos"
-            }
+            },
+            {
+                "title": "Analyysi",
+                "tags": "ohje_analyysi"
+            },
         ]
     }
 }, true);
