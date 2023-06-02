@@ -55,13 +55,13 @@ Oskari.registerLocalization(
                 "tags": "guide_thematic"
             },
             {
+                "title": "Coordinate Transformation",
+                "tags": "guide_coordinatetransformation"
+            },
+            {
                 "title": "Analysis",
                 "tags": "guide_analysis"
             },
-            {
-                "title": "Coordinate Transformation",
-                "tags": "guide_coordinatetransformation"
-            }
         ]
     }
 }, true);

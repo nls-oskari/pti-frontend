@@ -54,13 +54,13 @@ Oskari.registerLocalization(
                 "tags": "guide_thematic"
             },
             {
+                "title": "Koordinattransformation",
+                "tags": "guide_coordinatetransformation"
+            },
+            {
                 "title": "Analys",
                 "tags": "guide_analysis"
             },
-            {
-                "title": "Koordinattransformation",
-                "tags": "guide_coordinatetransformation"
-            }
         ]
     }
 }, true);
