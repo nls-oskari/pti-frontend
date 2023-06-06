@@ -14,10 +14,10 @@ Oskari.registerLocalization({
     'key': 'inspire',
     'value': {
         'tile': {
-            'title': 'INSPIRE'
+            'title': 'Service information'
         },
         'flyout': {
-            'title': 'INSPIRE brings spatial data available to all'
+            'title': 'Service information'
         },
         'flyoutContent': {
             'content': flyoutTextContent

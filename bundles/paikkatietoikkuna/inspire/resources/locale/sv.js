@@ -14,10 +14,10 @@ Oskari.registerLocalization({
     'key': 'inspire',
     'value': {
         'tile': {
-            'title': 'INSPIRE'
+            'title': 'Information om tjänsten'
         },
         'flyout': {
-            'title': 'INSPIRE gör geodata tillgängliga för alla'
+            'title': 'Information om tjänsten'
         },
         'flyoutContent': {
             'content': flyoutTextContent
