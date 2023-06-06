@@ -21,6 +21,7 @@ Oskari.clazz.define('Oskari.inspire.Flyout',
             this.flyout = flyout;
             this.container.classList.add('inspire');
             this.flyout.addClass('inspire');
+            this.flyout.css('max-width', '700px');
         },
         /**
          * Renders content for flyout UI
