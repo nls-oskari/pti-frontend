@@ -1,12 +1,27 @@
 const flyoutTextContent = `
-<a target="_blank" href="https://www.maanmittauslaitos.fi/sv/e-tjanster/geodataportalen-paikkatietoikkuna">Paikkatietoikkuna</a> är en central del av Finlands implementering av INSPIRE. Bekanta dig med geodataportaltjänsten som presenterar geografiska datamängder och tjänster som omfattar Finland. Vi uppmuntrar alla dataproducenter att göra sina datamängder och tjänster tillgängliga i Paikkatietoikkuna.<br><br>
+<p>
+<a target="_blank" href="https://www.maanmittauslaitos.fi/sv/e-tjanster/geodataportalen-paikkatietoikkuna">Paikkatietoikkuna</a> presenterar kartlager producerade av finländska dataproducenter.
+ Dataproducenterna erbjuder dem att bifogas i Paikkatietoikkuna.
+  Lantmäteriverket gör kontrakt med dataproducenten innan kartlagren läggs till i Paikkatietoikkuna.
+</p>
 
-INSPIRE har som mål att skapa en europeisk geodatainfrastruktur som underlättar tillgången på geografisk information över hela Europa och 
-främjar dess interoperabilitet. Läs mer på <a target="_blank" href="https://www.maanmittauslaitos.fi/sv/kartor-och-geodata/interoperabla-geodata/inspire/vilket-inspire">Vad är INSPIRE?</a><br><br>
+<p>
+Kartlagren i Paikkatietoikkuna baserar sig på gränssnittstjänster publicerade av dataproducenterna,
+ vilket gör att de är lika uppdaterade som i dataproducentens egna tjänster.
+  Kartlagrens innehåll och uppdatering är på dataproducentens ansvar.
+</p>
 
-Följ INSPIRE:s sociala mediekanaler så får du snabbt information om aktuella 
-utbildningar och evenemang samt frågor som berör geodataportalen Paikkatietoikkuna: <a target="_blank" href="https://twitter.com/geoportal_fi"> Twitter</a>  och
-<a target="_blank" href="https://fi-fi.facebook.com/paikkatietoikkuna/"> Facebook</a>
+<p>
+Paikkatietoikkuna är en del av implementeringen av INSPIRE-direktivet i Finland.
+ Direktivets målsättning är att geodata är lätt tillgängliga och användbara.
+  Läs mer på sidan <a target="_blank" href="https://www.maanmittauslaitos.fi/sv/kartor-och-geodata/interoperabla-geodata/inspire/vilket-inspire">Vilket INSPIRE?</a>
+</p>
+
+<p>
+Följ Paikkatietoikkunas på <a target="_blank" href="https://twitter.com/geoportal_fi"> Twitter</a> och
+<a target="_blank" href="https://fi-fi.facebook.com/paikkatietoikkuna/">Facebook</a>,
+ så får du snabbt information om Paikkatietoikkuna och INSPIRE, utbildningar och evenemang.
+</p>
 `;
 
 Oskari.registerLocalization({
