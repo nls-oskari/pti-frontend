@@ -18,7 +18,7 @@ Paikkatietoikkuna är en del av implementeringen av INSPIRE-direktivet i Finland
 </p>
 
 <p>
-Följ Paikkatietoikkunas på <a target="_blank" href="https://twitter.com/geoportal_fi"> Twitter</a> och
+Följ Paikkatietoikkuna på <a target="_blank" href="https://twitter.com/geoportal_fi"> Twitter</a> och
 <a target="_blank" href="https://fi-fi.facebook.com/paikkatietoikkuna/">Facebook</a>,
  så får du snabbt information om Paikkatietoikkuna och INSPIRE, utbildningar och evenemang.
 </p>
