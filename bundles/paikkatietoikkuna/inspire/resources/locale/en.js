@@ -1,12 +1,17 @@
 const flyoutTextContent = `
-Finnish National Geoportal, <a target="_blank" href="https://www.maanmittauslaitos.fi/en/e-services/geodata-portal-paikkatietoikkuna">Paikkatietoikkuna</a>, is in the heart of the Finnish
-INSPIRE-implementation. It is a geoportal introducing Finnish spatial data and services.<br><br>
-
-The objective of INSPIRE is to create a European spatial data infrastructure, which will facilitate the accessibility of spatial data
-everywhere in Europe while promoting their interoperability. Read more: <a href="https://inspire.ec.europa.eu/" target="_blank">What is INSPIRE?</a><br><br>
-
-Follow our INSPIRE social media channels (in Finnish) to get information on workshops and events as well as things related to Paikkatietoikkuna 
-geoportal:Paikkatietoikkuna <a target="_blank" href="https://twitter.com/geoportal_fi">Twitter</a><br> and <a target="_blank" href="https://fi-fi.facebook.com/paikkatietoikkuna/">Facebook</a><br><br>
+<p>
+Finnish National Geoportal <a target="_blank" href="https://www.maanmittauslaitos.fi/en/e-services/geodata-portal-paikkatietoikkuna">Paikkatietoikkuna</a> presents map layers produced by Finnish data providers.
+ Data providers offer map layers to be attached to Paikkatietoikkuna.
+  National Land Survey makes a contract with the data providers before the map layer is being added to Paikkatietoikkuna.
+</p>
+<p>
+The map layers of Paikkatietoikkuna are based on service interfaces published by the data providers, which means that they are as up-to-date as in the services of the data providers.
+</p>
+<p>
+Paikkatietoikkuna is part of the implementation of the INSPIRE Directive in Finland.
+ The goal of the Directive is to make geospatial data easily accessable and usable.
+ More about <a href="https://inspire.ec.europa.eu/" target="_blank">INSPIRE</a>.
+ </p>
 `;
 
 Oskari.registerLocalization({
