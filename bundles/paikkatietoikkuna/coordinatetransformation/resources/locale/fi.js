@@ -150,7 +150,7 @@ Oskari.registerLocalization(
             },
             "select":{
                 "title": "Valitse sijainnit kartalta",
-                "info": "Valitse yksi tai useampi piste kartalta klikkaamalla. Kartta on ETRS-TM35FIN-koordinaattijärjestelmässä. Tämä koordinaattijärjestelmä valitaan automaattisesti eikä sitä voi muutta. Valinnoissa on syytä huomioida, että kartalta sijaintien valinta ei ole tarkka ja valitut koordinaatit pyöristetään kokonaisluvuiksi.",
+                "info": "Valitse yksi tai useampi piste kartalta klikkaamalla. Kartta on ETRS-TM35FIN-koordinaattijärjestelmässä. Tämä koordinaattijärjestelmä valitaan automaattisesti eikä sitä voi muuttaa. Valinnoissa on syytä huomioida, että kartalta sijaintien valinta ei ole tarkka ja valitut koordinaatit pyöristetään kokonaisluvuiksi.",
                 "add": "Lisää merkintöjä",
                 "remove": "Poista merkintöjä"
             }
