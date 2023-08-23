@@ -31,7 +31,9 @@ jQuery(document).ready(function () {
         type: 'POST',
         dataType: 'json',
         data: getAppSetupParams,
-        url: '/action?action_route=GetAppSetup&mobile=' + Oskari.util.isMobile(),
+        url: Oskari.urls.getRoute('GetAppSetup', {
+            mobile: Oskari.util.isMobile()
+        }),
         success: function (appSetup) {
             var app = Oskari.app;
             if (!appSetup.startupSequence) {

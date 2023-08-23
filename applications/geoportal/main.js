@@ -47,6 +47,8 @@ import 'oskari-lazy-loader?printout!oskari-frontend/packages/framework/bundle/pr
 import 'oskari-lazy-loader?userguide!oskari-frontend/packages/framework/bundle/userguide/bundle.js';
 import 'oskari-lazy-loader?coordinatetransformation!../../packages/paikkatietoikkuna/bundle/coordinatetransformation/bundle.js';
 import 'oskari-lazy-loader?statsgrid!oskari-frontend/packages/statistics/statsgrid/bundle.js';
+import 'oskari-lazy-loader?terrain-profile!oskari-frontend-contrib/packages/terrain-profile/bundle.js';
+import 'oskari-lazy-loader?layerswipe!oskari-frontend/packages/mapping/ol/layerswipe/bundle.js';
 // added for mobile
 import 'oskari-lazy-loader?mobileuserguide!../../bundles/paikkatietoikkuna/mobileuserguide/bundle.js';
 
@@ -64,10 +66,8 @@ import 'oskari-loader!oskari-frontend-contrib/packages/mapping/ol/mapanalysis/bu
 // pti
 import 'oskari-loader!../../packages/paikkatietoikkuna/bundle/register/bundle.js';
 import 'oskari-loader!../../packages/paikkatietoikkuna/bundle/telemetry/bundle.js';
-import 'oskari-loader!oskari-frontend-contrib/packages/terrain-profile/bundle.js';
 import 'oskari-loader!../../packages/paikkatietoikkuna/lang-overrides/bundle.js';
 import 'oskari-loader!../../packages/paikkatietoikkuna/bundle/inspire/bundle.js';
-import 'oskari-loader!oskari-frontend/packages/mapping/ol/layerswipe/bundle.js';
 import 'oskari-loader!oskari-frontend/bundles/framework/layeranalytics/bundle.js';
 
 // lazy
