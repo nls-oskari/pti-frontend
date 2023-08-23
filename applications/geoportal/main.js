@@ -22,7 +22,6 @@ import 'oskari-loader!oskari-frontend/packages/framework/bundle/statehandler/bun
 import 'oskari-loader!oskari-frontend/packages/framework/bundle/search/bundle.js';
 import 'oskari-loader!oskari-frontend/packages/framework/bundle/timeseries/bundle.js';
 import 'oskari-loader!oskari-frontend/packages/framework/bundle/ui-components/bundle.js';
-import 'oskari-loader!oskari-frontend/packages/framework/featuredata2/bundle.js';
 
 import 'oskari-loader!oskari-frontend/packages/mapping/ol/heatmap/bundle.js';
 import 'oskari-loader!oskari-frontend/packages/mapping/ol/mapwmts/bundle.js';
@@ -49,6 +48,7 @@ import 'oskari-lazy-loader?coordinatetransformation!../../packages/paikkatietoik
 import 'oskari-lazy-loader?statsgrid!oskari-frontend/packages/statistics/statsgrid/bundle.js';
 import 'oskari-lazy-loader?terrain-profile!oskari-frontend-contrib/packages/terrain-profile/bundle.js';
 import 'oskari-lazy-loader?layerswipe!oskari-frontend/packages/mapping/ol/layerswipe/bundle.js';
+import 'oskari-lazy-loader?featuredata2!oskari-loader!oskari-frontend/packages/framework/featuredata2/bundle.js';
 // added for mobile
 import 'oskari-lazy-loader?mobileuserguide!../../bundles/paikkatietoikkuna/mobileuserguide/bundle.js';
 
