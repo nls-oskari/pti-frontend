@@ -30,7 +30,7 @@ Oskari.clazz.define('Oskari.pti.mobileuserguide.UserGuideBundleInstance',
             if (!nav) {
                 return;
             }
-            const linksContainer = nav.querySelector('.linksContainer')
+            const linksContainer = nav.querySelector('.linksContainer');
             if (linksContainer) {
                 const container = document.createElement('div');
                 linksContainer.append(container);
