@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Message } from 'oskari-ui';
-import { Link, LinkContainer } from './Link';
+import { Link } from './Link';
 
 const LINKS = {
     fi: 'https://www.maanmittauslaitos.fi/asioi-verkossa/palveluiden-kayttoohjeet/paikkatietoikkuna',
@@ -43,9 +43,9 @@ Oskari.clazz.define('Oskari.pti.mobileuserguide.UserGuideBundleInstance',
         },
 
         addLink: function (root) {
-            ReactDOM.render(<LinkContainer>
+            ReactDOM.render(<div>
                 <Link href={ this.getHref() }><Message bundleKey={ this.getName() } messageKey='title' /></Link>
-            </LinkContainer>, root);
+            </div>, root);
         }
     },
     {
