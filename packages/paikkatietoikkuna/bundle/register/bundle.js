@@ -17,9 +17,6 @@ Oskari.clazz.define(
             "scripts": [{
                 "type": "text/javascript",
                 "src": "../../../../bundles/paikkatietoikkuna/register/instance.js"
-            }, {
-                "type": "text/css",
-                "src": "../../../../bundles/paikkatietoikkuna/register/resources/scss/register.scss"
             }],
 
             "locales": [{
@@ -64,11 +61,6 @@ Oskari.clazz.define(
                 "Bundle-Version": "1.0.0",
                 "Import-Namespace": ["Oskari", "jquery"],
                 "Import-Bundle": {}
-
-                /**
-                 *
-                 */
-
             }
         },
 

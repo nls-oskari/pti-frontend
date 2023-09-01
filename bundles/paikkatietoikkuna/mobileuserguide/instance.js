@@ -26,11 +26,14 @@ Oskari.clazz.define('Oskari.pti.mobileuserguide.UserGuideBundleInstance',
         },
 
         _startImpl: function () {
-            const langContainer = document.getElementById('language');
             const nav = Oskari.dom.getNavigationEl();
-            if (nav && langContainer) {
+            if (!nav) {
+                return;
+            }
+            const linksContainer = nav.querySelector('.linksContainer')
+            if (linksContainer) {
                 const container = document.createElement('div');
-                nav.insertBefore(container, langContainer);
+                linksContainer.append(container);
                 this.addLink(container);
             }
         },
