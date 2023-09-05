@@ -8,9 +8,6 @@ import 'oskari-loader!oskari-frontend/packages/framework/bundle/divmanazer/bundl
 // Then import mapmodule and rest of the application
 import 'oskari-loader!oskari-frontend/packages/mapping/ol/mapmodule/bundle.js';
 
-import 'oskari-loader!oskari-frontend/packages/catalogue/bundle/metadataflyout/bundle.js';
-import 'oskari-loader!oskari-frontend/packages/catalogue/metadatacatalogue/bundle.js';
-
 import 'oskari-loader!oskari-frontend/packages/framework/bundle/coordinatetool/bundle.js';
 import 'oskari-loader!oskari-frontend/packages/framework/layerlist/bundle.js';
 import 'oskari-loader!oskari-frontend/packages/framework/bundle/findbycoordinates/bundle.js';
@@ -49,6 +46,8 @@ import 'oskari-lazy-loader?statsgrid!oskari-frontend/packages/statistics/statsgr
 import 'oskari-lazy-loader?terrain-profile!oskari-frontend-contrib/packages/terrain-profile/bundle.js';
 import 'oskari-lazy-loader?layerswipe!oskari-frontend/packages/mapping/ol/layerswipe/bundle.js';
 import 'oskari-lazy-loader?featuredata2!oskari-loader!oskari-frontend/packages/framework/featuredata2/bundle.js';
+import 'oskari-lazy-loader?metadataflyout!oskari-frontend/packages/catalogue/bundle/metadataflyout/bundle.js';
+import 'oskari-lazy-loader?metadatacatalogue!oskari-frontend/packages/catalogue/metadatacatalogue/bundle.js';
 // added for mobile
 import 'oskari-lazy-loader?mobileuserguide!../../bundles/paikkatietoikkuna/mobileuserguide/bundle.js';
 
