@@ -50,7 +50,6 @@ import 'oskari-lazy-loader?metadataflyout!oskari-frontend/packages/catalogue/bun
 import 'oskari-lazy-loader?metadatacatalogue!oskari-frontend/packages/catalogue/metadatacatalogue/bundle.js';
 // added for mobile
 import 'oskari-lazy-loader?mobileuserguide!../../bundles/paikkatietoikkuna/mobileuserguide/bundle.js';
-
 // end mobile tuning
 
 import 'oskari-loader!oskari-frontend/packages/mapping/dimension-change/bundle.js';
