@@ -4,9 +4,9 @@ import { Message } from 'oskari-ui';
 import { Link } from './Link';
 
 const LINKS = {
-    fi: 'https://www.maanmittauslaitos.fi/asioi-verkossa/palveluiden-kayttoohjeet/paikkatietoikkuna',
-    sv: 'https://www.maanmittauslaitos.fi/sv/e-tjanster/bruksanvisningar-av-e-tjanster/geodataportalen-paikkatietoikkuna',
-    en: 'https://www.maanmittauslaitos.fi/en/e-services/instructions-use-our-services/paikkatietoikkuna'
+    fi: 'https://www.maanmittauslaitos.fi/asioi-verkossa/palveluiden-kayttoohjeet/paikkatietoikkuna/mobiili',
+    sv: 'https://www.maanmittauslaitos.fi/sv/e-tjanster/bruksanvisningar-av-e-tjanster/paikkatietoikkuna/mobil',
+    en: 'https://www.maanmittauslaitos.fi/en/e-services/instructions-use-our-services/paikkatietoikkuna/mobile'
 };
 /**
  * @class Oskari.mapframework.bundle.mobileuserguide.UserGuideBundleInstance
