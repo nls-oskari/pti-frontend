@@ -75,7 +75,7 @@ Oskari.clazz.define('Oskari.pti.mobileuserguide.UserGuideBundleInstance',
             const linkContainer = document.createElement('div');
             // attach under the disclaimer
             const disclaimerEl = document.getElementById('pti_disclaimer');
-            disclaimerEl.after(linkContainer)
+            disclaimerEl.after(linkContainer);
             // render the link
             ReactDOM.render(<DesktopLink href={ this.createLinkHref() }>
                 <Message bundleKey={ this.getName() } messageKey='requestDesktop' />
