@@ -26,13 +26,17 @@ jQuery(document).ready(function () {
             }
         }, 500);
     }
+    var requestMobile = Oskari.util.isMobile();
+    if (typeof getAppSetupParams['mobile'] !== 'undefined') {
+        requestMobile = getAppSetupParams['mobile'];
+    }
 
     jQuery.ajax({
         type: 'POST',
         dataType: 'json',
         data: getAppSetupParams,
         url: Oskari.urls.getRoute('GetAppSetup', {
-            mobile: Oskari.util.isMobile()
+            mobile: requestMobile
         }),
         success: function (appSetup) {
             var app = Oskari.app;
