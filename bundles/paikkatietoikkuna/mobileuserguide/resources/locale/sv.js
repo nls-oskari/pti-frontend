@@ -3,6 +3,7 @@ Oskari.registerLocalization(
     "lang": "sv",
     "key": "mobileuserguide",
     "value": {
-        "title": "Bruksanvisningar"
+        "title": "Bruksanvisningar",
+        "requestDesktop": "Visa alla funktioner"
     }
 });
