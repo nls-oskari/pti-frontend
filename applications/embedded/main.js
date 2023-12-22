@@ -23,6 +23,7 @@ import 'oskari-loader!oskari-frontend/packages/mapping/ol/maprotator/bundle.js';
 import 'oskari-loader!oskari-frontend/packages/framework/bundle/postprocessor/bundle.js';
 import 'oskari-loader!oskari-frontend/packages/framework/bundle/rpc/bundle.js';
 
+import 'oskari-lazy-loader?layerswipe!oskari-frontend/packages/mapping/ol/layerswipe/bundle.js';
 import 'oskari-lazy-loader?timeseries!oskari-frontend/packages/framework/bundle/timeseries/bundle.js';
 import 'oskari-lazy-loader?maplegend!oskari-frontend/packages/framework/bundle/maplegend/bundle.js';
 import 'oskari-lazy-loader?featuredata!oskari-frontend/packages/framework/featuredata/bundle.js';
