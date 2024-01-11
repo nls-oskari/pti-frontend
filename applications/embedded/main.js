@@ -33,6 +33,8 @@ import 'oskari-lazy-loader?statsgrid!oskari-frontend/packages/statistics/statsgr
 import 'oskari-lazy-loader?metadataflyout!oskari-frontend/packages/catalogue/bundle/metadataflyout/bundle.js';
 import 'oskari-lazy-loader?metadatasearch!oskari-frontend/packages/catalogue/metadatasearch/bundle.js';
 
+import 'oskari-lazy-loader?layerswipe!oskari-frontend/packages/mapping/ol/layerswipe/bundle.js';
+
 import { PTIOrtophotoTimeseriesGFIformatter } from '../../util/PTIOrtophotoTimeseriesGFIformatter';
 
 import './css/overwritten.css';
