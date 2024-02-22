@@ -28,7 +28,7 @@ import 'oskari-lazy-loader?maplegend!oskari-frontend/packages/framework/bundle/m
 import 'oskari-lazy-loader?featuredata!oskari-frontend/packages/framework/featuredata/bundle.js';
 import 'oskari-lazy-loader?routingService!oskari-frontend/packages/framework/bundle/routingService/bundle.js';
 import 'oskari-lazy-loader?feedbackService!oskari-frontend/packages/framework/bundle/feedbackService/bundle.js';
-import 'oskari-lazy-loader?statsgrid!oskari-frontend/packages/statistics/statsgrid/bundle.js';
+import 'oskari-lazy-loader?statsgrid!oskari-frontend/bundles/statistics/statsgrid/bundle.js';
 
 import 'oskari-lazy-loader?metadataflyout!oskari-frontend/packages/catalogue/bundle/metadataflyout/bundle.js';
 import 'oskari-lazy-loader?metadatasearch!oskari-frontend/packages/catalogue/metadatasearch/bundle.js';
