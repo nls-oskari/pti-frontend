@@ -68,3 +68,17 @@ Oskari.registerLocalization(
         ]
     }
 }, true);
+
+Oskari.registerLocalization(
+{
+    "lang": "fi",
+    "key": "Analyse",
+    "value": {
+        "NotLoggedView": {
+            "discountedNotice": "HUOM! Analyysi ei ole käytettävissä 5.6.2024 - 31.8.2024 välisenä aikana."
+        },
+        "StartView": {
+            "discountedNotice": "HUOM! Analyysi ei ole käytettävissä 5.6.2024 - 31.8.2024 välisenä aikana."
+        }
+    }
+}, true);
