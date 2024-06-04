@@ -64,3 +64,17 @@ Oskari.registerLocalization(
         ]
     }
 }, true);
+
+Oskari.registerLocalization(
+{
+    "lang": "sv",
+    "key": "Analyse",
+    "value": {
+        "NotLoggedView": {
+            "discountedNotice": "OBS! Analysen är inte tillgänglig mellan 5.6.2024 och 31.8.2024."
+        },
+        "StartView": {
+            "discountedNotice": "OBS! Analysen är inte tillgänglig mellan 5.6.2024 och 31.8.2024."
+        }
+    }
+}, true);

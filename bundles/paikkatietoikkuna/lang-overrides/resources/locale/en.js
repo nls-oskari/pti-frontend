@@ -65,3 +65,17 @@ Oskari.registerLocalization(
         ]
     }
 }, true);
+
+Oskari.registerLocalization(
+{
+    "lang": "en",
+    "key": "Analyse",
+    "value": {
+        "NotLoggedView": {
+            "discountedNotice": "NOTE! Analysis is not available between 5.6.2024 and 31.8.2024."
+        },
+        "StartView": {
+            "discountedNotice": "NOTE! Analysis is not available between 5.6.2024 and 31.8.2024."
+        }
+    }
+}, true);
