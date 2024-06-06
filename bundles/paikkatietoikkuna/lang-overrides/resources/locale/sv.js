@@ -71,10 +71,10 @@ Oskari.registerLocalization(
     "key": "Analyse",
     "value": {
         "NotLoggedView": {
-            "discountedNotice": "OBS! Analysen är inte tillgänglig mellan 5.6.2024 och 31.8.2024."
+            "discountedNotice": "OBS! Analysen är inte tillgänglig fr.o.m. 11.6.2024."
         },
         "StartView": {
-            "discountedNotice": "OBS! Analysen är inte tillgänglig mellan 5.6.2024 och 31.8.2024."
+            "discountedNotice": "OBS! Analysen är inte tillgänglig fr.o.m. 11.6.2024."
         }
     }
 }, true);
