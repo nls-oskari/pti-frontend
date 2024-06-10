@@ -75,10 +75,10 @@ Oskari.registerLocalization(
     "key": "Analyse",
     "value": {
         "NotLoggedView": {
-            "discountedNotice": "HUOM! Analyysi ei ole käytettävissä 5.6.2024 - 31.8.2024 välisenä aikana."
+            "discountedNotice": "HUOM! Analyysi ei ole käytettävissä 11.6.2024 alkaen."
         },
         "StartView": {
-            "discountedNotice": "HUOM! Analyysi ei ole käytettävissä 5.6.2024 - 31.8.2024 välisenä aikana."
+            "discountedNotice": "HUOM! Analyysi ei ole käytettävissä 11.6.2024 alkaen."
         }
     }
 }, true);

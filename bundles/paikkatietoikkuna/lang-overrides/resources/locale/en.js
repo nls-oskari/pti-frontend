@@ -72,10 +72,10 @@ Oskari.registerLocalization(
     "key": "Analyse",
     "value": {
         "NotLoggedView": {
-            "discountedNotice": "NOTE! Analysis is not available between 5.6.2024 and 31.8.2024."
+            "discountedNotice": "NOTE! Analysis not available since 11 June 2024."
         },
         "StartView": {
-            "discountedNotice": "NOTE! Analysis is not available between 5.6.2024 and 31.8.2024."
+            "discountedNotice": "NOTE! Analysis not available since 11 June 2024."
         }
     }
 }, true);
