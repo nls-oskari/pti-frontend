@@ -1,3 +1,5 @@
+import { template } from 'lodash';
+
 Oskari.clazz.define('Oskari.coordinatetransformation.component.CoordinateTable', function (view, loc, type) {
     this.loc = loc;
     this.type = type;
@@ -7,14 +9,14 @@ Oskari.clazz.define('Oskari.coordinatetransformation.component.CoordinateTable',
     this.isEditable = false;
     this.scrollTimer = null;
     this.template = {
-        tableWrapper: _.template('<div class="coordinate-table-wrapper <%= type %>">' +
+        tableWrapper: template('<div class="coordinate-table-wrapper <%= type %>">' +
                                         '<h5> <%= title %> </h5>' +
                                         '<div class="oskari-table-header"></div>' +
                                         '<div class="oskari-table-content"></div>' +
                                     '</div>'
         ),
-        rowcounter: _.template('<div class="rowcount"><span class="row-counter">0</span> ${rows} </div>'),
-        header: _.template('<table class="oskari-tbl-header" cellpadding="0" cellspacing="0" border="0">' +
+        rowcounter: template('<div class="rowcount"><span class="row-counter">0</span> ${rows} </div>'),
+        header: template('<table class="oskari-tbl-header" cellpadding="0" cellspacing="0" border="0">' +
                                 '<thead>' +
                                     '<tr>' +
                                         '<th>${col1}</th>' +
@@ -24,7 +26,7 @@ Oskari.clazz.define('Oskari.coordinatetransformation.component.CoordinateTable',
                                  '</thead>' +
                             '</table>'
         ),
-        row: _.template('<tr>' +
+        row: template('<tr>' +
                                 '<td class="cell">' +
                                     '<div class="cellContent">${coords.col1}</div>' +
                                 '</td>' +
@@ -39,7 +41,7 @@ Oskari.clazz.define('Oskari.coordinatetransformation.component.CoordinateTable',
                                 '</td>' +
                             '</tr> '
         ),
-        table: _.template('<table class="hoverable oskari-coordinate-table two-dimensions" cellpadding="0" cellspacing="0" border="0">' +
+        table: template('<table class="hoverable oskari-coordinate-table two-dimensions" cellpadding="0" cellspacing="0" border="0">' +
                                 '<tbody></tbody' +
                             '</table>'
         )

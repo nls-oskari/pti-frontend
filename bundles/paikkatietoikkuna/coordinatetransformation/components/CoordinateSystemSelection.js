@@ -1,3 +1,5 @@
+import { template } from 'lodash';
+
 Oskari.clazz.define('Oskari.coordinatetransformation.component.CoordinateSystemSelection',
     function (view, loc, type, helper) {
         this.view = view;
@@ -14,7 +16,7 @@ Oskari.clazz.define('Oskari.coordinatetransformation.component.CoordinateSystemS
         this.isAxisFlip = false;
         this._template = {
             systemWrapper: jQuery('<div class="coordinate-system-wrapper"></div>'),
-            coordinateSystemSelection: _.template(
+            coordinateSystemSelection: template(
                 '<h4> ${ title }</h4>' +
                 '<div class="transformation-system">' +
                     '<div class="system epsgSearch selection-wrapper">' +

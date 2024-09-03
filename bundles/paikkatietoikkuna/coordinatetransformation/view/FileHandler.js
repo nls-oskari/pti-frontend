@@ -1,3 +1,5 @@
+import { template } from 'lodash';
+
 Oskari.clazz.define('Oskari.coordinatetransformation.view.FileHandler',
     function (helper, loc, type) {
         const me = this;
@@ -12,7 +14,7 @@ Oskari.clazz.define('Oskari.coordinatetransformation.view.FileHandler',
         me.isFileInput = false;
         me.selections = {};
         me._template = {
-            settings: _.template('<div class="coordinatetransformation-file-form">' +
+            settings: template('<div class="coordinatetransformation-file-form">' +
                                     '<% if (obj.export === true) { %> ' +
                                         '<div class="selection-wrapper fileName without-infolink">' +
                                             '<b class="title">${fileName}</b>' +

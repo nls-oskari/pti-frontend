@@ -1,3 +1,5 @@
+import { template } from 'lodash';
+
 Oskari.clazz.define('Oskari.coordinatetransformation.component.SourceSelect',
     function (loc) {
         Oskari.makeObservable(this);
@@ -10,35 +12,35 @@ Oskari.clazz.define('Oskari.coordinatetransformation.component.SourceSelect',
         this._template = {
             // TODO remove unused sourceWrapper and source. also remove 2 from names and commented codes
             sourceWrapper: jQuery('<div class="datasource-wrapper"></div>'),
-            source: _.template(
-                '<h4>${title}</h4>' +
-                '<div class="coordinate-datasources-wrapper">' +
-                    '<div class="source-select">' +
-                        '<input type="radio" id="clipboard" name="load" value="keyboard">' +
-                        '<label for="keyboard">' +
-                            '<span></span>' +
-                            '${keyboard}' +
-                        '</label>' +
-                        '<div class="infolink icon-info" data-source="keyboard" title="${keyboardInfo}"></div>' +
-                    '</div>' +
-                    '<div class="source-select">' +
-                        '<input type="radio" id="file" name="load" value="file">' +
-                        '<label for="file">' +
-                            '<span></span>' +
-                            '${file}' +
-                        '</label>' +
-                        '<div class="infolink icon-info" data-source="file" title="${fileInfo}"></div>' +
-                    '</div>' +
-                    '<div class="source-select">' +
-                        '<input type="radio" id="mapselection" name="load" value="map">' +
-                        '<label for="mapselection">' +
-                            '<span></span>' +
-                            '${map}' +
-                        '</label>' +
-                        '<div class="infolink icon-info" data-source="map" title="${mapInfo}"></div>' +
-                    '</div>' +
-                '</div>'
-            ),
+            source: ({ title, keyboard, keyboardInfo, file, fileInfo, map, mapInfo }) =>
+                `<h4>${title}</h4>
+                <div class="coordinate-datasources-wrapper">
+                    <div class="source-select">
+                        <input type="radio" id="clipboard" name="load" value="keyboard">
+                        <label for="keyboard">
+                            <span></span>
+                            ${keyboard}
+                        </label>
+                        <div class="infolink icon-info" data-source="keyboard" title="${keyboardInfo}"></div>
+                    </div>
+                    <div class="source-select">
+                        <input type="radio" id="file" name="load" value="file">
+                        <label for="file">
+                            <span></span>
+                            ${file}
+                        </label>
+                        <div class="infolink icon-info" data-source="file" title="${fileInfo}"></div>
+                    </div>
+                    <div class="source-select">
+                        <input type="radio" id="mapselection" name="load" value="map">
+                        <label for="mapselection">
+                            <span></span>
+                            ${map}
+                        </label>
+                        <div class="infolink icon-info" data-source="map" title="${mapInfo}"></div>
+                    </div>
+                </div>`
+            ,
             sourceWrapper2: jQuery(
                 '<div class="datasource-wrapper">' +
                     '<h4></h4>' +
@@ -46,7 +48,7 @@ Oskari.clazz.define('Oskari.coordinatetransformation.component.SourceSelect',
                 // '<div class="datasource-actions-wrapper"></div>' +
                 '</div>'
             ),
-            source2: _.template(
+            source2: template(
                 '<div class="source-select-wrapper">' +
                     '<div class="source-select">' +
                         // '<input type="radio" id="source-${type}" value="${type}">' +
@@ -65,14 +67,13 @@ Oskari.clazz.define('Oskari.coordinatetransformation.component.SourceSelect',
                     '<div class="infolink icon-info" data-source="${type}" title="${tooltip}"></div>' +
                 '</div>'
             ),
-            actions: _.template(
-                '<div class="datasource-action oskari-hidden">' +
-                    '<a href="javascript:void(0);">${mapButton}</a>' +
-                '</div>' +
-                '<div class="datasource-action oskari-hidden">' +
-                    '<a href="javascript:void(0);">${fileButton}</a>' +
-                '</div>'
-            )
+            actions: ({ mapButton, fileButton }) =>
+                `<div class="datasource-action oskari-hidden">
+                    <a href="javascript:void(0);">${mapButton}</a>
+                </div>
+                <div class="datasource-action oskari-hidden">
+                    <a href="javascript:void(0);">${fileButton}</a>
+                </div>`
         };
         this.createUi();
     }, {
