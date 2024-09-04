@@ -1,3 +1,5 @@
+import { template } from 'lodash';
+
 Oskari.clazz.define('Oskari.coordinatetransformation.view.transformation',
     function (instance, helper, dataHandler) {
         const me = this;
@@ -57,22 +59,22 @@ Oskari.clazz.define('Oskari.coordinatetransformation.view.transformation',
             systems: jQuery('<div class="coordinate-systems-wrapper"></div>'),
             tables: jQuery('<div class="coordinate-tables-wrapper"></div>'),
             divider: jQuery('<div class="auto-margin-divider"></div>'),
-            // title: _.template('<h4 class="header"><%= title %></h4>'), //TODO move
+            // title: template('<h4 class="header"><%= title %></h4>'), //TODO move
             // TODO oskari btn
-            transformButton: _.template(
+            transformButton: template(
                 '<div class="transformation-button">' +
                     '<input class="primary transform" type="button" value="<%= convert %> >>">' +
                 '</div>'
             ),
             // TODO oskari btn
-            utilRow: _.template(
+            utilRow: template(
                 '<div class="util-row-wrapper">' +
                     '<input class="clear" type="button" value="<%= clear %> ">' +
                     '<input class="show" type="button" value="<%= show %> ">' +
                     '<input class="export primary" type="button" value="<%= fileexport %> ">' +
                 '</div>'
             ),
-            filterSystems: _.template(
+            filterSystems: template(
                 '<div class="systems-filter-wrapper">' +
                     '<h4>${title}</h4>' +
                     '<div class="coordinate-systems-filters">' +

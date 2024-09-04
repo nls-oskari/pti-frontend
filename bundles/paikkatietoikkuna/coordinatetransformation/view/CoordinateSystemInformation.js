@@ -10,17 +10,16 @@ Oskari.clazz.define('Oskari.coordinatetransformation.view.CoordinateSystemInform
         list: jQuery('<ul class="info-list"></ul>'),
         listItem: jQuery('<li></li>'),
         paragraph: jQuery('<p></p>'),
-        precisionTable: _.template('<div class="precision-table-wrapper">' +
-                '<h5 class="precision-table"><%= title %></h5>' +
-                '<table class="precisionTable">' +
-                    '<tr><th><%= unit %></th><th>~1 m</th><th>~0.1 m</th><th>~1 cm</th><th>~1 mm</th><th>~0.1 mm</th></tr>' +
-                    '<tr><td><%= deg %></td><td>5</td><td>6</td><td>7</td><td>8</td><td>9</td></tr>' +
-                    '<tr><td><%= rad %></td><td>7</td><td>8</td><td>9</td><td>10</td><td>11</td></tr>' +
-                    '<tr><td><%= min %></td><td>4</td><td>5</td><td>6</td><td>7</td><td>8</td></tr>' +
-                    '<tr><td><%= sec %></td><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td></tr>' +
-                '</table>' +
-            '</div>'
-        )
+        precisionTable: ({ title, unit, deg, rad, min, sec }) => `<div class="precision-table-wrapper">
+                <h5 class="precision-table">${title}</h5>
+                <table class="precisionTable">
+                    <tr><th>${unit}</th><th>~1 m</th><th>~0.1 m</th><th>~1 cm</th><th>~1 mm</th><th>~0.1 mm</th></tr>
+                    <tr><td>${deg}</td><td>5</td><td>6</td><td>7</td><td>8</td><td>9</td></tr>
+                    <tr><td>${rad}</td><td>7</td><td>8</td><td>9</td><td>10</td><td>11</td></tr>
+                    <tr><td>${min}</td><td>4</td><td>5</td><td>6</td><td>7</td><td>8</td></tr>
+                    <tr><td>${sec}</td><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td></tr>
+                </table>
+            </div>`
     },
     setElement: function (el) {
         this.element = el;
