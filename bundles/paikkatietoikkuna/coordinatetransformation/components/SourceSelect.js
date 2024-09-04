@@ -39,8 +39,7 @@ Oskari.clazz.define('Oskari.coordinatetransformation.component.SourceSelect',
                         </label>
                         <div class="infolink icon-info" data-source="map" title="${mapInfo}"></div>
                     </div>
-                </div>`
-            ,
+                </div>`,
             sourceWrapper2: jQuery(
                 '<div class="datasource-wrapper">' +
                     '<h4></h4>' +
