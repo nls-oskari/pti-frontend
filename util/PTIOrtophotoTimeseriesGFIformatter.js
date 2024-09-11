@@ -38,7 +38,8 @@ export class PTIOrtophotoTimeseriesGFIformatter {
             const photoYearAttr = layerAttributes.PTI_GFI_property || 'kuvausvuosi';
             const label = Oskari.getLocalized(layerAttributes.PTI_GFI_label || 'Vuosi');
             const years = geojson.features.map(feature => parseInt(feature.properties[photoYearAttr], 10));
-            return `<b>${label}:</b> ${Math.max(...years)}`;
+            const year = years.length ? Math.max(...years) : '-';
+            return `<b>${label}:</b> ${year}`;
         } catch (err) {
             Oskari.log('PTIOrtophotoTimeseriesGFIformatter').warn(`Couldn't format GFI data`, data);
         }
