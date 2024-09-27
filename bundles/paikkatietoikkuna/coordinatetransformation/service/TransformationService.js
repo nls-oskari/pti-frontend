@@ -47,7 +47,7 @@ Oskari.clazz.define('Oskari.coordinatetransformation.TransformationService',
                 urlParameterString += '&targetHeightCrs=' + crs.targetElevationCrs;
             }
             if (exportSettings) {
-                urlParameterString += '&exportSettings=' + JSON.stringify(exportSettings.selects);
+                urlParameterString += '&exportSettings=' + encodeURIComponent(JSON.stringify(exportSettings.selects));
             }
             return urlBase + urlParameterString;
         },
