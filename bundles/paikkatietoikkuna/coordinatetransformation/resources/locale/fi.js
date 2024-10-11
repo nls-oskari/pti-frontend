@@ -98,7 +98,7 @@ Oskari.registerLocalization(
                     "titleRead": "Virhe tiedoston lukemisessa!",
                     "readFileError" : "Tiedostosta ei onnistuttu lukemaan kaikkia rivejä.",
                     "transformFileError": "Tiedoston koordinaatteja ei onnistuttu muuntamaan.",
-                    "invalidLine": "Tiedostossa on rivillä: {index, number} virheellinen koordinaattirivi: {line} <br> Tarkasta, että kyseinen rivi on kelvollinen ja vastaa lähtöaineiston ominaisuuksien valintoja.",
+                    "invalidLine": "Tiedostossa on rivillä: {index, number} virheellinen koordinaattirivi: {line} <br /> Tarkasta, että kyseinen rivi on kelvollinen ja vastaa lähtöaineiston ominaisuuksien valintoja.",
                     "generic": "Koordinaattimuunnos epäonnistui.",
                     //error codes
                     "invalid_coord": "Koordinaatti virheellinen. Tarkasta, että muunnettavat koordinaatit ovat oikeassa muodossa sekä geodeettinen koordinaatti- ja korkeusjärjestelmä ovat oikein.",

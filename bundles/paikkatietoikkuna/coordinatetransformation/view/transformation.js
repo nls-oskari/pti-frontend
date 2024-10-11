@@ -619,11 +619,11 @@ Oskari.clazz.define('Oskari.coordinatetransformation.view.transformation',
             if (errorInfo && errorInfo.errorKey) {
                 code = errorInfo.errorKey;
                 if (code === 'invalid_coord_in_line') {
-                    errorMsg = errors.transformFileError + '<br>' + Oskari.getMsg('coordinatetransformation', 'flyout.transform.responseErrors.invalidLine', { line: errorInfo.line, index: errorInfo.lineIndex });
+                    errorMsg = errors.transformFileError + '<br />' + Oskari.getMsg('coordinatetransformation', 'flyout.transform.responseErrors.invalidLine', { line: errorInfo.line, index: errorInfo.lineIndex });
                 } else if (code === 'invalid_read_line') {
-                    errorMsg = errors.readFileError + '<br>' + Oskari.getMsg('coordinatetransformation', 'flyout.transform.responseErrors.invalidLine', { line: errorInfo.line, index: errorInfo.lineIndex });
+                    errorMsg = errors.readFileError + '<br />' + Oskari.getMsg('coordinatetransformation', 'flyout.transform.responseErrors.invalidLine', { line: errorInfo.line, index: errorInfo.lineIndex });
                 } else if (code === 'transformation_error') { // error message from transformation service
-                    errorMsg = errors[code] + '<br>' + errorInfo.exception;
+                    errorMsg = errors[code] + '<br />' + errorInfo.exception;
                 } else if (errors[code]) {
                     errorMsg = errors[code];
                 }
