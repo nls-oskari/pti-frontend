@@ -30,7 +30,7 @@ import 'oskari-lazy-loader?routingService!oskari-frontend/packages/framework/bun
 import 'oskari-lazy-loader?feedbackService!oskari-frontend/packages/framework/bundle/feedbackService/bundle.js';
 import 'oskari-lazy-loader?statsgrid!oskari-frontend/bundles/statistics/statsgrid/bundle.js';
 
-import 'oskari-lazy-loader?metadataflyout!oskari-frontend/packages/catalogue/bundle/metadataflyout/bundle.js';
+import 'oskari-lazy-loader?metadataflyout!oskari-frontend/bundles/catalogue/metadata/bundle.js'
 import 'oskari-lazy-loader?metadatasearch!oskari-frontend/packages/catalogue/metadatasearch/bundle.js';
 
 import 'oskari-lazy-loader?layerswipe!oskari-frontend/packages/mapping/ol/layerswipe/bundle.js';
