@@ -1,6 +1,6 @@
 {
   "name": "oskari-frontend-paikkis",
-  "version": "1.29.0-dev",
+  "version": "1.29.0",
   "description": "kartta.paikkatietoikkuna.fi bundles & app conf",
   "license": "(MIT OR EUPL-1.1)",
   "keywords": [
