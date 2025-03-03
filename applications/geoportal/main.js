@@ -67,7 +67,7 @@ import 'oskari-loader!../../packages/paikkatietoikkuna/bundle/register/bundle.js
 import 'oskari-loader!../../packages/paikkatietoikkuna/bundle/telemetry/bundle.js';
 import 'oskari-loader!../../packages/paikkatietoikkuna/lang-overrides/bundle.js';
 import 'oskari-loader!../../packages/paikkatietoikkuna/bundle/inspire/bundle.js';
-import 'oskari-loader!oskari-frontend/bundles/framework/layeranalytics/bundle.js';
+import 'oskari-bundle!oskari-frontend/bundles/framework/layeranalytics';
 
 // lazy
 
