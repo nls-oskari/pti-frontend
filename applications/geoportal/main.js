@@ -58,10 +58,6 @@ import 'oskari-bundle!oskari-frontend/bundles/mapping/dimension-change';
 // 3D layer support
 import 'oskari-loader!oskari-frontend/packages/mapping/olcs/map3dtiles/bundle.js';
 
-// contrib
-import 'oskari-loader!oskari-frontend-contrib/packages/analysis/ol/analyse/bundle.js';
-import 'oskari-loader!oskari-frontend-contrib/packages/mapping/ol/mapanalysis/bundle.js';
-
 // pti
 import 'oskari-loader!../../packages/paikkatietoikkuna/bundle/register/bundle.js';
 import 'oskari-loader!../../packages/paikkatietoikkuna/bundle/telemetry/bundle.js';
