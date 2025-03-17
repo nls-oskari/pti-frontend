@@ -49,9 +49,9 @@ import 'oskari-lazy-bundle?publisher2!oskari-frontend/bundles/framework/publishe
 import 'oskari-lazy-bundle?printout!oskari-frontend/bundles/framework/printout';
 import 'oskari-lazy-bundle?userguide!oskari-frontend/bundles/framework/userguide';
 import 'oskari-lazy-bundle?statsgrid!oskari-frontend/bundles/statistics/statsgrid';
+import 'oskari-lazy-bundle?terrain-profile!oskari-frontend-contrib/bundles/terrain-profile';
 
 import 'oskari-lazy-loader?coordinatetransformation!../../packages/paikkatietoikkuna/bundle/coordinatetransformation/bundle.js';
-import 'oskari-lazy-loader?terrain-profile!oskari-frontend-contrib/packages/terrain-profile/bundle.js';
 
 import 'oskari-lazy-bundle?featuredata!oskari-frontend/bundles/framework/featuredata';
 import 'oskari-lazy-bundle?metadataflyout!oskari-frontend/bundles/catalogue/metadataflyout'
