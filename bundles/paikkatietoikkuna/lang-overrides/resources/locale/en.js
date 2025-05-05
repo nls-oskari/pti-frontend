@@ -61,19 +61,3 @@ Oskari.registerLocalization(
         ]
     }
 }, true);
-
-Oskari.registerLocalization(
-{
-    "lang": "en",
-    "key": "Analyse",
-    "value": {
-        "NotLoggedView": {
-            "discountedNotice": "The analysis functionality has been unpublished in June 2024. We apologize for any inconvenience this may cause.",
-            "text": "The saved analyses are viewable via My Data tab until the end of year 2024. More information in Finnish: https://www.maanmittauslaitos.fi/palvelutiedotteet/analyysi-toiminnallisuus-ei-ole-kaytettavissa-paikkatietoikkunassa-1162024-alkaen"
-        },
-        "StartView": {
-            "discountedNotice": "The analysis functionality has been unpublished in June 2024. We apologize for any inconvenience this may cause.",
-            "text": "The saved analyses are viewable via My Data tab until the end of year 2024. More information in Finnish: https://www.maanmittauslaitos.fi/palvelutiedotteet/analyysi-toiminnallisuus-ei-ole-kaytettavissa-paikkatietoikkunassa-1162024-alkaen"
-        }
-    }
-}, true);
