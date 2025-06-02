@@ -83,6 +83,7 @@ class UIHandler extends StateHandler {
     // parse float on blur
     parseInputCoordinate (index, column) {
         const { coordinates } = this.getState();
+        // eslint-disable-next-line no-unused-vars
         const { invalid: ignored, ...coord } = coordinates[index] || {};
         const value = parseCoordinateValue(coord[column]);
         // TODO: use column for invalid/error for styling ?

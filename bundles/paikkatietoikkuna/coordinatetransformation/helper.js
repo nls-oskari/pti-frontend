@@ -168,7 +168,7 @@ export const isCoordInBounds = (srs, coord) => {
 // TODO: pass mapmodule or move to service/maphelper??
 export const moveMapToMarkers = (state) => {
     // TODO: use converted map coordinates, this works only for native srs
-    const { coordinates, inputSrs } = state;
+    const { coordinates } = state; // inputSrs
     // let { lonFirst } = SRS.find(s => s.value === inputSrs) || {};
     const sandbox = Oskari.getSandbox();
     const closestZoom = 6;
