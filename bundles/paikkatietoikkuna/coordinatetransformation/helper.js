@@ -1,4 +1,4 @@
-import { SRS, SRS_H, SYSTEM, MARKER, DEGREE_DECIMALS, DMS } from "./constants";
+import { SRS, SRS_H, SYSTEM, MARKER, DEGREE_DECIMALS, DMS } from './constants';
 
 export const getDimension = (srs, srsHeight) => {
     const { system } = SRS.find(s => s.value === srs) || {};
@@ -20,7 +20,7 @@ export const isDegreeSystem = (srs) => {
 };
 
 // TODO: is this needed => getDimension() === 3
-export const is3DSystem = (srs) =>  {
+export const is3DSystem = (srs) => {
     const { coord } = SRS.find(s => s.value === srs) || {};
     if (coord === 'COORD_PROJ_3D' || coord === 'COORD_GEOG_3D') {
         return true;
@@ -28,7 +28,7 @@ export const is3DSystem = (srs) =>  {
     return false;
 };
 
-const getSrsUnit = srs => {
+export const getSrsUnit = srs => {
     const { system } = SRS.find(s => s.value === srs) || {};
     const { unit } = SYSTEM.find(c => c.value === system) || {};
 
@@ -63,9 +63,9 @@ const validateSelections = (state) => {
 export const validateFileSettings = (state, type) => {
     const selects = state[type];
     const errors = [];
-    
+
     if (!selects.coordinateSeparator) {
-            errors.push('noCoordinateSeparator');
+        errors.push('noCoordinateSeparator');
     }
     if (!selects.decimalSeparator) {
         errors.push('noDecimalSeparator');
@@ -81,7 +81,7 @@ export const validateFileSettings = (state, type) => {
         if (!state.files.length) {
             errors.push('noInputFile');
         }
-        if (typeof selects.headerLineCount !== 'number' ||  selects.headerLineCount < 0) {
+        if (typeof selects.headerLineCount !== 'number' || selects.headerLineCount < 0) {
             errors.push('headerCount');
         }
     }
@@ -89,7 +89,7 @@ export const validateFileSettings = (state, type) => {
         if (!selects.fileName) {
             errors.push('noFileName');
         }
-        if (typeof selects.decimalCount !== 'number' ||  selects.decimalCount < 0) {
+        if (typeof selects.decimalCount !== 'number' || selects.decimalCount < 0) {
             errors.push('decimalCount');
         }
     }
@@ -162,22 +162,22 @@ export const isCoordInBounds = (srs, coord) => {
         return false;
     }
     const x = lonFirst ? coord[0] : coord[1];
-    const y = lonFirst ? coord[1] : coord[0];   
-    return map.isPointInExtent(epsgValues.bounds, x, y);
+    const y = lonFirst ? coord[1] : coord[0];
+    return map.isPointInExtent(bounds, x, y);
 };
 // TODO: pass mapmodule or move to service/maphelper??
 export const moveMapToMarkers = (state) => {
     // TODO: use converted map coordinates, this works only for native srs
     const { coordinates, inputSrs } = state;
-    let { lonFirst } = SRS.find(s => s.value === inputSrs) || {};
+    // let { lonFirst } = SRS.find(s => s.value === inputSrs) || {};
     const sandbox = Oskari.getSandbox();
     const closestZoom = 6;
     // TODO: isAxisFlip? input settings? is this needed with objects
-    //lonFirst = isAxisFlip ? !lonFirst : lonFirst;
+    // lonFirst = isAxisFlip ? !lonFirst : lonFirst;
     if (!coordinates.length) {
         // Nothing to do here
     } else if (coordinates.length === 1) {
-        const { x, y } = coords[0];
+        const { x, y } = coordinates[0];
         sandbox.postRequestByName('MapMoveRequest', [x, y, closestZoom]);
     } else {
         const map = sandbox.findRegisteredModuleInstance('MainMapModule');
@@ -192,7 +192,7 @@ export const moveMapToMarkers = (state) => {
 };
 
 // TODO: refactor
-export const  getLabelForMarker = (lonlat, epsgValues, isAxisFlip) => {
+export const getLabelForMarker = (lonlat, epsgValues, isAxisFlip) => {
     let lonLabel;
     let latLabel;
     const val = epsgValues || this.mapEpsgValues;
@@ -222,18 +222,11 @@ export const coordinateToMarker = (coord, isNew) => {
     const { x, y, label } = coord;
     const msg = label || `E: ${x}, N: ${y}`;
     const color = isNew ? colors.new : colors.old;
-    return  { ...props, x, y, msg, color };
-};
-
-// TODO: !
-const getTransformType = (source, target) => {
-    const from = source === 'file' ? 'F' : 'A';
-    const to = target;
-    return `${from}2${to}`;
+    return { ...props, x, y, msg, color };
 };
 
 export const stateToPTIArray = (state, transformType, toFile) => {
-    const { source, inputSrs, outputSrs, inputHeightSrs, outputHeightSrs} = state;
+    const { source, inputSrs, outputSrs, inputHeightSrs, outputHeightSrs } = state;
     const dimension = transformType === 'F2R' ? 3 : getDimension(inputSrs, inputHeightSrs);
     const params = {
         sourceCrs: inputSrs,
@@ -262,9 +255,9 @@ export const stateToPTIArray = (state, transformType, toFile) => {
             params.exportSettings = JSON.stringify({ ...settings, decimalCount: decimals, unit: forced });
         }
         const coordinates = state.coordinates
-            .filter( coord => !coord.invalid)
+            .filter(coord => !coord.invalid)
             .map(({ x, y, z }) => dimension === 2 ? [x, y] : [x, y, z])
-            //.map(coord => coord.map(c => parseFloat(c)))
+            // .map(coord => coord.map(c => parseFloat(c)))
             .filter(coord => coord.every(c => !isNaN(c)));
         body = JSON.stringify(coordinates);
     }
@@ -282,7 +275,7 @@ export const parseCoordinateValue = value => {
     // TODO: or DMS some value includes dms
     if (Oskari.util.coordinateIsDegrees([value, '0\u00B0'])) {
         return Oskari.util.coordinateDegreesToMetric([value, '0\u00B0'], DEGREE_DECIMALS)[0];
-    } 
+    }
     // TODO: refactor
     // DMS with spaces only (not ° ' ")
     if (value.includes(' ') && value.split(' ').filter(v => !isNaN(v).length > 1)) {

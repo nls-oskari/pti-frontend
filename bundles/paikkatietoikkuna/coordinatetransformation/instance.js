@@ -32,14 +32,14 @@ Oskari.clazz.define('Oskari.coordinatetransformation.instance',
         },
         getMapCoordinates: function () {
             // remove id
-            return this.tempCoords.map(({x, y}) => ({ x, y }));
+            return this.tempCoords.map(({ x, y }) => ({ x, y }));
         },
         setMapCoordinates: function (coords) {
             // Remove previous
-            this.tempCoords.forEach(({id}) => this.sandbox.postRequestByName('MapModulePlugin.RemoveMarkersRequest', [id]));
+            this.tempCoords.forEach(({ id }) => this.sandbox.postRequestByName('MapModulePlugin.RemoveMarkersRequest', [id]));
             this.tempCoords = [];
-            
-            this.tempCoords = coords.map(coord => ({ ...coord, id: ID_PREFIX + Oskari.getSeq(this.getName()).nextVal()}));
+
+            this.tempCoords = coords.map(coord => ({ ...coord, id: ID_PREFIX + Oskari.getSeq(this.getName()).nextVal() }));
             this.tempCoords.forEach(coord => {
                 const marker = coordinateToMarker(coord);
                 this.sandbox.postRequestByName('MapModulePlugin.AddMarkerRequest', [marker, coord.id]);

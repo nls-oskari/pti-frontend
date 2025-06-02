@@ -57,7 +57,7 @@ Oskari.clazz.define('Oskari.coordinatetransformation.Flyout',
         },
         lazyRender: function () {
             const handler = this.getHandler();
-            if (!this.container || !handler ) {
+            if (!this.container || !handler) {
                 return;
             }
             const state = handler.getState();

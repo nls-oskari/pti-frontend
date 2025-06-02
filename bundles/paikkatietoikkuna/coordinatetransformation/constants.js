@@ -4,7 +4,7 @@ export const WATCH_URL = '/coordinatetransform/watch/';
 export const ID_PREFIX = 'coord_marker_';
 // TODO: or enums?
 export const SOURCE = ['table', 'file', 'map'];
-export const TRANSFORM = ['A2A', 'F2A', 'F2R' , 'F2F', 'A2F'];
+export const TRANSFORM = ['A2A', 'F2A', 'F2R', 'F2F', 'A2F'];
 export const MAP = {
     ADD: 'add',
     REMOVE: 'remove'
@@ -31,8 +31,8 @@ export const FILE_DEFAULTS = {
         coordinateSeparator: 'semicolon',
         lineSeparator: 'win'
     }
-}
-const closestZoom = 6;
+};
+// const closestZoom = 6;
 
 export const SEPARATORS = {
     lineSeparator: [
@@ -65,7 +65,7 @@ export const DEGREE = [
     { label: 'DD', value: 'DD', decimals: 8 },
     { label: 'DD MM', value: 'DD MM', decimals: 6 },
     { label: 'DD MM SS', value: 'DD MM SS', decimals: 4 },
-    { label: 'DDMM', value: 'DDMM', decimals: 6},
+    { label: 'DDMM', value: 'DDMM', decimals: 6 },
     { label: 'DDMMSS', value: 'DDMMSS', decimals: 4 }
 ];
 export const DEGREE_DECIMALS = DEGREE.find(d => d.value === 'degree')?.decimals;
@@ -368,7 +368,7 @@ export const SRS = [
         lonFirst: false
     }, {
         value: 'EPSG:2394',
-        loc: 'flyout.coordinateSystem.geodeticCoordinateSystem.kkj', 
+        loc: 'flyout.coordinateSystem.geodeticCoordinateSystem.kkj',
         args: { zone: 4 },
         datum: 'DATUM_KKJ',
         projection: 'PROJECTION_KKJ',
@@ -384,8 +384,8 @@ export const SRS = [
         system: 'COORD_PROJ_2D',
         bounds: [5423705.81, 6970442.95, 5428707.25, 6989284.23],
         lonFirst: false
-    }, { 
-        value:'EPSG:4123', // KKJ_GEO
+    }, {
+        value: 'EPSG:4123', // KKJ_GEO
         label: 'KKJ-Hayford',
         datum: 'DATUM_KKJ',
         projection: '',
@@ -403,15 +403,14 @@ export const SRS_H = [
         value: 'EPSG:5717',
         label: 'N60',
         cls: 'DATUM_KKJ DATUM_EUREF-FIN DATUM_DEFAULT'
-    }, { 
+    }, {
         value: 'EPSG:8675',
         label: 'N43',
         cls: 'DATUM_KKJ DATUM_EUREF-FIN DATUM_DEFAULT'
     }
 ];
 
-
-const createCls = (json) => {
+export const createCls = (json) => {
     Object.keys(json).forEach(function (key) {
         const geoCoord = json[key];
         if (key === 'DEFAULT') {

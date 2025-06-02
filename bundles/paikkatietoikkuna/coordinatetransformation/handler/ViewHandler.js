@@ -14,8 +14,8 @@ const getInitialState = () => ({
     inputHeightSrs: null,
     outputHeightSrs: null,
     files: [],
-    import: {...FILE_DEFAULTS.import},
-    export: {...FILE_DEFAULTS.export},
+    import: { ...FILE_DEFAULTS.import },
+    export: { ...FILE_DEFAULTS.export },
     coordinates: [],
     results: []
 });
@@ -23,7 +23,7 @@ const getInitialState = () => ({
 class UIHandler extends StateHandler {
     constructor (instance) {
         super();
-        this.instance = instance
+        this.instance = instance;
         this.sandbox = instance.getSandbox();
         this.loc = instance.loc;
         this.infoPopup = null;
@@ -35,7 +35,7 @@ class UIHandler extends StateHandler {
     }
 
     reset (closeFlyout) {
-         // TODO: close popups? see onFlyoutClose
+        // TODO: close popups? see onFlyoutClose
         const state = getInitialState();
         this.updateState(state); // TODO: set or update
         if (closeFlyout) {
@@ -72,7 +72,7 @@ class UIHandler extends StateHandler {
         this.updateState({ coordinates });
     }
 
-    // paste 
+    // paste
     pasteCoordinates (pasted) {
         // TODO:
         //  split("\n") for firefox and split(String.fromCharCode(13)) for Chrome
@@ -83,12 +83,13 @@ class UIHandler extends StateHandler {
     // parse float on blur
     parseInputCoordinate (index, column) {
         const { coordinates } = this.getState();
-        const { invalid, ...coord } = coordinates[index] || {};
+        const { invalid: ignored, ...coord } = coordinates[index] || {};
         const value = parseCoordinateValue(coord[column]);
         // TODO: use column for invalid/error for styling ?
-        const updated = isNaN(value) ? {...coord, invalid: true} : { ...coord, [column]: value };
+        const updated = isNaN(value) ? { ...coord, invalid: true } : { ...coord, [column]: value };
         this.updateCoordinate(index, updated);
     }
+
     // TODO: refactor
     setSrs (type, srs) {
         const prop = `${type}Srs`;
@@ -98,19 +99,20 @@ class UIHandler extends StateHandler {
     setFiles (files) {
         this.updateState({ files });
     }
+
     setFileSetting (type, key, value) {
         const settings = this.getState()[type];
-        this.updateState({ [type]: { ...settings, [key]: value }});
+        this.updateState({ [type]: { ...settings, [key]: value } });
     }
     // TODO: refactor
     setImport (key, value) {
         const current = this.getState().import;
-        this.updateState({ import: {...current, [key]: value} });
+        this.updateState({ import: { ...current, [key]: value } });
     }
     // TODO: refactor
     setExport (key, value) {
         const current = this.getState().export;
-        this.updateState({ export: {...current, [key]: value} });
+        this.updateState({ export: { ...current, [key]: value } });
     }
 
     clearTables () {
@@ -142,9 +144,9 @@ class UIHandler extends StateHandler {
             this.instance.setMapSelectionMode(id);
         }
     }
-  
+
     showOnMap () {
-        const { coordinates, inputSrs, source } = this.getState();
+        const { coordinates } = this.getState(); //  inputSrs, source
         // TODO: notify noCoordinates, noSrs
         if (this.mapPopup) {
             return;
@@ -181,7 +183,7 @@ class UIHandler extends StateHandler {
 
     showFileSettings (type) {
         this.filePopup?.close(); // TODO: change, reset???
-        this.filePopup = showFilePopup(type, this.getState(), this.getController(),  () => this.closeFileSettings());
+        this.filePopup = showFilePopup(type, this.getState(), this.getController(), () => this.closeFileSettings());
     }
 
     closeFileSettings () {
@@ -190,7 +192,7 @@ class UIHandler extends StateHandler {
     }
 
     showInfo (key) {
-        const { title, info = '', listItems = [], paragraphs = [info]} =  this.loc(`infoPopup.${key}`);
+        const { title, info = '', listItems = [], paragraphs = [info] } = this.loc(`infoPopup.${key}`);
         if (this.infoPopup) {
             this.infoPopup.update(title, paragraphs, listItems);
         } else {
@@ -202,7 +204,7 @@ class UIHandler extends StateHandler {
         this.infoPopup?.close();
         const listItems = errorKeys.map(key => this.loc(`flyout.transform.validateErrors.${key}`));
         const title = this.loc('flyout.transform.validateErrors.title');
-        const paragraphs = [this.loc('flyout.transform.validateErrors.message')]
+        const paragraphs = [this.loc('flyout.transform.validateErrors.message')];
         this.infoPopup = showInfoPopup(title, paragraphs, listItems, () => this.closeInfoPopup());
     }
 
@@ -269,17 +271,16 @@ class UIHandler extends StateHandler {
 
     transformToArray (transformType) {
         const state = this.getState();
-        // const type = transformType || 
         if (this.validate(transformType)) {
             return;
         }
         this.updateState({ loading: true });
-        
+
         const { params, body } = stateToPTIArray(state, transformType, false);
         fetch(Oskari.urls.getRoute('CoordinateTransformation', params), {
             method: 'POST',
             headers: {
-                'Accept': 'application/json'
+                Accept: 'application/json'
             },
             body
         }).then(response => {
@@ -305,21 +306,19 @@ class UIHandler extends StateHandler {
         fetch(Oskari.urls.getLocation(WATCH_JOB) + jobId, {
             method: 'GET',
             headers: {
-                'Accept': 'application/json'
-            },
-            }).then(response => {
+                Accept: 'application/json'
+            }
+        }).then(response => {
             if (!response.ok) {
                 throw new Error(response.statusText);
             }
             return response.json();
         }).then(json => {
-            const { jobId, resultCoordinates, hasMoreCoordinates } = json;
+            const { jobId, resultCoordinates } = json; // hasMoreCoordinates ??
             if (jobId) {
                 // set timeout??
                 this.watchJsonJob(jobId);
-                return;
             } else if (resultCoordinates) {
-                // hasMoreCoordinates ??
                 // TODO: can undefined z cause problems??
                 const results = resultCoordinates.map(([x, y, z]) => ({ x, y, z }));
                 this.updateState({ loading: false, results });
@@ -336,9 +335,9 @@ class UIHandler extends StateHandler {
         fetch(Oskari.urls.getLocation(WATCH_JOB) + jobId, {
             method: 'GET',
             headers: {
-                'Accept': 'application/json'
-            },
-            }).then(response => {
+                Accept: 'application/json'
+            }
+        }).then(response => {
             if (!response.ok) {
                 throw new Error(response.statusText);
             }
@@ -360,7 +359,7 @@ class UIHandler extends StateHandler {
 
     showResponseError (response) {
         const { error, info } = response || {};
-        const key = info?.errorKey || error?.errorKey || 'generic'
+        const key = info?.errorKey || error?.errorKey || 'generic';
         Oskari.log('CoordTransHandler').error(error);
         Messaging.error(this.loc(`flyout.transform.responseErrors.${key}`));
         this.updateState({ loading: false });
