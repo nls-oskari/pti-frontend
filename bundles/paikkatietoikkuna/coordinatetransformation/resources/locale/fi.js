@@ -14,13 +14,23 @@ Oskari.registerLocalization(
                 "epsg": "EPSG-koodilla",
                 "systems": "Datumilla ja koordinaatistolla"
             },
+            "steps": {
+                "inputSrs": "Lähtökoordinaattijärjestelmä",
+                "outputSrs": "Tuloskoordinaattijärjestelmä",
+                "importFile": "Lähtöaineisto",
+                "exportFile": "Tulosaineisto",
+                "mapSelect": "Valitse sijainnit",
+                "inputTable": "Lähtökoordinaatit",
+                "mapInputTable": "Kartan koordinaatit",
+                "resultTable": "Tuloskoordinaatit"
+            },
             "coordinateSystem": {
                 "title": "Koordinaattijärjestelmän tiedot",
                 "input": {
-                    "title": "Lähtökoordinaattijärjestelmän tiedot"
+                    "title": "Anna lähtökoordinaattijärjestelmän tiedot"
                 },
                 "output": {
-                    "title": "Tuloskoordinaattijärjestelmän tiedot"
+                    "title": "Anna tuloskoordinaattijärjestelmän tiedot"
                 },
                 "noFilter": "Mikä tahansa",
                 "epsgSearch": {
@@ -57,15 +67,31 @@ Oskari.registerLocalization(
             "coordinateTable": {
                 "input": "Muunnettavat koordinaatit",
                 "output": "Tuloskoordinaatit",
-                "north":"Pohjois-koordinaatti [m]",
-                "east":"Itä-koordinaatti [m]",
-                "lat":"Leveysaste",
-                "lon":"Pituusaste",
-                "elevation": "Korkeus [m]",
-                "geoX":"Geosentrinen X [m]",
-                "geoY":"Geosentrinen Y [m]",
-                "geoZ":"Geosentrinen Z [m]",
-                "ellipseElevation":"Ellipsoidinen korkeus [m]",
+                "metric": {
+                    "x":"Pohjois-koordinaatti [m]",
+                    "y":"Itä-koordinaatti [m]",
+                    "z": "Korkeus [m]"
+                },
+                "degree": {
+                    "x":"Leveysaste",
+                    "y":"Pituusaste",
+                    "z": "Korkeus [m]",
+                },
+                "degree3D": {
+                    "x":"Leveysaste",
+                    "y":"Pituusaste",
+                    "z": "Ellipsoidinen korkeus [m]",
+                },
+                "geocentric": {
+                    "x":"Geosentrinen X [m]",
+                    "y":"Geosentrinen Y [m]",
+                    "z":"Geosentrinen Z [m]"
+                },
+                "height": {
+                    "elevation": "Korkeus [m]",
+                    "ellipse":"Ellipsoidinen korkeus [m]",
+                    "geocentric": "Geosentrinen Z [m]"
+                },
                 "rows": "Riviä",
                 "clearTables": "Tyhjennä taulukot",
                 "confirmClear": "Haluatko tyhjentää taulukot?"
@@ -82,6 +108,7 @@ Oskari.registerLocalization(
                     "title": "Virhe!",
                     "message": "Valinnoissa on puutteita tai virheitä. Ota huomioon seuraavat vaatimukset ja yritä uudelleen.",
                     "crs": "Geodeettinen koordinaattijärjestelmä pitää olla valittuna sekä lähtö- että tulostiedoissa.",
+                    "srs": "Geodeettinen koordinaattijärjestelmä pitää olla valittuna.",
                     "noInputData": "Ei muunnettavia koordinaatteja.",
                     "noInputFile": "Lähtöaineiston sisältävä tiedosto pitää olla valittuna.",
                     "noFileName": "Muodostettavalle tiedostolle pitää antaa tiedostonimi.",
@@ -102,8 +129,8 @@ Oskari.registerLocalization(
                     "generic": "Koordinaattimuunnos epäonnistui.",
                     //error codes
                     "invalid_coord": "Koordinaatti virheellinen. Tarkasta, että muunnettavat koordinaatit ovat oikeassa muodossa sekä geodeettinen koordinaatti- ja korkeusjärjestelmä ovat oikein.",
-                    //"invalid_number": "Koordinaatti virheellinen.",
-                    //"invalid_coord_in_array": "Koordinaatti virheellinen.",
+                    "invalid_number": "Koordinaatti virheellinen.",
+                    "invalid_coord_in_array": "Koordinaatti virheellinen.",
                     "no_coordinates": "Tiedostosta ei löytynyt koordinaatteja. Tarkasta tiedosto sekä asetettu otsakerivien määrä.",
                     "invalid_file_settings": "Tiedoston asetukset virheelliset.",
                     "no_file": "Lähetetystä pyynnöstä ei löytynyt tiedostoa.",
@@ -119,14 +146,15 @@ Oskari.registerLocalization(
         },
         "dataSource": {
             "title": "Koordinaattitietojen lähde",
+            "change": "Vaihda lähde",
             "confirmChange": "Muunnettavat koordinaatit tyhjennetään. Haluatko jatkaa?",
             "file": {
-                "label": "Tiedostosta",
+                "label": "Tiedosto",
                 "info":  "Valitse lähtöaineiston sisältävä tiedosto ja sen asetukset.",
                 "action": "muokkaa valintoja"
             },
-            "keyboard": {
-                "label": "Näppäimistöltä",
+            "table": {
+                "label": "Taulukko",
                 "info": "Syötä lähtötiedot Muunnettavat koordinaatit -taulukkoon."
             },
             "map": {
@@ -156,8 +184,9 @@ Oskari.registerLocalization(
             }
         },
         "actions": {
-            "convert": "Muunna",
-            "export": "Muunna tiedostoon",
+            "convert": "Tee muunnos",
+            "export": "Tee muunnos tiedostoon",
+            "minimizeSrs": "Näytä kaikki koordinaattjijärjestelmän valinnat",
             "select": "Valitse",
             "cancel": "Peruuta",
             "done": "Valmis",
@@ -168,27 +197,25 @@ Oskari.registerLocalization(
             "options": {
                 "decimalSeparator": "Desimaalierotin",
                 "coordinateSeparator": "Sarake-erotin",
-                "headerCount": "Otsakerivien määrä",
-                "decimalPrecision": "Desimaalien tarkkuus",
-                "reverseCoordinates": "Koordinaatit käänteisesti",
+                "headerLineCount": "Otsakerivien määrä",
+                "decimalCount": "Desimaalien tarkkuus",
+                "axisFlip": "Koordinaatit käänteisesti",
+                "prefixId": "Koordinaatit sisältävät tunnisteet",
                 "useId": {
-                    "input": "Koordinaatit sisältävät tunnisteet",
                     "generate": "Luo tunnisteet",
                     "add": "Lisää tunnisteet",
                     "fromFile": "Lisää tunnisteet lähtötiedostosta"
                 },
                 "writeHeader": "Kirjoita otsakerivi tiedostoon",
-                "useCardinals": "Käytä kardinaaleja (N,E,W,S)",
-                "lineEnds": "Rivin loput tulokseen",
+                "writeCardinals": "Käytä kardinaaleja (N,E,W,S)",
+                "writeLineEndings": "Rivin loput tulokseen",
+                "lineSeparator": "Rivierotin",
+                "unit": "Kulman muoto/yksikkö",
                 "choose": "Valitse",
                 "degreeFormat":{
-                    "label": "Kulman muoto/yksikkö",
                     "degree": "Aste",
                     "gradian": "Gooni (graadi)",
                     "radian": "Radiaani"
-                },
-                "lineSeparator": {
-                    "label": "Rivierotin"
                 },
                 "delimeters":{
                     "point": "Piste",
@@ -208,7 +235,7 @@ Oskari.registerLocalization(
         },
         "infoPopup": {
             "description": "Kuvaus",
-            "keyboard": {
+            "table": {
                 "title": "Koordinaattitietojen lähde - taulukko",
                 "paragraphs": [
                     "Syötä lähtötiedot Muunnettavat koordinaatit -taulukkoon."
@@ -349,7 +376,7 @@ Oskari.registerLocalization(
                 ],
                 "listItems" : []
             },
-            "reverseCoordinates":{
+            "axisFlip":{
                 "title":"Koordinaatit käänteisesti",
                 "info": "X- ja Y-koordinaattiakselien järjestys poikkeaa määritetystä järjestyksestä",
                 "paragraphs": [
@@ -367,7 +394,7 @@ Oskari.registerLocalization(
                 ],
                 "listItems" : []
             },
-            "lineEnds":{
+            "writeLineEndings":{
                 "title":"Rivin loput tulokseen",
                 "info": "Lähtötiedoston rivin loput lisätään tulostiedostoon",
                 "paragraphs": [
@@ -376,7 +403,7 @@ Oskari.registerLocalization(
                 ],
                 "listItems" : []
             },
-            "useCardinals":{
+            "writeCardinals":{
                 "title":"Kardinaalien käyttö",
                 "info": "Koordinaattiarvojen perään lisätään ilmansuunnat (N, E, W tai S)",
                 "paragraphs": [

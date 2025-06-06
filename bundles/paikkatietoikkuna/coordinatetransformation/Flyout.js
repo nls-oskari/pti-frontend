@@ -1,10 +1,20 @@
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { FlyoutContent } from './view/FlyoutContent';
+import { FlyoutWizard } from './view/FlyoutWizard';
+import { LocaleProvider, ThemeProvider } from 'oskari-ui/util';
+import { Spin, Button } from 'oskari-ui';
+import { ViewHandler } from './handler/ViewHandler';
+import { BUNDLE } from './constants';
+
 Oskari.clazz.define('Oskari.coordinatetransformation.Flyout',
 
     function (instance) {
         this.instance = instance;
-        this.loc = Oskari.getMsg.bind(null, 'coordinatetransformation');
+        this.loc = Oskari.getMsg.bind(null, BUNDLE);
         this.container = null;
-        this.flyout = null;
+        this.handler = null;
+        this.mode = null;
     }, {
         getName: function () {
             return 'Oskari.coordinatetransformation.Flyout';
@@ -12,21 +22,23 @@ Oskari.clazz.define('Oskari.coordinatetransformation.Flyout',
         getTitle: function () {
             return this.loc('flyout.title');
         },
-        getViews: function () {
-            return this.views;
-        },
-        setEl: function (el, flyout, width, height) {
-            this.container = jQuery(el[0]);
+        setEl: function (el, flyout) {
+            flyout.addClass(BUNDLE);
             this.flyout = flyout;
-            this.container.addClass('coordinatetransformation');
-            this.flyout.addClass('coordinatetransformation');
+            this.container = el[0];
+            this.container.classList.add(BUNDLE);
         },
-        createUi: function () {
-            this.instance.getViews().transformation.createUI(this.container);
+        getHandler: function () {
+            if (!this.handler) {
+                this.handler = new ViewHandler(this.instance, this.loc);
+                this.handler.addStateListener(() => this.lazyRender());
+            }
+            return this.handler;
         },
-        startPlugin: function () {
-            this.template = jQuery();
+        teardown: function () {
+            this.handler?.stop();
         },
+        // For some screen sizes css + media doesn't give enough space for content
         setContainerMaxHeight: function (mapHeight) {
             // calculate max-height based on map size
             const container = this.flyout.find('.oskari-flyoutcontentcontainer');
@@ -38,5 +50,35 @@ Oskari.clazz.define('Oskari.coordinatetransformation.Flyout',
             if (container.outerHeight(true) >= maxHeight) {
                 this.flyout.css('top', '0px');
             }
+        },
+        setMode: function (mode) {
+            this.mode = mode;
+            this.lazyRender();
+        },
+        lazyRender: function () {
+            const handler = this.getHandler();
+            if (!this.container || !handler) {
+                return;
+            }
+            const state = handler.getState();
+            const content = (
+                <LocaleProvider value={{ bundleKey: BUNDLE }}>
+                    <ThemeProvider>
+                        <Spin spinning={state.loading}>
+                            { this.mode === 'wizard' && <FlyoutWizard state={state} controller={handler.getController()}/> }
+                            { this.mode === 'flyout' && <FlyoutContent {...state} controller={handler.getController()}/> }
+                            { !this.mode && (
+                                <div>
+                                    <Button onClick={() => this.setMode('wizard')}>Wizard</Button>
+                                    <Button onClick={() => this.setMode('flyout')}>Flyout</Button>
+                                </div>
+                            )}
+                        </Spin>
+                    </ThemeProvider>
+                </LocaleProvider>
+            );
+            ReactDOM.render(content, this.container);
         }
+    }, {
+        extend: ['Oskari.userinterface.extension.DefaultFlyout']
     });
