@@ -41,16 +41,16 @@ const Cell = ({ value, item, onChange }) => {
 const getEmptyArray = size => [...Array(size)].map(() => ({}));
 
 const getColumn = (column, lonFirst, unit, dimension, editable, controller) => {
-    let tileColumn = column;
+    let columnTitle = column;
     if (lonFirst) {
         if (column === 'x') {
-            tileColumn = 'y';
+            columnTitle = 'y';
         } else if (column === 'y') {
-            tileColumn = 'x';
+            columnTitle = 'x';
         }
     }
     const props = {
-        title: <Message messageKey={`flyout.coordinateTable.${unit}.${tileColumn}`} />,
+        title: <Message messageKey={`flyout.coordinateTable.${unit}.${columnTitle}`} />,
         dataIndex: column,
         width: dimension === 2 ? 180 : 120
     };
