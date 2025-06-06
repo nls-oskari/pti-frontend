@@ -25,7 +25,6 @@ export const OutputSrs = ({ outputSrs, outputHeightSrs, controller }) =>
     <SrsSelect type='output' srs={outputSrs} heightSrs={outputHeightSrs} controller={controller} />;
 
 export const SrsSelect = ({ srs, heightSrs, type, minimal, controller }) => {
-    const [searchVisible, setSearchVisible] = useState(false);
     const heightDisabled = getDimension(srs) === 3;
     const searchPH = <Message messageKey='flyout.coordinateSystem.epsgSearch.label' />
     // TODO: disable or hide height on 3D
