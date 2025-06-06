@@ -13,19 +13,12 @@ export const getDimension = (srs, srsHeight) => {
 
 export const isDegreeSystem = (srs) => {
     const { system } = SRS.find(s => s.value === srs) || {};
-    if (system === 'COORD_GEOG_2D' || system === 'COORD_GEOG_3D') {
-        return true;
-    }
-    return false;
+    return system === 'COORD_GEOG_2D' || system === 'COORD_GEOG_3D';
 };
 
-// TODO: is this needed => getDimension() === 3
 export const is3DSystem = (srs) => {
-    const { coord } = SRS.find(s => s.value === srs) || {};
-    if (coord === 'COORD_PROJ_3D' || coord === 'COORD_GEOG_3D') {
-        return true;
-    }
-    return false;
+    const { system } = SRS.find(s => s.value === srs) || {};
+    return system === 'COORD_PROJ_3D' || system === 'COORD_GEOG_3D';
 };
 
 export const getSrsUnit = srs => {
