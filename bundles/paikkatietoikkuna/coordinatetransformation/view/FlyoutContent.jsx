@@ -78,7 +78,6 @@ export const FlyoutContent = ({
 
 FlyoutContent.propTypes = {
     loading: PropTypes.bool,
-    srs: PropTypes.object.isRequired,
     source: PropTypes.string,
     transformType: PropTypes.string,
     inputSrs: PropTypes.string,
