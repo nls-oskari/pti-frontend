@@ -69,8 +69,8 @@ const getColumn = (column, lonFirst, unit, dimension, editable, controller) => {
     return props;
 };
 
-export const InputCoordinates = ({ source, coordinates, inputSrs, inputHeightSrs, controller}) =>
-    <CoordinateTable type='input' coordinates={coordinates} srs={inputSrs} heightSrs={inputHeightSrs} controller={controller} editable={source === 'table'} />;
+export const InputCoordinates = ({ source, coordinates, inputSrs, inputHeightSrs, controller, editable=source === 'table'}) =>
+    <CoordinateTable type='input' coordinates={coordinates} srs={inputSrs} heightSrs={inputHeightSrs} controller={controller} editable={editable} />;
 
 export const OutputCoordinates = ({ results, outputSrs, outputHeightSrs, controller}) =>
     <CoordinateTable type='output' coordinates={results} srs={outputSrs} heightSrs={outputHeightSrs} controller={controller} />;

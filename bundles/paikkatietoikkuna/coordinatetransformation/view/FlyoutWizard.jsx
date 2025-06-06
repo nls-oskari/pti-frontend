@@ -33,7 +33,7 @@ const StyledButtonContainer = styled(ButtonContainer)`
 
 const ResultTable = (props) => (
     <Spitter>
-        <InputCoordinates {...props} />
+        <InputCoordinates {...props} editable={false} />
         <OutputCoordinates {...props} />
     </Spitter>
 );
