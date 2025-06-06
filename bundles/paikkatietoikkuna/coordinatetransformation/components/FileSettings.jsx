@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Message, Checkbox } from 'oskari-ui';
 import { FileInput } from 'oskari-ui/components/FileInput';
-import { LabeledSelect, LabeledInput } from './Lableled';
+import { LabeledSelect, LabeledInput } from './LabeledFields';
 import { InfoIcon } from 'oskari-ui/components/icons';
 import { SEPARATORS, DECIMAL, DEGREE } from '../constants';
 import { isDegreeSystem } from '../helper';

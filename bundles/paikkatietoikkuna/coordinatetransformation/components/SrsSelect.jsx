@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Message } from 'oskari-ui';
-import { LabeledSelect } from './Lableled';
+import { LabeledSelect } from './LabeledFields';
 import { ComponentLabel } from './ComponentLabel';
 import { DATUM, SYSTEM, PROJECTION, SRS, SRS_H } from '../constants';
 import { getDimension } from '../helper';
