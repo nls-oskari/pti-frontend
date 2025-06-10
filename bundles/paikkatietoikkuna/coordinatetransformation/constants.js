@@ -477,6 +477,72 @@ export const SRS = [
     }
 ];
 
+export const SRS_C = [
+    {
+        value: 'EPSG:3901',
+        label: 'YKJ + N60',
+        name: 'KKJ / Finland Uniform Coordinate System + N60 height',
+        datum: 'DATUM_KKJ',
+        projection: 'PROJECTION_KKJ',
+        system: 'COORD_PROJ_2D',
+        srs: 'EPSG:2393',
+        srsHeight: 'EPSG:5717',
+        axes: ['N', 'E', 'H']
+    }, {
+        value: 'EPSG:3902',
+        label: 'ETRS-TM35FIN + N60',
+        name: 'EUREF-FIN / TM35FIN(N,E) + N60 height',
+        datum: 'DATUM_EUREF-FIN',
+        projection: 'PROJECTION_TM',
+        system: 'COORD_PROJ_2D',
+        srs: 'EPSG:5048',
+        srsHeight: 'EPSG:5717',
+        axes: ['N', 'E', 'H']
+    }, {
+        value: 'EPSG:3903',
+        label: 'ETRS-TM35FIN + N2000',
+        name: 'EUREF-FIN / TM35FIN(N,E) + N2000 height',
+        datum: 'DATUM_EUREF-FIN',
+        projection: 'PROJECTION_TM',
+        system: 'COORD_PROJ_2D',
+        srs: 'EPSG:5048',
+        srsHeight: 'EPSG:3900',
+        axes: ['N', 'E', 'H']
+    }, {
+        value: 'EPSG:10774',
+        label: 'ETRS-TM35FIN + N2000',
+        name: 'EUREF-FIN / TM35FIN(E,N) + N2000 height',
+        datum: 'DATUM_EUREF-FIN',
+        projection: 'PROJECTION_TM',
+        system: 'COORD_PROJ_2D',
+        srs: 'EPSG:3067',
+        srsHeight: 'EPSG:3900',
+        axes: ['E', 'N', 'H']
+    }, {
+        value: 'EPSG:10691',
+        label: 'EUREF-FIN-GRS80 + N60',
+        name: 'EUREF-FIN + N60 height',
+        datum: 'DATUM_EUREF-FIN',
+        projection: '',
+        system: 'COORD_GEOG_2D',
+        srs: 'EPSG:10690',
+        srsHeight: 'EPSG:5717',
+        axes: ['φ', 'λ', 'H'],
+        replaced: 'EPSG:7409' // ETRS89 + EVRF2000 height
+    }, {
+        value: 'EPSG:10692',
+        label: 'EUREF-FIN-GRS80 + N2000',
+        name: 'EUREF-FIN + N2000 height',
+        datum: 'DATUM_EUREF-FIN',
+        projection: '',
+        system: 'COORD_GEOG_2D',
+        srs: 'EPSG:10690',
+        srsHeight: 'EPSG:3900',
+        axes: ['φ', 'λ', 'H'],
+        replaced: 'EPSG:7423' // ETRS89 + EVRF2007 height
+    }
+];
+
 export const SRS_H = [
     {
         value: 'EPSG:3900',
