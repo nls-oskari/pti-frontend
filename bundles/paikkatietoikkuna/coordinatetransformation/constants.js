@@ -74,37 +74,35 @@ export const DMS = ['\u00B0', '\u0027', '\u0022'];
 export const DATUM = [
     {
         value: 'KKJ',
-        label: 'KKJ',
-        cls: 'KKJ EUREF-FIN'
+        label: 'KKJ'
     }, {
         value: 'EUREF-FIN',
-        label: 'EUREF-FIN',
-        cls: 'KKJ EUREF-FIN'
+        label: 'EUREF-FIN'
     }
 ];
 export const SYSTEM = [
     {
         value: 'PROJ_2D',
         loc: 'flyout.coordinateSystem.coordinateSystem.proj2D',
-        cls: 'KKJ EUREF-FIN',
+        datum: 'KKJ EUREF-FIN',
         unit: 'metric',
         dimension: 2
     }, {
         value: 'PROJ_3D',
         loc: 'flyout.coordinateSystem.coordinateSystem.proj3D',
-        cls: 'EUREF-FIN',
+        datum: 'EUREF-FIN',
         unit: 'geocentric',
         dimension: 3
     }, {
         value: 'GEOG_2D',
         loc: 'flyout.coordinateSystem.coordinateSystem.geo2D',
-        cls: 'EUREF-FIN KKJ',
+        datum: 'KKJ EUREF-FIN',
         unit: 'degree',
         dimension: 2
     }, {
         value: 'GEOG_3D',
         loc: 'flyout.coordinateSystem.coordinateSystem.geo3D',
-        cls: 'EUREF-FIN',
+        datum: 'EUREF-FIN',
         unit: 'degree3D',
         dimension: 3
     }
@@ -114,23 +112,23 @@ export const PROJECTION = [
     {
         value: 'PROJECTION_KKJ',
         label: 'KKJ',
-        cls: 'KKJ'
+        datum: 'KKJ'
     }, {
         value: 'PROJECTION_TM',
         label: 'Transversal Mercator',
-        cls: 'EUREF-FIN'
+        datum: 'EUREF-FIN'
     }, {
         value: 'PROJECTION_GK',
         label: 'Gauss-Kruger',
-        cls: 'EUREF-FIN'
+        datum: 'EUREF-FIN'
     }, {
         value: 'PROJECTION_LAEA',
         label: 'Lambert Azimuthal Equal Area',
-        cls: 'EUREF-FIN'
+        datum: 'EUREF-FIN'
     }, {
         value: 'PROJECTION_LCC',
         label: 'Lambert Conic Conformal',
-        cls: 'EUREF-FIN'
+        datum: 'EUREF-FIN'
     }
 ];
 
@@ -548,30 +546,16 @@ export const SRS_H = [
         value: 'EPSG:3900',
         label: 'N2000',
         name: 'N2000 height',
-        cls: 'KKJ EUREF-FIN DATUM_DEFAULT',
         axes: ['H']
     }, {
         value: 'EPSG:5717',
         label: 'N60',
         name: 'N60 height',
-        cls: 'KKJ EUREF-FIN DATUM_DEFAULT',
         axes: ['H']
     }, {
         value: 'EPSG:8675',
         label: 'N43',
         name: 'N43 height',
-        cls: 'KKJ EUREF-FIN DATUM_DEFAULT',
         axes: ['H']
     }
 ];
-
-export const createCls = (json) => {
-    Object.keys(json).forEach(function (key) {
-        const geoCoord = json[key];
-        if (key === 'DEFAULT') {
-            geoCoord.cls = '';
-        } else {
-            geoCoord.cls = geoCoord.datum + ' ' + geoCoord.proj + ' ' + geoCoord.coord;
-        }
-    });
-};
