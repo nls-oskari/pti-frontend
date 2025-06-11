@@ -3,7 +3,7 @@ import { SRS, SRS_H, SYSTEM, MARKER, DEGREE_DECIMALS, DMS } from './constants';
 export const getDimension = (srs, srsHeight) => {
     const { system } = SRS.find(s => s.value === srs) || {};
     // const { dimension } = SYSTEM.find(c => c.value === system) || {}
-    if (system === 'COORD_PROJ_3D' || system === 'COORD_GEOG_3D') {
+    if (system === 'PROJ_3D' || system === 'GEOG_3D') {
         return 3;
     } else if (SRS_H.find(h => h.value === srsHeight)) {
         return 3;
@@ -13,12 +13,12 @@ export const getDimension = (srs, srsHeight) => {
 
 export const isDegreeSystem = (srs) => {
     const { system } = SRS.find(s => s.value === srs) || {};
-    return system === 'COORD_GEOG_2D' || system === 'COORD_GEOG_3D';
+    return system === 'GEOG_2D' || system === 'GEOG_3D';
 };
 
 export const is3DSystem = (srs) => {
     const { system } = SRS.find(s => s.value === srs) || {};
-    return system === 'COORD_PROJ_3D' || system === 'COORD_GEOG_3D';
+    return system === 'PROJ_3D' || system === 'GEOG_3D';
 };
 
 export const getSrsUnit = srs => {
@@ -190,10 +190,10 @@ export const getLabelForMarker = (lonlat, epsgValues, isAxisFlip) => {
     let latLabel;
     const val = epsgValues || this.mapEpsgValues;
     const lonFirst = isAxisFlip ? !val.lonFirst : val.lonFirst;
-    if (val.coord === 'COORD_PROJ_3D') {
+    if (val.coord === 'PROJ_3D') {
         return 'X: ' + lonlat.lon + ', Y: ' + lonlat.lat + ', Z: ' + lonlat.height;
     }
-    if (val.coord === 'COORD_GEOG_2D' || val.coord === 'COORD_GEOG_3D') {
+    if (val.coord === 'GEOG_2D' || val.coord === 'GEOG_3D') {
         lonLabel = this.loc('mapMarkers.show.lon');
         latLabel = this.loc('mapMarkers.show.lat');
     } else {

@@ -42,7 +42,7 @@ export const SrsSelect = ({ srs, heightSrs, type, minimal, controller }) => {
     const [projection, setProjection] = useState(null);
     
     const onSystem = system => {
-        if (system !== 'COORD_PROJ_2D') {
+        if (system !== 'PROJ_2D') {
             // reset hidden select
             setProjection(null);
         }
@@ -67,7 +67,7 @@ export const SrsSelect = ({ srs, heightSrs, type, minimal, controller }) => {
             <ComponentLabel label={`flyout.coordinateSystem.${type}.title`}/>
             <LabeledSelect label='flyout.coordinateSystem.geodeticDatum.label' info='geodeticDatum' value={datum} options={DATUM} onChange={setDatum} controller={controller}/>
             <LabeledSelect localize label='flyout.coordinateSystem.coordinateSystem.label' info='coordinateSystem' value={system} options={SYSTEM} onChange={onSystem} controller={controller}/>
-            { system === 'COORD_PROJ_2D' && <LabeledSelect label='flyout.coordinateSystem.mapProjection.label' info='mapProjection' value={projection} options={PROJECTION} onChange={setProjection} controller={controller}/> }
+            { system === 'PROJ_2D' && <LabeledSelect label='flyout.coordinateSystem.mapProjection.label' info='mapProjection' value={projection} options={PROJECTION} onChange={setProjection} controller={controller}/> }
             <LabeledSelect mandatory localize showSearch filterOption={filter} label='flyout.coordinateSystem.geodeticCoordinateSystem.label' info='geodeticCoordinateSystem' value={srs} options={srsOptions} onChange={val => controller.setSrs(type, val)} controller={controller}/>
             <LabeledSelect label='flyout.coordinateSystem.heightSystem.label' value={heightSrs} disabled={heightDisabled} info='heightSystem' options={SRS_H} onChange={val => controller.setSrs(`${type}Height`, val)} controller={controller}/>
         </Content>
