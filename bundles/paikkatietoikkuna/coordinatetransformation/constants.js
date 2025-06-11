@@ -110,23 +110,23 @@ export const SYSTEM = [
 ];
 export const PROJECTION = [
     {
-        value: 'PROJECTION_KKJ',
+        value: 'KKJ',
         label: 'KKJ',
         datum: 'KKJ'
     }, {
-        value: 'PROJECTION_TM',
+        value: 'TM',
         label: 'Transversal Mercator',
         datum: 'EUREF-FIN'
     }, {
-        value: 'PROJECTION_GK',
+        value: 'GK',
         label: 'Gauss-Kruger',
         datum: 'EUREF-FIN'
     }, {
-        value: 'PROJECTION_LAEA',
+        value: 'LAEA',
         label: 'Lambert Azimuthal Equal Area',
         datum: 'EUREF-FIN'
     }, {
-        value: 'PROJECTION_LCC',
+        value: 'LCC',
         label: 'Lambert Conic Conformal',
         datum: 'EUREF-FIN'
     }
