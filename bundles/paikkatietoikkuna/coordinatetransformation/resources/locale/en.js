@@ -14,6 +14,17 @@ Oskari.registerLocalization(
                 "epsg": "With EPSG code",
                 "systems": "With datum and coordinate system"
             },
+            "steps": {
+                "inputSrs": "Input coordinate reference system",
+                "outputSrs": "Output coordinate reference system",
+                "srs": "Coordinate reference systems",
+                "importFile": "Import properties",
+                "exportFile": "Export properties",
+                "mapSelect": "Select on the map",
+                "inputTable": "Input coordinates",
+                "mapInputTable": "Map coordinates",
+                "resultTable": "Result coordinates"
+            },
             "coordinateSystem": {
                 "title": "Coordinate reference system information",
                 "input": {
@@ -54,18 +65,20 @@ Oskari.registerLocalization(
                     }
                 }
             },
+            "coordinateAxes": {
+                "N":"Northing [m]",
+                "E":"Easting [m]",
+                "φ":"Geodetic latitude",
+                "λ":"Geodetic longitude",
+                "X":"Geocentric X [m]",
+                "Y":"Geocentric Y [m]",
+                "Z":"Geocentric Z [m]",
+                "H": "Height [m]",
+                "h":"Ellipsoidal height [m]"
+            },
             "coordinateTable": {
                 "input": "Input coordinates",
                 "output": "Output coordinates",
-                "north":"Northing [m]",
-                "east":"Easting [m]",
-                "lat":"Geodetic latitude",
-                "lon":"Geodetic longitude",
-                "elevation": "Height [m]",
-                "geoX":"Geocentric X [m]",
-                "geoY":"Geocentric Y [m]",
-                "geoZ":"Geocentric Z [m]",
-                "ellipseElevation":"Ellipsoidal height [m]",
                 "rows": "Rows",
                 "clearTables": "Empty tables",
                 "confirmClear": "Are you sure you want to empty tables?"

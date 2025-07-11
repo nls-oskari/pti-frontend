@@ -17,6 +17,7 @@ Oskari.registerLocalization(
             "steps": {
                 "inputSrs": "Lähtökoordinaattijärjestelmä",
                 "outputSrs": "Tuloskoordinaattijärjestelmä",
+                "srs": "Koordinaattijärjestelmät",
                 "importFile": "Lähtöaineisto",
                 "exportFile": "Tulosaineisto",
                 "mapSelect": "Valitse sijainnit",
@@ -63,6 +64,17 @@ Oskari.registerLocalization(
                         "url": "https://www.suomidigi.fi/ohjeet-ja-tuki/jhs-suositukset/jhs-163-suomen-korkeusjarjestelma-n2000"
                     }
                 }
+            },
+            "coordinateAxes": {
+                'N': 'Pohjois-koordinaatti [m]',
+                'E': 'Itä-koordinaatti [m]',
+                'φ': 'Leveysaste',
+                'λ': 'Pituusaste',
+                'X': 'Geosentrinen X [m]',
+                'Y': 'Geosentrinen Y [m]',
+                'Z': 'Geosentrinen Z [m]',
+                'H': 'Korkeus [m]',
+                'h': 'Ellipsoidinen korkeus [m]'
             },
             "coordinateTable": {
                 "input": "Muunnettavat koordinaatit",

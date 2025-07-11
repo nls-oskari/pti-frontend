@@ -14,6 +14,17 @@ Oskari.registerLocalization(
                 "epsg": "Med EPSG-kod",
                 "systems": "Med datum och koordinatsystem"
             },
+            "steps": {
+                "inputSrs": "Utgångsuppgifter om referenssystemet för koordinater",
+                "outputSrs": "Resultatuppgifter om referenssystemet för koordinater",
+                "srs": "Referenssystemet för koordinater",
+                "importFile": "Utgångsmaterialets egenskaper",
+                "exportFile": "Bildande av datamaterial",
+                "mapSelect": "Välj lägen på kartan",
+                "inputTable": "Koordinater som ska transformeras",
+                "mapInputTable": "Kartans koordinater",
+                "resultTable": "Resultatkoordinater"
+            },
             "coordinateSystem": {
                 "title": "Uppgifter om referenssystemet för koordinater",
                 "input": {
@@ -54,18 +65,20 @@ Oskari.registerLocalization(
                     }
                 }
             },
+            "coordinateAxes": {
+                "N":"Nord-koordinat [m]",
+                "E":"Öst-koordinat [m]",
+                "φ":"Latitud",
+                "λ":"Longitud",
+                "X":"Geocentriskt X [m]",
+                "Y":"Geocentriskt Y [m]",
+                "Z":"Geocentriskt Z [m]",
+                "H": "Höjd [m]",
+                "h":"Höjd över ellipsoiden [m]"
+            },
             "coordinateTable": {
                 "input": "Koordinater som ska transformeras",
                 "output": "Resultatkoordinater",
-                "north":"Nord-koordinat [m]",
-                "east":"Öst-koordinat [m]",
-                "lat":"Latitud",
-                "lon":"Longitud",
-                "elevation": "Höjd [m]",
-                "geoX":"Geocentriskt X [m]",
-                "geoY":"Geocentriskt Y [m]",
-                "geoZ":"Geocentriskt Z [m]",
-                "ellipseElevation":"Höjd över ellipsoiden [m]",
                 "rows": "Rader",
                 "clearTables": "Töm tabellerna",
                 "confirmClear": "Är du säker på att du vill tömma tabellerna?"
