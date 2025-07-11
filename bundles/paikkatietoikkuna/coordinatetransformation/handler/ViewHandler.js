@@ -3,7 +3,7 @@ import { showInfoPopup } from '../view/InfoPopup';
 import { showFilePopup } from '../view/FilePopup';
 import { showMapSelectPopup, showMapPreviewPopup } from '../view/MapPopup';
 import { SOURCE, MAP, WATCH_JOB, WATCH_URL, TRANSFORM, FILE_DEFAULTS } from '../constants';
-import { stateToPTIArray, loadFile, validateTransform, validateFileSettings, parseCoordinateValue } from '../helper';
+import { stateToPTIArray, loadFile, validateTransform, validateFileSettings, parseCoordinateValue, is3DSystem } from '../helper';
 
 const getInitialState = () => ({
     loading: false,
@@ -17,7 +17,7 @@ const getInitialState = () => ({
     import: { ...FILE_DEFAULTS.import },
     export: { ...FILE_DEFAULTS.export },
     coordinates: [],
-    results: []
+    results: [] // TODO: xInput, xOutput, xMap ??
 });
 
 class UIHandler extends StateHandler {
@@ -94,6 +94,14 @@ class UIHandler extends StateHandler {
     // TODO: refactor
     setSrs (type, srs) {
         const prop = `${type}Srs`;
+        this.updateState({ [prop]: srs });
+        if (is3DSystem(srs)) {
+            this.setHeightSrs(type, null);
+        }
+    }
+
+    setHeightSrs (type, srs) {
+        const prop = `${type}HeightSrs`;
         this.updateState({ [prop]: srs });
     }
 
@@ -226,6 +234,9 @@ class UIHandler extends StateHandler {
         let errors = isTransform ? validateTransform(state, stepOrType) : [];
         // const steps = Object.keys(CONTENT) // import from FlyoutWizard
         if (!isTransform) {
+            if (stepOrType === 'srs' && (!state.inputSrs || !state.outputSrs)) {
+                errors.push('crs');
+            }
             if (stepOrType === 'inputSrs' && !state.inputSrs) {
                 errors.push('srs');
             }
@@ -370,6 +381,7 @@ class UIHandler extends StateHandler {
 const wrapped = controllerMixin(UIHandler, [
     'setSource',
     'setSrs',
+    'setHeightSrs',
     'updateCoordinate',
     'pasteCoordinates',
     'parseInputCoordinate',
