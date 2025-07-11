@@ -19,11 +19,11 @@ const SelectWrapper = styled.div`
 `;
 const filter = (input, {label, value, reversedEpsg}) => `${label} ${value} ${reversedEpsg}`.toLowerCase().includes(input.toLowerCase());
 
-export const InputSrs = ({ inputSrs, inputHeightSrs, controller }) => 
-    <SrsSelect type='input' srs={inputSrs} heightSrs={inputHeightSrs} controller={controller} />;
+export const InputSrs = ({ inputSrs, inputHeightSrs, minimal, controller }) =>
+    <SrsSelect type='input' srs={inputSrs} heightSrs={inputHeightSrs} minimal={minimal} controller={controller} />;
 
-export const OutputSrs = ({ outputSrs, outputHeightSrs, controller }) => 
-    <SrsSelect type='output' srs={outputSrs} heightSrs={outputHeightSrs} controller={controller} />;
+export const OutputSrs = ({ outputSrs, outputHeightSrs, minimal, controller }) =>
+    <SrsSelect type='output' srs={outputSrs} heightSrs={outputHeightSrs} minimal={minimal} controller={controller} />;
 
 export const SrsSelect = ({ srs, heightSrs, type, minimal, controller }) => {
     const heightDisabled = getDimension(srs) === 3;
@@ -34,7 +34,7 @@ export const SrsSelect = ({ srs, heightSrs, type, minimal, controller }) => {
             <Content>
                 <ComponentLabel label={`flyout.coordinateSystem.${type}.title`}/>
                 <LabeledSelect block mandatory localize showSearch placeholder={searchPH} filterOption={filter} label='flyout.coordinateSystem.geodeticCoordinateSystem.label' info='geodeticCoordinateSystem' value={srs} options={SRS} onChange={val => controller.setSrs(type, val)} controller={controller}/>
-                <LabeledSelect block label='flyout.coordinateSystem.heightSystem.label' value={heightSrs} placeholder={heightPH} disabled={heightDisabled} info='heightSystem' options={SRS_H} onChange={val => controller.setSrs(`${type}Height`, val)} controller={controller}/>
+                <LabeledSelect block label='flyout.coordinateSystem.heightSystem.label' value={heightSrs} placeholder={heightPH} disabled={heightDisabled} info='heightSystem' options={SRS_H} onChange={val => controller.setHeightSrs(type, val)} controller={controller}/>
             </Content>
         );
     }
@@ -77,7 +77,7 @@ export const SrsSelect = ({ srs, heightSrs, type, minimal, controller }) => {
             <LabeledSelect localize label='flyout.coordinateSystem.coordinateSystem.label' info='coordinateSystem' value={system} options={systemOptions} onChange={onSystem} controller={controller}/>
             { system === 'PROJ_2D' && <LabeledSelect label='flyout.coordinateSystem.mapProjection.label' info='mapProjection' value={projection} options={projectionOptions} onChange={setProjection} controller={controller}/> }
             <LabeledSelect mandatory localize showSearch filterOption={filter} label='flyout.coordinateSystem.geodeticCoordinateSystem.label' info='geodeticCoordinateSystem' value={srs} options={srsOptions} onChange={val => controller.setSrs(type, val)} controller={controller}/>
-            <LabeledSelect label='flyout.coordinateSystem.heightSystem.label' value={heightSrs} placeholder={heightPH} disabled={heightDisabled} info='heightSystem' options={SRS_H} onChange={val => controller.setSrs(`${type}Height`, val)} controller={controller}/>
+            <LabeledSelect label='flyout.coordinateSystem.heightSystem.label' value={heightSrs} placeholder={heightPH} disabled={heightDisabled} info='heightSystem' options={SRS_H} onChange={val => controller.setHeightSrs(type, val)} controller={controller}/>
         </Content>
     );
 };
