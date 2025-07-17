@@ -4,10 +4,11 @@ import styled from 'styled-components';
 import { Message, TextInput } from 'oskari-ui';
 import { ComponentLabel } from './ComponentLabel';
 import { Table } from 'oskari-ui/components/Table';
-import { SRS, SYSTEM } from '../constants';
+import { SRS, SRS_H, SYSTEM } from '../constants';
 import { getDimension } from '../helper';
 
 const COLUMNS = ['x', 'y', 'z'];
+const WIDTH = 360;
 
 const StyledTable = styled(Table)`
     td.ant-table-cell {
@@ -68,7 +69,31 @@ const getColumn = (column, lonFirst, unit, dimension, editable, controller) => {
     }
     return props;
 };
-
+const getColumns = (srs, heightSrs, controller) => {
+    const { axes } = SRS.find(s => s.value === srs) || {};
+    const { axis } = SRS_H.find(s => s.value === heightSrs) || {};
+    const columns = axes ? [...axes] : ['', ''];
+    if (axis) {
+        columns.push(axis)
+    }
+    const colWidth = WIDTH / columns.length;
+    const onEdit = (index, column, item, value) => {
+        if (value.includes('\t')) {
+            controller.pasteCoordinates(value);
+        } else {
+            controller.updateCoordinate(index, { ...item, [column]: value });
+        }
+    };
+    // TODO: if (optController) => props render
+    return columns.map((axis, i) => ({
+        title: axis ? <Message messageKey={`flyout.coordinateAxes.${axis}`}/> : axis,
+        dataIndex: COLUMNS[i],
+        width: colWidth,
+        render: controller
+            ? (value, item, index) => <StyledInput size='small' value={value} onChange={e => onEdit(index, COLUMNS[i], item, e.target.value)} onBlur={() => controller.parseInputCoordinate(index, COLUMNS[i])} />
+            : undefined
+    }));
+};
 export const InputCoordinates = ({ source, coordinates, inputSrs, inputHeightSrs, controller, editable=source === 'table'}) =>
     <CoordinateTable type='input' coordinates={coordinates} srs={inputSrs} heightSrs={inputHeightSrs} controller={controller} editable={editable} />;
 
@@ -77,12 +102,9 @@ export const OutputCoordinates = ({ results, outputSrs, outputHeightSrs, control
 
 export const CoordinateTable = ({ type, coordinates, srs, heightSrs, controller, editable }) => {
     // TODO: internal state for pagination
-    const { system, lonFirst } = SRS.find(s => s.value === srs) || {};
-    const { unit = 'metric' } = SYSTEM.find(s => s.value === system) || {};
-    const dimension = getDimension(srs, heightSrs);
-    const columns = COLUMNS.slice(0, dimension).map(col => getColumn(col, lonFirst, unit, dimension, editable, controller));
     // TODO: assumes pagination page size 10
     const dataSource = [...coordinates, ...getEmptyArray(10 - coordinates.length % 10)]; // .map((a,key) => ({...a, key }));
+    const optController = editable ? controller : null;
     return (
         <Content>
             <ComponentLabel label={`flyout.coordinateTable.${type}`}>
@@ -91,7 +113,7 @@ export const CoordinateTable = ({ type, coordinates, srs, heightSrs, controller,
             </ComponentLabel>
             <StyledTable bordered
                 $editable={editable}
-                columns={columns}
+                columns={getColumns(srs, heightSrs, optController)}
                 dataSource={dataSource}
                 pagination={{ hideOnSinglePage: true }}/>
         </Content>
