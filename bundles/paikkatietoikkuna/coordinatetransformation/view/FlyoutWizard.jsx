@@ -6,7 +6,7 @@ import { ComponentLabel } from '../components/ComponentLabel';
 import { InfoIcon } from 'oskari-ui/components/icons';
 import { SecondaryButton, PrimaryButton, ButtonContainer } from 'oskari-ui/components/buttons';
 import { MapSelect } from '../components/MapSelect';
-import { InputCoordinates, OutputCoordinates } from '../components/CoordinateTable.jsx';
+import { InputCoordinates, OutputCoordinates, ResultTable as ResultTable2 } from '../components/CoordinateTable.jsx';
 import { InputSrs, OutputSrs } from '../components/SrsSelect';
 import { ImportFile, ExportFile } from '../components/FileSettings';
 import { ClearTableButton } from '../components/ClearTableButton';
@@ -31,6 +31,11 @@ const StyledButtonContainer = styled(ButtonContainer)`
     justify-content: space-between;
 `;
 
+const MinimizeButton = styled(Button)`
+    justify-content: flex-start;
+    padding: 0;
+`;
+
 const ResultTable = (props) => (
     <Spitter>
         <InputCoordinates {...props} editable={false} />
@@ -38,21 +43,39 @@ const ResultTable = (props) => (
     </Spitter>
 );
 
+const Srs = (props) => {
+    const [ minimalSrs, setMinimalSrs ] = useState(true);
+    return (
+        <div className='t_srs'>
+            <Spitter>
+                <InputSrs {...props} minimal={minimalSrs}/>
+                <OutputSrs {...props} minimal={minimalSrs}/>
+            </Spitter>
+            <MinimizeButton type='link' onClick={() => setMinimalSrs(!minimalSrs)}>
+                <Message messageKey='actions.minimizeSrs'/>
+            </MinimizeButton>
+        </div>
+    );
+};
+
 const CONTENT = {
     mapSelect: { component: MapSelect, onNext: 'store' },
     inputSrs: { component: InputSrs },
     outputSrs: { component: OutputSrs },
     importFile: { component: ImportFile, onNext: 'preview' },
     exportFile: { component: ExportFile },
-    inputTable: { component: InputCoordinates  },
+    inputTable: { component: InputCoordinates },
     mapInputTable: { component: InputCoordinates, onPrevious: 'selectFromMap' },
-    resultTable: { component: ResultTable }
+    resultTable: { component: ResultTable },
+    srs: { component: Srs },
+    resultTable2: { component: ResultTable2 }
 };
 
 const STEPS = {
     map: ['mapSelect', 'mapInputTable', 'outputSrs'],
     file: ['inputSrs', 'importFile', 'inputTable', 'outputSrs'],
-    table: ['inputSrs', 'inputTable', 'outputSrs']
+    table: ['inputSrs', 'inputTable', 'outputSrs'],
+    table2: ['srs', 'inputTable']
 };
 
 export const FlyoutWizard = ({
@@ -61,13 +84,16 @@ export const FlyoutWizard = ({
 }) => {
     const [stepIndex, setStepIndex] = useState(-1);
     const [showExport, setShowExport] = useState(false);
-    const lastStep = showExport ? 'exportFile' : 'resultTable';
-    const steps = STEPS[state.source] ? [ ...STEPS[state.source], lastStep ] : [];
+    const [testing, setTesting] = useState(false);
+    const lastStep = showExport ? 'exportFile' : (testing ? 'resultTable2' : 'resultTable');
+    const source = testing ? 'table2' : state.source;
+    const steps = STEPS[source] ? [ ...STEPS[source], lastStep ] : [];
     const step = steps[stepIndex];
     const { component: Content, type, onNext, onPrevious } = CONTENT[step] || {};
 
     if (!Content) {
-        const onSourceClick = id => {
+        const onSourceClick = (id, isTest = false) => {
+            setTesting(isTest);
             controller.setSource(id);
             setStepIndex(0);
         };
@@ -80,14 +106,20 @@ export const FlyoutWizard = ({
             <ContentWrapper>
                 <ComponentLabel label='dataSource.title'/>
                 <SourceButtons>
-                    { SOURCE.map( id => (
+                    { SOURCE.map(id => (
                         <Button key={id} onClick={() => onSourceClick(id)}>
-                            <Message messageKey={`dataSource.${id}.label`} />
+                            <Message messageKey={`dataSource.${id}.label`} defaultMsg={id} />
                             <span onClick={(evt) => onInfoClick(evt, id)}>
                                 <InfoIcon title={<Message messageKey={`dataSource.${id}.info`} />} />
                             </span>
                         </Button>
                     ))}
+                    <Button onClick={() => onSourceClick('table', true)}>
+                        <Message messageKey={`dataSource.table.label`} />
+                        <span onClick={(evt) => onInfoClick(evt, 'table')}>
+                            <InfoIcon title={<Message messageKey={`dataSource.table.info`} />} />
+                        </span>
+                    </Button>
                 </SourceButtons>
             </ContentWrapper>
         );
