@@ -126,3 +126,22 @@ CoordinateTable.propTypes = {
     type: PropTypes.string.isRequired,
     controller: PropTypes.object.isRequired
 };
+
+export const ResultTable = ({ coordinates, inputSrs, inputHeightSrs, results, outputSrs, outputHeightSrs }) =>  {
+    const inputCols = getColumns(inputSrs, inputHeightSrs);
+    const ouputCols = getColumns(outputSrs, outputHeightSrs);
+    let dataSource = [];
+    if (coordinates.length === results.length) {
+        dataSource = coordinates.map(coord => ({ ...coord, ...results[i] }));
+    }
+    return (
+        <Content>
+            <ComponentLabel label={`flyout.coordinateTable.${type}`} />
+            <StyledTable bordered
+                $editable={editable}
+                columns={[...inputCols, ...ouputCols ]}
+                dataSource={dataSource}
+                pagination={{ hideOnSinglePage: true }}/>
+        </Content>
+    );
+};
