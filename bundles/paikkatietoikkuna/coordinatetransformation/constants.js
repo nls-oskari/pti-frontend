@@ -546,16 +546,16 @@ export const SRS_H = [
         value: 'EPSG:3900',
         label: 'N2000',
         name: 'N2000 height',
-        axes: ['H']
+        axis: 'H'
     }, {
         value: 'EPSG:5717',
         label: 'N60',
         name: 'N60 height',
-        axes: ['H']
+        axis: 'H'
     }, {
         value: 'EPSG:8675',
         label: 'N43',
         name: 'N43 height',
-        axes: ['H']
+        axis: 'H'
     }
 ];
