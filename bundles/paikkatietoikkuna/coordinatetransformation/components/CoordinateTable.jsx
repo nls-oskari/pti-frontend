@@ -132,13 +132,13 @@ export const ResultTable = ({ coordinates, inputSrs, inputHeightSrs, results, ou
     const ouputCols = getColumns(outputSrs, outputHeightSrs);
     let dataSource = [];
     if (coordinates.length === results.length) {
-        dataSource = coordinates.map(coord => ({ ...coord, ...results[i] }));
+        dataSource = coordinates.map((coord, i) => ({ ...coord, ...results[i] }));
     }
     return (
         <Content>
-            <ComponentLabel label={`flyout.coordinateTable.${type}`} />
+            <ComponentLabel label='flyout.coordinateTable.output' />
             <StyledTable bordered
-                $editable={editable}
+                $editable={false}
                 columns={[...inputCols, ...ouputCols ]}
                 dataSource={dataSource}
                 pagination={{ hideOnSinglePage: true }}/>
