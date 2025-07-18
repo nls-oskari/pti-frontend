@@ -11,11 +11,17 @@ import { InputSrs, OutputSrs } from '../components/SrsSelect';
 import { ImportFile, ExportFile } from '../components/FileSettings';
 import { ClearTableButton } from '../components/ClearTableButton';
 import { SOURCE } from '../constants';
+import { RightOutlined } from '@ant-design/icons';
 
 const ContentWrapper = styled.div`
     display: flex;
     flex-direction: column;
     gap: 2em;
+`;
+const SourceContainer = styled.div`
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
 `;
 const SourceButtons = styled.div`
     display: flex;
@@ -97,28 +103,22 @@ export const FlyoutWizard = ({
             controller.setSource(id);
             setStepIndex(0);
         };
-        const onInfoClick = (event, id) => {
-            event.preventDefault();
-            event.stopPropagation();
-            controller.showInfo(id);
-        };
         return (
             <ContentWrapper>
                 <ComponentLabel label='dataSource.select'/>
                 <SourceButtons>
                     { SOURCE.map(id => (
-                        <Button key={id} onClick={() => onSourceClick(id)}>
-                            <Message messageKey={`dataSource.${id}.label`} defaultMsg={id} />
-                            <span onClick={(evt) => onInfoClick(evt, id)}>
-                                <InfoIcon title={<Message messageKey={`dataSource.${id}.info`} />} />
-                            </span>
-                        </Button>
+                        <SourceContainer>
+                            <Button type='primary' key={id} onClick={() => onSourceClick(id)} iconPosition='end' icon={<RightOutlined />}>
+                                <Message messageKey={`dataSource.${id}.label`} defaultMsg={id} />
+                            </Button>
+                            <div onClick={()=> controller.showInfo(id)}>
+                                <InfoIcon size={20} title={<Message messageKey={`dataSource.${id}.info`}/>} />
+                            </div>
+                        </SourceContainer>
                     ))}
-                    <Button onClick={() => onSourceClick('table', true)}>
+                    <Button type='primary' onClick={() => onSourceClick('table', true)} iconPosition='end' icon={<RightOutlined />} >
                         <Message messageKey={`dataSource.table.label`} />
-                        <span onClick={(evt) => onInfoClick(evt, 'table')}>
-                            <InfoIcon title={<Message messageKey={`dataSource.table.info`} />} />
-                        </span>
                     </Button>
                 </SourceButtons>
             </ContentWrapper>
