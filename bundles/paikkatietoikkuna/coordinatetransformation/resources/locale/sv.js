@@ -132,6 +132,7 @@ Oskari.registerLocalization(
         },
         "dataSource": {
             "title": "Källa för koordinatuppgifter",
+            "select": "Välj källa för koordinatuppgifter",
             "confirmChange": "Koordinaterna som ska transformeras töms. Vill du fortsätta?",
             "file": {
                 "label": "Från fil",

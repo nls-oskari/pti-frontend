@@ -132,6 +132,7 @@ Oskari.registerLocalization(
         },
         "dataSource": {
             "title": "Coordinate information source",
+            "select": "Select coordinate information source",
             "confirmChange": "Input coordinates will be removed. Do you want to continue?",
             "file": {
                 "label": "From file",

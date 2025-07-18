@@ -104,7 +104,7 @@ export const FlyoutWizard = ({
         };
         return (
             <ContentWrapper>
-                <ComponentLabel label='dataSource.title'/>
+                <ComponentLabel label='dataSource.select'/>
                 <SourceButtons>
                     { SOURCE.map(id => (
                         <Button key={id} onClick={() => onSourceClick(id)}>

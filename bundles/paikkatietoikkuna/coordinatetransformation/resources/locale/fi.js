@@ -23,7 +23,8 @@ Oskari.registerLocalization(
                 "mapSelect": "Valitse sijainnit",
                 "inputTable": "Lähtökoordinaatit",
                 "mapInputTable": "Kartan koordinaatit",
-                "resultTable": "Tuloskoordinaatit"
+                "resultTable": "Tuloskoordinaatit",
+                "resultTable2": "Lähtö ja tuloskoordinaatit"
             },
             "coordinateSystem": {
                 "title": "Koordinaattijärjestelmän tiedot",
@@ -158,6 +159,7 @@ Oskari.registerLocalization(
         },
         "dataSource": {
             "title": "Koordinaattitietojen lähde",
+            "select": "Valitse koordinaattitietojen lähde",
             "change": "Vaihda lähde",
             "confirmChange": "Muunnettavat koordinaatit tyhjennetään. Haluatko jatkaa?",
             "file": {
