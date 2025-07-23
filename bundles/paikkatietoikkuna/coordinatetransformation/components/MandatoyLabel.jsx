@@ -1,0 +1,11 @@
+import React from 'react';
+import { Message } from 'oskari-ui';
+import { MandatoryIcon } from 'oskari-ui/components/icons';
+
+export const MandatoryLabel = () => (
+    <div>
+        <Message messageKey='flyout.mandatory.symbol' />
+        <MandatoryIcon twoToneColor={'#da5151'} />
+        <Message messageKey='flyout.mandatory.desc' />
+    </div>
+);

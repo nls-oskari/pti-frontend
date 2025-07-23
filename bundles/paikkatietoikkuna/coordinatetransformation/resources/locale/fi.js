@@ -9,6 +9,10 @@ Oskari.registerLocalization(
         },
         "flyout": {
             "title":"Koordinaattimuunnos",
+            "mandatory": {
+                "symbol": "Tähdellä (",
+                "desc": ") merkityt ovat pakollisia kenttiä."
+            },
             "filterSystems": {
                 "title": "Suodata koordinaattijärjestelmiä",
                 "epsg": "EPSG-koodilla",
