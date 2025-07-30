@@ -22,8 +22,8 @@ const StyledNumberInput = styled(NumberInput)`
     width: 200px;
 `;
 
-const phMandatory = <Message messageKey='actions.select' />
-const phOptional = <Message messageKey='flyout.coordinateSystem.noFilter' />
+const phMandatory = <Message messageKey='actions.select' />;
+const phOptional = <Message messageKey='flyout.coordinateSystem.noFilter' />;
 const getLocalized = options => options.map(opt => opt.label ? opt : ({ ...opt, label: <Message messageKey={opt.loc} messageArgs={opt.args} /> }));
 
 const Info = ({ info, controller }) => (
