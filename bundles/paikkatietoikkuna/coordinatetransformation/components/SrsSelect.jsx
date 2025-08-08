@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { Message } from 'oskari-ui';
 import { LabeledSelect } from './LabeledFields';
 import { ComponentLabel } from './ComponentLabel';
-import { DATUM, SYSTEM, PROJECTION, SRS, SRS_H } from '../constants';
+import { BUNDLE, DATUM, SYSTEM, PROJECTION, SRS, SRS_H } from '../constants';
 import { getDimension } from '../helper';
 
 const Content = styled.div`
@@ -19,6 +19,23 @@ const SelectWrapper = styled.div`
 `;
 const filter = (input, {label, value, reversedEpsg}) => `${label} ${value} ${reversedEpsg}`.toLowerCase().includes(input.toLowerCase());
 
+const Srs = ({ srs, options, onChange }) => {
+    const [isOpen, setOpen] = useState(false);
+    // placeholder is used as value for using same styling as selected value (srs field is mandatory)
+    const placeholder = Oskari.getMsg(BUNDLE, `actions.${isOpen ? 'search': 'select'}`);
+    // For some reason onOpenChange={open => setOpen(open)} doesn't work, use focus & blur
+    return <LabeledSelect block localize showSearch mandatory
+        styles={{ placeholder: { color: 'red' } }}
+        onFocus={()=> setOpen(true)}
+        onBlur={() => setOpen(false)}
+        filterOption={filter}
+        label='flyout.coordinateSystem.geodeticCoordinateSystem.label'
+        info='geodeticCoordinateSystem'
+        value={srs ? srs : placeholder}
+        options={options}
+        onChange={onChange}/>
+};
+
 export const InputSrs = ({ inputSrs, inputHeightSrs, minimal, controller }) =>
     <SrsSelect type='input' srs={inputSrs} heightSrs={inputHeightSrs} minimal={minimal} controller={controller} />;
 
@@ -27,13 +44,12 @@ export const OutputSrs = ({ outputSrs, outputHeightSrs, minimal, controller }) =
 
 export const SrsSelect = ({ srs, heightSrs, type, minimal, controller }) => {
     const heightDisabled = getDimension(srs) === 3;
-    const searchPH = <Message messageKey='flyout.coordinateSystem.epsgSearch.label' />
-    const heightPH = <Message messageKey='flyout.coordinateSystem.heightSystem.none' />
+    const heightPH = <Message messageKey='flyout.coordinateSystem.heightSystem.none' />;
     if (minimal) {
         return (
             <Content>
                 <ComponentLabel label={`flyout.coordinateSystem.${type}.title`}/>
-                <LabeledSelect block mandatory localize showSearch placeholder={searchPH} filterOption={filter} label='flyout.coordinateSystem.geodeticCoordinateSystem.label' info='geodeticCoordinateSystem' value={srs} options={SRS} onChange={val => controller.setSrs(type, val)} controller={controller}/>
+                <Srs srs={srs} options={SRS} onChange={val => controller.setSrs(type, val)} />
                 <LabeledSelect block label='flyout.coordinateSystem.heightSystem.label' value={heightSrs} placeholder={heightPH} disabled={heightDisabled} info='heightSystem' options={SRS_H} onChange={val => controller.setHeightSrs(type, val)} controller={controller}/>
             </Content>
         );
@@ -76,7 +92,7 @@ export const SrsSelect = ({ srs, heightSrs, type, minimal, controller }) => {
             <LabeledSelect label='flyout.coordinateSystem.geodeticDatum.label' info='geodeticDatum' value={datum} options={DATUM} onChange={onDatum} controller={controller}/>
             <LabeledSelect localize label='flyout.coordinateSystem.coordinateSystem.label' info='coordinateSystem' value={system} options={systemOptions} onChange={onSystem} controller={controller}/>
             { system === 'PROJ_2D' && <LabeledSelect label='flyout.coordinateSystem.mapProjection.label' info='mapProjection' value={projection} options={projectionOptions} onChange={setProjection} controller={controller}/> }
-            <LabeledSelect mandatory localize showSearch filterOption={filter} label='flyout.coordinateSystem.geodeticCoordinateSystem.label' info='geodeticCoordinateSystem' value={srs} options={srsOptions} onChange={val => controller.setSrs(type, val)} controller={controller}/>
+            <Srs srs={srs} options={srsOptions} onChange={val => controller.setSrs(type, val)} />
             <LabeledSelect label='flyout.coordinateSystem.heightSystem.label' value={heightSrs} placeholder={heightPH} disabled={heightDisabled} info='heightSystem' options={SRS_H} onChange={val => controller.setHeightSrs(type, val)} controller={controller}/>
         </Content>
     );
