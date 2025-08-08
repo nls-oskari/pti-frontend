@@ -204,7 +204,8 @@ Oskari.registerLocalization(
         "actions": {
             "convert": "Tee muunnos",
             "export": "Tee muunnos tiedostoon",
-            "minimizeSrs": "Näytä kaikki koordinaattjijärjestelmän valinnat",
+            "minimizedSrs": "Näytä kaikki koordinaattjijärjestelmän valinnat",
+            "search": "Hae nimellä tai EPSG-koodilla",
             "select": "Valitse",
             "cancel": "Peruuta",
             "done": "Valmis",

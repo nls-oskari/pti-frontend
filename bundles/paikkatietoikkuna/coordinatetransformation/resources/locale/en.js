@@ -172,6 +172,8 @@ Oskari.registerLocalization(
         "actions": {
             "convert": "Transform",
             "export": "Transform into file",
+            "minimizedSrs": "Show all coordinate reference system selections",
+            "search": "Search using name or EPSG code",
             "select": "Select",
             "cancel": "Cancel",
             "done": "Done",
