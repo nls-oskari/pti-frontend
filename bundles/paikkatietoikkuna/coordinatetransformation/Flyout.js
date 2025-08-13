@@ -1,9 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { FlyoutContent } from './view/FlyoutContent';
-import { FlyoutWizard } from './view/FlyoutWizard';
 import { LocaleProvider, ThemeProvider } from 'oskari-ui/util';
-import { Spin, Button } from 'oskari-ui';
+import { Spin } from 'oskari-ui';
 import { ViewHandler } from './handler/ViewHandler';
 import { BUNDLE } from './constants';
 
@@ -14,7 +13,6 @@ Oskari.clazz.define('Oskari.coordinatetransformation.Flyout',
         this.loc = Oskari.getMsg.bind(null, BUNDLE);
         this.container = null;
         this.handler = null;
-        this.mode = null;
     }, {
         getName: function () {
             return 'Oskari.coordinatetransformation.Flyout';
@@ -51,10 +49,6 @@ Oskari.clazz.define('Oskari.coordinatetransformation.Flyout',
                 this.flyout.css('top', '0px');
             }
         },
-        setMode: function (mode) {
-            this.mode = mode;
-            this.lazyRender();
-        },
         lazyRender: function () {
             const handler = this.getHandler();
             if (!this.container || !handler) {
@@ -65,14 +59,7 @@ Oskari.clazz.define('Oskari.coordinatetransformation.Flyout',
                 <LocaleProvider value={{ bundleKey: BUNDLE }}>
                     <ThemeProvider>
                         <Spin spinning={state.loading}>
-                            { this.mode === 'wizard' && <FlyoutWizard state={state} controller={handler.getController()}/> }
-                            { this.mode === 'flyout' && <FlyoutContent {...state} controller={handler.getController()}/> }
-                            { !this.mode && (
-                                <div>
-                                    <Button onClick={() => this.setMode('wizard')}>Wizard</Button>
-                                    <Button onClick={() => this.setMode('flyout')}>Flyout</Button>
-                                </div>
-                            )}
+                            <FlyoutContent {...state} controller={handler.getController()}/>
                         </Spin>
                     </ThemeProvider>
                 </LocaleProvider>
