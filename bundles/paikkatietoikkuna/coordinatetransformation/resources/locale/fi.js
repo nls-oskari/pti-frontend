@@ -204,6 +204,7 @@ Oskari.registerLocalization(
         "actions": {
             "convert": "Tee muunnos",
             "export": "Tee muunnos tiedostoon",
+            "minimizeSrs": "Piilota koordinaattjijärjestelmän lisävalinnat",
             "minimizedSrs": "Näytä kaikki koordinaattjijärjestelmän valinnat",
             "search": "Hae nimellä tai EPSG-koodilla",
             "select": "Valitse",

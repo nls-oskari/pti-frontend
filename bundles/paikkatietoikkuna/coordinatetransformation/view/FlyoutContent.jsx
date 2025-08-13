@@ -7,6 +7,7 @@ import { SourceSelect } from '../components/SourceSelect.jsx';
 import { CoordinateTable } from '../components/CoordinateTable.jsx';
 import { SrsSelect } from '../components/SrsSelect';
 import { ClearTableButton } from '../components/ClearTableButton';
+import { MandatoryDescription } from '../components/MandatoryDescription';
 
 const Content = styled.div`
     display: flex;
@@ -41,13 +42,14 @@ export const FlyoutContent = ({
     const transformType = source === 'file' ? 'F2A' : 'A2A';
     return (
         <Content>
+            <MandatoryDescription/>
             <div className='t_srs'>
                 <Splitter>
                     <SrsSelect type='input' minimal={minimalSrs} srs={inputSrs} heightSrs={inputHeightSrs} controller={controller}/>
                     <SrsSelect type='output' minimal={minimalSrs} srs={outputSrs} heightSrs={outputHeightSrs} controller={controller}/>
                 </Splitter>
                 <MinimizeButton type='link' onClick={() => setMinimalSrs(!minimalSrs)}>
-                    <Message messageKey='actions.minimizeSrs'/>
+                    <Message messageKey={`actions.minimize${minimalSrs ? 'd' : ''}Srs`}/>
                 </MinimizeButton>
             </div>
             <SourceSelect value={source} controller={controller} />
