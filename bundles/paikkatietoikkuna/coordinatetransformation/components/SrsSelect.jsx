@@ -36,12 +36,6 @@ const Srs = ({ srs, options, onChange }) => {
         onChange={onChange}/>
 };
 
-export const InputSrs = ({ inputSrs, inputHeightSrs, minimal, controller }) =>
-    <SrsSelect type='input' srs={inputSrs} heightSrs={inputHeightSrs} minimal={minimal} controller={controller} />;
-
-export const OutputSrs = ({ outputSrs, outputHeightSrs, minimal, controller }) =>
-    <SrsSelect type='output' srs={outputSrs} heightSrs={outputHeightSrs} minimal={minimal} controller={controller} />;
-
 export const SrsSelect = ({ srs, heightSrs, type, minimal, controller }) => {
     const heightDisabled = getDimension(srs) === 3;
     const heightPH = <Message messageKey='flyout.coordinateSystem.heightSystem.none' />;
