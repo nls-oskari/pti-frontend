@@ -1,6 +1,7 @@
 import { StateHandler, controllerMixin, Messaging } from 'oskari-ui/util';
 import { showInfoPopup } from '../view/InfoPopup';
 import { showFilePopup } from '../view/FilePopup';
+import { showConfirmPopup } from '../view/ConfirmPopup';
 import { showMapSelectPopup, showMapPreviewPopup } from '../view/MapPopup';
 import { SOURCE, MAP, WATCH_JOB, WATCH_URL, TRANSFORM, FILE_DEFAULTS } from '../constants';
 import { stateToPTIArray, loadFile, validateTransform, validateFileSettings, parseCoordinateValue, is3DSystem } from '../helper';
@@ -29,6 +30,7 @@ class UIHandler extends StateHandler {
         this.infoPopup = null;
         this.filePopup = null;
         this.mapPopup = null;
+        this.confirmPopup = null;
         this.setState(getInitialState());
         this.addStateListener(state => this.filePopup?.update(state));
         Oskari.urls.set(WATCH_JOB, WATCH_URL);
@@ -40,15 +42,16 @@ class UIHandler extends StateHandler {
         this.updateState(state); // TODO: set or update
         if (closeFlyout) {
             const flyout = this.instance.getFlyout();
-            // TODO: remove
-            flyout.mode = null;
             flyout.close();
         }
     }
 
     setSource (source) {
-        // TODO: confrim (jsx or popup) && clear
         if (source === this.getState().source) {
+            return;
+        }
+        if (this.getState().coordinates.length) {
+            this.confirmSourceChange(source);
             return;
         }
         if (source === 'map') {
@@ -57,6 +60,20 @@ class UIHandler extends StateHandler {
             this.selectFromMap();
         }
         this.updateState({ source });
+    }
+
+    confirmSourceChange (source) {
+        const onConfirm = () => {
+            this.reset();
+            this.setSource(source);
+            this.closeConfirmPopup();
+        };
+        this.confirmPopup=showConfirmPopup('dataSource.title', 'dataSource.confirmChange', onConfirm, () => this.closeConfirmPopup());
+    }
+
+    closeConfirmPopup () {
+        this.confirmPopup?.close();
+        this.confirmPopup = null;
     }
 
     addCoordinate (coordinate) {
@@ -226,6 +243,7 @@ class UIHandler extends StateHandler {
         this.closeFileSettings();
         this.closeInfoPopup();
         this.closeMapPopup();
+        this.closeConfirmPopup();
     }
 
     validate (stepOrType) {
