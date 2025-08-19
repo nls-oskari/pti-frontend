@@ -40,6 +40,7 @@ export const FlyoutContent = ({
 }) => {
     const [ minimalSrs, setMinimalSrs ] = useState(true);
     const transformType = source === 'file' ? 'F2A' : 'A2A';
+    const transformed = results.length > 0;
     return (
         <Content>
             <MandatoryDescription/>
@@ -66,10 +67,10 @@ export const FlyoutContent = ({
                     </Button>
                 </div>
                 <div className='t_transform'>
-                    <Button type='primary' onClick={() => controller.transformToArray(transformType)}>
+                    <Button type='primary' disabled={transformed} onClick={() => controller.transformToArray(transformType)}>
                         <Message messageKey='actions.transform'/>
                     </Button>
-                    <Button type='primary' onClick={() => controller.showFileSettings('export')}>
+                    <Button type='primary' disabled={!transformed} onClick={() => controller.showFileSettings('export')}>
                         <Message messageKey='actions.export'/>
                     </Button>
                 </div>
