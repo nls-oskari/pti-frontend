@@ -82,7 +82,7 @@ Oskari.registerLocalization(
                 'h': 'Ellipsoidinen korkeus [m]'
             },
             "coordinateTable": {
-                "input": "Muunnettavat koordinaatit",
+                "input": "Muunnettavat lähtökoordinaatit",
                 "output": "Tuloskoordinaatit",
                 "metric": {
                     "x":"Pohjois-koordinaatti [m]",
@@ -110,8 +110,8 @@ Oskari.registerLocalization(
                     "geocentric": "Geosentrinen Z [m]"
                 },
                 "rows": "Riviä",
-                "clearTables": "Tyhjennä taulukot",
-                "confirmClear": "Haluatko tyhjentää taulukot?"
+                "clearTables": "Poista kaikki koordinaatit",
+                "confirmClear": "Haluatko poistaa taulukoista kaikki koordinaatit?"
             },
             "transform": {
                 "warnings": {

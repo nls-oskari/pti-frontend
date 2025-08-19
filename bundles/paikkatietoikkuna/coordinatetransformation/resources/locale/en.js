@@ -77,11 +77,11 @@ Oskari.registerLocalization(
                 "h":"Ellipsoidal height [m]"
             },
             "coordinateTable": {
-                "input": "Input coordinates",
-                "output": "Output coordinates",
+                "input": "Coordinates to be transformed",
+                "output": "Result coordinates",
                 "rows": "Rows",
-                "clearTables": "Empty tables",
-                "confirmClear": "Are you sure you want to empty tables?"
+                "clearTables": "Remove all coordinates",
+                "confirmClear": "Are you sure you want to remove all coordinates from tables?"
             },
             "transform": {
                 "warnings": {
