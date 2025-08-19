@@ -169,9 +169,14 @@ class UIHandler extends StateHandler {
     }
 
     showOnMap () {
-        const { coordinates } = this.getState(); //  inputSrs, source
-        // TODO: notify noCoordinates, noSrs
+        const { coordinates, inputSrs } = this.getState(); //  inputSrs, source
         if (this.mapPopup) {
+            return;
+        }
+        if (!coordinates.length || !inputSrs) {
+            const title = 'mapMarkers.show.errorTitle';
+            const msg = `mapMarkers.show.${!inputSrs ? 'noSrs' : 'noCoordinates'}`
+            this.showInfoMessage(title, msg);
             return;
         }
         // TODO: convert to map projection (axis order) and add label (source !== map)
@@ -221,6 +226,17 @@ class UIHandler extends StateHandler {
         } else {
             this.infoPopup = showInfoPopup(title, paragraphs, listItems, () => this.closeInfoPopup());
         }
+    }
+
+    showInfoMessage (titleKey, msgKey) {
+        const title = this.loc(titleKey)
+        const paragraphs = [this.loc(msgKey)];
+        const listItems = [];
+        if (this.infoPopup) {
+            this.infoPopup.update(title, paragraphs, listItems);
+            return;
+        }
+        this.infoPopup = showInfoPopup(title, paragraphs, listItems, () => this.closeInfoPopup());
     }
 
     showValidationError (errorKeys) {
