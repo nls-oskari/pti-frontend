@@ -84,31 +84,6 @@ Oskari.registerLocalization(
             "coordinateTable": {
                 "input": "Muunnettavat lähtökoordinaatit",
                 "output": "Tuloskoordinaatit",
-                "metric": {
-                    "x":"Pohjois-koordinaatti [m]",
-                    "y":"Itä-koordinaatti [m]",
-                    "z": "Korkeus [m]"
-                },
-                "degree": {
-                    "x":"Leveysaste",
-                    "y":"Pituusaste",
-                    "z": "Korkeus [m]",
-                },
-                "degree3D": {
-                    "x":"Leveysaste",
-                    "y":"Pituusaste",
-                    "z": "Ellipsoidinen korkeus [m]",
-                },
-                "geocentric": {
-                    "x":"Geosentrinen X [m]",
-                    "y":"Geosentrinen Y [m]",
-                    "z":"Geosentrinen Z [m]"
-                },
-                "height": {
-                    "elevation": "Korkeus [m]",
-                    "ellipse":"Ellipsoidinen korkeus [m]",
-                    "geocentric": "Geosentrinen Z [m]"
-                },
                 "rows": "Riviä",
                 "clearTables": "Poista kaikki koordinaatit",
                 "confirmClear": "Haluatko poistaa taulukoista kaikki koordinaatit?"
