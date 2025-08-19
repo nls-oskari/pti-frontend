@@ -59,6 +59,9 @@ class UIHandler extends StateHandler {
             this.updateState({ inputSrs });
             this.selectFromMap();
         }
+        if (source === 'file') {
+            this.showFileSettings('import');
+        }
         this.updateState({ source });
     }
 
@@ -147,13 +150,7 @@ class UIHandler extends StateHandler {
 
     onAction (id) {
         if (id === 'map') {
-            this.showMapPopup();
-        }
-        if (id === 'selectFromMap') {
             this.selectFromMap();
-        }
-        if (id === 'showOnMap') {
-            this.showOnMap();
         }
         if (id === 'file') {
             this.showFileSettings('import');
@@ -187,13 +184,13 @@ class UIHandler extends StateHandler {
         const { coordinates } = this.getState();
         this.instance.setMapSelectionMode(MAP.ADD);
         this.instance.setMapCoordinates(coordinates);
+        this.showMapPopup();
     }
 
     showMapPopup () {
         if (this.mapPopup) {
             return;
         }
-        this.selectFromMap();
         this.instance.toggleFlyout(false);
         this.mapPopup = showMapSelectPopup(this.getController(), () => this.closeMapPopup(true));
     }
