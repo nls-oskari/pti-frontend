@@ -177,8 +177,8 @@ Oskari.registerLocalization(
             }
         },
         "actions": {
-            "convert": "Tee muunnos",
-            "export": "Tee muunnos tiedostoon",
+            "transform": "Tee muunnos",
+            "export": "Tallenna tiedostoon",
             "minimizeSrs": "Piilota koordinaattjijärjestelmän lisävalinnat",
             "minimizedSrs": "Näytä kaikki koordinaattjijärjestelmän valinnat",
             "search": "Hae nimellä tai EPSG-koodilla",

@@ -170,8 +170,8 @@ Oskari.registerLocalization(
             }
         },
         "actions": {
-            "convert": "Transform",
-            "export": "Transform into file",
+            "transform": "Transform",
+            "export": "Save to file",
             "minimizeSrs": "Hide coordinate reference system extra selections",
             "minimizedSrs": "Show all coordinate reference system selections",
             "search": "Search using name or EPSG code",

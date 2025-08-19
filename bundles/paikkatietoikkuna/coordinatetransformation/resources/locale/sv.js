@@ -170,8 +170,8 @@ Oskari.registerLocalization(
             }
         },
         "actions": {
-            "convert": "Transformera", //Transformera
-            "export": "Transformera i en fil",
+            "transform": "Transformera",
+            "export": "Spara till fil",
             "minimizeSrs": "Dölj extra val för koordinatreferenssystem",
             "minimizedSrs": "Visa alla val av koordinatreferenssystem",
             "search": "Sök med namn eller EPSG-kod",

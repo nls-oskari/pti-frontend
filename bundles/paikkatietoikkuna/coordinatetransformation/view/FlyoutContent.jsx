@@ -67,7 +67,7 @@ export const FlyoutContent = ({
                 </div>
                 <div className='t_transform'>
                     <Button type='primary' onClick={() => controller.transformToArray(transformType)}>
-                        <Message messageKey='actions.convert'/>
+                        <Message messageKey='actions.transform'/>
                     </Button>
                     <Button type='primary' onClick={() => controller.showFileSettings('export')}>
                         <Message messageKey='actions.export'/>
