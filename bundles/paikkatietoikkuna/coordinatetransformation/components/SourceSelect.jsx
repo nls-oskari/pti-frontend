@@ -39,7 +39,7 @@ const Option = ({ id, value, controller }) => {
 export const SourceSelect = ({ value, controller }) => {
     return(
         <Content>
-            <ComponentLabel label='dataSource.title'/>
+            <ComponentLabel label='dataSource.select'/>
             <Radio.Group
                 value={value}
                 style={style}
