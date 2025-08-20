@@ -18,7 +18,7 @@ const Content = styled.div`
 const Splitter = styled.div`
     display: flex;
     flex-flow: row nowrap;
-    gap: 2em;
+    gap: 1em;
 `;
 const MinimizeButton = styled(Button)`
     justify-content: flex-start;

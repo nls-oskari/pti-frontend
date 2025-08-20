@@ -19,13 +19,13 @@ const SelectWrapper = styled.div`
 `;
 const filter = (input, {label, value, reversedEpsg}) => `${label} ${value} ${reversedEpsg}`.toLowerCase().includes(input.toLowerCase());
 
-const Srs = ({ srs, options, onChange }) => {
+const Srs = ({ srs, options, onChange, block = false }) => {
     const [isOpen, setOpen] = useState(false);
     // placeholder is used as value for using same styling as selected value (srs field is mandatory)
     const placeholder = Oskari.getMsg(BUNDLE, `actions.${isOpen ? 'search': 'select'}`);
     // For some reason onOpenChange={open => setOpen(open)} doesn't work, use focus & blur
-    return <LabeledSelect block localize showSearch mandatory
-        styles={{ placeholder: { color: 'red' } }}
+    return <LabeledSelect localize showSearch mandatory
+        block={block}
         onFocus={()=> setOpen(true)}
         onBlur={() => setOpen(false)}
         filterOption={filter}
@@ -43,7 +43,7 @@ export const SrsSelect = ({ srs, heightSrs, type, minimal, controller }) => {
         return (
             <Content>
                 <ComponentLabel label={`flyout.coordinateSystem.${type}.title`}/>
-                <Srs srs={srs} options={SRS} onChange={val => controller.setSrs(type, val)} />
+                <Srs block srs={srs} options={SRS} onChange={val => controller.setSrs(type, val)} />
                 <LabeledSelect block label='flyout.coordinateSystem.heightSystem.label' value={heightSrs} placeholder={heightPH} disabled={heightDisabled} info='heightSystem' options={SRS_H} onChange={val => controller.setHeightSrs(type, val)} controller={controller}/>
             </Content>
         );
