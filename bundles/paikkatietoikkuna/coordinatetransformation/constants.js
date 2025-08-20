@@ -309,7 +309,7 @@ export const SRS = [
         axes: ['N', 'E']
     }, {
         value: 'EPSG:10699',
-        label: 'ETRS-TM34',
+        label: 'ETRS-TM34 (E,N)',
         name: 'EUREF-FIN / UTM zone 34N',
         datum: 'EUREF-FIN',
         projection: 'TM',
@@ -328,7 +328,7 @@ export const SRS = [
         axes: ['N', 'E'],
     }, {
         value: 'EPSG:25835',
-        label: 'ETRS-TM35',
+        label: 'ETRS-TM35 (E,N)',
         name: 'ETRS89 / UTM zone 35N',
         datum: 'EUREF-FIN',
         projection: 'TM',
@@ -346,7 +346,7 @@ export const SRS = [
         axes: ['N', 'E']
     }, {
         value: 'EPSG:10702',
-        label: 'ETRS-TM36',
+        label: 'ETRS-TM36 (E,N)',
         name: 'EUREF-FIN / UTM zone 36N',
         datum: 'EUREF-FIN',
         projection: 'TM',
