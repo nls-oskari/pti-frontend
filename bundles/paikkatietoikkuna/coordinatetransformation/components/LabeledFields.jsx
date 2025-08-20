@@ -33,6 +33,7 @@ const Info = ({ info, controller }) => (
     </span>
 );
 
+// placeholder is used as value for using same styling as selected value for mandatory fields
 export const LabeledSelect = ({ 
     label,
     block,
@@ -55,7 +56,7 @@ export const LabeledSelect = ({
         </StyledLabel>
         <StyledSelect
             { ...restForSelect }
-            value={value}
+            value={mandatory && !value ? placeholder : value}
             allowClear={!mandatory}
             options={localize ? getLocalized(options) : options}
             placeholder={placeholder}/>

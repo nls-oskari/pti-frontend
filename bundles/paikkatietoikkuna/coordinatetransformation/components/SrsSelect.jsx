@@ -21,7 +21,6 @@ const filter = (input, {label, value, reversedEpsg}) => `${label} ${value} ${rev
 
 const Srs = ({ srs, options, onChange, controller, block = false }) => {
     const [isOpen, setOpen] = useState(false);
-    // placeholder is used as value for using same styling as selected value (srs field is mandatory)
     const placeholder = Oskari.getMsg(BUNDLE, `actions.${isOpen ? 'search': 'select'}`);
     // For some reason onOpenChange={open => setOpen(open)} doesn't work, use focus & blur
     return <LabeledSelect localize showSearch mandatory
@@ -31,7 +30,8 @@ const Srs = ({ srs, options, onChange, controller, block = false }) => {
         filterOption={filter}
         label='flyout.coordinateSystem.geodeticCoordinateSystem.label'
         info='geodeticCoordinateSystem'
-        value={srs ? srs : placeholder}
+        value={srs}
+        placeholder={placeholder}
         options={options}
         controller={controller}
         onChange={onChange}/>
