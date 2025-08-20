@@ -71,7 +71,7 @@ class UIHandler extends StateHandler {
             this.setSource(source);
             this.closeConfirmPopup();
         };
-        this.confirmPopup=showConfirmPopup('dataSource.title', 'dataSource.confirmChange', onConfirm, () => this.closeConfirmPopup());
+        this.confirmPopup = showConfirmPopup('dataSource.title', 'dataSource.confirmChange', onConfirm, () => this.closeConfirmPopup());
     }
 
     closeConfirmPopup () {
@@ -175,7 +175,7 @@ class UIHandler extends StateHandler {
         }
         if (!coordinates.length || !inputSrs) {
             const title = 'mapMarkers.show.errorTitle';
-            const msg = `mapMarkers.show.${!inputSrs ? 'noSrs' : 'noCoordinates'}`
+            const msg = `mapMarkers.show.${!inputSrs ? 'noSrs' : 'noCoordinates'}`;
             this.showInfoMessage(title, msg);
             return;
         }
@@ -229,7 +229,7 @@ class UIHandler extends StateHandler {
     }
 
     showInfoMessage (titleKey, msgKey) {
-        const title = this.loc(titleKey)
+        const title = this.loc(titleKey);
         const paragraphs = [this.loc(msgKey)];
         const listItems = [];
         if (this.infoPopup) {

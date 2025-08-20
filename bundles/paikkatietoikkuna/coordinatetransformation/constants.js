@@ -325,7 +325,7 @@ export const SRS = [
         projection: 'TM',
         system: 'PROJ_2D',
         bounds: [-3669433.90, 4601644.86, 642319.78, 9362767.00],
-        axes: ['N', 'E'],
+        axes: ['N', 'E']
     }, {
         value: 'EPSG:25835',
         label: 'ETRS-TM35 (E,N)',
@@ -334,7 +334,7 @@ export const SRS = [
         projection: 'TM',
         system: 'PROJ_2D',
         bounds: [-3669433.90, 4601644.86, 642319.78, 9362767.00],
-        axes: ['E', 'N'],
+        axes: ['E', 'N']
     }, {
         value: 'EPSG:3048',
         label: 'ETRS-TM36',
