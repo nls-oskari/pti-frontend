@@ -19,7 +19,7 @@ const SelectWrapper = styled.div`
 `;
 const filter = (input, {label, value, reversedEpsg}) => `${label} ${value} ${reversedEpsg}`.toLowerCase().includes(input.toLowerCase());
 
-const Srs = ({ srs, options, onChange, block = false }) => {
+const Srs = ({ srs, options, onChange, controller, block = false }) => {
     const [isOpen, setOpen] = useState(false);
     // placeholder is used as value for using same styling as selected value (srs field is mandatory)
     const placeholder = Oskari.getMsg(BUNDLE, `actions.${isOpen ? 'search': 'select'}`);
@@ -33,6 +33,7 @@ const Srs = ({ srs, options, onChange, block = false }) => {
         info='geodeticCoordinateSystem'
         value={srs ? srs : placeholder}
         options={options}
+        controller={controller}
         onChange={onChange}/>
 };
 
@@ -43,7 +44,7 @@ export const SrsSelect = ({ srs, heightSrs, type, minimal, controller }) => {
         return (
             <Content>
                 <ComponentLabel label={`flyout.coordinateSystem.${type}.title`}/>
-                <Srs block srs={srs} options={SRS} onChange={val => controller.setSrs(type, val)} />
+                <Srs block srs={srs} options={SRS} onChange={val => controller.setSrs(type, val)} controller={controller}/>
                 <LabeledSelect block label='flyout.coordinateSystem.heightSystem.label' value={heightSrs} placeholder={heightPH} disabled={heightDisabled} info='heightSystem' options={SRS_H} onChange={val => controller.setHeightSrs(type, val)} controller={controller}/>
             </Content>
         );
@@ -86,7 +87,7 @@ export const SrsSelect = ({ srs, heightSrs, type, minimal, controller }) => {
             <LabeledSelect label='flyout.coordinateSystem.geodeticDatum.label' info='geodeticDatum' value={datum} options={DATUM} onChange={onDatum} controller={controller}/>
             <LabeledSelect localize label='flyout.coordinateSystem.coordinateSystem.label' info='coordinateSystem' value={system} options={systemOptions} onChange={onSystem} controller={controller}/>
             { system === 'PROJ_2D' && <LabeledSelect label='flyout.coordinateSystem.mapProjection.label' info='mapProjection' value={projection} options={projectionOptions} onChange={setProjection} controller={controller}/> }
-            <Srs srs={srs} options={srsOptions} onChange={val => controller.setSrs(type, val)} />
+            <Srs srs={srs} options={srsOptions} onChange={val => controller.setSrs(type, val)} controller={controller}/>
             <LabeledSelect label='flyout.coordinateSystem.heightSystem.label' value={heightSrs} placeholder={heightPH} disabled={heightDisabled} info='heightSystem' options={SRS_H} onChange={val => controller.setHeightSrs(type, val)} controller={controller}/>
         </Content>
     );
