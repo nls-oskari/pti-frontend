@@ -263,7 +263,6 @@ class UIHandler extends StateHandler {
         const state = this.getState();
         const isTransform = TRANSFORM.includes(stepOrType);
         let errors = isTransform ? validateTransform(state, stepOrType) : [];
-        // const steps = Object.keys(CONTENT) // import from FlyoutWizard
         if (!isTransform) {
             if (stepOrType === 'srs' && (!state.inputSrs || !state.outputSrs)) {
                 errors.push('crs');
