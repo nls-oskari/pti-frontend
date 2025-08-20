@@ -59,9 +59,6 @@ Oskari.clazz.define("Oskari.coordinatetransformation.bundle", function () {
         }, {
             "type": "text/javascript",
             "src": "../../../../bundles/paikkatietoikkuna/coordinatetransformation/service/TransformationService.js"
-        }, {
-            "type": "text/css",
-            "src": "../../../../bundles/paikkatietoikkuna/coordinatetransformation/resources/css/coordinatetransformation.css"
         }
         ],
         "locales": [ {

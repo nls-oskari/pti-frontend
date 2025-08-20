@@ -7,6 +7,7 @@ import { SourceSelect } from '../components/SourceSelect.jsx';
 import { CoordinateTable } from '../components/CoordinateTable.jsx';
 import { SrsSelect } from '../components/SrsSelect';
 import { ClearTableButton } from '../components/ClearTableButton';
+import { MandatoryDescription } from '../components/MandatoryDescription';
 
 const Content = styled.div`
     display: flex;
@@ -17,7 +18,7 @@ const Content = styled.div`
 const Splitter = styled.div`
     display: flex;
     flex-flow: row nowrap;
-    gap: 2em;
+    gap: 1em;
 `;
 const MinimizeButton = styled(Button)`
     justify-content: flex-start;
@@ -39,15 +40,17 @@ export const FlyoutContent = ({
 }) => {
     const [ minimalSrs, setMinimalSrs ] = useState(true);
     const transformType = source === 'file' ? 'F2A' : 'A2A';
+    const transformed = results.length > 0;
     return (
         <Content>
+            <MandatoryDescription/>
             <div className='t_srs'>
                 <Splitter>
                     <SrsSelect type='input' minimal={minimalSrs} srs={inputSrs} heightSrs={inputHeightSrs} controller={controller}/>
                     <SrsSelect type='output' minimal={minimalSrs} srs={outputSrs} heightSrs={outputHeightSrs} controller={controller}/>
                 </Splitter>
                 <MinimizeButton type='link' onClick={() => setMinimalSrs(!minimalSrs)}>
-                    <Message messageKey='actions.minimizeSrs'/>
+                    <Message messageKey={`actions.minimize${minimalSrs ? 'd' : ''}Srs`}/>
                 </MinimizeButton>
             </div>
             <SourceSelect value={source} controller={controller} />
@@ -59,15 +62,15 @@ export const FlyoutContent = ({
             <StyledButtonContainer>
                 <div className='t_actions'>
                     <ClearTableButton controller={controller} />
-                    <Button onClick={() => controller.onAction('showOnMap')}>
+                    <Button onClick={() => controller.showOnMap()}>
                         <Message messageKey='mapMarkers.show.title'/>
                     </Button>
                 </div>
                 <div className='t_transform'>
-                    <Button type='primary' onClick={() => controller.transformToArray(transformType)}>
-                        <Message messageKey='actions.convert'/>
+                    <Button type='primary' disabled={transformed} onClick={() => controller.transformToArray(transformType)}>
+                        <Message messageKey='actions.transform'/>
                     </Button>
-                    <Button type='primary' onClick={() => controller.showFileSettings('export')}>
+                    <Button type='primary' disabled={!transformed} onClick={() => controller.showFileSettings('export')}>
                         <Message messageKey='actions.export'/>
                     </Button>
                 </div>

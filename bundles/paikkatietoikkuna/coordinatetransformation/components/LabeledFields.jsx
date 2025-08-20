@@ -13,17 +13,18 @@ const StyledLabel = styled(Label)`
     width: ${props => props.$block ? 360 : 160}px;
 `;
 const StyledSelect = styled(Select)`
-    width: 200px;
+    width: 240px;
 `;
 const StyledTextInput = styled(TextInput)`
-    width: 200px;
+    width: 240px;
 `;
 const StyledNumberInput = styled(NumberInput)`
-    width: 200px;
+    width: 240px;
 `;
 
-const phMandatory = <Message messageKey='actions.select' />
-const phOptional = <Message messageKey='flyout.coordinateSystem.noFilter' />
+const phMandatory = <Message messageKey='actions.select' />;
+const phOptional = <Message messageKey='flyout.coordinateSystem.noFilter' />;
+const phNone = <Message messageKey='flyout.coordinateSystem.heightSystem.none' />;
 const getLocalized = options => options.map(opt => opt.label ? opt : ({ ...opt, label: <Message messageKey={opt.loc} messageArgs={opt.args} /> }));
 
 const Info = ({ info, controller }) => (
@@ -32,6 +33,7 @@ const Info = ({ info, controller }) => (
     </span>
 );
 
+// placeholder is used as value for using same styling as selected value for mandatory fields
 export const LabeledSelect = ({ 
     label,
     block,
@@ -54,7 +56,7 @@ export const LabeledSelect = ({
         </StyledLabel>
         <StyledSelect
             { ...restForSelect }
-            value={value}
+            value={mandatory && !value ? placeholder : value}
             allowClear={!mandatory}
             options={localize ? getLocalized(options) : options}
             placeholder={placeholder}/>

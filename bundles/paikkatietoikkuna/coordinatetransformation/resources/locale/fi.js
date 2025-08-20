@@ -9,6 +9,10 @@ Oskari.registerLocalization(
         },
         "flyout": {
             "title":"Koordinaattimuunnos",
+            "mandatory": {
+                "symbol": "Tähdellä (",
+                "desc": ") merkityt ovat pakollisia kenttiä."
+            },
             "filterSystems": {
                 "title": "Suodata koordinaattijärjestelmiä",
                 "epsg": "EPSG-koodilla",
@@ -17,12 +21,14 @@ Oskari.registerLocalization(
             "steps": {
                 "inputSrs": "Lähtökoordinaattijärjestelmä",
                 "outputSrs": "Tuloskoordinaattijärjestelmä",
+                "srs": "Koordinaattijärjestelmät",
                 "importFile": "Lähtöaineisto",
                 "exportFile": "Tulosaineisto",
                 "mapSelect": "Valitse sijainnit",
                 "inputTable": "Lähtökoordinaatit",
                 "mapInputTable": "Kartan koordinaatit",
-                "resultTable": "Tuloskoordinaatit"
+                "resultTable": "Tuloskoordinaatit",
+                "resultTable2": "Lähtö ja tuloskoordinaatit"
             },
             "coordinateSystem": {
                 "title": "Koordinaattijärjestelmän tiedot",
@@ -64,37 +70,23 @@ Oskari.registerLocalization(
                     }
                 }
             },
+            "coordinateAxes": {
+                'N': 'Pohjois-koordinaatti [m]',
+                'E': 'Itä-koordinaatti [m]',
+                'φ': 'Leveysaste',
+                'λ': 'Pituusaste',
+                'X': 'Geosentrinen X [m]',
+                'Y': 'Geosentrinen Y [m]',
+                'Z': 'Geosentrinen Z [m]',
+                'H': 'Korkeus [m]',
+                'h': 'Ellipsoidinen korkeus [m]'
+            },
             "coordinateTable": {
-                "input": "Muunnettavat koordinaatit",
+                "input": "Muunnettavat lähtökoordinaatit",
                 "output": "Tuloskoordinaatit",
-                "metric": {
-                    "x":"Pohjois-koordinaatti [m]",
-                    "y":"Itä-koordinaatti [m]",
-                    "z": "Korkeus [m]"
-                },
-                "degree": {
-                    "x":"Leveysaste",
-                    "y":"Pituusaste",
-                    "z": "Korkeus [m]",
-                },
-                "degree3D": {
-                    "x":"Leveysaste",
-                    "y":"Pituusaste",
-                    "z": "Ellipsoidinen korkeus [m]",
-                },
-                "geocentric": {
-                    "x":"Geosentrinen X [m]",
-                    "y":"Geosentrinen Y [m]",
-                    "z":"Geosentrinen Z [m]"
-                },
-                "height": {
-                    "elevation": "Korkeus [m]",
-                    "ellipse":"Ellipsoidinen korkeus [m]",
-                    "geocentric": "Geosentrinen Z [m]"
-                },
                 "rows": "Riviä",
-                "clearTables": "Tyhjennä taulukot",
-                "confirmClear": "Haluatko tyhjentää taulukot?"
+                "clearTables": "Poista kaikki koordinaatit",
+                "confirmClear": "Haluatko poistaa taulukoista kaikki koordinaatit?"
             },
             "transform": {
                 "warnings": {
@@ -146,6 +138,7 @@ Oskari.registerLocalization(
         },
         "dataSource": {
             "title": "Koordinaattitietojen lähde",
+            "select": "Valitse koordinaattitietojen lähde",
             "change": "Vaihda lähde",
             "confirmChange": "Muunnettavat koordinaatit tyhjennetään. Haluatko jatkaa?",
             "file": {
@@ -184,9 +177,11 @@ Oskari.registerLocalization(
             }
         },
         "actions": {
-            "convert": "Tee muunnos",
-            "export": "Tee muunnos tiedostoon",
-            "minimizeSrs": "Näytä kaikki koordinaattjijärjestelmän valinnat",
+            "transform": "Tee muunnos",
+            "export": "Tallenna tiedostoon",
+            "minimizeSrs": "Piilota koordinaattjijärjestelmän lisävalinnat",
+            "minimizedSrs": "Näytä kaikki koordinaattjijärjestelmän valinnat",
+            "search": "Hae nimellä tai EPSG-koodilla",
             "select": "Valitse",
             "cancel": "Peruuta",
             "done": "Valmis",

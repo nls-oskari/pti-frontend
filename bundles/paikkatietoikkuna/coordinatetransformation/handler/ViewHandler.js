@@ -1,9 +1,10 @@
 import { StateHandler, controllerMixin, Messaging } from 'oskari-ui/util';
 import { showInfoPopup } from '../view/InfoPopup';
 import { showFilePopup } from '../view/FilePopup';
+import { showConfirmPopup } from '../view/ConfirmPopup';
 import { showMapSelectPopup, showMapPreviewPopup } from '../view/MapPopup';
 import { SOURCE, MAP, WATCH_JOB, WATCH_URL, TRANSFORM, FILE_DEFAULTS } from '../constants';
-import { stateToPTIArray, loadFile, validateTransform, validateFileSettings, parseCoordinateValue } from '../helper';
+import { stateToPTIArray, loadFile, validateTransform, validateFileSettings, parseCoordinateValue, is3DSystem } from '../helper';
 
 const getInitialState = () => ({
     loading: false,
@@ -17,7 +18,7 @@ const getInitialState = () => ({
     import: { ...FILE_DEFAULTS.import },
     export: { ...FILE_DEFAULTS.export },
     coordinates: [],
-    results: []
+    results: [] // TODO: xInput, xOutput, xMap ??
 });
 
 class UIHandler extends StateHandler {
@@ -29,6 +30,7 @@ class UIHandler extends StateHandler {
         this.infoPopup = null;
         this.filePopup = null;
         this.mapPopup = null;
+        this.confirmPopup = null;
         this.setState(getInitialState());
         this.addStateListener(state => this.filePopup?.update(state));
         Oskari.urls.set(WATCH_JOB, WATCH_URL);
@@ -40,15 +42,16 @@ class UIHandler extends StateHandler {
         this.updateState(state); // TODO: set or update
         if (closeFlyout) {
             const flyout = this.instance.getFlyout();
-            // TODO: remove
-            flyout.mode = null;
             flyout.close();
         }
     }
 
     setSource (source) {
-        // TODO: confrim (jsx or popup) && clear
         if (source === this.getState().source) {
+            return;
+        }
+        if (this.getState().coordinates.length) {
+            this.confirmSourceChange(source);
             return;
         }
         if (source === 'map') {
@@ -56,7 +59,24 @@ class UIHandler extends StateHandler {
             this.updateState({ inputSrs });
             this.selectFromMap();
         }
+        if (source === 'file') {
+            this.showFileSettings('import');
+        }
         this.updateState({ source });
+    }
+
+    confirmSourceChange (source) {
+        const onConfirm = () => {
+            this.reset();
+            this.setSource(source);
+            this.closeConfirmPopup();
+        };
+        this.confirmPopup = showConfirmPopup('dataSource.title', 'dataSource.confirmChange', onConfirm, () => this.closeConfirmPopup());
+    }
+
+    closeConfirmPopup () {
+        this.confirmPopup?.close();
+        this.confirmPopup = null;
     }
 
     addCoordinate (coordinate) {
@@ -95,6 +115,14 @@ class UIHandler extends StateHandler {
     setSrs (type, srs) {
         const prop = `${type}Srs`;
         this.updateState({ [prop]: srs });
+        if (is3DSystem(srs)) {
+            this.setHeightSrs(type, null);
+        }
+    }
+
+    setHeightSrs (type, srs) {
+        const prop = `${type}HeightSrs`;
+        this.updateState({ [prop]: srs });
     }
 
     setFiles (files) {
@@ -122,13 +150,7 @@ class UIHandler extends StateHandler {
 
     onAction (id) {
         if (id === 'map') {
-            this.showMapPopup();
-        }
-        if (id === 'selectFromMap') {
             this.selectFromMap();
-        }
-        if (id === 'showOnMap') {
-            this.showOnMap();
         }
         if (id === 'file') {
             this.showFileSettings('import');
@@ -147,9 +169,14 @@ class UIHandler extends StateHandler {
     }
 
     showOnMap () {
-        const { coordinates } = this.getState(); //  inputSrs, source
-        // TODO: notify noCoordinates, noSrs
+        const { coordinates, inputSrs } = this.getState(); //  inputSrs, source
         if (this.mapPopup) {
+            return;
+        }
+        if (!coordinates.length || !inputSrs) {
+            const title = 'mapMarkers.show.errorTitle';
+            const msg = `mapMarkers.show.${!inputSrs ? 'noSrs' : 'noCoordinates'}`;
+            this.showInfoMessage(title, msg);
             return;
         }
         // TODO: convert to map projection (axis order) and add label (source !== map)
@@ -162,13 +189,13 @@ class UIHandler extends StateHandler {
         const { coordinates } = this.getState();
         this.instance.setMapSelectionMode(MAP.ADD);
         this.instance.setMapCoordinates(coordinates);
+        this.showMapPopup();
     }
 
     showMapPopup () {
         if (this.mapPopup) {
             return;
         }
-        this.selectFromMap();
         this.instance.toggleFlyout(false);
         this.mapPopup = showMapSelectPopup(this.getController(), () => this.closeMapPopup(true));
     }
@@ -201,6 +228,17 @@ class UIHandler extends StateHandler {
         }
     }
 
+    showInfoMessage (titleKey, msgKey) {
+        const title = this.loc(titleKey);
+        const paragraphs = [this.loc(msgKey)];
+        const listItems = [];
+        if (this.infoPopup) {
+            this.infoPopup.update(title, paragraphs, listItems);
+            return;
+        }
+        this.infoPopup = showInfoPopup(title, paragraphs, listItems, () => this.closeInfoPopup());
+    }
+
     showValidationError (errorKeys) {
         this.infoPopup?.close();
         const listItems = errorKeys.map(key => this.loc(`flyout.transform.validateErrors.${key}`));
@@ -218,14 +256,17 @@ class UIHandler extends StateHandler {
         this.closeFileSettings();
         this.closeInfoPopup();
         this.closeMapPopup();
+        this.closeConfirmPopup();
     }
 
     validate (stepOrType) {
         const state = this.getState();
         const isTransform = TRANSFORM.includes(stepOrType);
         let errors = isTransform ? validateTransform(state, stepOrType) : [];
-        // const steps = Object.keys(CONTENT) // import from FlyoutWizard
         if (!isTransform) {
+            if (stepOrType === 'srs' && (!state.inputSrs || !state.outputSrs)) {
+                errors.push('crs');
+            }
             if (stepOrType === 'inputSrs' && !state.inputSrs) {
                 errors.push('srs');
             }
@@ -370,6 +411,7 @@ class UIHandler extends StateHandler {
 const wrapped = controllerMixin(UIHandler, [
     'setSource',
     'setSrs',
+    'setHeightSrs',
     'updateCoordinate',
     'pasteCoordinates',
     'parseInputCoordinate',

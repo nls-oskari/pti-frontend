@@ -36,21 +36,14 @@ const Option = ({ id, value, controller }) => {
     );
 };
 
-// TODO: wrap confirm or confirm popup to handler
 export const SourceSelect = ({ value, controller }) => {
-    // TODO: refactor: remove this and handle source & popup in handler
-    // For now 'flyout' opens popups (action) and 'wizard' not (has own buttons without action call)
-    const onSource = source => {
-        controller.setSource(source);
-        controller.onAction(source);
-    };
     return(
         <Content>
-            <ComponentLabel label='dataSource.title'/>
+            <ComponentLabel label='dataSource.select'/>
             <Radio.Group
                 value={value}
                 style={style}
-                onChange={evt => onSource(evt.target.value)}
+                onChange={evt => controller.setSource(evt.target.value)}
                 options={SOURCE.map(id => ({label: <Option id={id} value={value} controller={controller}/>, value: id }))}/>
         </Content>
     );
