@@ -1,4 +1,4 @@
-import { SEPARATORS } from "../constants";
+import { SEPARATORS } from '../constants';
 
 export const parseFile = (file) => {
     return new Promise((resolve, reject) => {
@@ -30,9 +30,9 @@ export const parseFileContents = (lines = [], delimiter = ';', headerLineCount =
     const data = linesWithData.map(line =>
         line.split(delimiter)
             .map(cell => cell.trim())
-            .map(cell => decimalSeparator === ',' ? cell.replace(',', '.'): cell)
+            .map(cell => decimalSeparator === ',' ? cell.replace(',', '.') : cell)
     );
-    
+
     return {
         delimiter,
         // TODO: we don't need this when we don't send the file to backend
@@ -41,7 +41,7 @@ export const parseFileContents = (lines = [], delimiter = ';', headerLineCount =
         data,
         lines,
         ...headerMetadata
-    }
+    };
 };
 
 const detectDecimalSeparator = (line = '', delimiter = ';') => {
@@ -56,7 +56,7 @@ const detectDecimalSeparator = (line = '', delimiter = ';') => {
 
 const interpretFileContents = (lines = []) => {
     const delimiter = detectDelimiter(lines[0]);
-    let headerLineCount = countHeaders(lines, delimiter);
+    const headerLineCount = countHeaders(lines, delimiter);
     return parseFileContents(lines, delimiter, headerLineCount);
 };
 
@@ -75,9 +75,9 @@ const detectDelimiter = (line) => {
     }
 
     return bestDelimiter;
-}
+};
 
-const isNumericRow = (row, delimiter) =>  {
+const isNumericRow = (row, delimiter) => {
     const cells = row.split(delimiter).map(cell => cell.trim());
 
     return cells.every(cell => {
@@ -88,7 +88,7 @@ const isNumericRow = (row, delimiter) =>  {
 
 const countHeaders = (lines = [], delimiter) => {
     let headerLines = 0;
-    for (let i = 0; i < lines.length; ) {
+    for (let i = 0; i < lines.length;) {
         if (isNumericRow(lines[i], delimiter)) {
             headerLines = i;
             break;
@@ -97,4 +97,4 @@ const countHeaders = (lines = [], delimiter) => {
         }
     }
     return headerLines;
-}
+};

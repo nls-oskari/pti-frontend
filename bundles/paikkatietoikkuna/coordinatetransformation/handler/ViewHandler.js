@@ -334,14 +334,14 @@ class UIHandler extends StateHandler {
     importFileContentsToInputTable () {
         const { fileContents } = this.getState();
         /*{
-                delimiter,
-                // TODO: we don't need this when we don't send the file to backend
-                delimiterValueForBackend: SEPARATORS.coordinateSeparator.find(sep => sep.char === delimiter)?.value,
-                decimalSeparator,
-                data,
-                lines,
-                headerLines,
-                headers
+            delimiter,
+            // TODO: we don't need this when we don't send the file to backend
+            delimiterValueForBackend: SEPARATORS.coordinateSeparator.find(sep => sep.char === delimiter)?.value,
+            decimalSeparator,
+            data,
+            lines,
+            headerLines,
+            headers
         }
         */
         if (!fileContents) {
