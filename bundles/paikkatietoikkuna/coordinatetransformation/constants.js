@@ -40,10 +40,10 @@ export const SEPARATORS = {
         { label: 'UNIX / Mac', value: 'unix' }
     ],
     coordinateSeparator: [
-        { loc: 'fileSettings.options.delimeters.tab', value: 'tab' },
-        { loc: 'fileSettings.options.delimeters.space', value: 'space' },
-        { loc: 'fileSettings.options.delimeters.comma', value: 'comma' },
-        { loc: 'fileSettings.options.delimeters.semicolon', value: 'semicolon' }
+        { loc: 'fileSettings.options.delimeters.tab', value: 'tab', char:'\t' },
+        { loc: 'fileSettings.options.delimeters.space', value: 'space', char:' ' },
+        { loc: 'fileSettings.options.delimeters.comma', value: 'comma', char:',' },
+        { loc: 'fileSettings.options.delimeters.semicolon', value: 'semicolon', char:';' }
     ],
     decimalSeparator: [
         { loc: 'fileSettings.options.delimeters.point', value: '.' },
