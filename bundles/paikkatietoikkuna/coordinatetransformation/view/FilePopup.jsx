@@ -26,7 +26,8 @@ const getContent = (type, state, controller, onClose) => {
             return;
         }
         if (type ==='import') {
-            controller.transformToArray('F2R');
+            controller.importFileContentsToInputTable();
+            // controller.transformToArray('F2R');
         } else {
             const transformType = state.source === 'file' ? 'F2F' : 'A2F';
             controller.transformToFile(transformType);

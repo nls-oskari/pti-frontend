@@ -5,6 +5,7 @@ import { showConfirmPopup } from '../view/ConfirmPopup';
 import { showMapSelectPopup, showMapPreviewPopup } from '../view/MapPopup';
 import { SOURCE, MAP, WATCH_JOB, WATCH_URL, TRANSFORM, FILE_DEFAULTS } from '../constants';
 import { stateToPTIArray, loadFile, validateTransform, validateFileSettings, parseCoordinateValue, is3DSystem } from '../helper';
+import { parseFile, parseFileContents } from './FileParser';
 
 const getInitialState = () => ({
     loading: false,
@@ -125,11 +126,30 @@ class UIHandler extends StateHandler {
         this.updateState({ [prop]: srs });
     }
 
-    setFiles (files) {
-        this.updateState({ files });
+    setFiles (files = []) {
+        if (files.length !== 1) {
+            return;
+        }
+        // TODO: error handling?
+        parseFile(files[0]).then(contents => {
+            this.updateState({
+                files,
+                fileContents: contents,
+                import: {
+                    headerLineCount: contents.headerLines.length,
+                    coordinateSeparator: contents.delimiterValueForBackend,
+                    decimalSeparator: contents.decimalSeparator
+                }
+            });
+        })
+        .catch(err => {
+            console.log(err);
+            this.showValidationError(['noFileSettings']);
+        });
     }
 
     setFileSetting (type, key, value) {
+        // TODO: parseFileContents() based on the new selection
         const settings = this.getState()[type];
         this.updateState({ [type]: { ...settings, [key]: value } });
     }
@@ -311,6 +331,29 @@ class UIHandler extends StateHandler {
         });
     }
 
+    importFileContentsToInputTable () {
+        const { fileContents } = this.getState();
+        /*{
+                delimiter,
+                // TODO: we don't need this when we don't send the file to backend
+                delimiterValueForBackend: SEPARATORS.coordinateSeparator.find(sep => sep.char === delimiter)?.value,
+                decimalSeparator,
+                data,
+                lines,
+                headerLines,
+                headers
+        }
+        */
+        if (!fileContents) {
+            // TODO: error handling
+            alert('NOPE');
+            return;
+        }
+        const coordinates = fileContents.data.map(([x, y, z]) => ({ x, y, z }));
+        this.updateState({ coordinates });
+
+    }
+
     transformToArray (transformType) {
         const state = this.getState();
         if (this.validate(transformType)) {
@@ -425,7 +468,8 @@ const wrapped = controllerMixin(UIHandler, [
     'showFileSettings',
     'onAction',
     'reset',
-    'validate'
+    'validate',
+    'importFileContentsToInputTable'
 ]);
 
 export { wrapped as ViewHandler };
