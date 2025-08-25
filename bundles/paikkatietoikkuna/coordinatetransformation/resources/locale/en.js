@@ -212,7 +212,8 @@ Oskari.registerLocalization(
                     "comma": "Comma",
                     "tab": "Tabulator",
                     "space": "Space",
-                    "semicolon": "Semicolon"
+                    "semicolon": "Semicolon",
+                    "pipe": "Pipe"
                 }
             },
             "export": {
