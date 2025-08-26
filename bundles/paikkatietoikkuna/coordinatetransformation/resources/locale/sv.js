@@ -182,6 +182,9 @@ Oskari.registerLocalization(
             "close": "Stäng"
         },
         "fileSettings": {
+            "rows": "rader",
+            "columns": "fält",
+            "previewTitle": "Förhandsvy",
             "options": {
                 "decimalSeparator": "Skiljetecken för decimaler",
                 "coordinateSeparator": "Skiljetecken för fält",

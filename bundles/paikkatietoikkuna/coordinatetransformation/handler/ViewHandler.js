@@ -3,7 +3,7 @@ import { showInfoPopup } from '../view/InfoPopup';
 import { showFilePopup } from '../view/FilePopup';
 import { showConfirmPopup } from '../view/ConfirmPopup';
 import { showMapSelectPopup, showMapPreviewPopup } from '../view/MapPopup';
-import { SOURCE, MAP, WATCH_JOB, WATCH_URL, TRANSFORM, FILE_DEFAULTS } from '../constants';
+import { SOURCE, MAP, WATCH_JOB, WATCH_URL, TRANSFORM, FILE_DEFAULTS, SEPARATORS } from '../constants';
 import { stateToPTIArray, loadFile, validateTransform, validateFileSettings, parseCoordinateValue, is3DSystem } from '../helper';
 import { parseFile, parseFileContents } from './FileParser';
 
@@ -127,6 +127,12 @@ class UIHandler extends StateHandler {
     }
 
     setFiles (files = []) {
+        if (files.length === 0) {
+            this.updateState({
+                files: [],
+                fileContents: undefined
+            });
+        }
         if (files.length !== 1) {
             return;
         }
@@ -149,9 +155,21 @@ class UIHandler extends StateHandler {
     }
 
     setFileSetting (type, key, value) {
-        // TODO: parseFileContents() based on the new selection
         const settings = this.getState()[type];
-        this.updateState({ [type]: { ...settings, [key]: value } });
+        const newTypeState = {
+            [type]: {
+                ...settings,
+                [key]: value
+            }
+        }
+        const { fileContents } = this.getState();
+        if (fileContents) {
+            // parseFileContents() to update parsing based on the new selection
+            let coordSeparator = SEPARATORS.coordinateSeparator.find(sep => sep.value === newTypeState.import.coordinateSeparator)?.char;
+            newTypeState.fileContents = parseFileContents(fileContents.lines, coordSeparator, newTypeState.import.headerLineCount)
+        }
+
+        this.updateState(newTypeState);
     }
     // TODO: refactor
     setImport (key, value) {

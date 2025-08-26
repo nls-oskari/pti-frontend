@@ -189,6 +189,9 @@ Oskari.registerLocalization(
             "close": "Sulje"
         },
         "fileSettings": {
+            "rows": "riviä",
+            "columns": "saraketta",
+            "previewTitle": "Esikatselu",
             "options": {
                 "decimalSeparator": "Desimaalierotin",
                 "coordinateSeparator": "Sarake-erotin",

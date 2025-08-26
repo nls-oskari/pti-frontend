@@ -3,7 +3,7 @@ import { SEPARATORS } from '../constants';
 export const parseFile = (file) => {
     return new Promise((resolve, reject) => {
         if (!file || typeof file.text !== 'function') {
-            reject(new Error('Not able to parse file'));
+            reject(new Error('Unable to parse file'));
         }
         let lines = [];
         file.text().then(content => {
@@ -31,6 +31,7 @@ export const parseFileContents = (lines = [], delimiter = ';', headerLineCount =
         line.split(delimiter)
             .map(cell => cell.trim())
             .map(cell => decimalSeparator === ',' ? cell.replace(',', '.') : cell)
+            // TODO: detect non decimal cells?
     );
 
     return {
@@ -44,6 +45,12 @@ export const parseFileContents = (lines = [], delimiter = ';', headerLineCount =
     };
 };
 
+const interpretFileContents = (lines = []) => {
+    const delimiter = detectDelimiter(lines[0]);
+    const headerLineCount = countHeaders(lines, delimiter);
+    return parseFileContents(lines, delimiter, headerLineCount);
+};
+
 const detectDecimalSeparator = (line = '', delimiter = ';') => {
     if (!line.trim() || delimiter === ',') {
         return '.';
@@ -52,12 +59,6 @@ const detectDecimalSeparator = (line = '', delimiter = ';') => {
         return ',';
     }
     return '.';
-};
-
-const interpretFileContents = (lines = []) => {
-    const delimiter = detectDelimiter(lines[0]);
-    const headerLineCount = countHeaders(lines, delimiter);
-    return parseFileContents(lines, delimiter, headerLineCount);
 };
 
 const detectDelimiter = (line) => {
