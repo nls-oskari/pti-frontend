@@ -34,7 +34,7 @@ Oskari.clazz.define('Oskari.coordinatetransformation.Flyout',
             return this.handler;
         },
         teardown: function () {
-            this.handler?.stop();
+            this.handler?.onFlyoutClose();
         },
         // For some screen sizes css + media doesn't give enough space for content
         setContainerMaxHeight: function (mapHeight) {
