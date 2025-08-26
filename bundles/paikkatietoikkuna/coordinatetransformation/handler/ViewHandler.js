@@ -136,7 +136,6 @@ class UIHandler extends StateHandler {
         if (files.length !== 1) {
             return;
         }
-        // TODO: error handling?
         parseFile(files[0]).then(contents => {
             this.updateState({
                 files,
@@ -147,8 +146,8 @@ class UIHandler extends StateHandler {
                     decimalSeparator: contents.decimalSeparator
                 }
             });
-        })
-        .catch(err => {
+        }).catch(err => {
+            // TODO: error handling
             console.log(err);
             this.showValidationError(['noFileSettings']);
         });
@@ -161,12 +160,12 @@ class UIHandler extends StateHandler {
                 ...settings,
                 [key]: value
             }
-        }
+        };
         const { fileContents } = this.getState();
         if (fileContents) {
             // parseFileContents() to update parsing based on the new selection
-            let coordSeparator = SEPARATORS.coordinateSeparator.find(sep => sep.value === newTypeState.import.coordinateSeparator)?.char;
-            newTypeState.fileContents = parseFileContents(fileContents.lines, coordSeparator, newTypeState.import.headerLineCount)
+            const coordSeparator = SEPARATORS.coordinateSeparator.find(sep => sep.value === newTypeState.import.coordinateSeparator)?.char;
+            newTypeState.fileContents = parseFileContents(fileContents.lines, coordSeparator, newTypeState.import.headerLineCount);
         }
 
         this.updateState(newTypeState);
@@ -351,7 +350,7 @@ class UIHandler extends StateHandler {
 
     importFileContentsToInputTable () {
         const { fileContents } = this.getState();
-        /*{
+        /* {
             delimiter,
             // TODO: we don't need this when we don't send the file to backend
             delimiterValueForBackend: SEPARATORS.coordinateSeparator.find(sep => sep.char === delimiter)?.value,
@@ -369,7 +368,6 @@ class UIHandler extends StateHandler {
         }
         const coordinates = fileContents.data.map(([x, y, z]) => ({ x, y, z }));
         this.updateState({ coordinates });
-
     }
 
     transformToArray (transformType) {
