@@ -44,12 +44,12 @@ export const FlyoutContent = ({
     return (
         <Content>
             <MandatoryDescription/>
-            <div className='t_srs'>
+            <div>
                 <Splitter>
                     <SrsSelect type='input' minimal={minimalSrs} srs={inputSrs} heightSrs={inputHeightSrs} controller={controller}/>
                     <SrsSelect type='output' minimal={minimalSrs} srs={outputSrs} heightSrs={outputHeightSrs} controller={controller}/>
                 </Splitter>
-                <MinimizeButton type='link' onClick={() => setMinimalSrs(!minimalSrs)}>
+                <MinimizeButton className='t_toggle_srs' type='link' onClick={() => setMinimalSrs(!minimalSrs)}>
                     <Message messageKey={`actions.minimize${minimalSrs ? 'd' : ''}Srs`}/>
                 </MinimizeButton>
             </div>
@@ -62,15 +62,15 @@ export const FlyoutContent = ({
             <StyledButtonContainer>
                 <div className='t_actions'>
                     <ClearTableButton controller={controller} />
-                    <Button onClick={() => controller.showOnMap()}>
+                    <Button className='t_map' onClick={() => controller.showOnMap()}>
                         <Message messageKey='mapMarkers.show.title'/>
                     </Button>
                 </div>
                 <div className='t_transform'>
-                    <Button type='primary' disabled={transformed} onClick={() => controller.transformToArray(transformType)}>
+                    <Button type='primary' className='t_table' disabled={transformed} onClick={() => controller.transformToArray(transformType)}>
                         <Message messageKey='actions.transform'/>
                     </Button>
-                    <Button type='primary' disabled={!transformed} onClick={() => controller.showFileSettings('export')}>
+                    <Button type='primary' className='t_file' disabled={!transformed} onClick={() => controller.showFileSettings('export')}>
                         <Message messageKey='actions.export'/>
                     </Button>
                 </div>

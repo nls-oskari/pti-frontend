@@ -6,7 +6,7 @@ export const ClearTableButton = ({ controller }) => (
     <Confirm
         title={<Message messageKey='flyout.coordinateTable.confirmClear'/>}
         onConfirm={() => controller.clearTables()}>
-        <Button>
+        <Button className='t_clear'>
             <Message messageKey='flyout.coordinateTable.clearTables'/>
         </Button>
     </Confirm>
