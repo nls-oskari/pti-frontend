@@ -139,8 +139,8 @@ Oskari.registerLocalization(
                 "info":  "Välj filen med utgångsmaterialet och dess inställningar.",
                 "action": "redigera dina val"
             },
-            "keyboard": {
-                "label": "Med tangentbordet",
+            "table": {
+                "label": "Med tabellen",
                 "info": "Mata in utgångsuppgifter i tabellen Koordinater som ska transformeras."
             },
             "map": {
