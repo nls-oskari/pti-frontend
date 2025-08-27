@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Message, Checkbox } from 'oskari-ui';
 import { FileInput } from 'oskari-ui/components/FileInput';
 import { LabeledSelect, LabeledInput } from './LabeledFields';
+import { FilePreview } from './FilePreview';
 import { InfoIcon } from 'oskari-ui/components/icons';
 import { SEPARATORS, DECIMAL, DEGREE } from '../constants';
 import { isDegreeSystem } from '../helper';
@@ -56,7 +57,7 @@ const CheckboxOption = ({id, checked, onChange, controller}) => (
 const SelectOption = ({id, value, onChange, controller}) =>
     <LabeledSelect localize mandatory label={`fileSettings.options.${id}`} info={id} value={value} options={OPTIONS.options[id]} onChange={value => onChange(id, value)} controller={controller}/>
 
-export const ImportFile = ({ import: values, inputSrs, files, controller }) => {
+export const ImportFile = ({ import: values, inputSrs, files, fileContents, controller }) => {
     const onChange = (key, value) => controller.setFileSetting('import', key, value);
     return (
         <Content>
@@ -65,6 +66,7 @@ export const ImportFile = ({ import: values, inputSrs, files, controller }) => {
             { showDegreeUnit(inputSrs) && <SelectOption id='unit' controller={controller} onChange={onChange} value={values.unit}/> }
             { OPTIONS.importSelect.map(id => <SelectOption key={id} id={id} controller={controller} onChange={onChange} value={values[id]}/>)}
             { OPTIONS.importCheckbox.map(id => <CheckboxOption key={id} id={id} controller={controller} onChange={onChange} checked={values[id]}/>)}
+            <FilePreview fileContents={fileContents} />
         </Content>
     );
 };

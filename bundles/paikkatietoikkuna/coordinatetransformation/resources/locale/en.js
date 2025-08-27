@@ -182,6 +182,9 @@ Oskari.registerLocalization(
             "close": "Close"
         },
         "fileSettings": {
+            "rows": "rows",
+            "columns": "columns",
+            "previewTitle": "Preview",
             "options": {
                 "decimalSeparator": "Decimal separator",
                 "coordinateSeparator": "Field separator",
@@ -212,7 +215,8 @@ Oskari.registerLocalization(
                     "comma": "Comma",
                     "tab": "Tabulator",
                     "space": "Space",
-                    "semicolon": "Semicolon"
+                    "semicolon": "Semicolon",
+                    "pipe": "Pipe"
                 }
             },
             "export": {

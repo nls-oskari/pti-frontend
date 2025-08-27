@@ -189,6 +189,9 @@ Oskari.registerLocalization(
             "close": "Sulje"
         },
         "fileSettings": {
+            "rows": "riviä",
+            "columns": "saraketta",
+            "previewTitle": "Esikatselu",
             "options": {
                 "decimalSeparator": "Desimaalierotin",
                 "coordinateSeparator": "Sarake-erotin",
@@ -217,7 +220,8 @@ Oskari.registerLocalization(
                     "comma": "Pilkku",
                     "tab": "Tabulaattori",
                     "space": "Välilyönti",
-                    "semicolon": "Puolipiste"
+                    "semicolon": "Puolipiste",
+                    "pipe": "Pystyviiva"
                 }
             },
             "export": {

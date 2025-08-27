@@ -182,6 +182,9 @@ Oskari.registerLocalization(
             "close": "Stäng"
         },
         "fileSettings": {
+            "rows": "rader",
+            "columns": "fält",
+            "previewTitle": "Förhandsvy",
             "options": {
                 "decimalSeparator": "Skiljetecken för decimaler",
                 "coordinateSeparator": "Skiljetecken för fält",
@@ -212,7 +215,8 @@ Oskari.registerLocalization(
                     "comma": "Kommatecken",
                     "tab": "Tabulator",
                     "space": "Mellanslag", //Utslutning
-                    "semicolon": "Semikolon"
+                    "semicolon": "Semikolon",
+                    "pipe": "Vertikalstreck"
                 }
             },
             "export": {
