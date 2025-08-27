@@ -46,7 +46,7 @@ export const LabeledSelect = ({
     placeholder = mandatory ? phMandatory : phOptional,
     ...restForSelect
 }) => (
-    <Wrapper $block={block}>
+    <Wrapper $block={block} className={`t_${info}`}>
         <StyledLabel $block={block}>
             <Message messageKey={label} />
             &nbsp;
@@ -78,7 +78,7 @@ export const LabeledInput = ({ label, mandatory, value, info, number, placeholde
     const Input = number ? StyledNumberInput : StyledTextInput;
     const isValid = !mandatory || number || ( value && value.trim().length > 0 );
     return (
-        <Wrapper>
+        <Wrapper className={`t_${info}`}>
             <StyledLabel>
                 <Message messageKey={label} />
                 &nbsp;
