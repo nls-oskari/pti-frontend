@@ -22,7 +22,7 @@ const StyledInput = styled(TextInput)`
     font-size: 12px;
 `;
 const Count = styled.span`
-    float: right;
+    margin-right: 0.5em;
 `;
 
 const Content = styled.div`
@@ -100,10 +100,11 @@ export const CoordinateTable = ({ type, coordinates, srs, heightSrs, controller,
     // TODO: assumes pagination page size 10
     const dataSource = [...coordinates, ...getEmptyArray(10 - coordinates.length % 10)]; // .map((a,key) => ({...a, key }));
     const optController = editable ? controller : null;
+    const count = coordinates.filter(coord => !coord.invalid).length;
     return (
-        <Content>
+        <Content className={`t_table_${type}`}>
             <ComponentLabel label={`flyout.coordinateTable.${type}`}>
-                {coordinates.filter(coord => !coord.invalid).length + ' '}
+                <Count className='t_row_count'>{count}</Count>
                 <Message messageKey='flyout.coordinateTable.rows' />
             </ComponentLabel>
             <StyledTable bordered
