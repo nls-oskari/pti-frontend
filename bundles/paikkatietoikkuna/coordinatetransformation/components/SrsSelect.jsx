@@ -42,7 +42,7 @@ export const SrsSelect = ({ srs, heightSrs, type, minimal, controller }) => {
     const heightPH = <Message messageKey='flyout.coordinateSystem.heightSystem.none' />;
     if (minimal) {
         return (
-            <Content>
+            <Content className={`t_srs_${type}`}>
                 <ComponentLabel label={`flyout.coordinateSystem.${type}.title`}/>
                 <Srs block srs={srs} options={SRS} onChange={val => controller.setSrs(type, val)} controller={controller}/>
                 <LabeledSelect block label='flyout.coordinateSystem.heightSystem.label' value={heightSrs} placeholder={heightPH} disabled={heightDisabled} info='heightSystem' options={SRS_H} onChange={val => controller.setHeightSrs(type, val)} controller={controller}/>
@@ -82,7 +82,7 @@ export const SrsSelect = ({ srs, heightSrs, type, minimal, controller }) => {
     });
 
     return (
-        <Content>
+        <Content className={`t_srs_${type}`}>
             <ComponentLabel label={`flyout.coordinateSystem.${type}.title`}/>
             <LabeledSelect label='flyout.coordinateSystem.geodeticDatum.label' info='geodeticDatum' value={datum} options={DATUM} onChange={onDatum} controller={controller}/>
             <LabeledSelect localize label='flyout.coordinateSystem.coordinateSystem.label' info='coordinateSystem' value={system} options={systemOptions} onChange={onSystem} controller={controller}/>

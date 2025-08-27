@@ -22,7 +22,7 @@ const Option = ({ id, value, controller }) => {
         controller.showInfo(id);
     };
     return (
-        <Content>
+        <Content className={`t_${id}`}>
             <Message messageKey={`dataSource.${id}.label`} />
             { showAction &&
                 <Button type='link' onClick={() => controller.onAction(id)}>
@@ -38,7 +38,7 @@ const Option = ({ id, value, controller }) => {
 
 export const SourceSelect = ({ value, controller }) => {
     return(
-        <Content>
+        <Content className='t_source'>
             <ComponentLabel label='dataSource.select'/>
             <Radio.Group
                 value={value}

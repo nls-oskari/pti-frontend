@@ -139,8 +139,8 @@ Oskari.registerLocalization(
                 "info":  "Select the file containing the input information and its settings.",
                 "action": "edit selections"
             },
-            "keyboard": {
-                "label": "Using keyboard",
+            "table": {
+                "label": "Using table",
                 "info": "Put the input information into the Input coordinates table."
             },
             "map": {
