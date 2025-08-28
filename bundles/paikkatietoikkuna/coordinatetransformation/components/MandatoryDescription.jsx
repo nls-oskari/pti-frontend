@@ -5,7 +5,7 @@ import { MandatoryIcon } from 'oskari-ui/components/icons';
 export const MandatoryDescription = () => (
     <div>
         <Message messageKey='flyout.mandatory.symbol' />
-        <MandatoryIcon twoToneColor={'#da5151'} />
+            <MandatoryIcon isValid={false}/>
         <Message messageKey='flyout.mandatory.desc' />
     </div>
 );
