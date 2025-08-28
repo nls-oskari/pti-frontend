@@ -2,7 +2,6 @@ export const BUNDLE = 'coordinatetransformation';
 export const WATCH_JOB = 'CoordinateTransformJob';
 export const WATCH_URL = '/coordinatetransform/watch/';
 export const ID_PREFIX = 'coord_marker_';
-// TODO: or enums?
 export const SOURCE = ['table', 'file', 'map'];
 export const TRANSFORM = ['A2A', 'F2A', 'F2R', 'F2F', 'A2F'];
 export const MAP = {
@@ -307,7 +306,7 @@ export const SRS = [
         axes: ['N', 'E']
     }, {
         value: 'EPSG:3046',
-        label: 'ETRS-TM34',
+        label: 'ETRS-TM34 (N,E)',
         name: 'ETRS89 / UTM zone 34N (N-E)',
         datum: 'EUREF-FIN',
         projection: 'TM',
@@ -326,7 +325,7 @@ export const SRS = [
         replaced: 'EPSG:25834' // ETRS89 / UTM zone 34N
     }, {
         value: 'EPSG:3047',
-        label: 'ETRS-TM35',
+        label: 'ETRS-TM35 (N,E)',
         name: 'ETRS89 / UTM zone 35N (N-E)',
         datum: 'EUREF-FIN',
         projection: 'TM',
@@ -344,7 +343,7 @@ export const SRS = [
         axes: ['E', 'N']
     }, {
         value: 'EPSG:3048',
-        label: 'ETRS-TM36',
+        label: 'ETRS-TM36 (N,E)',
         name: 'ETRS89 / UTM zone 36N (N-E)',
         datum: 'EUREF-FIN',
         projection: 'TM',
@@ -363,7 +362,7 @@ export const SRS = [
         replaced: 'EPSG:25836' // ETRS89 / UTM zone 36N
     }, {
         value: 'EPSG:3067',
-        label: 'ETRS-TM35FIN',
+        label: 'ETRS-TM35FIN (E,N)',
         name: 'EUREF-FIN / TM35FIN(E,N)',
         datum: 'EUREF-FIN',
         projection: 'TM',
@@ -373,7 +372,7 @@ export const SRS = [
         alias: 'ETRS89 / TM35FIN(E,N)'
     }, {
         value: 'EPSG:5048',
-        label: 'ETRS-TM35FIN',
+        label: 'ETRS-TM35FIN (N,E)',
         name: 'EUREF-FIN / TM35FIN(N,E)',
         datum: 'EUREF-FIN',
         projection: 'TM',
