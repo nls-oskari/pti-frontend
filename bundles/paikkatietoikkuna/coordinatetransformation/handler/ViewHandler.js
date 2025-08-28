@@ -2,16 +2,18 @@ import { StateHandler, controllerMixin, Messaging } from 'oskari-ui/util';
 import { showInfoPopup } from '../view/InfoPopup';
 import { showFilePopup } from '../view/FilePopup';
 import { showConfirmPopup } from '../view/ConfirmPopup';
+import { showClipboardPopup } from '../view/ClipboardPopup';
 import { showMapSelectPopup, showMapPreviewPopup } from '../view/MapPopup';
-import { SOURCE, MAP, WATCH_JOB, WATCH_URL, TRANSFORM, FILE_DEFAULTS, SEPARATORS } from '../constants';
+import { SOURCE, MAP, WATCH_JOB, WATCH_URL, TRANSFORM, FILE_DEFAULTS, SEPARATORS, ACTIONS } from '../constants';
 import { stateToPTIArray, loadFile, validateTransform, validateFileSettings, parseCoordinateValue, is3DSystem } from '../helper';
 import { parseFile, parseFileContents } from './FileParser';
 
 const getInitialState = () => ({
     loading: false,
     source: SOURCE[0],
-    transformType: null, // ??
-    inputSrs: null, // input, output (srs, height)
+    sources: [],
+    transformType: null,
+    inputSrs: null,
     outputSrs: null,
     inputHeightSrs: null,
     outputHeightSrs: null,
@@ -19,7 +21,7 @@ const getInitialState = () => ({
     import: { ...FILE_DEFAULTS.import },
     export: { ...FILE_DEFAULTS.export },
     coordinates: [],
-    results: [] // TODO: xInput, xOutput, xMap ??
+    results: []
 });
 
 class UIHandler extends StateHandler {
@@ -31,6 +33,7 @@ class UIHandler extends StateHandler {
         this.infoPopup = null;
         this.filePopup = null;
         this.mapPopup = null;
+        this.clipboardPopup = null;
         this.confirmPopup = null;
         this.setState(getInitialState());
         this.addStateListener(state => this.filePopup?.update(state));
@@ -66,6 +69,64 @@ class UIHandler extends StateHandler {
         this.updateState({ source });
     }
 
+    addFromSource (source) {
+        const { coordinates, inputSrs } = this.getState();
+        if (source === ACTIONS.MAP) {
+            const mapSrs = this.sandbox.getMap().getSrsName();
+            if (inputSrs && inputSrs !== mapSrs) {
+                this.confirmMapSrs(mapSrs);
+                return;
+            }
+            this.updateState({ inputSrs: mapSrs });
+            this.selectFromMap();
+        } else if (source === ACTIONS.IMPORT) {
+            if (coordinates.length) {
+                this.confirmReset(() => this.showFileSettings('import'));
+                return;
+            }
+            this.showFileSettings('import');
+        } else if (source === ACTIONS.CLIPBOARD) {
+            this.showClipboard();
+        }
+        this.addSourceToState(source);
+    }
+
+    addSourceToState (source) {
+        const { sources } = this.getState();
+        if(!source || sources.includes(source)) {
+            return;
+        }
+        this.updateState({ sources: [...sources, source] });
+    }
+
+    confirmReset (callback = () => {}) {
+        const onChange = () => {
+            this.updateState({ coordinates: [], results: [], sources: [] });
+            this.closeConfirmPopup();
+            callback();
+        };
+        const onConfirm = () => {
+            this.reset();
+            this.closeConfirmPopup();
+            callback();
+        };
+        this.confirmPopup = showConfirmPopup('confirm.title', 'confirm.reset', onConfirm, () => this.closeConfirmPopup(), onChange);
+    }
+
+    confirmMapSrs (mapSrs) {
+        const onChange = () => {
+            this.setSrs('input', mapSrs, true);
+            this.closeConfirmPopup();
+            this.selectFromMap();
+        };
+        const onConfirm = () => {
+            this.reset();
+            onChange();
+            this.closeConfirmPopup();
+        };
+        this.confirmPopup = showConfirmPopup('confirm.title', 'confirm.mapSrs', onConfirm, () => this.closeConfirmPopup(), onChange);
+    }
+
     confirmSourceChange (source) {
         const onConfirm = () => {
             this.reset();
@@ -93,12 +154,18 @@ class UIHandler extends StateHandler {
         this.updateState({ coordinates });
     }
 
-    // paste
     pasteCoordinates (pasted) {
-        // TODO:
-        //  split("\n") for firefox and split(String.fromCharCode(13)) for Chrome
-        const coordinates = pasted.split(' ').map(s => s.split('\t')).map(([x, y, z]) => ({ x, y, z }));
-        this.updateState({ coordinates });
+        const separator = pasted.includes(';') ? ';' : '\t';
+        try {
+            const coordinates = pasted
+                .split('\n')
+                .filter(notEmpty => notEmpty)
+                .map(s => s.split(separator).map(val => parseCoordinateValue(val)))
+                .map(([x, y, z]) => ({ x, y, z }));
+            this.updateState({ coordinates });
+        } catch {
+
+        }
     }
 
     // parse float on blur
@@ -113,12 +180,54 @@ class UIHandler extends StateHandler {
     }
 
     // TODO: refactor
-    setSrs (type, srs) {
+    setSrs (type, srs, forced) {
+        if (type === 'input' && !forced) {
+            this.inputSrsChange(srs);
+            return;
+        }
+        if (type === 'output' && !forced) {
+            this.outputSrsChange(srs);
+            return;
+        }
         const prop = `${type}Srs`;
         this.updateState({ [prop]: srs });
         if (is3DSystem(srs)) {
             this.setHeightSrs(type, null);
         }
+    }
+    inputSrsChange (srs) {
+        const { coordinates, inputSrs } = this.getState();
+        if (!inputSrs || !coordinates.length) {
+            this.setSrs('input', srs, true);
+            return;
+        }
+        const onChange = () => {
+            this.setSrs('input', srs, true);
+            this.closeConfirmPopup();
+        };
+        const onConfirm = () => {
+            this.reset();
+            onChange();
+        };
+        this.confirmPopup = showConfirmPopup('confirm.title', 'confirm.coordinates', onConfirm, () => this.closeConfirmPopup(), onChange);
+    }
+
+    outputSrsChange(srs) {
+        const { results, outputSrs } = this.getState();
+        if (!outputSrs || !results.length) {
+            this.setSrs('output', srs, true);
+            return;
+        }
+        const onChange = () => {
+            this.setSrs('output', srs, true);
+            this.closeConfirmPopup();
+        };
+        const onConfirm = () => {
+            this.updateState({ results: [] });
+            onChange();
+            this.transformToArray('A2A');
+        };
+        this.confirmPopup = showConfirmPopup('confirm.title', 'confirm.results', onConfirm, () => this.closeConfirmPopup(), onChange);
     }
 
     setHeightSrs (type, srs) {
@@ -181,8 +290,12 @@ class UIHandler extends StateHandler {
         this.updateState({ export: { ...current, [key]: value } });
     }
 
-    clearTables () {
-        this.updateState({ coordinates: [], results: [] });
+    confirmClearTables () {
+        const onConfirm = () => {
+            this.updateState({ coordinates: [], results: [], sources: [] });
+            this.closeConfirmPopup();
+        };
+        this.confirmPopup = showConfirmPopup('flyout.coordinateTable.clearTables', 'flyout.coordinateTable.confirmClear', onConfirm, () => this.closeConfirmPopup());
     }
 
     onAction (id) {
@@ -256,6 +369,18 @@ class UIHandler extends StateHandler {
         this.filePopup = null;
     }
 
+    showClipboard () {
+        if (this.clipboardPopup) {
+            return;
+        }
+        this.clipboardPopup = showClipboardPopup(this.getController(), () => this.closeClipboard());
+    }
+
+    closeClipboard () {
+        this.clipboardPopup?.close();
+        this.clipboardPopup = null;
+    }
+
     showInfo (key) {
         const { title, info = '', listItems = [], paragraphs = [info] } = this.loc(`infoPopup.${key}`);
         if (this.infoPopup) {
@@ -294,6 +419,7 @@ class UIHandler extends StateHandler {
         this.closeInfoPopup();
         this.closeMapPopup();
         this.closeConfirmPopup();
+        this.closeClipboard();
     }
 
     validate (stepOrType) {
@@ -476,7 +602,7 @@ const wrapped = controllerMixin(UIHandler, [
     'parseInputCoordinate',
     'setFileSetting',
     'setFiles',
-    'clearTables',
+    'confirmClearTables',
     'showOnMap',
     'transformToFile',
     'transformToArray',
@@ -485,7 +611,8 @@ const wrapped = controllerMixin(UIHandler, [
     'onAction',
     'reset',
     'validate',
-    'importFileContentsToInputTable'
+    'importFileContentsToInputTable',
+    'addFromSource'
 ]);
 
 export { wrapped as ViewHandler };
