@@ -10,6 +10,12 @@ export const MAP = {
     REMOVE: 'remove'
 };
 
+export const ACTIONS = {
+    IMPORT: 'file',
+    MAP: 'map',
+    CLIPBOARD: 'clipboard'
+};
+
 export const MARKER = {
     colors: {
         new: '#ff0000',

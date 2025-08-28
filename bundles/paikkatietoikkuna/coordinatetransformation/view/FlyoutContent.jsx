@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Message, Button} from 'oskari-ui';
 import { ButtonContainer } from 'oskari-ui/components/buttons';
-import { SourceSelect } from '../components/SourceSelect.jsx';
+import { SourceButtons } from '../components/SourceSelect.jsx';
 import { CoordinateTable } from '../components/CoordinateTable.jsx';
 import { SrsSelect } from '../components/SrsSelect';
 import { ClearTableButton } from '../components/ClearTableButton';
@@ -53,7 +53,7 @@ export const FlyoutContent = ({
                     <Message messageKey={`actions.minimize${minimalSrs ? 'd' : ''}Srs`}/>
                 </MinimizeButton>
             </div>
-            <SourceSelect value={source} controller={controller} />
+            <SourceButtons controller={controller} />
             <Splitter>
                 <CoordinateTable type='input' editable={source === 'table'} srs={inputSrs} heightSrs={inputHeightSrs} coordinates={coordinates} controller={controller} />
                 <CoordinateTable type='output' srs={outputSrs} heightSrs={outputHeightSrs} coordinates={results} controller={controller} />
