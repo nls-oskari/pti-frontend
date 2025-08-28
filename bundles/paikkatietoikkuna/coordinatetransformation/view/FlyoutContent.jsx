@@ -61,7 +61,9 @@ export const FlyoutContent = ({
             
             <StyledButtonContainer>
                 <div className='t_actions'>
-                    <ClearTableButton controller={controller} />
+                    <Button className='t_clear' onClick={() => controller.confirmClearTables()}>
+                        <Message messageKey='flyout.coordinateTable.clearTables'/>
+                    </Button>
                     <Button className='t_map' onClick={() => controller.showOnMap()}>
                         <Message messageKey='mapMarkers.show.title'/>
                     </Button>
