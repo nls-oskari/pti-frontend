@@ -161,11 +161,19 @@ class UIHandler extends StateHandler {
                 [key]: value
             }
         };
-        const { fileContents } = this.getState();
-        if (fileContents) {
-            // parseFileContents() to update parsing based on the new selection
-            const coordSeparator = SEPARATORS.coordinateSeparator.find(sep => sep.value === newTypeState.import.coordinateSeparator)?.char;
-            newTypeState.fileContents = parseFileContents(fileContents.lines, coordSeparator, newTypeState.import.headerLineCount);
+        if (type === 'import') {
+            const { fileContents } = this.getState();
+            if (fileContents) {
+                // The UI is only a checkbox atm but parser takes a number of prefix columns
+                let prefixColCount = fileContents.prefixColCount;
+                if (key === 'prefixId') {
+                    prefixColCount = value ? 1 : 0;
+                }
+
+                // parseFileContents() to update parsing based on the new selection
+                const coordSeparator = SEPARATORS.coordinateSeparator.find(sep => sep.value === newTypeState.import.coordinateSeparator)?.char;
+                newTypeState.fileContents = parseFileContents(fileContents.lines, coordSeparator, newTypeState.import.headerLineCount, prefixColCount);
+            }
         }
 
         this.updateState(newTypeState);
