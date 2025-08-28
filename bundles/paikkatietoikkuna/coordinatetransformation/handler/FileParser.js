@@ -13,7 +13,7 @@ export const parseFile = (file) => {
     });
 };
 
-export const parseFileContents = (lines = [], delimiter = ';', headerLineCount = 0) => {
+export const parseFileContents = (lines = [], delimiter = ';', headerLineCount = 0, prefixColCount = 0) => {
     const headerMetadata = {
         headerLines: [],
         headers: []
@@ -23,12 +23,15 @@ export const parseFileContents = (lines = [], delimiter = ';', headerLineCount =
         const headerLines = lines.slice(0, headerLineCount);
         const headers = headerLines[0].split(delimiter).map(cell => cell.trim());
         headerMetadata.headerLines = headerLines;
-        headerMetadata.headers = headers;
+        // remove possible id column(s) at the start
+        headerMetadata.headers = headers.slice(prefixColCount);
         linesWithData = lines.slice(headerLineCount);
     }
     const decimalSeparator = detectDecimalSeparator(linesWithData[0], delimiter);
     const data = linesWithData.map(line =>
         line.split(delimiter)
+            // remove possible id column(s) at the start
+            .slice(prefixColCount)
             .map(cell => cell.trim())
             .map(cell => decimalSeparator === ',' ? cell.replace(',', '.') : cell)
             // TODO: detect non decimal cells?
@@ -39,6 +42,7 @@ export const parseFileContents = (lines = [], delimiter = ';', headerLineCount =
         // TODO: we don't need this when we don't send the file to backend
         delimiterValueForBackend: SEPARATORS.coordinateSeparator.find(sep => sep.char === delimiter)?.value,
         decimalSeparator,
+        prefixColCount,
         data,
         lines,
         ...headerMetadata
