@@ -136,6 +136,7 @@ Oskari.registerLocalization(
             "confirmChange": "Koordinaterna som ska transformeras töms. Vill du fortsätta?",
             "file": {
                 "label": "Från fil",
+                "button": "Från fil",
                 "info":  "Välj filen med utgångsmaterialet och dess inställningar.",
                 "action": "redigera dina val"
             },
@@ -145,9 +146,16 @@ Oskari.registerLocalization(
             },
             "map": {
                 "label": "Välj lägen på kartan",
+                "button": "Välj lägen på kartan",
                 "info": "Du kan välja koordinater som ska transformeras genom att klicka på kartan",
                 "confirmSelect": "Uppgifterna om utgångsreferenssystemet för koordinater väljs automatiskt att vara i ETRS-TM35FIN. Dina val av utgångsreferenssystem för koordinater ersätts. Vill du fortsätta?",
                 "action": "välj fler"
+            },
+            "clipboard": {
+                "title": "Importera koordinater från urklipp",
+                "button": "Hämta från urklipp",
+                "info":  "Valitse lähtöaineiston sisältävä tiedosto ja sen asetukset.",
+                "placeholder": "Ange värden från urklippet här. En rad motsvarar ett koordinat. Separera värden med semikolon eller tabulator. Värden kan tilläggas i följande form:\n383699,477;6676232,276;13,4"
             }
         },
         "mapMarkers":{
@@ -180,6 +188,15 @@ Oskari.registerLocalization(
             "done": "Färdig",
             "ok": "Ok",
             "close": "Stäng"
+        },
+        "confirm": {
+            "title": "Val av koordinatuppgifter",
+            "reset": "Alla koordinater och val kommer att tas bort. Vill du fortsätta?.",
+            "coordinates": "Koordinaterna som ska transformeras töms. Vill du fortsätta?",
+            "results": "Resultatkoordinater töms och ny transformation kommer att göras med nya val. Vill du fortsätta?",
+            "mapSrs": "Uppgifterna om utgångsreferenssystemet för koordinater väljs automatiskt att vara i ETRS-TM35FIN. Dina val av utgångsreferenssystem för koordinater ersätts. Vill du fortsätta?",
+            "change": "Behåll andra val och koordinater",
+            "changeTooltip": "Observera att om du behåller valen och koordinaterna kan det leda till att resultaten inte matchar valen."
         },
         "fileSettings": {
             "rows": "rader",

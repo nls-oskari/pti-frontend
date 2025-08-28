@@ -136,6 +136,7 @@ Oskari.registerLocalization(
             "confirmChange": "Input coordinates will be removed. Do you want to continue?",
             "file": {
                 "label": "From file",
+                "button": "Import from file",
                 "info":  "Select the file containing the input information and its settings.",
                 "action": "edit selections"
             },
@@ -145,9 +146,16 @@ Oskari.registerLocalization(
             },
             "map": {
                 "label": "Select locations on the map",
+                "button": "Select locations on the map",
                 "info": "Select coordinates to be transformed on the map by clicking them.",
                 "confirmSelect": "The input coordinate reference system is automatically changed to ETRS-TM35FIN. Your selections for the input coordinate reference system will be replaced. Do you want to continue?",
                 "action": "select more"
+            },
+            "clipboard": {
+                "title": "Import coordinates from clipboard",
+                "button": "Import from clipboard",
+                "info":  "Import coordinates from clipboard (csv, excel)",
+                "placeholder": "Enter coordinates here. Each row should contain one coordinate. Use semicolon or tab as a separator. Data can be imported in following format:\n383699,477;6676232,276;13,4"
             }
         },
         "mapMarkers":{
@@ -180,6 +188,15 @@ Oskari.registerLocalization(
             "done": "Done",
             "ok": "Ok",
             "close": "Close"
+        },
+        "confirm": {
+            "title": "Coordinate information selections",
+            "reset": "All coordinates and selections will be removed. Do you want to continue?",
+            "coordinates": "Input coordinates will be removed. Do you want to continue?",
+            "results": "Input coordinates will be removed and new transformation will be done with new selections. Do you want to continue?",
+            "mapSrs": "The input coordinate reference system is automatically changed to ETRS-TM35FIN. The input coordinates will be removed and your selections for the input coordinate reference system will be replaced. Do you want to continue?",
+            "change": "Keep other selections and coordinates",
+            "changeTooltip": "Note that keeping the selections and coordinates can lead to a situation where the results do not match the selections."
         },
         "fileSettings": {
             "rows": "rows",
