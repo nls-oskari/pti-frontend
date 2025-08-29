@@ -38,7 +38,8 @@ export const FlyoutContent = ({
     inputHeightSrs,
     outputHeightSrs,
     outputSrs,
-    transformed
+    transformed,
+    tablePage
 }) => {
     const [ minimalSrs, setMinimalSrs ] = useState(true);
     const transformType = source === 'file' ? 'F2A' : 'A2A';
@@ -58,8 +59,8 @@ export const FlyoutContent = ({
             </div>
             <SourceButtons controller={controller} />
             <Splitter>
-                <CoordinatesTable large={transform3D} inputSrs={inputSrs} inputHeightSrs={inputHeightSrs} coordinates={coordinates} sources={sources} controller={controller} />
-                <ResultsTable large={transform3D} outputSrs={outputSrs} outputHeightSrs={outputHeightSrs} coordinates={coordinates} results={results} transformed={transformed} />
+                <CoordinatesTable large={transform3D} page={tablePage} inputSrs={inputSrs} inputHeightSrs={inputHeightSrs} coordinates={coordinates} sources={sources} controller={controller} />
+                <ResultsTable large={transform3D} page={tablePage} outputSrs={outputSrs} outputHeightSrs={outputHeightSrs} coordinates={coordinates} results={results} transformed={transformed} controller={controller}/>
             </Splitter>
             
             <StyledButtonContainer>
@@ -93,5 +94,7 @@ FlyoutContent.propTypes = {
     file: PropTypes.any,
     coordinates: PropTypes.array.isRequired,
     results: PropTypes.array.isRequired,
+    transformed: PropTypes.bool.isRequired,
+    tablePage: PropTypes.number.isRequired,
     controller: PropTypes.object.isRequired
 };

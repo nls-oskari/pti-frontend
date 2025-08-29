@@ -22,7 +22,8 @@ const getInitialState = () => ({
     export: { ...FILE_DEFAULTS.export },
     coordinates: [],
     results: [],
-    transformed: false // set false if coordinates or srs selections are updated
+    transformed: false, // set false if coordinates or srs selections are updated
+    tablePage: 1
 });
 
 class UIHandler extends StateHandler {
@@ -241,6 +242,10 @@ class UIHandler extends StateHandler {
     setHeightSrs (type, srs) {
         const prop = `${type}HeightSrs`;
         this.updateState({ [prop]: srs, transformed: false });
+    }
+
+    setTablePage (tablePage) {
+        this.updateState({ tablePage });
     }
 
     setFiles (files = []) {
@@ -631,7 +636,8 @@ const wrapped = controllerMixin(UIHandler, [
     'validate',
     'importFileContentsToInputTable',
     'addFromSource',
-    'swapCoordinates'
+    'swapCoordinates',
+    'setTablePage'
 ]);
 
 export { wrapped as ViewHandler };

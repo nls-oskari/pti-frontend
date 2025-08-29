@@ -100,7 +100,7 @@ const getColumns = (srs, heightSrs, controller) => {
     });
 };
 
-export const CoordinatesTable = ({ coordinates, sources, inputSrs, inputHeightSrs, large, controller }) => {
+export const CoordinatesTable = ({ coordinates, sources, inputSrs, inputHeightSrs, large, controller, page }) => {
     const dataSource = [...coordinates, ...getEmptyArray(10 - coordinates.length % 10)]; // .map((a,key) => ({...a, key }));
     const fromFile = sources.includes(ACTIONS.IMPORT);
     const optController = fromFile ? null : controller;
@@ -117,7 +117,7 @@ export const CoordinatesTable = ({ coordinates, sources, inputSrs, inputHeightSr
                 $large={large}
                 columns={getColumns(inputSrs, inputHeightSrs, optController)}
                 dataSource={dataSource}
-                pagination={{ hideOnSinglePage: true }}/>
+                pagination={{ position: ['none'], current: page }}/>
         </Content>
     );
 };
@@ -128,10 +128,11 @@ CoordinatesTable.propTypes = {
     inputSrs: PropTypes.string,
     inputHeightSrs: PropTypes.string,
     controller: PropTypes.object.isRequired,
-    large: PropTypes.bool.isRequired
+    large: PropTypes.bool.isRequired,
+    page: PropTypes.number.isRequired
 };
 
-export const ResultsTable = ({ coordinates, results, outputSrs, outputHeightSrs, transformed, large }) =>  {
+export const ResultsTable = ({ coordinates, results, outputSrs, outputHeightSrs, transformed, large, page, controller }) =>  {
     const dataSource = [...results, ...getEmptyArray(10 - results.length % 10)]; // .map((a,key) => ({...a, key }));
     const count = coordinates.filter(coord => coord && !coord.invalid).length;
     const outdated = results.length > 0 && !transformed;
@@ -149,7 +150,13 @@ export const ResultsTable = ({ coordinates, results, outputSrs, outputHeightSrs,
                 $large={large}
                 columns={getColumns(outputSrs, outputHeightSrs)}
                 dataSource={dataSource}
-                pagination={{ hideOnSinglePage: true }}/>
+                pagination={{
+                    hideOnSinglePage: true,
+                    showSizeChanger: false,
+                    total: coordinates.length,
+                    current: page,
+                    onChange: page => controller.setTablePage(page)
+                }}/>
         </Content>
     );
 };
@@ -160,5 +167,7 @@ ResultsTable.propTypes = {
     outputSrs: PropTypes.string,
     outputHeightSrs: PropTypes.string,
     transformed: PropTypes.bool.isRequired,
-    large: PropTypes.bool.isRequired
+    controller: PropTypes.object.isRequired,
+    large: PropTypes.bool.isRequired,
+    page: PropTypes.number.isRequired
 };
