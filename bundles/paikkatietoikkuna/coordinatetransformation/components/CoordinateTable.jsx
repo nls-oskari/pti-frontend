@@ -7,13 +7,13 @@ import { IconButton } from 'oskari-ui/components/buttons';
 import { Table } from 'oskari-ui/components/Table';
 import { SwapOutlined } from '@ant-design/icons';
 import { SRS, SRS_H, ACTIONS } from '../constants';
-import { getDimension } from '../helper';
 
 const COLUMNS = ['x', 'y', 'z'];
 const WIDTH = 360;
 
 const StyledWarningIcon = styled(WarningIcon)`
     margin-right: 1em;
+    font-size: 16px;
 `;
 
 const StyledTable = styled(Table)`
@@ -22,7 +22,11 @@ const StyledTable = styled(Table)`
         height: 24px;
         font-size: 12px;
     }
+    .ant-table-thead {
+        height: ${props => props.$large ? 52 : 34}px;
+    }
 `;
+
 const StyledInput = styled(TextInput)`
     border: none;
     font-size: 12px;
@@ -95,7 +99,7 @@ const getColumns = (srs, heightSrs, controller) => {
     });
 };
 
-export const CoordinatesTable = ({ coordinates, sources, inputSrs, inputHeightSrs, controller }) => {
+export const CoordinatesTable = ({ coordinates, sources, inputSrs, inputHeightSrs, large, controller }) => {
     const dataSource = [...coordinates, ...getEmptyArray(10 - coordinates.length % 10)]; // .map((a,key) => ({...a, key }));
     const fromFile = sources.includes(ACTIONS.IMPORT);
     const optController = fromFile ? null : controller;
@@ -109,6 +113,7 @@ export const CoordinatesTable = ({ coordinates, sources, inputSrs, inputHeightSr
             </ComponentLabel>
             <StyledTable bordered
                 $editable={!fromFile}
+                $large={large}
                 columns={getColumns(inputSrs, inputHeightSrs, optController)}
                 dataSource={dataSource}
                 pagination={{ hideOnSinglePage: true }}/>
@@ -121,13 +126,15 @@ CoordinatesTable.propTypes = {
     sources: PropTypes.array.isRequired,
     inputSrs: PropTypes.string,
     inputHeightSrs: PropTypes.string,
-    controller: PropTypes.object.isRequired
+    controller: PropTypes.object.isRequired,
+    large: PropTypes.bool.isRequired
 };
 
-export const ResultsTable = ({ coordinates, results, outputSrs, outputHeightSrs, transformed }) =>  {
+export const ResultsTable = ({ coordinates, results, outputSrs, outputHeightSrs, transformed, large }) =>  {
     const dataSource = [...results, ...getEmptyArray(10 - results.length % 10)]; // .map((a,key) => ({...a, key }));
     const count = coordinates.filter(coord => coord && !coord.invalid).length;
     const outdated = results.length > 0 && !transformed;
+    const validLengths = coordinates.length === results.length;
     return (
         <Content className='t_table_output'>
             <ComponentLabel label='flyout.coordinateTable.output'>
@@ -138,6 +145,7 @@ export const ResultsTable = ({ coordinates, results, outputSrs, outputHeightSrs,
                 <Message messageKey='flyout.coordinateTable.rows' />
             </ComponentLabel>
             <StyledTable bordered
+                $large={large}
                 columns={getColumns(outputSrs, outputHeightSrs)}
                 dataSource={dataSource}
                 pagination={{ hideOnSinglePage: true }}/>
@@ -150,5 +158,6 @@ ResultsTable.propTypes = {
     results: PropTypes.array.isRequired,
     outputSrs: PropTypes.string,
     outputHeightSrs: PropTypes.string,
-    transformed: PropTypes.bool.isRequired
+    transformed: PropTypes.bool.isRequired,
+    large: PropTypes.bool.isRequired
 };
