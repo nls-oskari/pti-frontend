@@ -21,7 +21,8 @@ const getInitialState = () => ({
     import: { ...FILE_DEFAULTS.import },
     export: { ...FILE_DEFAULTS.export },
     coordinates: [],
-    results: []
+    results: [],
+    transformed: false // set false if coordinates or srs selections are updated
 });
 
 class UIHandler extends StateHandler {
@@ -88,7 +89,6 @@ class UIHandler extends StateHandler {
         } else if (source === ACTIONS.CLIPBOARD) {
             this.showClipboard();
         }
-        this.addSourceToState(source);
     }
 
     addSourceToState (source) {
@@ -151,7 +151,8 @@ class UIHandler extends StateHandler {
         // TODO: validate x,y,z getDimension (remove keys with empty value??)
         coordinates[index] = coordinate;
         // const updated = coordinates.map((c, i) => i === index ? coordinate : c);
-        this.updateState({ coordinates });
+        this.addSourceToState('table');
+        this.updateState({ coordinates, transformed: false });
     }
 
     pasteCoordinates (pasted) {
@@ -162,7 +163,8 @@ class UIHandler extends StateHandler {
                 .filter(notEmpty => notEmpty)
                 .map(s => s.split(separator).map(val => parseCoordinateValue(val)))
                 .map(([x, y, z]) => ({ x, y, z }));
-            this.updateState({ coordinates });
+            this.addSourceToState('clipboard');
+            this.updateState({ coordinates, transformed: false });
         } catch {
 
         }
@@ -190,7 +192,7 @@ class UIHandler extends StateHandler {
             return;
         }
         const prop = `${type}Srs`;
-        this.updateState({ [prop]: srs });
+        this.updateState({ [prop]: srs, transformed: false });
         if (is3DSystem(srs)) {
             this.setHeightSrs(type, null);
         }
@@ -232,7 +234,7 @@ class UIHandler extends StateHandler {
 
     setHeightSrs (type, srs) {
         const prop = `${type}HeightSrs`;
-        this.updateState({ [prop]: srs });
+        this.updateState({ [prop]: srs, transformed: false });
     }
 
     setFiles (files = []) {
@@ -292,7 +294,7 @@ class UIHandler extends StateHandler {
 
     confirmClearTables () {
         const onConfirm = () => {
-            this.updateState({ coordinates: [], results: [], sources: [] });
+            this.updateState({ coordinates: [], results: [], sources: [], transformed: false });
             this.closeConfirmPopup();
         };
         this.confirmPopup = showConfirmPopup('flyout.coordinateTable.clearTables', 'flyout.coordinateTable.confirmClear', onConfirm, () => this.closeConfirmPopup());
@@ -311,7 +313,7 @@ class UIHandler extends StateHandler {
         if (id === 'store') {
             const coordinates = this.instance.getMapCoordinates();
             this.instance.setMapSelectionMode();
-            this.updateState({ coordinates });
+            this.updateState({ coordinates, transformed: false });
         }
         if (Object.values(MAP).includes(id)) {
             this.instance.setMapSelectionMode(id);
@@ -548,7 +550,7 @@ class UIHandler extends StateHandler {
             } else if (resultCoordinates) {
                 // TODO: can undefined z cause problems??
                 const results = resultCoordinates.map(([x, y, z]) => ({ x, y, z }));
-                this.updateState({ loading: false, results });
+                this.updateState({ loading: false, results, transformed: true });
             } else {
                 this.showResponseError(json);
             }

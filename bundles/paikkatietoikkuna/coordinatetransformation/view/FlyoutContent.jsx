@@ -36,11 +36,11 @@ export const FlyoutContent = ({
     inputSrs,
     inputHeightSrs,
     outputHeightSrs,
-    outputSrs
+    outputSrs,
+    transformed
 }) => {
     const [ minimalSrs, setMinimalSrs ] = useState(true);
     const transformType = source === 'file' ? 'F2A' : 'A2A';
-    const transformed = results.length > 0;
     return (
         <Content>
             <MandatoryDescription/>
