@@ -241,6 +241,10 @@ class UIHandler extends StateHandler {
 
     setHeightSrs (type, srs) {
         const prop = `${type}HeightSrs`;
+        if (srs === 'EPSG:8675') {
+            // TODO: url isn't added because it did't work, find working url and refactor showInfoMessage
+            this.showInfoMessage('flyout.coordinateSystem.heightSystem.label', 'flyout.coordinateSystem.heightSystem.n43.info');
+        }
         this.updateState({ [prop]: srs, transformed: false });
     }
 
