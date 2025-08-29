@@ -5,7 +5,7 @@ import { showConfirmPopup } from '../view/ConfirmPopup';
 import { showClipboardPopup } from '../view/ClipboardPopup';
 import { showMapSelectPopup, showMapPreviewPopup } from '../view/MapPopup';
 import { SOURCE, MAP, WATCH_JOB, WATCH_URL, TRANSFORM, FILE_DEFAULTS, SEPARATORS, ACTIONS, PAGINATION } from '../constants';
-import { stateToPTIArray, loadFile, validateTransform, validateFileSettings, parseCoordinateValue, is3DSystem } from '../helper';
+import { stateToPTIArray, loadFile, validateTransform, validateFileSettings, parseCoordinateValue, is3DSystem, getLabelForMarker } from '../helper';
 import { parseFile, parseFileContents } from './FileParser';
 
 const getInitialState = () => ({
@@ -356,10 +356,27 @@ class UIHandler extends StateHandler {
         const end = current * pageSize;
         const start = end - pageSize;
         const toShow = coordinates.slice(start, end);
-        // TODO: convert to map projection (axis order) and add label (source !== map)
-        this.instance.setMapCoordinates(toShow);
-        this.instance.toggleFlyout(false);
-        this.mapPopup = showMapPreviewPopup(() => this.closeMapPopup(true));
+        const mapSrs = this.sandbox.getMap().getSrsName();
+
+        const callback = mapCoords => {
+            const labeled = mapCoords.map((coord, i) => {
+                // Use original coords and srs for label
+                const label = getLabelForMarker(toShow[i], inputSrs);
+                return { ...coord, label };
+            });
+            this.instance.setMapCoordinates(labeled);
+            this.instance.toggleFlyout(false);
+            this.mapPopup = showMapPreviewPopup(() => this.closeMapPopup(true));
+        };
+        if (mapSrs === inputSrs) {
+            callback(toShow);
+        } else {
+            this.transformToMapSrs({
+                coordinates: toShow,
+                inputSrs,
+                outputSrs: mapSrs
+            },callback);
+        }
     }
 
     selectFromMap () {
@@ -524,6 +541,34 @@ class UIHandler extends StateHandler {
         this.updateState({ coordinates, sources: [ACTIONS.IMPORT] });
     }
 
+    transformToMapSrs (values, callback) {
+        const state = { ...this.getState(), ...values };
+        if (this.validate('inputSrs')) {
+            return;
+        }
+        this.updateState({ loading: true });
+        const { params, body } = stateToPTIArray(state, 'A2A', false);
+        fetch(Oskari.urls.getRoute('CoordinateTransformation', params), {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json'
+            },
+            body
+        }).then(response => {
+            return response.json();
+        }).then(json => {
+            const { jobId } = json;
+            if (jobId) {
+                this.watchJsonJob(jobId, callback);
+            } else {
+                this.showResponseError(json);
+            }
+        }).catch((e) => {
+            Messaging.error(this.loc('flyout.transform.responseErrors.generic'));
+            this.updateState({ loading: false });
+        });
+    }
+
     transformToArray (transformType) {
         const state = this.getState();
         if (this.validate(transformType)) {
@@ -557,7 +602,8 @@ class UIHandler extends StateHandler {
         });
     }
 
-    watchJsonJob (jobId) {
+    // For now use same function for show on map transformation
+    watchJsonJob (jobId, callback) {
         fetch(Oskari.urls.getLocation(WATCH_JOB) + jobId, {
             method: 'GET',
             headers: {
@@ -576,7 +622,12 @@ class UIHandler extends StateHandler {
             } else if (resultCoordinates) {
                 // TODO: can undefined z cause problems??
                 const results = resultCoordinates.map(([x, y, z]) => ({ x, y, z }));
-                this.updateState({ loading: false, results, transformed: true });
+                if (typeof callback === 'function') {
+                    this.updateState({ loading: false });
+                    callback(results);
+                } else {
+                    this.updateState({ loading: false, results, transformed: true });
+                }
             } else {
                 this.showResponseError(json);
             }

@@ -147,7 +147,6 @@ export const getSystemsFromCompound = (epsg) => {
     return null;
 };
 
-// TODO: pass mapmodule or move to service/maphelper??
 export const isCoordInBounds = (srs, coord) => {
     const { lonFirst, bounds } = SRS.find(s => s.value === srs);
     const map = Oskari.getSandbox().findRegisteredModuleInstance('MainMapModule');
@@ -184,36 +183,38 @@ export const moveMapToMarkers = (state) => {
     }
 };
 
-// TODO: refactor
-export const getLabelForMarker = (lonlat, epsgValues, isAxisFlip) => {
-    let lonLabel;
-    let latLabel;
-    const val = epsgValues || this.mapEpsgValues;
-    const lonFirst = isAxisFlip ? !val.lonFirst : val.lonFirst;
-    if (val.coord === 'PROJ_3D') {
-        return 'X: ' + lonlat.lon + ', Y: ' + lonlat.lat + ', Z: ' + lonlat.height;
+export const getLabelForMarker = (coord, srs) => {
+    const { axes } = SRS.find(s => s.value === srs) || {};
+    const { x, y, z } = coord;
+    if (!axes) {
+        return `${x}, ${y}${z ? ', z' : ''}`;
     }
-    if (val.coord === 'GEOG_2D' || val.coord === 'GEOG_3D') {
-        lonLabel = this.loc('mapMarkers.show.lon');
-        latLabel = this.loc('mapMarkers.show.lat');
-    } else {
-        lonLabel = this.loc('mapMarkers.show.east');
-        latLabel = this.loc('mapMarkers.show.north');
+    // Table columns x, y, z always
+    const labels = axes.map(axis => {
+        if (axis === 'φ') {
+            return 'Lat';
+        }
+        if (axis === 'λ') {
+            return 'Lon';
+        }
+        return axis;
+    });
+    const decimal = Oskari.getDecimalSeparator();
+    const values = [x, y, z].map(c => `${c || ''}`.replace('.', decimal));
+    return labels.map((label, i) => `${label}: ${values[i]}`).join(', ');
+    /*
+    const [xLabel, yLabel, zLabel] = labels;
+    if (zLabel) {
+        return `${xLabel}: ${x}, ${yLabel}: ${y}, ${zLabel}: ${y}`;
     }
-    // TODO do we need to localize decimal separator for label
-    // Oskari.getDecimalSeparator();
-    // lon = coords[].replace('.', Oskari.getDecimalSeparator());
-    if (lonFirst) {
-        return lonLabel + ': ' + lonlat.lon + ', ' + latLabel + ': ' + lonlat.lat;
-    } else {
-        return latLabel + ': ' + lonlat.lat + ', ' + lonLabel + ': ' + lonlat.lon;
-    }
+    return `${xLabel}: ${x}, ${yLabel}: ${y}`;
+    */
 };
 
 export const coordinateToMarker = (coord, isNew) => {
     const { colors, ...props } = MARKER;
     const { x, y, label } = coord;
-    const msg = label || `E: ${x}, N: ${y}`;
+    const msg = label || `E: ${x}, N: ${y}`; // default to map E, N
     const color = isNew ? colors.new : colors.old;
     return { ...props, x, y, msg, color };
 };
