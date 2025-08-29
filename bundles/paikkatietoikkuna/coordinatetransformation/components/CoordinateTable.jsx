@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { Message, TextInput } from 'oskari-ui';
 import { ComponentLabel } from './ComponentLabel';
 import { Table } from 'oskari-ui/components/Table';
-import { SRS, SRS_H, SYSTEM } from '../constants';
+import { SRS, SRS_H, ACTIONS } from '../constants';
 import { getDimension } from '../helper';
 
 const COLUMNS = ['x', 'y', 'z'];
@@ -89,49 +89,55 @@ const getColumns = (srs, heightSrs, controller) => {
     });
 };
 
-export const CoordinateTable = ({ type, coordinates, srs, heightSrs, controller, editable }) => {
-    // TODO: internal state for pagination
-    // TODO: assumes pagination page size 10
+export const CoordinatesTable = ({ coordinates, sources, inputSrs, inputHeightSrs, controller }) => {
     const dataSource = [...coordinates, ...getEmptyArray(10 - coordinates.length % 10)]; // .map((a,key) => ({...a, key }));
-    const optController = editable ? controller : null;
+    const fromFile = sources.includes(ACTIONS.IMPORT);
+    const optController = fromFile ? null : controller;
     const count = coordinates.filter(coord => coord && !coord.invalid).length;
     return (
-        <Content className={`t_table_${type}`}>
-            <ComponentLabel label={`flyout.coordinateTable.${type}`}>
+        <Content className='t_table_input'>
+            <ComponentLabel label='flyout.coordinateTable.input'>
                 <Count className='t_row_count'>{count}</Count>
                 <Message messageKey='flyout.coordinateTable.rows' />
             </ComponentLabel>
             <StyledTable bordered
-                $editable={editable}
-                columns={getColumns(srs, heightSrs, optController)}
+                $editable={!fromFile}
+                columns={getColumns(inputSrs, inputHeightSrs, optController)}
                 dataSource={dataSource}
                 pagination={{ hideOnSinglePage: true }}/>
         </Content>
     );
 };
 
-CoordinateTable.propTypes = {
+CoordinatesTable.propTypes = {
     coordinates: PropTypes.array.isRequired,
-    srs: PropTypes.string,
-    type: PropTypes.string.isRequired,
+    sources: PropTypes.array.isRequired,
+    inputSrs: PropTypes.string,
+    inputHeightSrs: PropTypes.string,
     controller: PropTypes.object.isRequired
 };
 
-export const ResultTable = ({ coordinates, inputSrs, inputHeightSrs, results, outputSrs, outputHeightSrs }) =>  {
-    const inputCols = getColumns(inputSrs, inputHeightSrs);
-    const ouputCols = getColumns(outputSrs, outputHeightSrs);
-    let dataSource = [];
-    if (coordinates.length === results.length) {
-        dataSource = coordinates.map((coord, i) => ({ ...coord, ...results[i] }));
-    }
+export const ResultsTable = ({ coordinates, results, outputSrs, outputHeightSrs, transformed }) =>  {
+    const dataSource = [...results, ...getEmptyArray(10 - results.length % 10)]; // .map((a,key) => ({...a, key }));
+    const count = results.length;
     return (
-        <Content>
-            <ComponentLabel label='flyout.coordinateTable.output' />
+        <Content className='t_table_output'>
+            <ComponentLabel label='flyout.coordinateTable.output'>
+                <Count className='t_row_count'>{count}</Count>
+                <Message messageKey='flyout.coordinateTable.rows' />
+            </ComponentLabel>
             <StyledTable bordered
-                $editable={false}
-                columns={[...inputCols, ...ouputCols ]}
+                columns={getColumns(outputSrs, outputHeightSrs)}
                 dataSource={dataSource}
                 pagination={{ hideOnSinglePage: true }}/>
         </Content>
     );
+};
+
+ResultsTable.propTypes = {
+    coordinates: PropTypes.array.isRequired,
+    results: PropTypes.array.isRequired,
+    outputSrs: PropTypes.string,
+    outputHeightSrs: PropTypes.string,
+    transformed: PropTypes.bool.isRequired
 };

@@ -4,9 +4,8 @@ import styled from 'styled-components';
 import { Message, Button} from 'oskari-ui';
 import { ButtonContainer } from 'oskari-ui/components/buttons';
 import { SourceButtons } from '../components/SourceSelect.jsx';
-import { CoordinateTable } from '../components/CoordinateTable.jsx';
+import { CoordinatesTable, ResultsTable } from '../components/CoordinateTable.jsx';
 import { SrsSelect } from '../components/SrsSelect';
-import { ClearTableButton } from '../components/ClearTableButton';
 import { MandatoryDescription } from '../components/MandatoryDescription';
 
 const Content = styled.div`
@@ -31,6 +30,7 @@ const StyledButtonContainer = styled(ButtonContainer)`
 export const FlyoutContent = ({
     controller,
     source,
+    sources,
     coordinates,
     results,
     inputSrs,
@@ -55,8 +55,8 @@ export const FlyoutContent = ({
             </div>
             <SourceButtons controller={controller} />
             <Splitter>
-                <CoordinateTable type='input' editable={source === 'table'} srs={inputSrs} heightSrs={inputHeightSrs} coordinates={coordinates} controller={controller} />
-                <CoordinateTable type='output' srs={outputSrs} heightSrs={outputHeightSrs} coordinates={results} controller={controller} />
+                <CoordinatesTable inputSrs={inputSrs} inputHeightSrs={inputHeightSrs} coordinates={coordinates} sources={sources} controller={controller} />
+                <ResultsTable outputSrs={outputSrs} outputHeightSrs={outputHeightSrs} coordinates={coordinates} results={results} transformed={transformed} />
             </Splitter>
             
             <StyledButtonContainer>
