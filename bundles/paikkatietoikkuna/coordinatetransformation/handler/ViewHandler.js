@@ -321,6 +321,7 @@ class UIHandler extends StateHandler {
         if (id === 'store') {
             const coordinates = this.instance.getMapCoordinates();
             this.instance.setMapSelectionMode();
+            this.addSourceToState(ACTIONS.MAP)
             this.updateState({ coordinates, transformed: false });
         }
         if (Object.values(MAP).includes(id)) {
@@ -503,7 +504,8 @@ class UIHandler extends StateHandler {
             return;
         }
         const coordinates = fileContents.data.map(([x, y, z]) => ({ x, y, z }));
-        this.updateState({ coordinates });
+        // sets all coordinates from file so one source only
+        this.updateState({ coordinates, sources: [ACTIONS.IMPORT] });
     }
 
     transformToArray (transformType) {
