@@ -165,11 +165,7 @@ Oskari.registerLocalization(
                 "info" : "The coordinate reference system of the map is ETRS-TM35FIN. Coordinates have been placed on the map using this coordinate reference system. With the location, the coordinates are shown numerically in the input and/or output coordinate reference system. ",
                 "errorTitle": "Error in showing positions",
                 "noCoordinates": "No coordinates available to be shown on the map",
-                "noSrs": "A geodetic coordinate reference system must be selected in input properties in order to show points on the map.",
-                "lon": "Lon",
-                "lat": "Lat",
-                "north": "N",
-                "east": "E"
+                "noSrs": "A geodetic coordinate reference system must be selected in input properties in order to show points on the map."
             },
             "select":{
                 "title": "Select locations on the map",

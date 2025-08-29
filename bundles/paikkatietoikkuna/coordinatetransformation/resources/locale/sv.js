@@ -165,11 +165,7 @@ Oskari.registerLocalization(
                 "info" : "Kartans referenssystem för koordinater är ETRS-TM35FIN. Koordinaterna har placerats på kartan med hjälp av detta referenssystem för koordinater. I samband med lägesanteckningen anges koordinaterna enligt utgångs- och/eller resultatreferenssystemet i siffror.",
                 "errorTitle": "Fel i visningen av positioner",
                 "noCoordinates": "Det finns inga koordinater att visa på kartan.",
-                "noSrs": "Ett geodetiskt referenssystem för koordinater måste ingå i utgångsuppgifterna för att kunna visa punkter på kartan.",
-                "lon": "Lon",
-                "lat": "Lat",
-                "north": "N",
-                "east": "E"
+                "noSrs": "Ett geodetiskt referenssystem för koordinater måste ingå i utgångsuppgifterna för att kunna visa punkter på kartan."
             },
             "select":{
                 "title": "Välj lägen på kartan",

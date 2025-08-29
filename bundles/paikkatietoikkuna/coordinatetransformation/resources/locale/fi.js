@@ -172,11 +172,7 @@ Oskari.registerLocalization(
                 "info": "Kartta on ETRS-TM35FIN-koordinaattijärjestelmässä. Koordinaatit on sijoitettu kartalle kyseistä koordinaattijärjestelmää käyttäen. Sijaintimerkinnän yhteydessä näytään lähtö- ja/tai tuloskoordinaattijärjestelmän mukaiset koordinaatit lukemina. ",
                 "errorTitle": "Virhe sijaintien näyttämisessä",
                 "noCoordinates": "Ei koordinaatteja näytettäväksi kartalla",
-                "noSrs": "Geodeettinen koordinaattijärjestelmä pitää olla valittuna lähtötiedoissa, jotta pisteet voidaan näyttää kartalla.",
-                "lon": "Lon",
-                "lat": "Lat",
-                "north": "N",
-                "east": "E"
+                "noSrs": "Geodeettinen koordinaattijärjestelmä pitää olla valittuna lähtötiedoissa, jotta pisteet voidaan näyttää kartalla."
             },
             "select":{
                 "title": "Valitse sijainnit kartalta",
