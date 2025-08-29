@@ -93,7 +93,7 @@ class UIHandler extends StateHandler {
 
     addSourceToState (source) {
         const { sources } = this.getState();
-        if(!source || sources.includes(source)) {
+        if (!source || sources.includes(source)) {
             return;
         }
         this.updateState({ sources: [...sources, source] });
@@ -214,7 +214,7 @@ class UIHandler extends StateHandler {
         this.confirmPopup = showConfirmPopup('confirm.title', 'confirm.coordinates', onConfirm, () => this.closeConfirmPopup(), onChange);
     }
 
-    outputSrsChange(srs) {
+    outputSrsChange (srs) {
         const { results, outputSrs } = this.getState();
         if (!outputSrs || !results.length) {
             this.setSrs('output', srs, true);
