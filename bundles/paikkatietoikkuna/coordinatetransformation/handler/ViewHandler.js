@@ -574,6 +574,7 @@ class UIHandler extends StateHandler {
     }
 
     transformToArray (transformType) {
+        // TODO: confirm 2Dto3D and 3Dto2D (transform.warnings)
         const state = this.getState();
         if (this.validate(transformType)) {
             return;
