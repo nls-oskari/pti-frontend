@@ -50,7 +50,10 @@ const Cell = ({ value, item, onChange }) => {
     );
 };
 
-const getEmptyArray = size => [...Array(size)].map(() => ({}));
+const getFilledArray = (array, { pageSize = 10 }) => {
+    const empty = [...Array(pageSize - array.length % pageSize)].map(() => ({})); // .map((a,key) => ({...a, key }));
+    return [...array, ...empty];
+};
 
 const getColumn = (column, lonFirst, unit, dimension, editable, controller) => {
     let columnTitle = column;
@@ -100,8 +103,8 @@ const getColumns = (srs, heightSrs, controller) => {
     });
 };
 
-export const CoordinatesTable = ({ coordinates, sources, inputSrs, inputHeightSrs, large, controller, page }) => {
-    const dataSource = [...coordinates, ...getEmptyArray(10 - coordinates.length % 10)]; // .map((a,key) => ({...a, key }));
+export const CoordinatesTable = ({ coordinates, sources, inputSrs, inputHeightSrs, large, pagination, controller }) => {
+    const dataSource = getFilledArray(coordinates, pagination);
     const fromFile = sources.includes(ACTIONS.IMPORT);
     const optController = fromFile ? null : controller;
     return (
@@ -117,7 +120,7 @@ export const CoordinatesTable = ({ coordinates, sources, inputSrs, inputHeightSr
                 $large={large}
                 columns={getColumns(inputSrs, inputHeightSrs, optController)}
                 dataSource={dataSource}
-                pagination={{ position: ['none'], current: page }}/>
+                pagination={{ position: ['none'], ...pagination }}/>
         </Content>
     );
 };
@@ -129,11 +132,11 @@ CoordinatesTable.propTypes = {
     inputHeightSrs: PropTypes.string,
     controller: PropTypes.object.isRequired,
     large: PropTypes.bool.isRequired,
-    page: PropTypes.number.isRequired
+    pagination: PropTypes.object.isRequired
 };
 
-export const ResultsTable = ({ coordinates, results, outputSrs, outputHeightSrs, transformed, large, page, controller }) =>  {
-    const dataSource = [...results, ...getEmptyArray(10 - results.length % 10)]; // .map((a,key) => ({...a, key }));
+export const ResultsTable = ({ coordinates, results, outputSrs, outputHeightSrs, transformed, large, pagination, controller }) =>  {
+    const dataSource = getFilledArray(results, pagination);
     const count = coordinates.filter(coord => coord && !coord.invalid).length;
     const outdated = results.length > 0 && !transformed;
     const validLengths = coordinates.length === results.length;
@@ -151,11 +154,11 @@ export const ResultsTable = ({ coordinates, results, outputSrs, outputHeightSrs,
                 columns={getColumns(outputSrs, outputHeightSrs)}
                 dataSource={dataSource}
                 pagination={{
+                    ...pagination,
                     hideOnSinglePage: true,
                     showSizeChanger: false,
                     total: coordinates.length,
-                    current: page,
-                    onChange: page => controller.setTablePage(page)
+                    onChange: (page, pageSize) => controller.setPagination(page, pageSize)
                 }}/>
         </Content>
     );
@@ -169,5 +172,5 @@ ResultsTable.propTypes = {
     transformed: PropTypes.bool.isRequired,
     controller: PropTypes.object.isRequired,
     large: PropTypes.bool.isRequired,
-    page: PropTypes.number.isRequired
+    pagination: PropTypes.object.isRequired
 };

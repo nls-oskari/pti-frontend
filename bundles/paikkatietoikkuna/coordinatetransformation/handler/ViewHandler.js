@@ -4,7 +4,7 @@ import { showFilePopup } from '../view/FilePopup';
 import { showConfirmPopup } from '../view/ConfirmPopup';
 import { showClipboardPopup } from '../view/ClipboardPopup';
 import { showMapSelectPopup, showMapPreviewPopup } from '../view/MapPopup';
-import { SOURCE, MAP, WATCH_JOB, WATCH_URL, TRANSFORM, FILE_DEFAULTS, SEPARATORS, ACTIONS } from '../constants';
+import { SOURCE, MAP, WATCH_JOB, WATCH_URL, TRANSFORM, FILE_DEFAULTS, SEPARATORS, ACTIONS, PAGINATION } from '../constants';
 import { stateToPTIArray, loadFile, validateTransform, validateFileSettings, parseCoordinateValue, is3DSystem } from '../helper';
 import { parseFile, parseFileContents } from './FileParser';
 
@@ -23,7 +23,7 @@ const getInitialState = () => ({
     coordinates: [],
     results: [],
     transformed: false, // set false if coordinates or srs selections are updated
-    tablePage: 1
+    pagination: { ...PAGINATION }
 });
 
 class UIHandler extends StateHandler {
@@ -244,8 +244,9 @@ class UIHandler extends StateHandler {
         this.updateState({ [prop]: srs, transformed: false });
     }
 
-    setTablePage (tablePage) {
-        this.updateState({ tablePage });
+    setPagination (current, pageSize) {
+        const { pagination } = this.getState();
+        this.updateState({ pagination: { ...pagination, current } });
     }
 
     setFiles (files = []) {
@@ -637,7 +638,7 @@ const wrapped = controllerMixin(UIHandler, [
     'importFileContentsToInputTable',
     'addFromSource',
     'swapCoordinates',
-    'setTablePage'
+    'setPagination'
 ]);
 
 export { wrapped as ViewHandler };
