@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Message, Card, WarningIcon } from 'oskari-ui';
 import { ErrorBoundary } from 'oskari-ui/util';
+import { parseValue } from '../handler/FileParser';
 
 const MAX_COLUMNS = 4;
 
@@ -24,7 +25,7 @@ const RawPreviewNode = styled.pre`
 `;
 
 const ParseHeaderRow = ({ fileContents }) => {
-    if (!fileContents.headers) {
+    if (!fileContents.headers?.length || !fileContents.headerLines?.length) {
         return null;
     }
     const headerLineCount = fileContents.headerLines.length;
@@ -45,8 +46,8 @@ const ParseHeaderRow = ({ fileContents }) => {
         </thead>)
 }
 
-const PreviewCell = ({ data }) => {
-    const numberValue = parseFloat(data);
+const PreviewCell = ({ data, dataFormat }) => {
+    const numberValue = parseValue(data, dataFormat);
     if (isNaN(numberValue)) {
         // show raw value
         return (<PreviewCellStyle className={'invalid'}>{data} <WarningIcon/></PreviewCellStyle>);
@@ -55,8 +56,8 @@ const PreviewCell = ({ data }) => {
     return (<PreviewCellStyle>{numberValue}</PreviewCellStyle>);
 };
 
-const ParseDataRow = ({ fileContents }) => {
-    if (!fileContents.data) {
+const ParseDataRow = ({ fileContents, dataFormat }) => {
+    if (!fileContents.data || !fileContents.data.length) {
         return null;
     }
     // only show max 2 rows and 4 columns of data
@@ -71,9 +72,9 @@ const ParseDataRow = ({ fileContents }) => {
         previewData = previewData.map(data => data.slice(0, MAX_COLUMNS));
         colCount = MAX_COLUMNS;
     }
-    const previewRows = previewData.map(data => (
-            <tr>
-                { data.map(cell => (<PreviewCell data={ cell } />)) }
+    const previewRows = previewData.map((data, i) => (
+            <tr key={ 'data_' + i }>
+                { data.map(cell => (<PreviewCell key={i + '_' + cell} data={ cell } dataFormat={ dataFormat } />)) }
             </tr>
         ));
     let extraMessages = [];
@@ -87,7 +88,7 @@ const ParseDataRow = ({ fileContents }) => {
         extraMessages.push(<React.Fragment>{colCountOriginal - colCount} <Message messageKey='fileSettings.columns' /></React.Fragment>);
     }
     if (extraMessages.length) {
-        previewRows.push(<tr>
+        previewRows.push(<tr key='metadata'>
                 <HasMoreCell colSpan={ colCount }>
                     + {extraMessages}
                 </HasMoreCell>
@@ -102,7 +103,7 @@ const RawPreviewRow = ({ fileContents }) => {
     return (<RawPreviewNode>{ previewLines.join('\r\n') + '\r\n...' }</RawPreviewNode>);
 };
 
-export const FilePreview = ({ fileContents }) => {
+export const FilePreview = ({ fileContents, dataFormat }) => {
     if (!fileContents) {
         return null;
     }
@@ -113,7 +114,7 @@ export const FilePreview = ({ fileContents }) => {
                 <table>
                     <ParseHeaderRow fileContents={fileContents} />
                     <tbody>
-                        <ParseDataRow fileContents={fileContents} />
+                        <ParseDataRow fileContents={fileContents} dataFormat={dataFormat} />
                     </tbody>
                 </table>
                 <RawPreviewRow fileContents={fileContents} />
