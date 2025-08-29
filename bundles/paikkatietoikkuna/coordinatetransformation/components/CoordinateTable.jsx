@@ -94,7 +94,7 @@ export const CoordinateTable = ({ type, coordinates, srs, heightSrs, controller,
     // TODO: assumes pagination page size 10
     const dataSource = [...coordinates, ...getEmptyArray(10 - coordinates.length % 10)]; // .map((a,key) => ({...a, key }));
     const optController = editable ? controller : null;
-    const count = coordinates.filter(coord => !coord.invalid).length;
+    const count = coordinates.filter(coord => coord && !coord.invalid).length;
     return (
         <Content className={`t_table_${type}`}>
             <ComponentLabel label={`flyout.coordinateTable.${type}`}>
