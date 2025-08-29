@@ -45,10 +45,15 @@ export const validateTransform = (state, type) => {
     return ['message'];
 };
 const validateSelections = (state) => {
+    const { inputSrs, outputSrs, inputHeightSrs } = state;
     const errors = [];
     // TODO: set import, set export, transform => split ??
-    if (!state.inputSrs || !state.outputSrs) {
+    if (!inputSrs || !outputSrs) {
         errors.push('crs');
+    }
+    const { system } = SRS.find(s => s.value === outputSrs) || {};
+    if (getDimension(inputSrs, inputHeightSrs) !== 3 && system === 'PROJ_3D') {
+        errors.push('xyz');
     }
     return errors;
 };

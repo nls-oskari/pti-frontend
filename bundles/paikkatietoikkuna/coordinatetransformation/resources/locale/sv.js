@@ -89,12 +89,12 @@ Oskari.registerLocalization(
                     "title": "Observera!",
                     "3DTo2D": "I de utgångsuppgifter du valt finns höjdvärden, men inte i resultatuppgifterna. Höjvärden ingår alltså inte i resultatkoordinaterna. Vill du fortsätta?",
                     "2DTo3D": "I de resultatuppgifter du valt finns höjdvärden, men inte i utgångsuppgifterna. Utgångsmaterialet ges höjdvärdet 0 och höjdsystemet N2000. Vill du fortsätta?",
-                    "xyz": "I valen som berör utgångsreferenssystemet för koordinater finns inget höjdsystem. En omvandling till ett kartesiskt 3D-system kan inte göras.",
                     "largeFile": "Transformation av stora filer kan ta flera minuter."
                 },
                 "validateErrors": {
                     "title": "Fel!",
                     "message": "Det finns brister eller fel i valen. Beakta följande krav och försök på nytt.",
+                    "xyz": "I valen som berör utgångsreferenssystemet för koordinater finns inget höjdsystem. En omvandling till ett kartesiskt 3D-system kan inte göras.",
                     "crs": "Ett geodetiskt referenssystem för koordinater ska vara valt både i utgångs- och resultatuppgifterna.",
                     "noInputData": "Det finns inga koordinater som kan transformeras.",
                     "noInputFile": "Filen som innehåller utgångsmaterial ska vara vald.",

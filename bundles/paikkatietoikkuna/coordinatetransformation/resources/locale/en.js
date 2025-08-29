@@ -89,12 +89,12 @@ Oskari.registerLocalization(
                     "title": "Warning!",
                     "3DTo2D": "The selected input information contains height values, but the output information does not. Output coordinates will therefore not include height values. Do you want to continue?",
                     "2DTo3D": "The selected output information contains height values, but the input information does not. The height values 0 and height system N2000 will be added to the input information. Do you want to continue?",
-                    "xyz": "No height system has been selected for the input coordinate system. It is not possible to transform this input information into a projected 3D system.",
                     "largeFile": "The transformation of large files can take several minutes."
                 },
                 "validateErrors": {
                     "title": "Error!", // Error in coordinate system selections
                     "message": "Selections are incomplete or contain errors. Note the following requirements and try again.",
+                    "xyz": "No height system has been selected for the input coordinate system. It is not possible to transform this input information into a projected 3D system.",
                     "crs": "A geodetic coordinate reference system must be selected both in the input and the output information.",
                     "noInputData": "No input coordinates.",
                     "noInputFile": "The file containing input information must be selected.",
