@@ -10,6 +10,7 @@ import { SRS, SRS_H, ACTIONS } from '../constants';
 
 const COLUMNS = ['x', 'y', 'z'];
 const WIDTH = 360;
+const LABEL_HEIGHT = 34;
 
 const StyledWarningIcon = styled(WarningIcon)`
     margin-right: 1em;
@@ -105,7 +106,7 @@ export const CoordinatesTable = ({ coordinates, sources, inputSrs, inputHeightSr
     const optController = fromFile ? null : controller;
     return (
         <Content className='t_table_input'>
-            <ComponentLabel label='flyout.coordinateTable.input'>
+            <ComponentLabel height={LABEL_HEIGHT} label='flyout.coordinateTable.input'>
                 <IconButton
                     icon={<SwapOutlined />}
                     title={<Message messageKey='actions.axisFlip'/>}
@@ -137,7 +138,7 @@ export const ResultsTable = ({ coordinates, results, outputSrs, outputHeightSrs,
     const validLengths = coordinates.length === results.length;
     return (
         <Content className='t_table_output'>
-            <ComponentLabel label='flyout.coordinateTable.output'>
+            <ComponentLabel height={LABEL_HEIGHT} label='flyout.coordinateTable.output'>
                 {outdated &&
                     <StyledWarningIcon tooltip={<Message messageKey='flyout.coordinateTable.outdated' />} />
                 }
