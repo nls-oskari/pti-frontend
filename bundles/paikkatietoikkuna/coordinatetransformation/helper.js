@@ -148,15 +148,14 @@ export const getSystemsFromCompound = (epsg) => {
 };
 
 export const isCoordInBounds = (srs, coord) => {
-    const { lonFirst, bounds } = SRS.find(s => s.value === srs);
-    const map = Oskari.getSandbox().findRegisteredModuleInstance('MainMapModule');
-    if (!bounds || !map) {
-        return false;
+    const { bounds } = SRS.find(s => s.value === srs) || {};
+    if (!bounds || bounds.length !== 4) {
+        return true;
     }
-    const x = lonFirst ? coord[0] : coord[1];
-    const y = lonFirst ? coord[1] : coord[0];
-    return map.isPointInExtent(bounds, x, y);
+    const { x, y } = coord;
+    return bounds[0] <= x && x <= bounds[2] && bounds[1] <= y && y <= bounds[3];
 };
+
 // TODO: pass mapmodule or move to service/maphelper??
 export const moveMapToMarkers = (state) => {
     // TODO: use converted map coordinates, this works only for native srs
