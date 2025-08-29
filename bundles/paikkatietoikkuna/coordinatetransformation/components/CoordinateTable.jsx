@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { Message, TextInput } from 'oskari-ui';
+import { Message, TextInput, WarningIcon } from 'oskari-ui';
 import { ComponentLabel } from './ComponentLabel';
 import { IconButton } from 'oskari-ui/components/buttons';
 import { Table } from 'oskari-ui/components/Table';
@@ -11,6 +11,10 @@ import { getDimension } from '../helper';
 
 const COLUMNS = ['x', 'y', 'z'];
 const WIDTH = 360;
+
+const StyledWarningIcon = styled(WarningIcon)`
+    margin-right: 1em;
+`;
 
 const StyledTable = styled(Table)`
     td.ant-table-cell {
@@ -123,9 +127,13 @@ CoordinatesTable.propTypes = {
 export const ResultsTable = ({ coordinates, results, outputSrs, outputHeightSrs, transformed }) =>  {
     const dataSource = [...results, ...getEmptyArray(10 - results.length % 10)]; // .map((a,key) => ({...a, key }));
     const count = coordinates.filter(coord => coord && !coord.invalid).length;
+    const outdated = results.length > 0 && !transformed;
     return (
         <Content className='t_table_output'>
             <ComponentLabel label='flyout.coordinateTable.output'>
+                {outdated &&
+                    <StyledWarningIcon tooltip={<Message messageKey='flyout.coordinateTable.outdated' />} />
+                }
                 <Count className='t_row_count'>{count}</Count>
                 <Message messageKey='flyout.coordinateTable.rows' />
             </ComponentLabel>

@@ -85,6 +85,7 @@ Oskari.registerLocalization(
                 "input": "Muunnettavat lähtökoordinaatit",
                 "output": "Tuloskoordinaatit",
                 "rows": "Riviä",
+                "outdated": "Valinnat tai koordinatit muuttuneet. Muunna koordinaatit, jotta tulokset päivittyvät.",
                 "clearTables": "Poista kaikki koordinaatit",
                 "confirmClear": "Haluatko poistaa taulukoista kaikki koordinaatit?"
             },

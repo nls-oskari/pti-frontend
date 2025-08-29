@@ -80,6 +80,7 @@ Oskari.registerLocalization(
                 "input": "Koordinater som ska transformeras",
                 "output": "Resultatkoordinater",
                 "rows": "Rader",
+                "outdated": "Valen eller koordinaterna har ändrats. Transformera koordinaterna för att få uppdaterade resultat.",
                 "clearTables": "Ta bort alla koordinater",
                 "confirmClear": "Är du säker på att du vill ta bort alla koordinater från tabellerna?"
             },

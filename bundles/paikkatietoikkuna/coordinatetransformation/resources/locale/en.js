@@ -80,6 +80,7 @@ Oskari.registerLocalization(
                 "input": "Coordinates to be transformed",
                 "output": "Result coordinates",
                 "rows": "Rows",
+                "outdated": "The selections or coordinates have changed. Transform coordinates to get updated results.",
                 "clearTables": "Remove all coordinates",
                 "confirmClear": "Are you sure you want to remove all coordinates from tables?"
             },
