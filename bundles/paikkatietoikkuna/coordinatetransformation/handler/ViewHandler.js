@@ -342,7 +342,7 @@ class UIHandler extends StateHandler {
     }
 
     showOnMap () {
-        const { coordinates, inputSrs } = this.getState(); //  inputSrs, source
+        const { coordinates, inputSrs, pagination } = this.getState();
         if (this.mapPopup) {
             return;
         }
@@ -352,8 +352,12 @@ class UIHandler extends StateHandler {
             this.showInfoMessage(title, msg);
             return;
         }
+        const { current, pageSize } = pagination;
+        const end = current * pageSize;
+        const start = end - pageSize;
+        const toShow = coordinates.slice(start, end);
         // TODO: convert to map projection (axis order) and add label (source !== map)
-        this.instance.setMapCoordinates(coordinates);
+        this.instance.setMapCoordinates(toShow);
         this.instance.toggleFlyout(false);
         this.mapPopup = showMapPreviewPopup(() => this.closeMapPopup(true));
     }
