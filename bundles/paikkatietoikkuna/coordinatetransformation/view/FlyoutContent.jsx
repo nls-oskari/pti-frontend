@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Message, Button} from 'oskari-ui';
 import { ButtonContainer } from 'oskari-ui/components/buttons';
-import { SourceSelect } from '../components/SourceSelect.jsx';
+import { SourceButtons } from '../components/SourceSelect.jsx';
 import { CoordinateTable } from '../components/CoordinateTable.jsx';
 import { SrsSelect } from '../components/SrsSelect';
 import { ClearTableButton } from '../components/ClearTableButton';
@@ -36,11 +36,11 @@ export const FlyoutContent = ({
     inputSrs,
     inputHeightSrs,
     outputHeightSrs,
-    outputSrs
+    outputSrs,
+    transformed
 }) => {
     const [ minimalSrs, setMinimalSrs ] = useState(true);
     const transformType = source === 'file' ? 'F2A' : 'A2A';
-    const transformed = results.length > 0;
     return (
         <Content>
             <MandatoryDescription/>
@@ -53,7 +53,7 @@ export const FlyoutContent = ({
                     <Message messageKey={`actions.minimize${minimalSrs ? 'd' : ''}Srs`}/>
                 </MinimizeButton>
             </div>
-            <SourceSelect value={source} controller={controller} />
+            <SourceButtons controller={controller} />
             <Splitter>
                 <CoordinateTable type='input' editable={source === 'table'} srs={inputSrs} heightSrs={inputHeightSrs} coordinates={coordinates} controller={controller} />
                 <CoordinateTable type='output' srs={outputSrs} heightSrs={outputHeightSrs} coordinates={results} controller={controller} />
@@ -61,7 +61,9 @@ export const FlyoutContent = ({
             
             <StyledButtonContainer>
                 <div className='t_actions'>
-                    <ClearTableButton controller={controller} />
+                    <Button className='t_clear' onClick={() => controller.confirmClearTables()}>
+                        <Message messageKey='flyout.coordinateTable.clearTables'/>
+                    </Button>
                     <Button className='t_map' onClick={() => controller.showOnMap()}>
                         <Message messageKey='mapMarkers.show.title'/>
                     </Button>

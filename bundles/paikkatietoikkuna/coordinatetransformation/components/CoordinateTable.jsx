@@ -56,11 +56,7 @@ const getColumn = (column, lonFirst, unit, dimension, editable, controller) => {
         width: dimension === 2 ? 180 : 120
     };
     const onEdit = (index, item, value) => {
-        if (value.includes('\t')) {
-            controller.pasteCoordinates(value);
-        } else {
-            controller.updateCoordinate(index, { ...item, [column]:  value });
-        }
+        controller.updateCoordinate(index, { ...item, [column]:  value });
     };
     // TODO: some styling for invalid coordinate??
     if (editable) {
@@ -72,27 +68,25 @@ const getColumn = (column, lonFirst, unit, dimension, editable, controller) => {
 const getColumns = (srs, heightSrs, controller) => {
     const { axes } = SRS.find(s => s.value === srs) || {};
     const { axis } = SRS_H.find(s => s.value === heightSrs) || {};
-    const columns = axes ? [...axes] : ['', ''];
+    const columnAxes = axes ? [...axes] : ['', ''];
     if (axis) {
-        columns.push(axis)
+        columnAxes.push(axis)
     }
-    const colWidth = WIDTH / columns.length;
-    const onEdit = (index, column, item, value) => {
-        if (value.includes('\t')) {
-            controller.pasteCoordinates(value);
-        } else {
-            controller.updateCoordinate(index, { ...item, [column]: value });
-        }
-    };
-    // TODO: if (optController) => props render
-    return columns.map((axis, i) => ({
-        title: axis ? <Message messageKey={`flyout.coordinateAxes.${axis}`}/> : axis,
-        dataIndex: COLUMNS[i],
-        width: colWidth,
-        render: controller
-            ? (value, item, index) => <StyledInput size='small' value={value} onChange={e => onEdit(index, COLUMNS[i], item, e.target.value)} onBlur={() => controller.parseInputCoordinate(index, COLUMNS[i])} />
-            : undefined
-    }));
+    const colWidth = WIDTH / columnAxes.length;
+    return columnAxes.map((axis, colIndex) => {
+        const col = COLUMNS[colIndex];
+        return {
+            title: axis ? <Message messageKey={`flyout.coordinateAxes.${axis}`}/> : axis,
+            dataIndex: col,
+            width: colWidth,
+            render: controller
+                ? (value, item, row) => <StyledInput size='small' value={value}
+                    status={value && isNaN(value) ? 'error' : ''}
+                    onChange={e => controller.updateCoordinate(row, { ...item, [col]: e.target.value })}
+                    onBlur={() => controller.parseInputCoordinate(row, col)} />
+                : undefined
+        };
+    });
 };
 
 export const CoordinateTable = ({ type, coordinates, srs, heightSrs, controller, editable }) => {
@@ -100,7 +94,7 @@ export const CoordinateTable = ({ type, coordinates, srs, heightSrs, controller,
     // TODO: assumes pagination page size 10
     const dataSource = [...coordinates, ...getEmptyArray(10 - coordinates.length % 10)]; // .map((a,key) => ({...a, key }));
     const optController = editable ? controller : null;
-    const count = coordinates.filter(coord => !coord.invalid).length;
+    const count = coordinates.filter(coord => coord && !coord.invalid).length;
     return (
         <Content className={`t_table_${type}`}>
             <ComponentLabel label={`flyout.coordinateTable.${type}`}>

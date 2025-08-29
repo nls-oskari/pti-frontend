@@ -143,6 +143,7 @@ Oskari.registerLocalization(
             "confirmChange": "Muunnettavat koordinaatit tyhjennetään. Haluatko jatkaa?",
             "file": {
                 "label": "Tiedosto",
+                "button": "Tuo tiedostosta",
                 "info":  "Valitse lähtöaineiston sisältävä tiedosto ja sen asetukset.",
                 "action": "muokkaa valintoja"
             },
@@ -152,9 +153,16 @@ Oskari.registerLocalization(
             },
             "map": {
                 "label": "Valitse sijainnit kartalta",
+                "button": "Valitse sijainnit kartalta",
                 "info": "Voit valita muunnettavia koordinaatteja kartalta klikkaamalla.",
                 "confirmSelect": "Lähtökoordinaattijärjestelmän tiedot valitaan automaattisesti kartan käyttämän ETRS-TM35FIN-koordinaattijärjestelmän mukaisiksi. Tekemäsi lähtökoordinaattijärjestelmän valinnat korvataan. Haluatko jatkaa?",
                 "action": "valitse lisää"
+            },
+            "clipboard": {
+                "title": "Tuo koordinaatit leikepöydältä",
+                "button": "Tuo leikepöydältä",
+                "info":  "Voit tuoda koordinaatteja leikepöydältä (csv, excel)",
+                "placeholder": "Kopioi tähän koordinaattien tiedot. Yhdellä rivillä on yhden pisteen koordinaatit. Erottimeksi puolipiste tai sarkain (tab). Tiedot voivat olla seuraavassa muodossa:\n383699,477;6676232,276;13,4"
             }
         },
         "mapMarkers":{
@@ -187,6 +195,15 @@ Oskari.registerLocalization(
             "done": "Valmis",
             "ok": "Ok",
             "close": "Sulje"
+        },
+        "confirm": {
+            "title": "Koordinaattitietojen valinnat",
+            "reset": "Kaikki koordinaatit ja valinnat tyhjennetään. Haluatko jatkaa?",
+            "coordinates": "Muunnettavat koordinaatit tyhjennetään. Haluatko jatkaa?",
+            "results": "Tuloskoordinaatit tyhjennetään ja muunnos tehdään uusilla valinnoilla. Haluatko jatkaa?",
+            "mapSrs": "Lähtökoordinaattijärjestelmän tiedot valitaan automaattisesti kartan käyttämän ETRS-TM35FIN-koordinaattijärjestelmän mukaisiksi. Tekemäsi lähtökoordinaattijärjestelmän valinnat korvataan ja koordinaatit tyhjennetään. Haluatko jatkaa?",
+            "change": "Säilytä muut valinnnat ja koordinaatit",
+            "changeTooltip": "Huomioi, että valintojen ja koordinaattien säilyttäminen voi johtaa tilanteeseen, jossa tulokset eivät vastaa valintoja."
         },
         "fileSettings": {
             "rows": "riviä",

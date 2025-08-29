@@ -5,7 +5,6 @@ import { Message, Radio } from 'oskari-ui';
 import { BUNDLE, MAP } from '../constants';
 
 const Content = styled.div`
-    width: 800px;
     display: flex;
     flex-direction: column;
     gap: 1rem;

@@ -4,9 +4,12 @@ import styled from 'styled-components';
 import { Message, Radio, Button } from 'oskari-ui';
 import { ComponentLabel } from './ComponentLabel';
 import { InfoIcon } from 'oskari-ui/components/icons';
-import { SOURCE } from '../constants';
+import { SOURCE, ACTIONS } from '../constants';
 
 const Content = styled.div`
+    display: flex;
+    flex-flow: row nowrap;
+    gap: 1em;
 `;
 
 const style = {
@@ -14,6 +17,9 @@ const style = {
     flexDirection: 'column',
     gap: 8
 };
+
+const BUTTONS = Object.values(ACTIONS);
+
 const Option = ({ id, value, controller }) => {
     const showAction = id === value && id !== 'table';
     const onClick = (event) => {
@@ -38,18 +44,35 @@ const Option = ({ id, value, controller }) => {
 
 export const SourceSelect = ({ value, controller }) => {
     return(
-        <Content className='t_source'>
+        <div className='t_source'>
             <ComponentLabel label='dataSource.select'/>
             <Radio.Group
                 value={value}
                 style={style}
                 onChange={evt => controller.setSource(evt.target.value)}
                 options={SOURCE.map(id => ({label: <Option id={id} value={value} controller={controller}/>, value: id }))}/>
-        </Content>
+        </div>
     );
 };
 
 SourceSelect.propTypes = {
     value: PropTypes.string,
+    controller: PropTypes.object.isRequired
+};
+
+// color='primary' variant='outlined'
+export const SourceButtons = ({ controller }) => {
+    return(
+        <Content className='t_source'>
+            { BUTTONS.map(id =>
+                <Button key={id} className={`t_${id}`} onClick={() => controller.addFromSource(id)}>
+                    <Message messageKey={`dataSource.${id}.button`}/>
+                </Button>
+            )}
+        </Content>
+    );
+};
+
+SourceButtons.propTypes = {
     controller: PropTypes.object.isRequired
 };
