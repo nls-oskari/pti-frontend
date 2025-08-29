@@ -56,11 +56,7 @@ const getColumn = (column, lonFirst, unit, dimension, editable, controller) => {
         width: dimension === 2 ? 180 : 120
     };
     const onEdit = (index, item, value) => {
-        if (value.includes('\t')) {
-            controller.pasteCoordinates(value);
-        } else {
-            controller.updateCoordinate(index, { ...item, [column]:  value });
-        }
+        controller.updateCoordinate(index, { ...item, [column]:  value });
     };
     // TODO: some styling for invalid coordinate??
     if (editable) {
@@ -92,7 +88,6 @@ const getColumns = (srs, heightSrs, controller) => {
         };
     });
 };
-
 
 export const CoordinateTable = ({ type, coordinates, srs, heightSrs, controller, editable }) => {
     // TODO: internal state for pagination
