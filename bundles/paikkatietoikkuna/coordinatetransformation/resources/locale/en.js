@@ -182,6 +182,7 @@ Oskari.registerLocalization(
             "export": "Save to file",
             "minimizeSrs": "Hide coordinate reference system extra selections",
             "minimizedSrs": "Show all coordinate reference system selections",
+            "axisFlip": "Coordinates reversed",
             "search": "Search using name or EPSG code",
             "select": "Select",
             "cancel": "Cancel",
@@ -207,7 +208,7 @@ Oskari.registerLocalization(
                 "coordinateSeparator": "Field separator",
                 "headerCount": "Number of header rows",
                 "decimalPrecision": "Decimal precision",
-                "reverseCoordinates": "Coordinates reversed",
+                "axisFlip": "Coordinates reversed",
                 "useId": { // Use identifier, Use id infront
                     "input": "Coordinates contain identifiers",
                     "generate": "Create identifers",
@@ -387,7 +388,7 @@ Oskari.registerLocalization(
                 ],
                 "listItems" : []
             },
-            "reverseCoordinates":{
+            "axisFlip":{
                 "title":"Reversed coordinates",
                 "info": "",
                 "paragraphs": [

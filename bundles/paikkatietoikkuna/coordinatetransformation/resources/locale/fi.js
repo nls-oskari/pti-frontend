@@ -189,6 +189,7 @@ Oskari.registerLocalization(
             "export": "Tallenna tiedostoon",
             "minimizeSrs": "Piilota koordinaattjijärjestelmän lisävalinnat",
             "minimizedSrs": "Näytä kaikki koordinaattjijärjestelmän valinnat",
+            "axisFlip": "Koordinaatit käänteisesti",
             "search": "Hae nimellä tai EPSG-koodilla",
             "select": "Valitse",
             "cancel": "Peruuta",

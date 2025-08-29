@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Message, TextInput } from 'oskari-ui';
 import { ComponentLabel } from './ComponentLabel';
+import { IconButton } from 'oskari-ui/components/buttons';
 import { Table } from 'oskari-ui/components/Table';
+import { SwapOutlined } from '@ant-design/icons';
 import { SRS, SRS_H, ACTIONS } from '../constants';
 import { getDimension } from '../helper';
 
@@ -93,12 +95,13 @@ export const CoordinatesTable = ({ coordinates, sources, inputSrs, inputHeightSr
     const dataSource = [...coordinates, ...getEmptyArray(10 - coordinates.length % 10)]; // .map((a,key) => ({...a, key }));
     const fromFile = sources.includes(ACTIONS.IMPORT);
     const optController = fromFile ? null : controller;
-    const count = coordinates.filter(coord => coord && !coord.invalid).length;
     return (
         <Content className='t_table_input'>
             <ComponentLabel label='flyout.coordinateTable.input'>
-                <Count className='t_row_count'>{count}</Count>
-                <Message messageKey='flyout.coordinateTable.rows' />
+                <IconButton
+                    icon={<SwapOutlined />}
+                    title={<Message messageKey='actions.axisFlip'/>}
+                    onClick={() => controller.swapCoordinates()} />
             </ComponentLabel>
             <StyledTable bordered
                 $editable={!fromFile}
@@ -119,7 +122,7 @@ CoordinatesTable.propTypes = {
 
 export const ResultsTable = ({ coordinates, results, outputSrs, outputHeightSrs, transformed }) =>  {
     const dataSource = [...results, ...getEmptyArray(10 - results.length % 10)]; // .map((a,key) => ({...a, key }));
-    const count = results.length;
+    const count = coordinates.filter(coord => coord && !coord.invalid).length;
     return (
         <Content className='t_table_output'>
             <ComponentLabel label='flyout.coordinateTable.output'>

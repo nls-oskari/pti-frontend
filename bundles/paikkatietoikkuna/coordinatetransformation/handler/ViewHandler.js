@@ -181,6 +181,12 @@ class UIHandler extends StateHandler {
         this.updateCoordinate(index, updated);
     }
 
+    swapCoordinates () {
+        const { coordinates } = this.getState();
+        const swapped = coordinates.map(c => ({ ...c, x: c.y, y: c.x }));
+        this.updateState({ coordinates: swapped })
+    }
+
     // TODO: refactor
     setSrs (type, srs, forced) {
         if (type === 'input' && !forced) {
@@ -624,7 +630,8 @@ const wrapped = controllerMixin(UIHandler, [
     'reset',
     'validate',
     'importFileContentsToInputTable',
-    'addFromSource'
+    'addFromSource',
+    'swapCoordinates'
 ]);
 
 export { wrapped as ViewHandler };

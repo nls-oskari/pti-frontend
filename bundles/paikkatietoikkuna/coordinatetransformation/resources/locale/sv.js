@@ -182,6 +182,7 @@ Oskari.registerLocalization(
             "export": "Spara till fil",
             "minimizeSrs": "Dölj extra val för koordinatreferenssystem",
             "minimizedSrs": "Visa alla val av koordinatreferenssystem",
+            "axisFlip": "Omvända koordinater",
             "search": "Sök med namn eller EPSG-kod",
             "select": "Välj",
             "cancel": "Avbryt", //Ångra
@@ -207,7 +208,7 @@ Oskari.registerLocalization(
                 "coordinateSeparator": "Skiljetecken för fält",
                 "headerCount": "Antal rubrikrader",
                 "decimalCount": "Decimalernas precision",
-                "reverseCoordinates": "Omvända koordinater",
+                "axisFlip": "Omvända koordinater",
                 "useId": { // Använd identifierare
                     "input": "Koordinater innehåller identifierare",
                     "generate": "Skapa identifierare",
@@ -386,7 +387,7 @@ Oskari.registerLocalization(
                 ],
                 "listItems" : []
             },
-            "reverseCoordinates":{
+            "axisFlip":{
                 "title":"Omvända koordinater",
                 "info": "X- och Y-koordinataxlarnas ordning avviker från den definierade ordningen.",
                 "paragraphs": [
