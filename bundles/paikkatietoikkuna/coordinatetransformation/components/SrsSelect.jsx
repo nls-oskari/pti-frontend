@@ -42,7 +42,9 @@ const Srs = ({ srs, options, onChange, controller, block = false }) => {
 
 export const SrsSelect = ({ srs, heightSrs, type, minimal, controller }) => {
     const heightDisabled = getDimension(srs) === 3;
-    const heightPH = <Message messageKey='flyout.coordinateSystem.heightSystem.none' />;
+    const heightPH = heightDisabled
+        ? SRS_OPTIONS.find(s => s.value === srs)?.label
+        : <Message messageKey='flyout.coordinateSystem.heightSystem.none' />;
     if (minimal) {
         return (
             <Content className={`t_srs_${type}`}>

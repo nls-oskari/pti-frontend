@@ -24,6 +24,11 @@ export const MARKER = {
     size: 3
 };
 
+export const PAGINATION = {
+    current: 1,
+    pageSize: 10
+};
+
 export const FILE_DEFAULTS = {
     import: {
         headerLineCount: 0,

@@ -4,10 +4,10 @@ import styled from 'styled-components';
 import { Message, Button} from 'oskari-ui';
 import { ButtonContainer } from 'oskari-ui/components/buttons';
 import { SourceButtons } from '../components/SourceSelect.jsx';
-import { CoordinateTable } from '../components/CoordinateTable.jsx';
+import { CoordinatesTable, ResultsTable } from '../components/CoordinateTable.jsx';
 import { SrsSelect } from '../components/SrsSelect';
-import { ClearTableButton } from '../components/ClearTableButton';
 import { MandatoryDescription } from '../components/MandatoryDescription';
+import { getDimension } from '../helper';
 
 const Content = styled.div`
     display: flex;
@@ -31,16 +31,20 @@ const StyledButtonContainer = styled(ButtonContainer)`
 export const FlyoutContent = ({
     controller,
     source,
+    sources,
     coordinates,
     results,
     inputSrs,
     inputHeightSrs,
     outputHeightSrs,
     outputSrs,
-    transformed
+    transformed,
+    pagination
 }) => {
     const [ minimalSrs, setMinimalSrs ] = useState(true);
     const transformType = source === 'file' ? 'F2A' : 'A2A';
+    // Have to check here to use same height for input & output table headers
+    const transform3D = getDimension(inputSrs, inputHeightSrs) === 3 || getDimension(outputSrs, outputHeightSrs) === 3;
     return (
         <Content>
             <MandatoryDescription/>
@@ -55,8 +59,8 @@ export const FlyoutContent = ({
             </div>
             <SourceButtons controller={controller} />
             <Splitter>
-                <CoordinateTable type='input' editable={source === 'table'} srs={inputSrs} heightSrs={inputHeightSrs} coordinates={coordinates} controller={controller} />
-                <CoordinateTable type='output' srs={outputSrs} heightSrs={outputHeightSrs} coordinates={results} controller={controller} />
+                <CoordinatesTable large={transform3D} pagination={pagination} inputSrs={inputSrs} inputHeightSrs={inputHeightSrs} coordinates={coordinates} sources={sources} controller={controller} />
+                <ResultsTable large={transform3D} pagination={pagination} outputSrs={outputSrs} outputHeightSrs={outputHeightSrs} coordinates={coordinates} results={results} transformed={transformed} controller={controller}/>
             </Splitter>
             
             <StyledButtonContainer>
@@ -90,5 +94,7 @@ FlyoutContent.propTypes = {
     file: PropTypes.any,
     coordinates: PropTypes.array.isRequired,
     results: PropTypes.array.isRequired,
+    transformed: PropTypes.bool.isRequired,
+    tablePage: PropTypes.number.isRequired,
     controller: PropTypes.object.isRequired
 };

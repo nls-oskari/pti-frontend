@@ -85,6 +85,7 @@ Oskari.registerLocalization(
                 "input": "Muunnettavat lähtökoordinaatit",
                 "output": "Tuloskoordinaatit",
                 "rows": "Riviä",
+                "outdated": "Valinnat tai koordinatit muuttuneet. Muunna koordinaatit, jotta tulokset päivittyvät.",
                 "clearTables": "Poista kaikki koordinaatit",
                 "confirmClear": "Haluatko poistaa taulukoista kaikki koordinaatit?"
             },
@@ -93,12 +94,12 @@ Oskari.registerLocalization(
                     "title": "Huomio!",
                     "3DTo2D": "Valitsemissasi lähtötiedoissa on mukana korkeusarvoja, mutta tulostiedoissa ei. Tuloskoordinaatteihin ei siis tule korkeusarvoja mukaan. Haluatko jatkaa?",
                     "2DTo3D": "Valitsemissasi lähtötiedoissa ei ole korkeusarvoja, mutta tulostiedoissa on. Lähtöaineiston korkeusarvoiksi lisätään 0 ja korkeusjärjestelmäksi N2000. Haluatko jatkaa?",
-                    "xyz": "Lähtökoordinaattijärjestelmän valinnoissa ei ole korkeusjärjestelmää. Muunnos suorakulmaiseen 3D -järjestelmään ei ole mahdollinen.",
                     "largeFile": "Isojen tiedostojen muuntaminen voi kestää useita minuutteja."
                 },
                 "validateErrors": {
                     "title": "Virhe!",
                     "message": "Valinnoissa on puutteita tai virheitä. Ota huomioon seuraavat vaatimukset ja yritä uudelleen.",
+                    "xyz": "Lähtökoordinaattijärjestelmän valinnoissa ei ole korkeusjärjestelmää. Muunnos suorakulmaiseen 3D -järjestelmään ei ole mahdollinen.",
                     "crs": "Geodeettinen koordinaattijärjestelmä pitää olla valittuna sekä lähtö- että tulostiedoissa.",
                     "srs": "Geodeettinen koordinaattijärjestelmä pitää olla valittuna.",
                     "noInputData": "Ei muunnettavia koordinaatteja.",
@@ -171,11 +172,7 @@ Oskari.registerLocalization(
                 "info": "Kartta on ETRS-TM35FIN-koordinaattijärjestelmässä. Koordinaatit on sijoitettu kartalle kyseistä koordinaattijärjestelmää käyttäen. Sijaintimerkinnän yhteydessä näytään lähtö- ja/tai tuloskoordinaattijärjestelmän mukaiset koordinaatit lukemina. ",
                 "errorTitle": "Virhe sijaintien näyttämisessä",
                 "noCoordinates": "Ei koordinaatteja näytettäväksi kartalla",
-                "noSrs": "Geodeettinen koordinaattijärjestelmä pitää olla valittuna lähtötiedoissa, jotta pisteet voidaan näyttää kartalla.",
-                "lon": "Lon",
-                "lat": "Lat",
-                "north": "N",
-                "east": "E"
+                "noSrs": "Geodeettinen koordinaattijärjestelmä pitää olla valittuna lähtötiedoissa, jotta pisteet voidaan näyttää kartalla."
             },
             "select":{
                 "title": "Valitse sijainnit kartalta",
@@ -189,6 +186,7 @@ Oskari.registerLocalization(
             "export": "Tallenna tiedostoon",
             "minimizeSrs": "Piilota koordinaattjijärjestelmän lisävalinnat",
             "minimizedSrs": "Näytä kaikki koordinaattjijärjestelmän valinnat",
+            "axisFlip": "Koordinaatit käänteisesti",
             "search": "Hae nimellä tai EPSG-koodilla",
             "select": "Valitse",
             "cancel": "Peruuta",

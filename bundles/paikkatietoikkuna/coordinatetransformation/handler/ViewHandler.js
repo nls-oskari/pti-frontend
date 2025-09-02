@@ -4,8 +4,8 @@ import { showFilePopup } from '../view/FilePopup';
 import { showConfirmPopup } from '../view/ConfirmPopup';
 import { showClipboardPopup } from '../view/ClipboardPopup';
 import { showMapSelectPopup, showMapPreviewPopup } from '../view/MapPopup';
-import { SOURCE, MAP, WATCH_JOB, WATCH_URL, TRANSFORM, FILE_DEFAULTS, SEPARATORS, ACTIONS } from '../constants';
-import { stateToPTIArray, loadFile, validateTransform, validateFileSettings, parseCoordinateValue, is3DSystem } from '../helper';
+import { SOURCE, MAP, WATCH_JOB, WATCH_URL, TRANSFORM, FILE_DEFAULTS, SEPARATORS, ACTIONS, PAGINATION } from '../constants';
+import { stateToPTIArray, loadFile, validateTransform, validateFileSettings, parseCoordinateValue, is3DSystem, getLabelForMarker } from '../helper';
 import { parseFile, parseFileContents, parseValue } from './FileParser';
 
 const getInitialState = () => ({
@@ -22,7 +22,8 @@ const getInitialState = () => ({
     export: { ...FILE_DEFAULTS.export },
     coordinates: [],
     results: [],
-    transformed: false // set false if coordinates or srs selections are updated
+    transformed: false, // set false if coordinates or srs selections are updated
+    pagination: { ...PAGINATION }
 });
 
 class UIHandler extends StateHandler {
@@ -147,10 +148,10 @@ class UIHandler extends StateHandler {
     }
 
     updateCoordinate (index, coordinate) {
-        const coordinates = [...this.getState().coordinates];
-        // TODO: validate x,y,z getDimension (remove keys with empty value??)
-        coordinates[index] = coordinate;
-        // const updated = coordinates.map((c, i) => i === index ? coordinate : c);
+        const updated = [...this.getState().coordinates];
+        updated[index] = coordinate;
+        // fill empty/undefined with object
+        const coordinates = updated.map(c => c ? c : { invalid: true });
         this.addSourceToState('table');
         this.updateState({ coordinates, transformed: false });
     }
@@ -179,6 +180,12 @@ class UIHandler extends StateHandler {
         // TODO: use column for invalid/error for styling ?
         const updated = isNaN(value) ? { ...coord, invalid: true } : { ...coord, [column]: value };
         this.updateCoordinate(index, updated);
+    }
+
+    swapCoordinates () {
+        const { coordinates } = this.getState();
+        const swapped = coordinates.map(c => ({ ...c, x: c.y, y: c.x }));
+        this.updateState({ coordinates: swapped });
     }
 
     // TODO: refactor
@@ -234,7 +241,16 @@ class UIHandler extends StateHandler {
 
     setHeightSrs (type, srs) {
         const prop = `${type}HeightSrs`;
+        if (srs === 'EPSG:8675') {
+            // TODO: url isn't added because it did't work, find working url and refactor showInfoMessage
+            this.showInfoMessage('flyout.coordinateSystem.heightSystem.label', 'flyout.coordinateSystem.heightSystem.n43.info');
+        }
         this.updateState({ [prop]: srs, transformed: false });
+    }
+
+    setPagination (current, pageSize) {
+        const { pagination } = this.getState();
+        this.updateState({ pagination: { ...pagination, current } });
     }
 
     setFiles (files = []) {
@@ -321,6 +337,7 @@ class UIHandler extends StateHandler {
         if (id === 'store') {
             const coordinates = this.instance.getMapCoordinates();
             this.instance.setMapSelectionMode();
+            this.addSourceToState(ACTIONS.MAP);
             this.updateState({ coordinates, transformed: false });
         }
         if (Object.values(MAP).includes(id)) {
@@ -329,7 +346,7 @@ class UIHandler extends StateHandler {
     }
 
     showOnMap () {
-        const { coordinates, inputSrs } = this.getState(); //  inputSrs, source
+        const { coordinates, inputSrs, pagination } = this.getState();
         if (this.mapPopup) {
             return;
         }
@@ -339,10 +356,31 @@ class UIHandler extends StateHandler {
             this.showInfoMessage(title, msg);
             return;
         }
-        // TODO: convert to map projection (axis order) and add label (source !== map)
-        this.instance.setMapCoordinates(coordinates);
-        this.instance.toggleFlyout(false);
-        this.mapPopup = showMapPreviewPopup(() => this.closeMapPopup(true));
+        const { current, pageSize } = pagination;
+        const end = current * pageSize;
+        const start = end - pageSize;
+        const toShow = coordinates.slice(start, end);
+        const mapSrs = this.sandbox.getMap().getSrsName();
+
+        const callback = mapCoords => {
+            const labeled = mapCoords.map((coord, i) => {
+                // Use original coords and srs for label
+                const label = getLabelForMarker(toShow[i], inputSrs);
+                return { ...coord, label };
+            });
+            this.instance.setMapCoordinates(labeled);
+            this.instance.toggleFlyout(false);
+            this.mapPopup = showMapPreviewPopup(() => this.closeMapPopup(true));
+        };
+        if (mapSrs === inputSrs) {
+            callback(toShow);
+        } else {
+            this.transformToMapSrs({
+                coordinates: toShow,
+                inputSrs,
+                outputSrs: mapSrs
+            }, callback);
+        }
     }
 
     selectFromMap () {
@@ -508,10 +546,40 @@ class UIHandler extends StateHandler {
             y: parseValue(y, unit),
             z: parseValue(z, unit)
         }));
-        this.updateState({ coordinates });
+        // sets all coordinates from file so one source only
+        this.updateState({ coordinates, sources: [ACTIONS.IMPORT] });
+    }
+
+    transformToMapSrs (values, callback) {
+        const state = { ...this.getState(), ...values };
+        if (this.validate('inputSrs')) {
+            return;
+        }
+        this.updateState({ loading: true });
+        const { params, body } = stateToPTIArray(state, 'A2A', false);
+        fetch(Oskari.urls.getRoute('CoordinateTransformation', params), {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json'
+            },
+            body
+        }).then(response => {
+            return response.json();
+        }).then(json => {
+            const { jobId } = json;
+            if (jobId) {
+                this.watchJsonJob(jobId, callback);
+            } else {
+                this.showResponseError(json);
+            }
+        }).catch((e) => {
+            Messaging.error(this.loc('flyout.transform.responseErrors.generic'));
+            this.updateState({ loading: false });
+        });
     }
 
     transformToArray (transformType) {
+        // TODO: confirm 2Dto3D and 3Dto2D (transform.warnings)
         const state = this.getState();
         if (this.validate(transformType)) {
             return;
@@ -544,7 +612,8 @@ class UIHandler extends StateHandler {
         });
     }
 
-    watchJsonJob (jobId) {
+    // For now use same function for show on map transformation
+    watchJsonJob (jobId, callback) {
         fetch(Oskari.urls.getLocation(WATCH_JOB) + jobId, {
             method: 'GET',
             headers: {
@@ -563,7 +632,12 @@ class UIHandler extends StateHandler {
             } else if (resultCoordinates) {
                 // TODO: can undefined z cause problems??
                 const results = resultCoordinates.map(([x, y, z]) => ({ x, y, z }));
-                this.updateState({ loading: false, results, transformed: true });
+                if (typeof callback === 'function') {
+                    this.updateState({ loading: false });
+                    callback(results);
+                } else {
+                    this.updateState({ loading: false, results, transformed: true });
+                }
             } else {
                 this.showResponseError(json);
             }
@@ -627,7 +701,9 @@ const wrapped = controllerMixin(UIHandler, [
     'reset',
     'validate',
     'importFileContentsToInputTable',
-    'addFromSource'
+    'addFromSource',
+    'swapCoordinates',
+    'setPagination'
 ]);
 
 export { wrapped as ViewHandler };

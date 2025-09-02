@@ -80,6 +80,7 @@ Oskari.registerLocalization(
                 "input": "Coordinates to be transformed",
                 "output": "Result coordinates",
                 "rows": "Rows",
+                "outdated": "The selections or coordinates have changed. Transform coordinates to get updated results.",
                 "clearTables": "Remove all coordinates",
                 "confirmClear": "Are you sure you want to remove all coordinates from tables?"
             },
@@ -88,12 +89,12 @@ Oskari.registerLocalization(
                     "title": "Warning!",
                     "3DTo2D": "The selected input information contains height values, but the output information does not. Output coordinates will therefore not include height values. Do you want to continue?",
                     "2DTo3D": "The selected output information contains height values, but the input information does not. The height values 0 and height system N2000 will be added to the input information. Do you want to continue?",
-                    "xyz": "No height system has been selected for the input coordinate system. It is not possible to transform this input information into a projected 3D system.",
                     "largeFile": "The transformation of large files can take several minutes."
                 },
                 "validateErrors": {
                     "title": "Error!", // Error in coordinate system selections
                     "message": "Selections are incomplete or contain errors. Note the following requirements and try again.",
+                    "xyz": "No height system has been selected for the input coordinate system. It is not possible to transform this input information into a projected 3D system.",
                     "crs": "A geodetic coordinate reference system must be selected both in the input and the output information.",
                     "noInputData": "No input coordinates.",
                     "noInputFile": "The file containing input information must be selected.",
@@ -164,11 +165,7 @@ Oskari.registerLocalization(
                 "info" : "The coordinate reference system of the map is ETRS-TM35FIN. Coordinates have been placed on the map using this coordinate reference system. With the location, the coordinates are shown numerically in the input and/or output coordinate reference system. ",
                 "errorTitle": "Error in showing positions",
                 "noCoordinates": "No coordinates available to be shown on the map",
-                "noSrs": "A geodetic coordinate reference system must be selected in input properties in order to show points on the map.",
-                "lon": "Lon",
-                "lat": "Lat",
-                "north": "N",
-                "east": "E"
+                "noSrs": "A geodetic coordinate reference system must be selected in input properties in order to show points on the map."
             },
             "select":{
                 "title": "Select locations on the map",
@@ -182,6 +179,7 @@ Oskari.registerLocalization(
             "export": "Save to file",
             "minimizeSrs": "Hide coordinate reference system extra selections",
             "minimizedSrs": "Show all coordinate reference system selections",
+            "axisFlip": "Coordinates reversed",
             "search": "Search using name or EPSG code",
             "select": "Select",
             "cancel": "Cancel",
@@ -207,7 +205,7 @@ Oskari.registerLocalization(
                 "coordinateSeparator": "Field separator",
                 "headerCount": "Number of header rows",
                 "decimalPrecision": "Decimal precision",
-                "reverseCoordinates": "Coordinates reversed",
+                "axisFlip": "Coordinates reversed",
                 "useId": { // Use identifier, Use id infront
                     "input": "Coordinates contain identifiers",
                     "generate": "Create identifers",
@@ -387,7 +385,7 @@ Oskari.registerLocalization(
                 ],
                 "listItems" : []
             },
-            "reverseCoordinates":{
+            "axisFlip":{
                 "title":"Reversed coordinates",
                 "info": "",
                 "paragraphs": [
