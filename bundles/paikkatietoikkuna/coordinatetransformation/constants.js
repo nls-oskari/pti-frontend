@@ -85,17 +85,25 @@ export const DMS = ['\u00B0', '\u0027', '\u0022'];
 export const DATUM = [
     {
         value: 'KKJ',
-        label: 'KKJ'
+        label: 'KKJ',
+        alias: 'Kartastokoordinaattijarjestelma (1966)',
+        epsg: 'EPSG:6123'
     }, {
         value: 'EUREF-FIN',
-        label: 'EUREF-FIN'
+        label: 'EUREF-FIN',
+        epsg: 'EPSG:1391'
+    }, {
+        value: 'ETRS89',
+        label: 'ETRS89',
+        alias: 'European Terrestrial Reference System 1989',
+        epsg: 'EPSG:6258'
     }
 ];
 export const SYSTEM = [
     {
         value: 'PROJ_2D',
         loc: 'flyout.coordinateSystem.coordinateSystem.proj2D',
-        datums: ['KKJ', 'EUREF-FIN'],
+        datums: ['KKJ', 'EUREF-FIN', 'ETRS89'],
         unit: 'metric',
         dimension: 2
     }, {
@@ -123,23 +131,23 @@ export const PROJECTION = [
     {
         value: 'KKJ',
         label: 'KKJ',
-        datum: 'KKJ'
+        datums: ['KKJ']
     }, {
         value: 'TM',
         label: 'Transversal Mercator',
-        datum: 'EUREF-FIN'
+        datums: ['EUREF-FIN', 'ETRS89']
     }, {
         value: 'GK',
         label: 'Gauss-Kruger',
-        datum: 'EUREF-FIN'
+        datums: ['EUREF-FIN']
     }, {
         value: 'LAEA',
         label: 'Lambert Azimuthal Equal Area',
-        datum: 'EUREF-FIN'
+        datums: ['ETRS89']
     }, {
         value: 'LCC',
         label: 'Lambert Conic Conformal',
-        datum: 'EUREF-FIN'
+        datums: ['ETRS89']
     }
 ];
 
@@ -295,7 +303,7 @@ export const SRS = [
         value: 'EPSG:3035',
         label: 'ETRS-LAEA',
         name: 'ETRS89 / LAEA Europe', // ETRS89-extended / LAEA Europe
-        datum: 'EUREF-FIN',
+        datum: 'ETRS89',
         projection: 'LAEA',
         system: 'PROJ_2D',
         bounds: [1908523.29, 1137678.21, 6901611.5, 6872461.46], // europe
@@ -304,7 +312,7 @@ export const SRS = [
         value: 'EPSG:3034',
         label: 'ETRS-LCC',
         name: 'ETRS89 / LCC Europe', // ETRS89-extended / LCC Europe
-        datum: 'EUREF-FIN',
+        datum: 'ETRS89',
         projection: 'LCC',
         system: 'PROJ_2D',
         bounds: [1599590.5, 762627.9, 6567884.54, 6743948.43], // europe
@@ -313,7 +321,7 @@ export const SRS = [
         value: 'EPSG:3046',
         label: 'ETRS-TM34 (N,E)',
         name: 'ETRS89 / UTM zone 34N (N-E)',
-        datum: 'EUREF-FIN',
+        datum: 'ETRS89',
         projection: 'TM',
         system: 'PROJ_2D',
         bounds: [-3043798.18, 3680130.24, 2093536.19, 9528204.85], // europe
@@ -332,7 +340,7 @@ export const SRS = [
         value: 'EPSG:3047',
         label: 'ETRS-TM35 (N,E)',
         name: 'ETRS89 / UTM zone 35N (N-E)',
-        datum: 'EUREF-FIN',
+        datum: 'ETRS89',
         projection: 'TM',
         system: 'PROJ_2D',
         bounds: [-3646007.42, 3680723.36, 1528001.15, 9567789.69], // europe
@@ -341,7 +349,7 @@ export const SRS = [
         value: 'EPSG:25835',
         label: 'ETRS-TM35 (E,N)',
         name: 'ETRS89 / UTM zone 35N',
-        datum: 'EUREF-FIN',
+        datum: 'ETRS89',
         projection: 'TM',
         system: 'PROJ_2D',
         bounds: [-3646007.42, 3680723.36, 1528001.15, 9567789.69], // europe
@@ -350,7 +358,7 @@ export const SRS = [
         value: 'EPSG:3048',
         label: 'ETRS-TM36 (N,E)',
         name: 'ETRS89 / UTM zone 36N (N-E)',
-        datum: 'EUREF-FIN',
+        datum: 'ETRS89',
         projection: 'TM',
         system: 'PROJ_2D',
         bounds: [-4254095.6, 3680114.85, 966874.41, 9612110.39], // europe
