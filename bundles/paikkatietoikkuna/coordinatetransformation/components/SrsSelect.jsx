@@ -72,7 +72,7 @@ export const SrsSelect = ({ srs, heightSrs, type, minimal, controller }) => {
     };
 
     const systemOptions = datum ? SYSTEM.filter(opt => opt.datums.includes(datum)) : SYSTEM;
-    const projectionOptions = datum ? PROJECTION.filter(opt => opt.datum === datum) : PROJECTION;
+    const projectionOptions = datum ? PROJECTION.filter(opt => opt.datums.includes(datum)) : PROJECTION;
     const srsOptions = SRS_OPTIONS.filter(srs => {
         if (datum && datum !== srs.datum) {
             return false;
