@@ -19,8 +19,8 @@ const StyledWarningIcon = styled(WarningIcon)`
 
 const StyledTable = styled(Table)`
     td.ant-table-cell {
-        ${props => props.$editable && 'padding: 0 !important;'}
-        height: 24px;
+        padding: ${props => props.$editable ? '0px' : '4px 8px 2px'} !important;
+        height: 26px;
         font-size: 12px;
     }
     .ant-table-thead {
@@ -30,6 +30,7 @@ const StyledTable = styled(Table)`
 
 const StyledInput = styled(TextInput)`
     border: none;
+    padding: 4px 8px 2px;
     font-size: 12px;
 `;
 const Count = styled.span`
