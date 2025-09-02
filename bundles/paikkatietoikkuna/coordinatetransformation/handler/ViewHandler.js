@@ -6,7 +6,7 @@ import { showClipboardPopup } from '../view/ClipboardPopup';
 import { showMapSelectPopup, showMapPreviewPopup } from '../view/MapPopup';
 import { SOURCE, MAP, WATCH_JOB, WATCH_URL, TRANSFORM, FILE_DEFAULTS, SEPARATORS, ACTIONS, PAGINATION } from '../constants';
 import { stateToPTIArray, loadFile, validateTransform, validateFileSettings, parseCoordinateValue, is3DSystem, getLabelForMarker } from '../helper';
-import { parseFile, parseFileContents } from './FileParser';
+import { parseFile, parseFileContents, parseValue } from './FileParser';
 
 const getInitialState = () => ({
     loading: false,
@@ -523,7 +523,8 @@ class UIHandler extends StateHandler {
     }
 
     importFileContentsToInputTable () {
-        const { fileContents } = this.getState();
+        const { fileContents, import: importSettings } = this.getState();
+        const { unit } = importSettings;
         /* {
             delimiter,
             // TODO: we don't need this when we don't send the file to backend
@@ -543,6 +544,12 @@ class UIHandler extends StateHandler {
         const coordinates = fileContents.data.map(([x, y, z]) => ({ x, y, z }));
         // sets all coordinates from file so one source only
         this.updateState({ coordinates, sources: [ACTIONS.IMPORT] });
+        const coordinates = fileContents.data.map(([x, y, z]) => ({
+            x: parseValue(x, unit),
+            y: parseValue(y, unit),
+            z: parseValue(z, unit)
+        }));
+        this.updateState({ coordinates });
     }
 
     transformToMapSrs (values, callback) {

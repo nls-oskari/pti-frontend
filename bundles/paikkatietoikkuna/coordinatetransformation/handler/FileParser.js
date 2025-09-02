@@ -1,4 +1,4 @@
-import { SEPARATORS } from '../constants';
+import { DEGREE, SEPARATORS } from '../constants';
 
 export const parseFile = (file) => {
     return new Promise((resolve, reject) => {
@@ -47,6 +47,63 @@ export const parseFileContents = (lines = [], delimiter = ';', headerLineCount =
         lines,
         ...headerMetadata
     };
+};
+
+const HOUR_TO_MIN = 60;
+const HOUR_TO_SEC = 3600;
+// 2 * pi =~ 6.283185307179586476925286766559
+const PI2 = Math.PI * 2;
+const DEC_TO_GRAD = 10 / 9;
+const DEC_TO_RAD = PI2 / 360;
+
+// https://github.com/nls-oskari/kartta.paikkatietoikkuna.fi/blob/master/service-coordtransform/src/main/java/fi/nls/paikkatietoikkuna/coordtransform/CoordTransService.java#L25-L26
+export const parseValue = (value, format = 'default') => {
+    if (typeof value === 'undefined') {
+        return NaN;
+    }
+    const asNumber = parseFloat(value);
+    const unitItem = DEGREE.find(unit => unit.value === format);
+    if (!unitItem) {
+        return parseFloat(value);
+    }
+    if (format === 'gradian') {
+        return asNumber / DEC_TO_GRAD;
+    } else if (format === 'radian') {
+        return asNumber / DEC_TO_RAD;
+    } else if (!format?.startsWith('DD')) {
+        return asNumber;
+    }
+    // parsing the degree format
+    const degreeValue = value.replaceAll(' ', '');
+    const degreeFormat = format.replaceAll(' ', '');
+    if (degreeFormat === 'DD') {
+        return asNumber;
+    } else if (degreeFormat === 'DDMM') {
+        // value should be a string of length 4+
+        if (degreeValue.length < 4) {
+            return NaN;
+        }
+        const dd = parseFloat(degreeValue.substring(0, 2));
+        const mm = parseFloat(degreeValue.substring(2));
+        if (isNaN(dd) || isNaN(mm)) {
+            return NaN;
+        }
+        return dd + mm / HOUR_TO_MIN;
+    } else if (degreeFormat === 'DDMMSS') {
+        // value should be a string of length 5+
+        if (degreeValue.length < 5) {
+            return NaN;
+        }
+        const dd = parseFloat(degreeValue.substring(0, 2));
+        const mm = parseFloat(degreeValue.substring(2, 4));
+        const ss = parseFloat(degreeValue.substring(4));
+        if (isNaN(dd) || isNaN(mm) || isNaN(ss)) {
+            return NaN;
+        }
+        return dd + (mm / HOUR_TO_MIN) + (ss / HOUR_TO_SEC);
+    }
+
+    return asNumber;
 };
 
 const interpretFileContents = (lines = []) => {

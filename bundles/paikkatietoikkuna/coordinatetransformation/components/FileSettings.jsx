@@ -16,14 +16,12 @@ const FILE_INPUT_PROPS = {
 };
 
 const OPTIONS = {
-    importSelect: ['decimalSeparator', 'coordinateSeparator'],
-    importCheckbox: ['prefixId', 'axisFlip'],
+    importSelect: ['coordinateSeparator', 'decimalSeparator'],
+    importCheckbox: ['prefixId' /*, 'axisFlip' */],
     exportSelect: ['decimalCount', 'decimalSeparator', 'coordinateSeparator', 'lineSeparator'],
     exportCheckbox: ['prefixId', 'axisFlip', 'writeHeader', 'writeLineEndings', 'writeCardinals'],
     options: {...SEPARATORS, decimalCount: DECIMAL, unit: DEGREE }
 };
-
-const IMPORT = ['headerLineCount', 'prefixId', 'axisFlip'];
 
 const Content = styled.div`
     display: flex;
@@ -63,10 +61,10 @@ export const ImportFile = ({ import: values, inputSrs, files, fileContents, cont
         <Content>
             <FileInput mandatory onFiles={controller.setFiles} files={files} { ...FILE_INPUT_PROPS } />
             <LabeledInput number min={0} label='fileSettings.options.headerLineCount' value={values.headerLineCount} onChange={value => onChange('headerLineCount', value)} controller={controller}/>
-            { showDegreeUnit(inputSrs) && <SelectOption id='unit' controller={controller} onChange={onChange} value={values.unit}/> }
             { OPTIONS.importSelect.map(id => <SelectOption key={id} id={id} controller={controller} onChange={onChange} value={values[id]}/>)}
+            { showDegreeUnit(inputSrs) && <SelectOption id='unit' controller={controller} onChange={onChange} value={values.unit}/> }
             { OPTIONS.importCheckbox.map(id => <CheckboxOption key={id} id={id} controller={controller} onChange={onChange} checked={values[id]}/>)}
-            <FilePreview fileContents={fileContents} />
+            <FilePreview fileContents={fileContents} dataFormat={values.unit} />
         </Content>
     );
 };
