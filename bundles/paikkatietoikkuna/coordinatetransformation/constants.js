@@ -144,7 +144,7 @@ export const PROJECTION = [
 ];
 
 // https://www.maanmittauslaitos.fi/kartat-ja-paikkatieto/koordinaatit-ja-paikannus/epsg-koodit-ja-proj-muunnosohjelma
-// bounds:[minx, miny, maxx, maxy]
+// projected bounds:[minx, miny, maxx, maxy] from https://epsg.io/[xxxx]
 export const SRS = [
     // newer GK EPSG-codes which have false easting 500000 prefixed with zone number -> GK19 19500000
     // GK replaced is the old one, which have always false easting 500000
@@ -155,7 +155,7 @@ export const SRS = [
         datum: 'EUREF-FIN',
         projection: 'GK',
         system: 'PROJ_2D',
-        bounds: [16136220.08, 4245436.94, 19729336.74, 9392386.51],
+        bounds: [19503041.74, 6524848.85, 20224215.96, 7828409.49],
         axes: ['N', 'E'],
         alias: 'ETRS89 / GK19FIN, valeitä (false easting) 19 500 00 m',
         replaced: 'EPSG:3126'
@@ -166,7 +166,7 @@ export const SRS = [
         datum: 'EUREF-FIN',
         projection: 'GK',
         system: 'PROJ_2D',
-        bounds: [17036139.71, 4284384.64, 20718673.04, 9388493.84],
+        bounds: [20446878.68, 6524866.44, 21167083.8,7820883.59],
         axes: ['N', 'E'],
         alias: 'ETRS89 / GK20FIN, valeitä (false easting) 20 500 00 m',
         replaced: 'EPSG:3127'
@@ -177,7 +177,7 @@ export const SRS = [
         datum: 'EUREF-FIN',
         projection: 'GK',
         system: 'PROJ_2D',
-        bounds: [17935765.83, 4324906.92, 21707943.90, 9384787.32],
+        bounds: [21389145.54, 6524865.85, 22109853.34, 7813977.57],
         axes: ['N', 'E'],
         alias: 'ETRS89 / GK21FIN, valeitä (false easting) 21 500 00 m',
         replaced: 'EPSG:3128'
@@ -188,7 +188,7 @@ export const SRS = [
         datum: 'EUREF-FIN',
         projection: 'GK',
         system: 'PROJ_2D',
-        bounds: [18835101.07, 4367049.45, 22697152.55, 9381268.03],
+        bounds: [22331428.09, 6524848.63, 23052533.62, 7807692.12],
         axes: ['N', 'E'],
         alias: 'ETRS89 / GK22FIN, valeitä (false easting) 22 500 00 m',
         replaced: 'EPSG:3129'
@@ -199,7 +199,7 @@ export const SRS = [
         datum: 'EUREF-FIN',
         projection: 'GK',
         system: 'PROJ_2D',
-        bounds: [19734149.31, 4410859.98, 23686302.23, 9377936.99],
+        bounds: [23273734.53, 6524847.66, 23995133.53, 7802027.86],
         axes: ['N', 'E'],
         alias: 'ETRS89 / GK23FIN, valeitä (false easting) 23 500 00 m',
         replaced: 'EPSG:3130'
@@ -210,7 +210,7 @@ export const SRS = [
         datum: 'EUREF-FIN',
         projection: 'GK',
         system: 'PROJ_2D',
-        bounds: [20632915.73, 4456388.39, 24675396.21, 9374795.15],
+        bounds: [24216073.12, 6524862.94, 24937661.81, 7796985.36],
         axes: ['N', 'E'],
         alias: 'ETRS89 / GK24FIN, valeitä (false easting) 24 500 00 m',
         replaced: 'EPSG:3131'
@@ -221,7 +221,7 @@ export const SRS = [
         datum: 'EUREF-FIN',
         projection: 'GK',
         system: 'PROJ_2D',
-        bounds: [21531406.93, 4503686.78, 25664437.76, 9371843.41],
+        bounds: [25158452.15, 6524869.62, 25880127.1, 7792565.1],
         axes: ['N', 'E'],
         alias: 'ETRS89 / GK25FIN, valeitä (false easting) 25 500 00 m',
         replaced: 'EPSG:3132'
@@ -232,7 +232,7 @@ export const SRS = [
         datum: 'EUREF-FIN',
         projection: 'GK',
         system: 'PROJ_2D',
-        bounds: [22429630.98, 4552809.52, 26653430.17, 9369082.63],
+        bounds: [26100880.01, 6524850.09, 26822537.91, 7793954.97],
         axes: ['N', 'E'],
         alias: 'ETRS89 / GK26FIN, valeitä (false easting) 26 500 00 m',
         replaced: 'EPSG:3133'
@@ -243,7 +243,7 @@ export const SRS = [
         datum: 'EUREF-FIN',
         projection: 'GK',
         system: 'PROJ_2D',
-        bounds: [23327597.57, 4603813.37, 27642376.73, 9366513.60],
+        bounds: [27043365.14, 6524846.81, 27764902.68, 7798580.62],
         axes: ['N', 'E'],
         alias: 'ETRS89 / GK27FIN, valeitä (false easting) 27 500 00 m',
         replaced: 'EPSG:3134'
@@ -254,7 +254,7 @@ export const SRS = [
         datum: 'EUREF-FIN',
         projection: 'GK',
         system: 'PROJ_2D',
-        bounds: [24225318.05, 4656757.53, 28631280.76, 9364137.06],
+        bounds: [27985916.09, 6524859.78, 28707229.74, 7803828.36],
         axes: ['N', 'E'],
         alias: 'ETRS89 / GK28FIN, valeitä (false easting) 28 500 00 m',
         replaced: 'EPSG:3135'
@@ -265,7 +265,7 @@ export const SRS = [
         datum: 'EUREF-FIN',
         projection: 'GK',
         system: 'PROJ_2D',
-        bounds: [25122805.55, 4711703.72, 29620145.58, 9361953.68],
+        bounds: [28928541.55, 6524873.73, 29649527.39, 7809697.67],
         axes: ['N', 'E'],
         alias: 'ETRS89 / GK29FIN, valeitä (false easting) 29 500 00 m',
         replaced: 'EPSG:3136'
@@ -276,7 +276,7 @@ export const SRS = [
         datum: 'EUREF-FIN',
         projection: 'GK',
         system: 'PROJ_2D',
-        bounds: [26020075.09, 4768716.31, 30608974.53, 9359964.10],
+        bounds: [29871250.3, 6524851.88, 30591803.86, 7816187.99],
         axes: ['N', 'E'],
         alias: 'ETRS89 / GK30FIN, valeitä (false easting) 30 500 00 m',
         replaced: 'EPSG:3137'
@@ -287,27 +287,27 @@ export const SRS = [
         datum: 'EUREF-FIN',
         projection: 'GK',
         system: 'PROJ_2D',
-        bounds: [26917143.71, 4827862.39, 31597770.94, 9358168.88],
+        bounds: [30814051.27, 6524846.28, 31534067.33, 7823298.65],
         axes: ['N', 'E'],
         alias: 'ETRS89 / GK31FIN, valeitä (false easting) 31 500 00 m',
         replaced: 'EPSG:3138'
     }, {
         value: 'EPSG:3035',
         label: 'ETRS-LAEA',
-        name: 'ETRS89 / LAEA Europe',
+        name: 'ETRS89 / LAEA Europe', // ETRS89-extended / LAEA Europe
         datum: 'EUREF-FIN',
         projection: 'LAEA',
         system: 'PROJ_2D',
-        bounds: [1896628.62, 1507846.05, 4656644.57, 6827128.02],
+        bounds: [1908523.29, 1137678.21, 6901611.5, 6872461.46], // europe
         axes: ['N', 'E']
     }, {
         value: 'EPSG:3034',
         label: 'ETRS-LCC',
-        name: 'ETRS89 / LCC Europe',
+        name: 'ETRS89 / LCC Europe', // ETRS89-extended / LCC Europe
         datum: 'EUREF-FIN',
         projection: 'LCC',
         system: 'PROJ_2D',
-        bounds: [1584884.54, 1150546.94, 4435373.08, 6675249.46],
+        bounds: [1599590.5, 762627.9, 6567884.54, 6743948.43], // europe
         axes: ['N', 'E']
     }, {
         value: 'EPSG:3046',
@@ -316,7 +316,7 @@ export const SRS = [
         datum: 'EUREF-FIN',
         projection: 'TM',
         system: 'PROJ_2D',
-        bounds: [-3062460.04, 4323108.17, 707860.72, 9381033.40],
+        bounds: [-3043798.18, 3680130.24, 2093536.19, 9528204.85], // europe
         axes: ['N', 'E']
     }, {
         value: 'EPSG:10699',
@@ -325,7 +325,7 @@ export const SRS = [
         datum: 'EUREF-FIN',
         projection: 'TM',
         system: 'PROJ_2D',
-        bounds: [-3062460.04, 4323108.17, 707860.72, 9381033.40],
+        bounds: [389189.88, 6522255.9, 1109609.4, 7810851.98],
         axes: ['E', 'N'],
         replaced: 'EPSG:25834' // ETRS89 / UTM zone 34N
     }, {
@@ -335,7 +335,7 @@ export const SRS = [
         datum: 'EUREF-FIN',
         projection: 'TM',
         system: 'PROJ_2D',
-        bounds: [-3669433.90, 4601644.86, 642319.78, 9362767.00],
+        bounds: [-3646007.42, 3680723.36, 1528001.15, 9567789.69], // europe
         axes: ['N', 'E']
     }, {
         value: 'EPSG:25835',
@@ -344,7 +344,7 @@ export const SRS = [
         datum: 'EUREF-FIN',
         projection: 'TM',
         system: 'PROJ_2D',
-        bounds: [-3669433.90, 4601644.86, 642319.78, 9362767.00],
+        bounds: [-3646007.42, 3680723.36, 1528001.15, 9567789.69], // europe
         axes: ['E', 'N']
     }, {
         value: 'EPSG:3048',
@@ -353,7 +353,7 @@ export const SRS = [
         datum: 'EUREF-FIN',
         projection: 'TM',
         system: 'PROJ_2D',
-        bounds: [-4283197.87, 4949558.27, 575249.45, 9351421.46],
+        bounds: [-4254095.6, 3680114.85, 966874.41, 9612110.39], // europe
         axes: ['N', 'E']
     }, {
         value: 'EPSG:10702',
@@ -362,7 +362,7 @@ export const SRS = [
         datum: 'EUREF-FIN',
         projection: 'TM',
         system: 'PROJ_2D',
-        bounds: [-4283197.87, 4949558.27, 575249.45, 9351421.46],
+        bounds: [-299713.56, 6523093.09, 446414.83, 7836242.3],
         axes: ['E', 'N'],
         replaced: 'EPSG:25836' // ETRS89 / UTM zone 36N
     }, {
@@ -372,7 +372,7 @@ export const SRS = [
         datum: 'EUREF-FIN',
         projection: 'TM',
         system: 'PROJ_2D',
-        bounds: [-3669433.90, 4601644.86, 642319.78, 9362767.00],
+        bounds: [43547.79, 6522236.87, 764796.72, 7795461.19],
         axes: ['E', 'N'],
         alias: 'ETRS89 / TM35FIN(E,N)'
     }, {
@@ -382,7 +382,7 @@ export const SRS = [
         datum: 'EUREF-FIN',
         projection: 'TM',
         system: 'PROJ_2D',
-        bounds: [-3669433.90, 4601644.86, 642319.78, 9362767.00],
+        bounds: [43547.79, 6522236.87, 764796.72, 7795461.19],
         axes: ['N', 'E'],
         alias: 'ETRS89 / TM35FIN(N,E)'
     }, {
@@ -392,7 +392,7 @@ export const SRS = [
         datum: 'EUREF-FIN',
         projection: '',
         system: 'GEOG_2D',
-        bounds: [-16.1, 32.88, 39.65, 84.17],
+        bounds: [19.08, 58.84, 31.59, 70.09],
         axes: ['φ', 'λ'],
         replaced: 'EPSG:4258'
     }, {
@@ -402,7 +402,7 @@ export const SRS = [
         datum: 'EUREF-FIN',
         projection: '',
         system: 'GEOG_3D',
-        bounds: [-16.1, 32.88, 39.65, 84.17],
+        bounds: [19.08, 58.84, 31.59, 70.09],
         axes: ['φ', 'λ', 'h'],
         replaced: 'EPSG:4937'
     }, {
@@ -412,7 +412,7 @@ export const SRS = [
         datum: 'EUREF-FIN',
         projection: '',
         system: 'PROJ_3D',
-        bounds: [5151420.52, -1486881.13, 500495.11, 414781.77],
+        bounds: [1855677.68, 712122.25, 3126605.61, 1733040.37],
         axes: ['X', 'Y', 'Z'],
         replaced: 'EPSG:4936'
     }, {
@@ -423,7 +423,7 @@ export const SRS = [
         datum: 'KKJ',
         projection: 'KKJ',
         system: 'PROJ_2D',
-        bounds: [569217.09, 6663791.81, 583029.96, 6693054.88],
+        bounds: [547043.17, 6627102.47, 1260363.75, 7836788.32],
         axes: ['N', 'E']
     }, {
         value: 'EPSG:2391',
@@ -433,7 +433,7 @@ export const SRS = [
         datum: 'KKJ',
         projection: 'KKJ',
         system: 'PROJ_2D',
-        bounds: [1415885.57, 6628437.53, 1559300.06, 7695112.84],
+        bounds: [1400957.88, 6626458.25, 2093591.36, 7814216.46],
         axes: ['N', 'E']
     }, {
         value: 'EPSG:2392',
@@ -443,7 +443,7 @@ export const SRS = [
         datum: 'KKJ',
         projection: 'KKJ',
         system: 'PROJ_2D',
-        bounds: [2415851.96, 6627314.46, 2560464.61, 7647148.92],
+        bounds: [2232435.81, 6626492.03, 2925991.46, 7797229.5],
         axes: ['N', 'E']
     }, {
         value: 'EPSG:2393',
@@ -452,7 +452,7 @@ export const SRS = [
         datum: 'KKJ',
         projection: 'KKJ',
         system: 'PROJ_2D',
-        bounds: [3064557.21, 6651895.29, 3674549.99, 7785726.70],
+        bounds: [3064277.44, 6626471.36, 3757806.74, 7798047.82],
         axes: ['N', 'E']
     }, {
         value: 'EPSG:2394',
@@ -462,7 +462,7 @@ export const SRS = [
         datum: 'KKJ',
         projection: 'KKJ',
         system: 'PROJ_2D',
-        bounds: [4418851.11, 6759862.03, 4557959.34, 7748619.72],
+        bounds: [3896717.7, 6626476.77, 4589271.75, 7815362.72],
         axes: ['N', 'E']
     }, {
         value: 'EPSG:3387',
@@ -472,7 +472,7 @@ export const SRS = [
         datum: 'KKJ',
         projection: 'KKJ',
         system: 'PROJ_2D',
-        bounds: [5423705.81, 6970442.95, 5428707.25, 6989284.23],
+        bounds: [4729999.83, 6627321.29, 5446273.48, 7838261.51],
         axes: ['N', 'E']
     }, {
         value: 'EPSG:4123', // KKJ_GEO
@@ -496,6 +496,7 @@ export const SRS_C = [
         system: 'PROJ_2D',
         srs: 'EPSG:2393',
         srsHeight: 'EPSG:5717',
+        bounds: [3064557.21, 6626355.8, 3758085.96, 7797932.96],
         axes: ['N', 'E', 'H']
     }, {
         value: 'EPSG:3902',
@@ -506,6 +507,7 @@ export const SRS_C = [
         system: 'PROJ_2D',
         srs: 'EPSG:5048',
         srsHeight: 'EPSG:5717',
+        bounds: [64562.79, 6623573.95, 757812.73, 7794679.58],
         axes: ['N', 'E', 'H']
     }, {
         value: 'EPSG:3903',
@@ -516,6 +518,7 @@ export const SRS_C = [
         system: 'PROJ_2D',
         srs: 'EPSG:5048',
         srsHeight: 'EPSG:3900',
+        bounds: [64562.79, 6623573.95, 757812.73, 7794679.58],
         axes: ['N', 'E', 'H']
     }, {
         value: 'EPSG:10774',
@@ -526,6 +529,7 @@ export const SRS_C = [
         system: 'PROJ_2D',
         srs: 'EPSG:3067',
         srsHeight: 'EPSG:3900',
+        bounds: [64562.79, 6623573.95, 757812.73, 7794679.58],
         axes: ['E', 'N', 'H']
     }, {
         value: 'EPSG:10691',
@@ -536,6 +540,7 @@ export const SRS_C = [
         system: 'GEOG_2D',
         srs: 'EPSG:10690',
         srsHeight: 'EPSG:5717',
+        bounds: [19.24, 59.75, 31.59, 70.09],
         axes: ['φ', 'λ', 'H'],
         replaced: 'EPSG:7409' // ETRS89 + EVRF2000 height
     }, {
@@ -547,6 +552,7 @@ export const SRS_C = [
         system: 'GEOG_2D',
         srs: 'EPSG:10690',
         srsHeight: 'EPSG:3900',
+        bounds: [19.24, 59.75, 31.59, 70.09],
         axes: ['φ', 'λ', 'H'],
         replaced: 'EPSG:7423' // ETRS89 + EVRF2007 height
     }
