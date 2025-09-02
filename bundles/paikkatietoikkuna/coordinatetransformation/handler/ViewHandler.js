@@ -148,10 +148,10 @@ class UIHandler extends StateHandler {
     }
 
     updateCoordinate (index, coordinate) {
-        const coordinates = [...this.getState().coordinates];
-        // TODO: validate x,y,z getDimension (remove keys with empty value??)
-        coordinates[index] = coordinate;
-        // const updated = coordinates.map((c, i) => i === index ? coordinate : c);
+        const updated = [...this.getState().coordinates];
+        updated[index] = coordinate;
+        // fill empty/undefined with object
+        const coordinates = updated.map(c => c ? c : { invalid: true });
         this.addSourceToState('table');
         this.updateState({ coordinates, transformed: false });
     }
