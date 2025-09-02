@@ -541,15 +541,13 @@ class UIHandler extends StateHandler {
             alert('NOPE');
             return;
         }
-        const coordinates = fileContents.data.map(([x, y, z]) => ({ x, y, z }));
-        // sets all coordinates from file so one source only
-        this.updateState({ coordinates, sources: [ACTIONS.IMPORT] });
         const coordinates = fileContents.data.map(([x, y, z]) => ({
             x: parseValue(x, unit),
             y: parseValue(y, unit),
             z: parseValue(z, unit)
         }));
-        this.updateState({ coordinates });
+        // sets all coordinates from file so one source only
+        this.updateState({ coordinates, sources: [ACTIONS.IMPORT] });
     }
 
     transformToMapSrs (values, callback) {
