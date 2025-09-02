@@ -185,7 +185,7 @@ class UIHandler extends StateHandler {
     swapCoordinates () {
         const { coordinates } = this.getState();
         const swapped = coordinates.map(c => ({ ...c, x: c.y, y: c.x }));
-        this.updateState({ coordinates: swapped })
+        this.updateState({ coordinates: swapped });
     }
 
     // TODO: refactor
@@ -337,7 +337,7 @@ class UIHandler extends StateHandler {
         if (id === 'store') {
             const coordinates = this.instance.getMapCoordinates();
             this.instance.setMapSelectionMode();
-            this.addSourceToState(ACTIONS.MAP)
+            this.addSourceToState(ACTIONS.MAP);
             this.updateState({ coordinates, transformed: false });
         }
         if (Object.values(MAP).includes(id)) {
@@ -379,7 +379,7 @@ class UIHandler extends StateHandler {
                 coordinates: toShow,
                 inputSrs,
                 outputSrs: mapSrs
-            },callback);
+            }, callback);
         }
     }
 
