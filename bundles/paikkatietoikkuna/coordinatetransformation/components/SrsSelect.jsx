@@ -20,7 +20,7 @@ const SelectWrapper = styled.div`
     flex-flow: row nowrap;
     gap: 1em;
 `;
-const filter = (input, {label, value, reversedEpsg}) => `${label} ${value} ${reversedEpsg}`.toLowerCase().includes(input.toLowerCase());
+const filter = (input, {label, value, replaced=''}) => `${label} ${value} ${replaced}`.toLowerCase().includes(input.toLowerCase());
 
 const Srs = ({ srs, options, onChange, controller, block = false }) => {
     const [isOpen, setOpen] = useState(false);
