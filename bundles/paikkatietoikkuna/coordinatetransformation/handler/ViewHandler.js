@@ -555,7 +555,7 @@ class UIHandler extends StateHandler {
     }
 
     exportResultsToFile () {
-        const errors = validateFileSettings(state, 'export');
+        const errors = validateFileSettings(this.getState(), 'export');
         if (errors.length) {
             this.showValidationError(errors);
             return false;
