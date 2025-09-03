@@ -28,6 +28,15 @@ export const getSrsUnit = srs => {
     return unit || 'metric';
 };
 
+const validateCoordinate = (coord, is3D) => {
+    if (coord.valid === false) {
+        return false;
+    }
+    const { x, y, z } = coord;
+    const array = is3D ? [x, y, z] : [x, y];
+    return !array.some(c => typeof c !== 'number' || isNaN(c));
+};
+
 export const validateTransform = (state) => {
     const { inputSrs, outputSrs, inputHeightSrs, outputHeightSrs, coordinates } = state;
     const errors = [];
