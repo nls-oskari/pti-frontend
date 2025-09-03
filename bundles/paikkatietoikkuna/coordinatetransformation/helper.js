@@ -266,8 +266,11 @@ export const stateToPTIArray = (state, transformType, toFile) => {
 };
 
 export const parseCoordinateValue = value => {
-    if (typeof value === 'number' || !value) {
+    if (typeof value === 'number') {
         return value;
+    }
+    if (!value) {
+        return NaN;
     }
     // TODO: Oskari.util has only mehtod for point => use fake point[1]
     // TODO: or DMS some value includes dms
