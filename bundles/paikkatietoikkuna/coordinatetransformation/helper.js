@@ -152,12 +152,14 @@ export const getSystemsFromCompound = (epsg) => {
     return null;
 };
 
-export const isCoordInBounds = (srs, coord) => {
-    const { bounds } = SRS.find(s => s.value === srs) || {};
+export const validateCoordInBounds = (coord, srs) => {
+    const { bounds, axes } = SRS.find(s => s.value === srs) || {};
     if (!bounds || bounds.length !== 4) {
         return true;
     }
-    const { x, y } = coord;
+    const swap = ['N', 'φ', 'Y'].some(axis => axis === axes[0]);
+    const x = swap ? coord.y : coord.x;
+    const y = swap ? coord.x : coord.y;
     return bounds[0] <= x && x <= bounds[2] && bounds[1] <= y && y <= bounds[3];
 };
 
