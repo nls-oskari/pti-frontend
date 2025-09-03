@@ -80,6 +80,7 @@ Oskari.registerLocalization(
                 "input": "Coordinates to be transformed",
                 "output": "Result coordinates",
                 "rows": "Rows",
+                "outdated": "The selections or coordinates have changed. Transform coordinates to get updated results.",
                 "clearTables": "Remove all coordinates",
                 "confirmClear": "Are you sure you want to remove all coordinates from tables?"
             },
@@ -88,12 +89,12 @@ Oskari.registerLocalization(
                     "title": "Warning!",
                     "3DTo2D": "The selected input information contains height values, but the output information does not. Output coordinates will therefore not include height values. Do you want to continue?",
                     "2DTo3D": "The selected output information contains height values, but the input information does not. The height values 0 and height system N2000 will be added to the input information. Do you want to continue?",
-                    "xyz": "No height system has been selected for the input coordinate system. It is not possible to transform this input information into a projected 3D system.",
                     "largeFile": "The transformation of large files can take several minutes."
                 },
                 "validateErrors": {
                     "title": "Error!", // Error in coordinate system selections
                     "message": "Selections are incomplete or contain errors. Note the following requirements and try again.",
+                    "xyz": "No height system has been selected for the input coordinate system. It is not possible to transform this input information into a projected 3D system.",
                     "crs": "A geodetic coordinate reference system must be selected both in the input and the output information.",
                     "noInputData": "No input coordinates.",
                     "noInputFile": "The file containing input information must be selected.",
@@ -136,6 +137,7 @@ Oskari.registerLocalization(
             "confirmChange": "Input coordinates will be removed. Do you want to continue?",
             "file": {
                 "label": "From file",
+                "button": "Import from file",
                 "info":  "Select the file containing the input information and its settings.",
                 "action": "edit selections"
             },
@@ -145,9 +147,16 @@ Oskari.registerLocalization(
             },
             "map": {
                 "label": "Select locations on the map",
+                "button": "Select locations on the map",
                 "info": "Select coordinates to be transformed on the map by clicking them.",
                 "confirmSelect": "The input coordinate reference system is automatically changed to ETRS-TM35FIN. Your selections for the input coordinate reference system will be replaced. Do you want to continue?",
                 "action": "select more"
+            },
+            "clipboard": {
+                "title": "Import coordinates from clipboard",
+                "button": "Import from clipboard",
+                "info":  "Import coordinates from clipboard (csv, excel)",
+                "placeholder": "Enter coordinates here. Each row should contain one coordinate. Use semicolon or tab as a separator. Data can be imported in following format:\n383699,477;6676232,276;13,4"
             }
         },
         "mapMarkers":{
@@ -156,11 +165,7 @@ Oskari.registerLocalization(
                 "info" : "The coordinate reference system of the map is ETRS-TM35FIN. Coordinates have been placed on the map using this coordinate reference system. With the location, the coordinates are shown numerically in the input and/or output coordinate reference system. ",
                 "errorTitle": "Error in showing positions",
                 "noCoordinates": "No coordinates available to be shown on the map",
-                "noSrs": "A geodetic coordinate reference system must be selected in input properties in order to show points on the map.",
-                "lon": "Lon",
-                "lat": "Lat",
-                "north": "N",
-                "east": "E"
+                "noSrs": "A geodetic coordinate reference system must be selected in input properties in order to show points on the map."
             },
             "select":{
                 "title": "Select locations on the map",
@@ -174,12 +179,22 @@ Oskari.registerLocalization(
             "export": "Save to file",
             "minimizeSrs": "Hide coordinate reference system extra selections",
             "minimizedSrs": "Show all coordinate reference system selections",
+            "axisFlip": "Coordinates reversed",
             "search": "Search using name or EPSG code",
             "select": "Select",
             "cancel": "Cancel",
             "done": "Done",
             "ok": "Ok",
             "close": "Close"
+        },
+        "confirm": {
+            "title": "Coordinate information selections",
+            "reset": "All coordinates and selections will be removed. Do you want to continue?",
+            "coordinates": "Input coordinates will be removed. Do you want to continue?",
+            "results": "Input coordinates will be removed and new transformation will be done with new selections. Do you want to continue?",
+            "mapSrs": "The input coordinate reference system is automatically changed to ETRS-TM35FIN. The input coordinates will be removed and your selections for the input coordinate reference system will be replaced. Do you want to continue?",
+            "change": "Keep other selections and coordinates",
+            "changeTooltip": "Note that keeping the selections and coordinates can lead to a situation where the results do not match the selections."
         },
         "fileSettings": {
             "rows": "rows",
@@ -190,7 +205,7 @@ Oskari.registerLocalization(
                 "coordinateSeparator": "Field separator",
                 "headerCount": "Number of header rows",
                 "decimalPrecision": "Decimal precision",
-                "reverseCoordinates": "Coordinates reversed",
+                "axisFlip": "Coordinates reversed",
                 "useId": { // Use identifier, Use id infront
                     "input": "Coordinates contain identifiers",
                     "generate": "Create identifers",
@@ -370,7 +385,7 @@ Oskari.registerLocalization(
                 ],
                 "listItems" : []
             },
-            "reverseCoordinates":{
+            "axisFlip":{
                 "title":"Reversed coordinates",
                 "info": "",
                 "paragraphs": [

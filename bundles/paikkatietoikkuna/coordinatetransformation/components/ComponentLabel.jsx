@@ -5,13 +5,14 @@ import { Label, Message} from 'oskari-ui';
 
 const StyledLabel = styled(Label)`
     font-weight: bold;
+    ${props => props.$height && `height: ${props.$height}px`}
 `;
 const Extra = styled.span`
     float: right;
 `;
 
-export const ComponentLabel  = ({ label, children }) => (
-    <StyledLabel>
+export const ComponentLabel  = ({ height, label, children }) => (
+    <StyledLabel $height={height}>
         <Message messageKey={label} />
         <Extra>
             { children }
@@ -20,5 +21,6 @@ export const ComponentLabel  = ({ label, children }) => (
 );
 
 ComponentLabel.propTypes = {
-    label: PropTypes.string.isRequired
+    label: PropTypes.string.isRequired,
+    height: PropTypes.number
 };

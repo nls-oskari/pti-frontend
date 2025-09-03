@@ -7,6 +7,9 @@ import { ComponentLabel } from './ComponentLabel';
 import { BUNDLE, DATUM, SYSTEM, PROJECTION, SRS, SRS_H } from '../constants';
 import { getDimension } from '../helper';
 
+// Use EPSG code as title
+const SRS_OPTIONS = SRS.map(opt => ({ ...opt, title: opt.value }));
+const HEIGHT_OPTIONS = SRS_H.map(opt => ({ ...opt, title: opt.value }));
 const Content = styled.div`
     display: flex;
     flex-direction: column;
@@ -17,7 +20,7 @@ const SelectWrapper = styled.div`
     flex-flow: row nowrap;
     gap: 1em;
 `;
-const filter = (input, {label, value, reversedEpsg}) => `${label} ${value} ${reversedEpsg}`.toLowerCase().includes(input.toLowerCase());
+const filter = (input, {label, value, replaced=''}) => `${label} ${value} ${replaced}`.toLowerCase().includes(input.toLowerCase());
 
 const Srs = ({ srs, options, onChange, controller, block = false }) => {
     const [isOpen, setOpen] = useState(false);
@@ -39,13 +42,15 @@ const Srs = ({ srs, options, onChange, controller, block = false }) => {
 
 export const SrsSelect = ({ srs, heightSrs, type, minimal, controller }) => {
     const heightDisabled = getDimension(srs) === 3;
-    const heightPH = <Message messageKey='flyout.coordinateSystem.heightSystem.none' />;
+    const heightPH = heightDisabled
+        ? SRS_OPTIONS.find(s => s.value === srs)?.label
+        : <Message messageKey='flyout.coordinateSystem.heightSystem.none' />;
     if (minimal) {
         return (
             <Content className={`t_srs_${type}`}>
                 <ComponentLabel label={`flyout.coordinateSystem.${type}.title`}/>
-                <Srs block srs={srs} options={SRS} onChange={val => controller.setSrs(type, val)} controller={controller}/>
-                <LabeledSelect block label='flyout.coordinateSystem.heightSystem.label' value={heightSrs} placeholder={heightPH} disabled={heightDisabled} info='heightSystem' options={SRS_H} onChange={val => controller.setHeightSrs(type, val)} controller={controller}/>
+                <Srs block srs={srs} options={SRS_OPTIONS} onChange={val => controller.setSrs(type, val)} controller={controller}/>
+                <LabeledSelect block label='flyout.coordinateSystem.heightSystem.label' value={heightSrs} placeholder={heightPH} disabled={heightDisabled} info='heightSystem' options={HEIGHT_OPTIONS} onChange={val => controller.setHeightSrs(type, val)} controller={controller}/>
             </Content>
         );
     }
@@ -67,8 +72,8 @@ export const SrsSelect = ({ srs, heightSrs, type, minimal, controller }) => {
     };
 
     const systemOptions = datum ? SYSTEM.filter(opt => opt.datums.includes(datum)) : SYSTEM;
-    const projectionOptions = datum ? PROJECTION.filter(opt => opt.datum === datum) : PROJECTION;
-    const srsOptions = SRS.filter(srs => {
+    const projectionOptions = datum ? PROJECTION.filter(opt => opt.datums.includes(datum)) : PROJECTION;
+    const srsOptions = SRS_OPTIONS.filter(srs => {
         if (datum && datum !== srs.datum) {
             return false;
         }
@@ -88,7 +93,7 @@ export const SrsSelect = ({ srs, heightSrs, type, minimal, controller }) => {
             <LabeledSelect localize label='flyout.coordinateSystem.coordinateSystem.label' info='coordinateSystem' value={system} options={systemOptions} onChange={onSystem} controller={controller}/>
             { system === 'PROJ_2D' && <LabeledSelect label='flyout.coordinateSystem.mapProjection.label' info='mapProjection' value={projection} options={projectionOptions} onChange={setProjection} controller={controller}/> }
             <Srs srs={srs} options={srsOptions} onChange={val => controller.setSrs(type, val)} controller={controller}/>
-            <LabeledSelect label='flyout.coordinateSystem.heightSystem.label' value={heightSrs} placeholder={heightPH} disabled={heightDisabled} info='heightSystem' options={SRS_H} onChange={val => controller.setHeightSrs(type, val)} controller={controller}/>
+            <LabeledSelect label='flyout.coordinateSystem.heightSystem.label' value={heightSrs} placeholder={heightPH} disabled={heightDisabled} info='heightSystem' options={HEIGHT_OPTIONS} onChange={val => controller.setHeightSrs(type, val)} controller={controller}/>
         </Content>
     );
 };

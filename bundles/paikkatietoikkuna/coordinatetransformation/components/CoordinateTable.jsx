@@ -1,24 +1,36 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { Message, TextInput } from 'oskari-ui';
+import { Message, TextInput, WarningIcon } from 'oskari-ui';
 import { ComponentLabel } from './ComponentLabel';
+import { IconButton } from 'oskari-ui/components/buttons';
 import { Table } from 'oskari-ui/components/Table';
-import { SRS, SRS_H, SYSTEM } from '../constants';
-import { getDimension } from '../helper';
+import { SwapOutlined } from '@ant-design/icons';
+import { SRS, SRS_H, ACTIONS } from '../constants';
 
 const COLUMNS = ['x', 'y', 'z'];
 const WIDTH = 360;
+const LABEL_HEIGHT = 34;
+
+const StyledWarningIcon = styled(WarningIcon)`
+    margin-right: 1em;
+    font-size: 16px;
+`;
 
 const StyledTable = styled(Table)`
     td.ant-table-cell {
-        ${props => props.$editable && 'padding: 0 !important;'}
-        height: 24px;
+        padding: ${props => props.$editable ? '0px' : '4px 8px 2px'} !important;
+        height: 26px;
         font-size: 12px;
     }
+    .ant-table-thead {
+        height: ${props => props.$large ? 52 : 34}px;
+    }
 `;
+
 const StyledInput = styled(TextInput)`
     border: none;
+    padding: 4px 8px 2px;
     font-size: 12px;
 `;
 const Count = styled.span`
@@ -39,7 +51,10 @@ const Cell = ({ value, item, onChange }) => {
     );
 };
 
-const getEmptyArray = size => [...Array(size)].map(() => ({}));
+const getFilledArray = (array, { pageSize = 10 }) => {
+    const empty = [...Array(pageSize - array.length % pageSize)].map(() => ({})); // .map((a,key) => ({...a, key }));
+    return [...array, ...empty];
+};
 
 const getColumn = (column, lonFirst, unit, dimension, editable, controller) => {
     let columnTitle = column;
@@ -56,11 +71,7 @@ const getColumn = (column, lonFirst, unit, dimension, editable, controller) => {
         width: dimension === 2 ? 180 : 120
     };
     const onEdit = (index, item, value) => {
-        if (value.includes('\t')) {
-            controller.pasteCoordinates(value);
-        } else {
-            controller.updateCoordinate(index, { ...item, [column]:  value });
-        }
+        controller.updateCoordinate(index, { ...item, [column]:  value });
     };
     // TODO: some styling for invalid coordinate??
     if (editable) {
@@ -72,72 +83,95 @@ const getColumn = (column, lonFirst, unit, dimension, editable, controller) => {
 const getColumns = (srs, heightSrs, controller) => {
     const { axes } = SRS.find(s => s.value === srs) || {};
     const { axis } = SRS_H.find(s => s.value === heightSrs) || {};
-    const columns = axes ? [...axes] : ['', ''];
+    const columnAxes = axes ? [...axes] : ['', ''];
     if (axis) {
-        columns.push(axis)
+        columnAxes.push(axis)
     }
-    const colWidth = WIDTH / columns.length;
-    const onEdit = (index, column, item, value) => {
-        if (value.includes('\t')) {
-            controller.pasteCoordinates(value);
-        } else {
-            controller.updateCoordinate(index, { ...item, [column]: value });
-        }
-    };
-    // TODO: if (optController) => props render
-    return columns.map((axis, i) => ({
-        title: axis ? <Message messageKey={`flyout.coordinateAxes.${axis}`}/> : axis,
-        dataIndex: COLUMNS[i],
-        width: colWidth,
-        render: controller
-            ? (value, item, index) => <StyledInput size='small' value={value} onChange={e => onEdit(index, COLUMNS[i], item, e.target.value)} onBlur={() => controller.parseInputCoordinate(index, COLUMNS[i])} />
-            : undefined
-    }));
+    const colWidth = WIDTH / columnAxes.length;
+    return columnAxes.map((axis, colIndex) => {
+        const col = COLUMNS[colIndex];
+        return {
+            title: axis ? <Message messageKey={`flyout.coordinateAxes.${axis}`}/> : axis,
+            dataIndex: col,
+            width: colWidth,
+            render: controller
+                ? (value, item, row) => <StyledInput size='small' value={value}
+                    status={value && isNaN(value) ? 'error' : ''}
+                    onChange={e => controller.updateCoordinate(row, { ...item, [col]: e.target.value })}
+                    onBlur={() => controller.parseInputCoordinate(row, col)} />
+                : undefined
+        };
+    });
 };
 
-export const CoordinateTable = ({ type, coordinates, srs, heightSrs, controller, editable }) => {
-    // TODO: internal state for pagination
-    // TODO: assumes pagination page size 10
-    const dataSource = [...coordinates, ...getEmptyArray(10 - coordinates.length % 10)]; // .map((a,key) => ({...a, key }));
-    const optController = editable ? controller : null;
-    const count = coordinates.filter(coord => !coord.invalid).length;
+export const CoordinatesTable = ({ coordinates, sources, inputSrs, inputHeightSrs, large, pagination, controller }) => {
+    const dataSource = getFilledArray(coordinates, pagination);
+    const fromFile = sources.includes(ACTIONS.IMPORT);
+    const optController = fromFile ? null : controller;
     return (
-        <Content className={`t_table_${type}`}>
-            <ComponentLabel label={`flyout.coordinateTable.${type}`}>
+        <Content className='t_table_input'>
+            <ComponentLabel height={LABEL_HEIGHT} label='flyout.coordinateTable.input'>
+                <IconButton
+                    icon={<SwapOutlined />}
+                    title={<Message messageKey='actions.axisFlip'/>}
+                    onClick={() => controller.swapCoordinates()} />
+            </ComponentLabel>
+            <StyledTable bordered
+                $editable={!fromFile}
+                $large={large}
+                columns={getColumns(inputSrs, inputHeightSrs, optController)}
+                dataSource={dataSource}
+                pagination={{ position: ['none'], ...pagination }}/>
+        </Content>
+    );
+};
+
+CoordinatesTable.propTypes = {
+    coordinates: PropTypes.array.isRequired,
+    sources: PropTypes.array.isRequired,
+    inputSrs: PropTypes.string,
+    inputHeightSrs: PropTypes.string,
+    controller: PropTypes.object.isRequired,
+    large: PropTypes.bool.isRequired,
+    pagination: PropTypes.object.isRequired
+};
+
+export const ResultsTable = ({ coordinates, results, outputSrs, outputHeightSrs, transformed, large, pagination, controller }) =>  {
+    const dataSource = getFilledArray(results, pagination);
+    const count = coordinates.filter(coord => coord && !coord.invalid).length;
+    const outdated = results.length > 0 && !transformed;
+    const validLengths = coordinates.length === results.length;
+    return (
+        <Content className='t_table_output'>
+            <ComponentLabel height={LABEL_HEIGHT} label='flyout.coordinateTable.output'>
+                {outdated &&
+                    <StyledWarningIcon tooltip={<Message messageKey='flyout.coordinateTable.outdated' />} />
+                }
                 <Count className='t_row_count'>{count}</Count>
                 <Message messageKey='flyout.coordinateTable.rows' />
             </ComponentLabel>
             <StyledTable bordered
-                $editable={editable}
-                columns={getColumns(srs, heightSrs, optController)}
+                $large={large}
+                columns={getColumns(outputSrs, outputHeightSrs)}
                 dataSource={dataSource}
-                pagination={{ hideOnSinglePage: true }}/>
+                pagination={{
+                    ...pagination,
+                    hideOnSinglePage: true,
+                    showSizeChanger: false,
+                    total: coordinates.length,
+                    onChange: (page, pageSize) => controller.setPagination(page, pageSize)
+                }}/>
         </Content>
     );
 };
 
-CoordinateTable.propTypes = {
+ResultsTable.propTypes = {
     coordinates: PropTypes.array.isRequired,
-    srs: PropTypes.string,
-    type: PropTypes.string.isRequired,
-    controller: PropTypes.object.isRequired
-};
-
-export const ResultTable = ({ coordinates, inputSrs, inputHeightSrs, results, outputSrs, outputHeightSrs }) =>  {
-    const inputCols = getColumns(inputSrs, inputHeightSrs);
-    const ouputCols = getColumns(outputSrs, outputHeightSrs);
-    let dataSource = [];
-    if (coordinates.length === results.length) {
-        dataSource = coordinates.map((coord, i) => ({ ...coord, ...results[i] }));
-    }
-    return (
-        <Content>
-            <ComponentLabel label='flyout.coordinateTable.output' />
-            <StyledTable bordered
-                $editable={false}
-                columns={[...inputCols, ...ouputCols ]}
-                dataSource={dataSource}
-                pagination={{ hideOnSinglePage: true }}/>
-        </Content>
-    );
+    results: PropTypes.array.isRequired,
+    outputSrs: PropTypes.string,
+    outputHeightSrs: PropTypes.string,
+    transformed: PropTypes.bool.isRequired,
+    controller: PropTypes.object.isRequired,
+    large: PropTypes.bool.isRequired,
+    pagination: PropTypes.object.isRequired
 };

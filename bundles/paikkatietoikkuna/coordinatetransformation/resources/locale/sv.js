@@ -80,6 +80,7 @@ Oskari.registerLocalization(
                 "input": "Koordinater som ska transformeras",
                 "output": "Resultatkoordinater",
                 "rows": "Rader",
+                "outdated": "Valen eller koordinaterna har ändrats. Transformera koordinaterna för att få uppdaterade resultat.",
                 "clearTables": "Ta bort alla koordinater",
                 "confirmClear": "Är du säker på att du vill ta bort alla koordinater från tabellerna?"
             },
@@ -88,12 +89,12 @@ Oskari.registerLocalization(
                     "title": "Observera!",
                     "3DTo2D": "I de utgångsuppgifter du valt finns höjdvärden, men inte i resultatuppgifterna. Höjvärden ingår alltså inte i resultatkoordinaterna. Vill du fortsätta?",
                     "2DTo3D": "I de resultatuppgifter du valt finns höjdvärden, men inte i utgångsuppgifterna. Utgångsmaterialet ges höjdvärdet 0 och höjdsystemet N2000. Vill du fortsätta?",
-                    "xyz": "I valen som berör utgångsreferenssystemet för koordinater finns inget höjdsystem. En omvandling till ett kartesiskt 3D-system kan inte göras.",
                     "largeFile": "Transformation av stora filer kan ta flera minuter."
                 },
                 "validateErrors": {
                     "title": "Fel!",
                     "message": "Det finns brister eller fel i valen. Beakta följande krav och försök på nytt.",
+                    "xyz": "I valen som berör utgångsreferenssystemet för koordinater finns inget höjdsystem. En omvandling till ett kartesiskt 3D-system kan inte göras.",
                     "crs": "Ett geodetiskt referenssystem för koordinater ska vara valt både i utgångs- och resultatuppgifterna.",
                     "noInputData": "Det finns inga koordinater som kan transformeras.",
                     "noInputFile": "Filen som innehåller utgångsmaterial ska vara vald.",
@@ -136,6 +137,7 @@ Oskari.registerLocalization(
             "confirmChange": "Koordinaterna som ska transformeras töms. Vill du fortsätta?",
             "file": {
                 "label": "Från fil",
+                "button": "Från fil",
                 "info":  "Välj filen med utgångsmaterialet och dess inställningar.",
                 "action": "redigera dina val"
             },
@@ -145,9 +147,16 @@ Oskari.registerLocalization(
             },
             "map": {
                 "label": "Välj lägen på kartan",
+                "button": "Välj lägen på kartan",
                 "info": "Du kan välja koordinater som ska transformeras genom att klicka på kartan",
                 "confirmSelect": "Uppgifterna om utgångsreferenssystemet för koordinater väljs automatiskt att vara i ETRS-TM35FIN. Dina val av utgångsreferenssystem för koordinater ersätts. Vill du fortsätta?",
                 "action": "välj fler"
+            },
+            "clipboard": {
+                "title": "Importera koordinater från urklipp",
+                "button": "Hämta från urklipp",
+                "info":  "Valitse lähtöaineiston sisältävä tiedosto ja sen asetukset.",
+                "placeholder": "Ange värden från urklippet här. En rad motsvarar ett koordinat. Separera värden med semikolon eller tabulator. Värden kan tilläggas i följande form:\n383699,477;6676232,276;13,4"
             }
         },
         "mapMarkers":{
@@ -156,11 +165,7 @@ Oskari.registerLocalization(
                 "info" : "Kartans referenssystem för koordinater är ETRS-TM35FIN. Koordinaterna har placerats på kartan med hjälp av detta referenssystem för koordinater. I samband med lägesanteckningen anges koordinaterna enligt utgångs- och/eller resultatreferenssystemet i siffror.",
                 "errorTitle": "Fel i visningen av positioner",
                 "noCoordinates": "Det finns inga koordinater att visa på kartan.",
-                "noSrs": "Ett geodetiskt referenssystem för koordinater måste ingå i utgångsuppgifterna för att kunna visa punkter på kartan.",
-                "lon": "Lon",
-                "lat": "Lat",
-                "north": "N",
-                "east": "E"
+                "noSrs": "Ett geodetiskt referenssystem för koordinater måste ingå i utgångsuppgifterna för att kunna visa punkter på kartan."
             },
             "select":{
                 "title": "Välj lägen på kartan",
@@ -174,12 +179,22 @@ Oskari.registerLocalization(
             "export": "Spara till fil",
             "minimizeSrs": "Dölj extra val för koordinatreferenssystem",
             "minimizedSrs": "Visa alla val av koordinatreferenssystem",
+            "axisFlip": "Omvända koordinater",
             "search": "Sök med namn eller EPSG-kod",
             "select": "Välj",
             "cancel": "Avbryt", //Ångra
             "done": "Färdig",
             "ok": "Ok",
             "close": "Stäng"
+        },
+        "confirm": {
+            "title": "Val av koordinatuppgifter",
+            "reset": "Alla koordinater och val kommer att tas bort. Vill du fortsätta?.",
+            "coordinates": "Koordinaterna som ska transformeras töms. Vill du fortsätta?",
+            "results": "Resultatkoordinater töms och ny transformation kommer att göras med nya val. Vill du fortsätta?",
+            "mapSrs": "Uppgifterna om utgångsreferenssystemet för koordinater väljs automatiskt att vara i ETRS-TM35FIN. Dina val av utgångsreferenssystem för koordinater ersätts. Vill du fortsätta?",
+            "change": "Behåll andra val och koordinater",
+            "changeTooltip": "Observera att om du behåller valen och koordinaterna kan det leda till att resultaten inte matchar valen."
         },
         "fileSettings": {
             "rows": "rader",
@@ -190,7 +205,7 @@ Oskari.registerLocalization(
                 "coordinateSeparator": "Skiljetecken för fält",
                 "headerCount": "Antal rubrikrader",
                 "decimalCount": "Decimalernas precision",
-                "reverseCoordinates": "Omvända koordinater",
+                "axisFlip": "Omvända koordinater",
                 "useId": { // Använd identifierare
                     "input": "Koordinater innehåller identifierare",
                     "generate": "Skapa identifierare",
@@ -369,7 +384,7 @@ Oskari.registerLocalization(
                 ],
                 "listItems" : []
             },
-            "reverseCoordinates":{
+            "axisFlip":{
                 "title":"Omvända koordinater",
                 "info": "X- och Y-koordinataxlarnas ordning avviker från den definierade ordningen.",
                 "paragraphs": [
