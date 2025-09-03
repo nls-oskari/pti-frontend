@@ -28,7 +28,7 @@ export const getSrsUnit = srs => {
     return unit || 'metric';
 };
 
-const validateCoordinate = (coord, is3D) => {
+export const validateCoordinate = (coord, is3D) => {
     if (coord.valid === false) {
         return false;
     }

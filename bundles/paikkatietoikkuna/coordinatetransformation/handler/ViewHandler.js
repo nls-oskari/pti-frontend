@@ -5,7 +5,7 @@ import { showConfirmPopup } from '../view/ConfirmPopup';
 import { showClipboardPopup } from '../view/ClipboardPopup';
 import { showMapSelectPopup, showMapPreviewPopup } from '../view/MapPopup';
 import { SOURCE, MAP, WATCH_JOB, WATCH_URL, FILE_DEFAULTS, SEPARATORS, ACTIONS, PAGINATION } from '../constants';
-import { stateToPTIArray, loadFile, validateTransform, parseCoordinateValue, is3DSystem, getLabelForMarker } from '../helper';
+import { stateToPTIArray, loadFile, validateTransform, validateCoordinate, parseCoordinateValue, is3DSystem, getDimension, getLabelForMarker } from '../helper';
 import { parseFile, parseFileContents, parseValue } from './FileParser';
 
 const getInitialState = () => ({
@@ -145,6 +145,13 @@ class UIHandler extends StateHandler {
     addCoordinate (coordinate) {
         const { coordinates } = this.getState();
         this.updateState({ coordinates: [...coordinates, coordinate] });
+    }
+
+    cleanInputCoordinates () {
+        const { coordinates, inputSrs, inputHeightSrs } = this.getState();
+        const input3D = getDimension(inputSrs, inputHeightSrs) === 3;
+        const cleaned = coordinates.filter(coord => validateCoordinate(coord, input3D));
+        this.updateState({ coordinates: cleaned });
     }
 
     updateCoordinate (index, coordinate) {
@@ -462,7 +469,11 @@ class UIHandler extends StateHandler {
         const listItems = warningKeys.map(key => this.loc(`flyout.transform.warnings.${key}`));
         const title = this.loc('flyout.transform.warnings.title');
         const paragraphs = [this.loc('flyout.transform.warnings.message')];
-        this.infoPopup = showInfoPopup(title, paragraphs, listItems, () => this.closeInfoPopup(), () => this.transformToArray());
+        const onConfirm = () => {
+            this.cleanInputCoordinates();
+            this.transformToArray();
+        };
+        this.infoPopup = showInfoPopup(title, paragraphs, listItems, () => this.closeInfoPopup(), onConfirm);
     }
 
     closeInfoPopup () {
