@@ -175,7 +175,7 @@ export const SRS = [
         datum: 'EUREF-FIN',
         projection: 'GK',
         system: 'PROJ_2D',
-        bounds: [20446878.68, 6524866.44, 21167083.8,7820883.59],
+        bounds: [20446878.68, 6524866.44, 21167083.8, 7820883.59],
         axes: ['N', 'E'],
         alias: 'ETRS89 / GK20FIN, valeitä (false easting) 20 500 00 m',
         replaced: 'EPSG:3127'
