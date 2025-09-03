@@ -28,34 +28,31 @@ export const getSrsUnit = srs => {
     return unit || 'metric';
 };
 
-export const validateTransform = (state, type) => {
-    if (type === 'F2R') {
-        return validateFileSettings(state, 'import');
-    }
-    if (type === 'A2A') {
-        return validateSelections(state);
-    }
-    if (type === 'F2A') {
-        return [...validateSelections(state), ...validateFileSettings(state, 'import')];
-    }
-    // import settings are validated on import
-    if (type === 'A2F' || type === 'F2F') {
-        return [...validateSelections(state), ...validateFileSettings(state, 'export')];
-    }
-    return ['message'];
-};
-const validateSelections = (state) => {
-    const { inputSrs, outputSrs, inputHeightSrs } = state;
+export const validateTransform = (state) => {
+    const { inputSrs, outputSrs, inputHeightSrs, outputHeightSrs, coordinates } = state;
     const errors = [];
-    // TODO: set import, set export, transform => split ??
+    const warnings = [];
+    const input3D = getDimension(inputSrs, inputHeightSrs) === 3;
+    const output3D = getDimension(outputSrs, outputHeightSrs) === 3;
+
     if (!inputSrs || !outputSrs) {
         errors.push('crs');
     }
-    const { system } = SRS.find(s => s.value === outputSrs) || {};
-    if (getDimension(inputSrs, inputHeightSrs) !== 3 && system === 'PROJ_3D') {
+    const { system: outputSystem } = SRS.find(s => s.value === outputSrs) || {};
+    if ( !input3D && outputSystem === 'PROJ_3D') {
         errors.push('xyz');
     }
-    return errors;
+    if (input3D !== output3D) {
+        warnings.push(input3D ? '3DTo2D' : '2DTo3D');
+    }
+    if (coordinates.some(coord => !validateCoordinate(coord, input3D))) {
+        warnings.push('coordinates');
+    }
+    if (coordinates.some(coord => !validateCoordInBounds(coord, inputSrs))) {
+        warnings.push('bbox');
+    }
+    // previously: show warning for > 10MB files => coordinates.length > 1000 etc??
+    return { errors, warnings };
 };
 
 export const validateFileSettings = (state, type) => {
