@@ -95,6 +95,6 @@ FlyoutContent.propTypes = {
     coordinates: PropTypes.array.isRequired,
     results: PropTypes.array.isRequired,
     transformed: PropTypes.bool.isRequired,
-    tablePage: PropTypes.number.isRequired,
+    pagination: PropTypes.object.isRequired,
     controller: PropTypes.object.isRequired
 };
