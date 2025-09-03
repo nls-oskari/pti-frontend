@@ -48,7 +48,7 @@ export const validateTransform = (state) => {
         errors.push('crs');
     }
     const { system: outputSystem } = SRS.find(s => s.value === outputSrs) || {};
-    if ( !input3D && outputSystem === 'PROJ_3D') {
+    if (!input3D && outputSystem === 'PROJ_3D') {
         errors.push('xyz');
     }
     // No need to check warnings
