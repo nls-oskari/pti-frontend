@@ -99,6 +99,7 @@ export const DATUM = [
         epsg: 'EPSG:6258'
     }
 ];
+
 export const SYSTEM = [
     {
         value: 'PROJ_2D',
@@ -125,8 +126,8 @@ export const SYSTEM = [
         unit: 'degree3D',
         dimension: 3
     }
-
 ];
+
 export const PROJECTION = [
     {
         value: 'KKJ',
@@ -152,7 +153,7 @@ export const PROJECTION = [
 ];
 
 // https://www.maanmittauslaitos.fi/kartat-ja-paikkatieto/koordinaatit-ja-paikannus/epsg-koodit-ja-proj-muunnosohjelma
-// projected bounds:[minx, miny, maxx, maxy] from https://epsg.io/[xxxx]
+// projected bounds:[minX/E/lon, minY/N/lat, maxX/E/lon, maxY/N/lat] [W,S,E,N] from https://epsg.io/[xxxx]
 export const SRS = [
     // newer GK EPSG-codes which have false easting 500000 prefixed with zone number -> GK19 19500000
     // GK replaced is the old one, which have always false easting 500000
