@@ -89,6 +89,10 @@ export const validateFileSettings = (state, type) => {
         if (!state.files.length) {
             errors.push('noInputFile');
         }
+        if (!state.fileContents) {
+            // TODO: invalidFile, failedToParse, etc..
+            errors.push('noInputFile');
+        }
         if (typeof selects.headerLineCount !== 'number' || selects.headerLineCount < 0) {
             errors.push('headerCount');
         }

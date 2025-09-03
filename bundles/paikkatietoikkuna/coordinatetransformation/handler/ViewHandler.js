@@ -5,7 +5,7 @@ import { showConfirmPopup } from '../view/ConfirmPopup';
 import { showClipboardPopup } from '../view/ClipboardPopup';
 import { showMapSelectPopup, showMapPreviewPopup } from '../view/MapPopup';
 import { SOURCE, MAP, WATCH_JOB, WATCH_URL, FILE_DEFAULTS, SEPARATORS, ACTIONS, PAGINATION } from '../constants';
-import { stateToPTIArray, loadFile, validateTransform, validateCoordinate, parseCoordinateValue, is3DSystem, getDimension, getLabelForMarker } from '../helper';
+import { stateToPTIArray, loadFile, validateFileSettings, validateTransform, validateCoordinate, parseCoordinateValue, is3DSystem, getDimension, getLabelForMarker } from '../helper';
 import { parseFile, parseFileContents, parseValue } from './FileParser';
 
 const getInitialState = () => ({
@@ -502,12 +502,10 @@ class UIHandler extends StateHandler {
         this.transformToArray();
     }
 
-    transformToFile (transformType) {
-        if (this.validate(transformType)) {
-            return;
-        }
-        this.updateState({ loading: true });
+    transformToFile () {
         const state = this.getState();
+        this.updateState({ loading: true });
+        const transformType = 'A2F';
         const { params, body } = stateToPTIArray(state, transformType, true);
         const { fileName } = state.export;
         fetch(Oskari.urls.getRoute('CoordinateTransformation', params), {
@@ -528,8 +526,6 @@ class UIHandler extends StateHandler {
     }
 
     importFileContentsToInputTable () {
-        const { fileContents, import: importSettings } = this.getState();
-        const { unit } = importSettings;
         /* {
             delimiter,
             // TODO: we don't need this when we don't send the file to backend
@@ -541,11 +537,13 @@ class UIHandler extends StateHandler {
             headers
         }
         */
-        if (!fileContents) {
-            // TODO: error handling
-            alert('NOPE');
-            return;
+       const errors = validateFileSettings(this.getState(), 'import');
+        if (errors.length) {
+            this.showValidationError(errors);
+            return false;
         }
+        const { fileContents, import: importSettings } = this.getState();
+        const { unit } = importSettings;
         const coordinates = fileContents.data.map(([x, y, z]) => ({
             x: parseValue(x, unit),
             y: parseValue(y, unit),
@@ -553,6 +551,18 @@ class UIHandler extends StateHandler {
         }));
         // sets all coordinates from file so one source only
         this.updateState({ coordinates, sources: [ACTIONS.IMPORT] });
+        return true;
+    }
+
+    exportResultsToFile () {
+        const errors = validateFileSettings(state, 'export');
+        if (errors.length) {
+            this.showValidationError(errors);
+            return false;
+        }
+        // TODO: write file content from results using export settings
+        this.transformToFile();
+        return true;
     }
 
     transformToMapSrs (values, callback) {
@@ -694,13 +704,12 @@ const wrapped = controllerMixin(UIHandler, [
     'setFiles',
     'confirmClearTables',
     'showOnMap',
-    'transformToFile',
+    'exportResultsToFile',
     'transform',
     'showInfo',
     'showFileSettings',
     'onAction',
     'reset',
-    'validate',
     'importFileContentsToInputTable',
     'addFromSource',
     'swapCoordinates',

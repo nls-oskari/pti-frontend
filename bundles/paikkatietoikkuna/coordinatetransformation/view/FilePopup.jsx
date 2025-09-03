@@ -4,6 +4,7 @@ import { showPopup } from 'oskari-ui/components/window';
 import { LocaleProvider } from 'oskari-ui/util';
 import { Message, Button } from 'oskari-ui';
 import { SecondaryButton, ButtonContainer } from 'oskari-ui/components/buttons';
+import { validateFileSettings } from '../helper';
 import { ImportFile, ExportFile } from '../components/FileSettings';
 
 import { BUNDLE } from '../constants';
@@ -22,17 +23,12 @@ const Content = styled.div`
 const getContent = (type, state, controller, onClose) => {
     const Node = type ==='import' ? ImportFile : ExportFile;
     const onPrimary = () => {
-        if (controller.validate(`${type}File`)) {
-            return;
+        const valid = type ==='import'
+            ? controller.importFileContentsToInputTable()
+            : controller.exportResultsToFile();
+        if (valid) {
+            onClose();
         }
-        if (type ==='import') {
-            controller.importFileContentsToInputTable();
-            // controller.transformToArray('F2R');
-        } else {
-            const transformType = state.source === 'file' ? 'F2F' : 'A2F';
-            controller.transformToFile(transformType);
-        }
-        onClose();
     };
     return (
         <LocaleProvider value={{ bundleKey: BUNDLE }}>
