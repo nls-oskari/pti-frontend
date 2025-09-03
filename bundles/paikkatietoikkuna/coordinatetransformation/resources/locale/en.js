@@ -87,8 +87,11 @@ Oskari.registerLocalization(
             "transform": {
                 "warnings": {
                     "title": "Warning!",
-                    "3DTo2D": "The selected input information contains height values, but the output information does not. Output coordinates will therefore not include height values. Do you want to continue?",
-                    "2DTo3D": "The selected output information contains height values, but the input information does not. The height values 0 and height system N2000 will be added to the input information. Do you want to continue?",
+                    "message": "Please note the following restrictions on selections or coordinates before the transform. Do you want to continue?",
+                    "3DTo2D": "The selected input information contains height values, but the output information does not. Output coordinates will therefore not include height values.",
+                    "2DTo3D": "The selected output information contains height values, but the input information does not. The height values 0 and height system N2000 will be added to the input information.",
+                    "coordinates": "There are invalid rows in the coordinates to be transformed. The invalid rows will be removed before transform.",
+                    "bbox": "The coordinates to be transformed are outside the coverage area of ​​the source coordinate system. The coordinate values ​​must be in the axis order defined by the source coordinate system.",
                     "largeFile": "The transformation of large files can take several minutes."
                 },
                 "validateErrors": {
