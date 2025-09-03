@@ -4,8 +4,8 @@ import { showFilePopup } from '../view/FilePopup';
 import { showConfirmPopup } from '../view/ConfirmPopup';
 import { showClipboardPopup } from '../view/ClipboardPopup';
 import { showMapSelectPopup, showMapPreviewPopup } from '../view/MapPopup';
-import { SOURCE, MAP, WATCH_JOB, WATCH_URL, TRANSFORM, FILE_DEFAULTS, SEPARATORS, ACTIONS, PAGINATION } from '../constants';
-import { stateToPTIArray, loadFile, validateTransform, validateFileSettings, parseCoordinateValue, is3DSystem, getLabelForMarker } from '../helper';
+import { SOURCE, MAP, WATCH_JOB, WATCH_URL, FILE_DEFAULTS, SEPARATORS, ACTIONS, PAGINATION } from '../constants';
+import { stateToPTIArray, loadFile, validateTransform, parseCoordinateValue, is3DSystem, getLabelForMarker } from '../helper';
 import { parseFile, parseFileContents, parseValue } from './FileParser';
 
 const getInitialState = () => ({
@@ -234,7 +234,7 @@ class UIHandler extends StateHandler {
         const onConfirm = () => {
             this.updateState({ results: [] });
             onChange();
-            this.transformToArray('A2A');
+            this.transform();
         };
         this.confirmPopup = showConfirmPopup('confirm.title', 'confirm.results', onConfirm, () => this.closeConfirmPopup(), onChange);
     }
@@ -457,6 +457,14 @@ class UIHandler extends StateHandler {
         this.infoPopup = showInfoPopup(title, paragraphs, listItems, () => this.closeInfoPopup());
     }
 
+    showConfirmTransform (warningKeys) {
+        this.infoPopup?.close();
+        const listItems = warningKeys.map(key => this.loc(`flyout.transform.warnings.${key}`));
+        const title = this.loc('flyout.transform.warnings.title');
+        const paragraphs = [this.loc('flyout.transform.warnings.message')];
+        this.infoPopup = showInfoPopup(title, paragraphs, listItems, () => this.closeInfoPopup(), () => this.transformToArray());
+    }
+
     closeInfoPopup () {
         this.infoPopup?.close();
         this.infoPopup = null;
@@ -470,31 +478,17 @@ class UIHandler extends StateHandler {
         this.closeClipboard();
     }
 
-    validate (stepOrType) {
-        const state = this.getState();
-        const isTransform = TRANSFORM.includes(stepOrType);
-        let errors = isTransform ? validateTransform(state, stepOrType) : [];
-        if (!isTransform) {
-            if (stepOrType === 'srs' && (!state.inputSrs || !state.outputSrs)) {
-                errors.push('crs');
-            }
-            if (stepOrType === 'inputSrs' && !state.inputSrs) {
-                errors.push('srs');
-            }
-            if (stepOrType === 'ouputSrs' && !state.outputSrs) {
-                errors.push('srs');
-            }
-            if (stepOrType === 'importFile') {
-                errors = [...errors, ...validateFileSettings(state, 'import')];
-            }
-            if (stepOrType === 'exportFile') {
-                errors = [...errors, ...validateFileSettings(state, 'export')];
-            }
-        }
+    transform () {
+        const { warnings, errors } = validateTransform(this.getState());
         if (errors.length) {
             this.showValidationError(errors);
+            return;
         }
-        return errors.length > 0;
+        if (warnings.length) {
+            this.showConfirmTransform(warnings);
+            return;
+        }
+        this.transformToArray();
     }
 
     transformToFile (transformType) {
@@ -577,16 +571,12 @@ class UIHandler extends StateHandler {
             this.updateState({ loading: false });
         });
     }
-
-    transformToArray (transformType) {
-        // TODO: confirm 2Dto3D and 3Dto2D (transform.warnings)
-        const state = this.getState();
-        if (this.validate(transformType)) {
-            return;
-        }
+    // TODO: replace with new
+    transformToArray () {
+        const transformType = 'A2A';
         this.updateState({ loading: true });
 
-        const { params, body } = stateToPTIArray(state, transformType, false);
+        const { params, body } = stateToPTIArray(this.getState(), transformType, false);
         fetch(Oskari.urls.getRoute('CoordinateTransformation', params), {
             method: 'POST',
             headers: {
@@ -694,7 +684,7 @@ const wrapped = controllerMixin(UIHandler, [
     'confirmClearTables',
     'showOnMap',
     'transformToFile',
-    'transformToArray',
+    'transform',
     'showInfo',
     'showFileSettings',
     'onAction',
