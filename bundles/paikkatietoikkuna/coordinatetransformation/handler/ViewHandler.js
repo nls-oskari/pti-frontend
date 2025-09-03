@@ -192,7 +192,7 @@ class UIHandler extends StateHandler {
     swapCoordinates () {
         const { coordinates } = this.getState();
         const swapped = coordinates.map(c => ({ ...c, x: c.y, y: c.x }));
-        this.updateState({ coordinates: swapped });
+        this.updateState({ coordinates: swapped, transformed: false });
     }
 
     // TODO: refactor
