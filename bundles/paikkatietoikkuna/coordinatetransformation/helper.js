@@ -51,6 +51,10 @@ export const validateTransform = (state) => {
     if ( !input3D && outputSystem === 'PROJ_3D') {
         errors.push('xyz');
     }
+    // No need to check warnings
+    if (errors.length) {
+        return { errors, warnings };
+    }
     if (input3D !== output3D) {
         warnings.push(input3D ? '3DTo2D' : '2DTo3D');
     }
