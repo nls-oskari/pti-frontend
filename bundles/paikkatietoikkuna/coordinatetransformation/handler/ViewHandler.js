@@ -558,7 +558,7 @@ class UIHandler extends StateHandler {
         }
         this.updateState({ loading: true });
         const { params, body } = stateToPTIArray(state, 'A2A', false);
-        fetch(Oskari.urls.getRoute('CoordinateTransformation', params), {
+        fetch(Oskari.urls.buildUrl(this.baseUrl, params), {
             method: 'POST',
             headers: {
                 Accept: 'application/json'
