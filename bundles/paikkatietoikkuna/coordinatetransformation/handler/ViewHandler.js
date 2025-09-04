@@ -5,7 +5,7 @@ import { showConfirmPopup } from '../view/ConfirmPopup';
 import { showClipboardPopup } from '../view/ClipboardPopup';
 import { showMapSelectPopup, showMapPreviewPopup } from '../view/MapPopup';
 import { SOURCE, MAP, WATCH_JOB, WATCH_URL, FILE_DEFAULTS, SEPARATORS, ACTIONS, PAGINATION } from '../constants';
-import { stateToPTIArray, exportStateToFile, validateFileSettings, validateTransform, validateCoordinate, parseCoordinateValue, is3DSystem, getDimension, getLabelForMarker } from '../helper';
+import { stateToPTIArray, stateToTransformRequest, stateToKomuRequest, parseKomuResponse, exportStateToFile, validateFileSettings, validateTransform, validateCoordinate, parseCoordinateValue, is3DSystem, getDimension, getLabelForMarker } from '../helper';
 import { parseFile, parseFileContents, parseValue } from './FileParser';
 
 const getInitialState = () => ({
@@ -540,6 +540,50 @@ class UIHandler extends StateHandler {
         }
         this.exportStateToFile();
         return true;
+    }
+
+    transformJson () {
+        this.updateState({ loading: true });
+        const { params, body } = stateToTransformRequest(this.getState());
+        fetch(Oskari.urls.buildUrl(this.baseUrl, params), {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body
+        }).then(response => {
+            return response.json();
+        }).then(json => {
+            if (!Array.isArray(json)) {
+                this.showResponseError(json)
+                return;
+            }
+            this.updateState({ results: json, loading: false, transformed: true });
+        }).catch((e) => {
+            Messaging.error(this.loc('flyout.transform.responseErrors.generic'));
+            this.updateState({ loading: false });
+        });
+    }
+
+    transformText () {
+        this.updateState({ loading: true });
+        const { params, body } = stateToKomuRequest(this.getState());
+        fetch(Oskari.urls.buildUrl(this.baseUrl, params), {
+            method: 'POST',
+            headers: {
+                Accept: 'text/plain'
+            },
+            body
+        }).then(response => {
+            return response.text();
+        }).then(text => {
+            const results = parseKomuResponse(text);
+            this.updateState({ results, loading: false, transformed: true });
+        }).catch((e) => {
+            Messaging.error(this.loc('flyout.transform.responseErrors.generic'));
+            this.updateState({ loading: false });
+        });
     }
 
     // deprecated

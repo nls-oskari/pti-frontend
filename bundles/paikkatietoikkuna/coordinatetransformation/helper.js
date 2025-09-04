@@ -206,6 +206,52 @@ export const coordinateToMarker = (coord, isNew) => {
     return { ...props, x, y, msg, color };
 };
 
+export const stateToTransformRequest = (state) => {
+    const { inputSrs, outputSrs, inputHeightSrs, outputHeightSrs, coordinates } = state;
+    let from = inputSrs;
+    if (inputHeightSrs) {
+        from += '+' + inputHeightSrs;
+    }
+    let to = outputSrs;
+    if (outputHeightSrs) {
+        to += '+' + outputHeightSrs;
+    }
+    const params = { from, to };
+    const body = JSON.stringify(coordinates);
+    return { params, body };
+};
+
+// use params only with GET method
+export const stateToKomuRequest = (state, paramsOnly) => {
+    const { inputSrs, outputSrs, inputHeightSrs, outputHeightSrs, coordinates } = state;
+    const is2D = getDimension(inputSrs, inputHeightSrs) === 2;
+    let sourceCRS = inputSrs;
+    if (inputHeightSrs) {
+        sourceCRS += ',' + inputHeightSrs;
+    }
+    let targetCRS = outputSrs;
+    if (outputHeightSrs) {
+        targetCRS += ',' + outputHeightSrs;
+    }
+    // x,y,z;x,y,z,..
+    const body = coordinates
+        .map(({ x, y, z }) => is2D ? [x, y] : [x, y, z])
+        .map(coord => coord.join())
+        .join(';');
+    const params = { sourceCRS, targetCRS };
+    if (paramsOnly) {
+        params.coords = body;
+        return params;
+    }
+    return { params, body };
+};
+export const parseKomuResponse = (text) => {
+    return text.split(`;`).map(coord => {
+        const [x,y,z] = coord.split(',');
+        return { x, y, z };
+    });
+};
+
 // deprecated
 export const stateToPTIArray = (state, transformType = 'A2A', toFile) => {
     const { source, inputSrs, outputSrs, inputHeightSrs, outputHeightSrs } = state;
