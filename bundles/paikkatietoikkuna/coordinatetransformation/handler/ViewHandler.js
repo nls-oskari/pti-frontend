@@ -5,7 +5,7 @@ import { showConfirmPopup } from '../view/ConfirmPopup';
 import { showClipboardPopup } from '../view/ClipboardPopup';
 import { showMapSelectPopup, showMapPreviewPopup } from '../view/MapPopup';
 import { SOURCE, MAP, WATCH_JOB, WATCH_URL, FILE_DEFAULTS, SEPARATORS, ACTIONS, PAGINATION } from '../constants';
-import { stateToPTIArray, loadFile, validateFileSettings, validateTransform, validateCoordinate, parseCoordinateValue, is3DSystem, getDimension, getLabelForMarker } from '../helper';
+import { stateToPTIArray, exportStateToFile, validateFileSettings, validateTransform, validateCoordinate, parseCoordinateValue, is3DSystem, getDimension, getLabelForMarker } from '../helper';
 import { parseFile, parseFileContents, parseValue } from './FileParser';
 
 const getInitialState = () => ({
@@ -538,8 +538,7 @@ class UIHandler extends StateHandler {
             this.showValidationError(errors);
             return false;
         }
-        // TODO: write file content from results using export settings
-        this.transformToFile();
+        this.exportStateToFile();
         return true;
     }
 
