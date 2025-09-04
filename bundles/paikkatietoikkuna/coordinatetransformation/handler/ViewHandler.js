@@ -503,29 +503,6 @@ class UIHandler extends StateHandler {
         this.transformToArray();
     }
 
-    transformToFile () {
-        const state = this.getState();
-        this.updateState({ loading: true });
-        const transformType = 'A2F';
-        const { params, body } = stateToPTIArray(state, transformType, true);
-        const { fileName } = state.export;
-        fetch(Oskari.urls.buildUrl(this.baseUrl, params), {
-            method: 'POST',
-            body
-        }).then(response => {
-            if (!response.ok) {
-                throw new Error(response.statusText);
-            }
-            return response.json();
-        }).then(json => {
-            const { jobId } = json;
-            this.watchFileJob(jobId, fileName);
-        }).catch(() => {
-            Messaging.error(this.loc('transform.responseErrors.generic'));
-            this.updateState({ loading: false });
-        });
-    }
-
     importFileContentsToInputTable () {
         /* {
             delimiter,
@@ -566,6 +543,7 @@ class UIHandler extends StateHandler {
         return true;
     }
 
+    // deprecated
     transformToMapSrs (values, callback) {
         const state = { ...this.getState(), ...values };
         const { errors } = validateTransform(state);
@@ -596,6 +574,7 @@ class UIHandler extends StateHandler {
         });
     }
 
+    // deprecated
     transformToArray () {
         this.updateState({ loading: true });
         const { params, body } = stateToPTIArray(this.getState());
@@ -624,7 +603,7 @@ class UIHandler extends StateHandler {
         });
     }
 
-    // For now use same function for show on map transformation
+    // deprecated
     watchJsonJob (jobId, callback) {
         fetch(Oskari.urls.getLocation(WATCH_JOB) + jobId, {
             method: 'GET',
@@ -653,32 +632,6 @@ class UIHandler extends StateHandler {
             } else {
                 this.showResponseError(json);
             }
-        }).catch(() => {
-            Messaging.error(this.loc('flyout.transform.responseErrors.generic'));
-            this.updateState({ loading: false });
-        });
-    }
-
-    watchFileJob (jobId, fileName) {
-        fetch(Oskari.urls.getLocation(WATCH_JOB) + jobId, {
-            method: 'GET',
-            headers: {
-                Accept: 'application/json'
-            }
-        }).then(response => {
-            if (!response.ok) {
-                throw new Error(response.statusText);
-            }
-            // getFileNameFromResponse
-            return response.blob();
-        }).then(blob => {
-            if (!blob) {
-                // set timeout??
-                this.watchFileJob(jobId, fileName);
-                return;
-            }
-            loadFile(blob, fileName);
-            this.updateState({ loading: false });
         }).catch(() => {
             Messaging.error(this.loc('flyout.transform.responseErrors.generic'));
             this.updateState({ loading: false });
