@@ -30,7 +30,6 @@ const StyledButtonContainer = styled(ButtonContainer)`
 
 export const FlyoutContent = ({
     controller,
-    source,
     sources,
     coordinates,
     results,
@@ -42,7 +41,6 @@ export const FlyoutContent = ({
     pagination
 }) => {
     const [ minimalSrs, setMinimalSrs ] = useState(true);
-    const transformType = source === 'file' ? 'F2A' : 'A2A';
     // Have to check here to use same height for input & output table headers
     const transform3D = getDimension(inputSrs, inputHeightSrs) === 3 || getDimension(outputSrs, outputHeightSrs) === 3;
     return (
@@ -73,7 +71,7 @@ export const FlyoutContent = ({
                     </Button>
                 </div>
                 <div className='t_transform'>
-                    <Button type='primary' className='t_table' disabled={transformed} onClick={() => controller.transformToArray(transformType)}>
+                    <Button type='primary' className='t_table' disabled={transformed} onClick={() => controller.transform()}>
                         <Message messageKey='actions.transform'/>
                     </Button>
                     <Button type='primary' className='t_file' disabled={!transformed} onClick={() => controller.showFileSettings('export')}>
@@ -87,7 +85,6 @@ export const FlyoutContent = ({
 
 FlyoutContent.propTypes = {
     loading: PropTypes.bool,
-    source: PropTypes.string,
     transformType: PropTypes.string,
     inputSrs: PropTypes.string,
     outputSrs: PropTypes.string,
