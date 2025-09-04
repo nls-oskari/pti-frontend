@@ -174,7 +174,8 @@ class UIHandler extends StateHandler {
             this.addSourceToState('clipboard');
             this.updateState({ coordinates, transformed: false });
         } catch {
-
+            // TODO: error handling
+            Messaging.error(this.loc('flyout.transform.responseErrors.generic'));
         }
     }
 
