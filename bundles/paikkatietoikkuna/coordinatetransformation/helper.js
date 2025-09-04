@@ -1,4 +1,4 @@
-import { SRS, SRS_H, SYSTEM, MARKER, DEGREE_DECIMALS, DMS } from './constants';
+import { SRS, SRS_H, SYSTEM, MARKER, DEGREE_DECIMALS, DMS, LON_AXES } from './constants';
 
 export const getDimension = (srs, srsHeight) => {
     const { system } = SRS.find(s => s.value === srs) || {};
@@ -26,6 +26,15 @@ export const getSrsUnit = srs => {
     const { unit } = SYSTEM.find(c => c.value === system) || {};
 
     return unit || 'metric';
+};
+
+export const isLonFirst = (srs) => {
+    const { axes = [] } = SRS.find(s => s.value === srs) || {};
+    if (axes.length < 2) {
+       Oskari.log('CoordTransHelper').warn('Misconfigured srs coordinate axes - cannot get lon first');
+       return false;
+    }
+    return LON_AXES.some(axis => axis === axes[0]);
 };
 
 export const validateCoordinate = (coord, is3D) => {
@@ -88,9 +97,9 @@ export const validateFileSettings = (state, type) => {
     if (type === 'import') {
         if (!state.files.length) {
             errors.push('noInputFile');
-        }
-        if (!state.fileContents) {
+        } else if (!state.fileContents) {
             // TODO: invalidFile, failedToParse, etc..
+            // use else if for now to avoid duplicate error message without input file
             errors.push('noInputFile');
         }
         if (typeof selects.headerLineCount !== 'number' || selects.headerLineCount < 0) {
@@ -138,7 +147,7 @@ export const validateCoordInBounds = (coord, srs) => {
     if (!bounds || bounds.length !== 4) {
         return true;
     }
-    const swap = ['N', 'φ', 'Y'].some(axis => axis === axes[0]);
+    const swap = !isLonFirst(srs);
     const x = swap ? coord.y : coord.x;
     const y = swap ? coord.x : coord.y;
     return bounds[0] <= x && x <= bounds[2] && bounds[1] <= y && y <= bounds[3];
