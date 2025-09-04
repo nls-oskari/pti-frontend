@@ -2,7 +2,7 @@ export const BUNDLE = 'coordinatetransformation';
 export const WATCH_JOB = 'CoordinateTransformJob';
 export const WATCH_URL = '/coordinatetransform/watch/';
 export const ID_PREFIX = 'coord_marker_';
-export const SOURCE = ['table', 'file', 'map'];
+export const SOURCE = ['table', 'file', 'map']; // deprecated
 export const MAP = {
     ADD: 'add',
     REMOVE: 'remove'

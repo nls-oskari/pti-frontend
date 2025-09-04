@@ -10,9 +10,8 @@ import { parseFile, parseFileContents, parseValue } from './FileParser';
 
 const getInitialState = () => ({
     loading: false,
-    source: SOURCE[0],
+    source: SOURCE[0], // deprecated
     sources: [],
-    transformType: null,
     inputSrs: null,
     outputSrs: null,
     inputHeightSrs: null,
@@ -44,15 +43,15 @@ class UIHandler extends StateHandler {
     }
 
     reset (closeFlyout) {
-        // TODO: close popups? see onFlyoutClose
         const state = getInitialState();
-        this.updateState(state); // TODO: set or update
+        this.updateState(state);
         if (closeFlyout) {
             const flyout = this.instance.getFlyout();
             flyout.close();
         }
     }
 
+    // deprecated
     setSource (source) {
         if (source === this.getState().source) {
             return;
@@ -196,7 +195,6 @@ class UIHandler extends StateHandler {
         this.updateState({ coordinates: swapped, transformed: false });
     }
 
-    // TODO: refactor
     setSrs (type, srs, forced) {
         if (type === 'input' && !forced) {
             this.inputSrsChange(srs);
@@ -313,12 +311,12 @@ class UIHandler extends StateHandler {
 
         this.updateState(newTypeState);
     }
-    // TODO: refactor
+
     setImport (key, value) {
         const current = this.getState().import;
         this.updateState({ import: { ...current, [key]: value } });
     }
-    // TODO: refactor
+
     setExport (key, value) {
         const current = this.getState().export;
         this.updateState({ export: { ...current, [key]: value } });
@@ -332,15 +330,13 @@ class UIHandler extends StateHandler {
         this.confirmPopup = showConfirmPopup('flyout.coordinateTable.clearTables', 'flyout.coordinateTable.confirmClear', onConfirm, () => this.closeConfirmPopup());
     }
 
+    // deprecated
     onAction (id) {
         if (id === 'map') {
             this.selectFromMap();
         }
         if (id === 'file') {
             this.showFileSettings('import');
-        }
-        if (id === 'preview') {
-            this.transformToArray('F2R');
         }
         if (id === 'store') {
             const coordinates = this.instance.getMapCoordinates();
@@ -416,7 +412,7 @@ class UIHandler extends StateHandler {
     }
 
     showFileSettings (type) {
-        this.filePopup?.close(); // TODO: change, reset???
+        this.filePopup?.close();
         this.filePopup = showFilePopup(type, this.getState(), this.getController(), () => this.closeFileSettings());
     }
 
