@@ -14,17 +14,6 @@ Oskari.registerLocalization(
                 "epsg": "With EPSG code",
                 "systems": "With datum and coordinate system"
             },
-            "steps": {
-                "inputSrs": "Input coordinate reference system",
-                "outputSrs": "Output coordinate reference system",
-                "srs": "Coordinate reference systems",
-                "importFile": "Import properties",
-                "exportFile": "Export properties",
-                "mapSelect": "Select on the map",
-                "inputTable": "Input coordinates",
-                "mapInputTable": "Map coordinates",
-                "resultTable": "Result coordinates"
-            },
             "coordinateSystem": {
                 "title": "Coordinate reference system information",
                 "input": {
