@@ -133,39 +133,6 @@ export const getDecimalCount = (decimals, unit) => {
     }
 };
 
-export const getSystemsFromCompound = (epsg) => {
-    switch (epsg) {
-    case 'EPSG:3901': // YKJ + N60
-        return {
-            srs: 'EPSG:2393',
-            height: 'EPSG:5717'
-        };
-    case 'EPSG:3902': // ETRS-TM35FIN (N,E) + N60
-        return {
-            srs: 'EPSG:3067', // CoordTrans service doesn't support EPSG:5048, use EPSG:3047 (Identical except for area of use) or 3067 and axisFlip
-            height: 'EPSG:5717',
-            reversed: 'EPSG:5048'
-        };
-    case 'EPSG:3903': // ETRS-TM35FIN (N,E) + N2000
-        return {
-            srs: 'EPSG:3067', // CoordTrans service doesn't support EPSG:5048, use EPSG:3047 (Identical except for area of use) or 3067 and axisFlip
-            height: 'EPSG:3900',
-            reversed: 'EPSG:5048'
-        };
-    case 'EPSG:7409': // ETRS89 + EVRF2000 (EUREF-FIN-GRS80 + N60)
-        return {
-            srs: 'EPSG:4258',
-            height: 'EPSG:5717'
-        };
-    case 'EPSG:7423': // ETRS89 + EVRF2007 (EUREF-FIN-GRS80 + N2000)
-        return {
-            srs: 'EPSG:4258',
-            height: 'EPSG:3900'
-        };
-    }
-    return null;
-};
-
 export const validateCoordInBounds = (coord, srs) => {
     const { bounds, axes } = SRS.find(s => s.value === srs) || {};
     if (!bounds || bounds.length !== 4) {
