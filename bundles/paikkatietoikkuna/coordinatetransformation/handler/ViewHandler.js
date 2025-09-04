@@ -39,7 +39,7 @@ class UIHandler extends StateHandler {
         this.confirmPopup = null;
         this.setState(getInitialState());
         this.addStateListener(state => this.filePopup?.update(state));
-        this.baseUrl = serverUrl || ;
+        this.baseUrl = serverUrl;
         Oskari.urls.set(WATCH_JOB, WATCH_URL);
     }
 
@@ -500,7 +500,14 @@ class UIHandler extends StateHandler {
             this.showConfirmTransform(warnings);
             return;
         }
-        this.transformToArray();
+        // This is little hacky (will be removed)
+        if (!this.baseUrl) {
+            this.transformToArray();
+        } else if (this.baseUrl.endsWith('komu')) {
+            this.transformText();
+        } else {
+            this.transformJson();
+        }
     }
 
     importFileContentsToInputTable () {
