@@ -221,8 +221,7 @@ export const stateToTransformRequest = (state) => {
     return { params, body };
 };
 
-// use params only with GET method
-export const stateToKomuRequest = (state, paramsOnly) => {
+export const stateToKomuRequest = (state) => {
     const { inputSrs, outputSrs, inputHeightSrs, outputHeightSrs, coordinates } = state;
     const is2D = getDimension(inputSrs, inputHeightSrs) === 2;
     let sourceCRS = inputSrs;
@@ -233,18 +232,15 @@ export const stateToKomuRequest = (state, paramsOnly) => {
     if (outputHeightSrs) {
         targetCRS += ',' + outputHeightSrs;
     }
+    const params = { sourceCRS, targetCRS };
     // x,y,z;x,y,z,..
     const body = coordinates
         .map(({ x, y, z }) => is2D ? [x, y] : [x, y, z])
         .map(coord => coord.join())
         .join(';');
-    const params = { sourceCRS, targetCRS };
-    if (paramsOnly) {
-        params.coords = body;
-        return params;
-    }
     return { params, body };
 };
+
 export const parseKomuResponse = (text) => {
     return text.split(`;`).map(coord => {
         const [x,y,z] = coord.split(',');
