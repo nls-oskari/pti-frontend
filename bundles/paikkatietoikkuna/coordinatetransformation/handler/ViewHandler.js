@@ -39,7 +39,7 @@ class UIHandler extends StateHandler {
         this.confirmPopup = null;
         this.setState(getInitialState());
         this.addStateListener(state => this.filePopup?.update(state));
-        this.baseUrl = serverUrl || Oskari.urls.getRoute('CoordinateTransformation');
+        this.baseUrl = serverUrl || ;
         Oskari.urls.set(WATCH_JOB, WATCH_URL);
     }
 
@@ -621,7 +621,7 @@ class UIHandler extends StateHandler {
     transformToArray () {
         this.updateState({ loading: true });
         const { params, body } = stateToPTIArray(this.getState());
-        fetch(Oskari.urls.buildUrl(this.baseUrl, params), {
+        fetch(Oskari.urls.getRoute('CoordinateTransformation', params), {
             method: 'POST',
             headers: {
                 Accept: 'application/json'
