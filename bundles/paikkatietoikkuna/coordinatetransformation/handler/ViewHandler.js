@@ -593,11 +593,10 @@ class UIHandler extends StateHandler {
             this.updateState({ loading: false });
         });
     }
-    // TODO: replace with new
+
     transformToArray () {
-        const transformType = 'A2A';
         this.updateState({ loading: true });
-        const { params, body } = stateToPTIArray(this.getState(), transformType, false);
+        const { params, body } = stateToPTIArray(this.getState());
         fetch(Oskari.urls.buildUrl(this.baseUrl, params), {
             method: 'POST',
             headers: {

@@ -239,7 +239,7 @@ export const coordinateToMarker = (coord, isNew) => {
     return { ...props, x, y, msg, color };
 };
 
-export const stateToPTIArray = (state, transformType, toFile) => {
+export const stateToPTIArray = (state, transformType = 'A2A', toFile) => {
     const { source, inputSrs, outputSrs, inputHeightSrs, outputHeightSrs } = state;
     const dimension = transformType === 'F2R' ? 3 : getDimension(inputSrs, inputHeightSrs);
     const params = {
