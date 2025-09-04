@@ -545,7 +545,7 @@ class UIHandler extends StateHandler {
             this.showValidationError(errors);
             return false;
         }
-        this.exportStateToFile();
+        exportStateToFile();
         return true;
     }
 
