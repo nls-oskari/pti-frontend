@@ -145,3 +145,14 @@ export const exportStateToFile = (state) => {
     const file = new Blob([content.join(lineSeparator)], { type: 'text/plain' }); // transparent, native
     loadFile(file, fileName);
 };
+
+const loadFile = (file, name) => {
+    const elem = document.createElement('a');
+    const href = window.URL.createObjectURL(file);
+    elem.href = href;
+    elem.download = name || 'results.txt';
+    document.body.appendChild(elem);
+    elem.click();
+    document.body.removeChild(elem);
+    window.URL.revokeObjectURL(href);
+};

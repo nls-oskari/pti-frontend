@@ -304,14 +304,3 @@ export const parseCoordinateValue = value => {
     }
     return parseFloat(value.replace(',', '.'));
 };
-
-export const loadFile = (file, name) => {
-    const elem = document.createElement('a');
-    const href = window.URL.createObjectURL(file);
-    elem.href = href;
-    elem.download = name || 'results.txt';
-    document.body.appendChild(elem);
-    elem.click();
-    document.body.removeChild(elem);
-    window.URL.revokeObjectURL(href);
-};
