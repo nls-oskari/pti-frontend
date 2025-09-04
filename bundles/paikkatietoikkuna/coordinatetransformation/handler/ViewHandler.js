@@ -568,11 +568,13 @@ class UIHandler extends StateHandler {
 
     transformToMapSrs (values, callback) {
         const state = { ...this.getState(), ...values };
-        if (this.validate('inputSrs')) {
+        const { errors } = validateTransform(state);
+        if (errors.length) {
+            this.showValidationError(errors);
             return;
         }
         this.updateState({ loading: true });
-        const { params, body } = stateToPTIArray(state, 'A2A', false);
+        const { params, body } = stateToPTIArray(state);
         fetch(Oskari.urls.buildUrl(this.baseUrl, params), {
             method: 'POST',
             headers: {
