@@ -537,7 +537,7 @@ class UIHandler extends StateHandler {
             headers
         }
         */
-       const errors = validateFileSettings(this.getState(), 'import');
+        const errors = validateFileSettings(this.getState(), 'import');
         if (errors.length) {
             this.showValidationError(errors);
             return false;
