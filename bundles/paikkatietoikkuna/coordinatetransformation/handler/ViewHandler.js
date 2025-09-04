@@ -5,8 +5,9 @@ import { showConfirmPopup } from '../view/ConfirmPopup';
 import { showClipboardPopup } from '../view/ClipboardPopup';
 import { showMapSelectPopup, showMapPreviewPopup } from '../view/MapPopup';
 import { SOURCE, MAP, WATCH_JOB, WATCH_URL, FILE_DEFAULTS, SEPARATORS, ACTIONS, PAGINATION } from '../constants';
-import { stateToPTIArray, stateToTransformRequest, stateToKomuRequest, parseKomuResponse, exportStateToFile, validateFileSettings, validateTransform, validateCoordinate, parseCoordinateValue, is3DSystem, getDimension, getLabelForMarker } from '../helper';
+import { stateToPTIArray, stateToTransformRequest, stateToKomuRequest, parseKomuResponse, validateFileSettings, validateTransform, validateCoordinate, parseCoordinateValue, is3DSystem, getDimension, getLabelForMarker } from '../helper';
 import { parseFile, parseFileContents, parseValue } from './FileParser';
+import { exportStateToFile } from './FileWriter';
 
 const getInitialState = () => ({
     loading: false,
@@ -211,6 +212,7 @@ class UIHandler extends StateHandler {
             this.setHeightSrs(type, null);
         }
     }
+
     inputSrsChange (srs) {
         const { coordinates, inputSrs } = this.getState();
         if (!inputSrs || !coordinates.length) {
@@ -271,6 +273,7 @@ class UIHandler extends StateHandler {
             return;
         }
         parseFile(files[0]).then(contents => {
+            // TODO: maybe set from content only if default settings (don't override user selects)
             this.updateState({
                 files,
                 fileContents: contents,
@@ -305,7 +308,7 @@ class UIHandler extends StateHandler {
                 }
 
                 // parseFileContents() to update parsing based on the new selection
-                const coordSeparator = SEPARATORS.coordinateSeparator.find(sep => sep.value === newTypeState.import.coordinateSeparator)?.char;
+                const coordSeparator = newTypeState.import.coordinateSeparator;
                 newTypeState.fileContents = parseFileContents(fileContents.lines, coordSeparator, newTypeState.import.headerLineCount, prefixColCount);
             }
         }
@@ -537,12 +540,13 @@ class UIHandler extends StateHandler {
     }
 
     exportResultsToFile () {
-        const errors = validateFileSettings(this.getState(), 'export');
+        const state = this.getState();
+        const errors = validateFileSettings(state, 'export');
         if (errors.length) {
             this.showValidationError(errors);
             return false;
         }
-        exportStateToFile();
+        exportStateToFile(state);
         return true;
     }
 
@@ -600,7 +604,7 @@ class UIHandler extends StateHandler {
         }
         this.updateState({ loading: true });
         const { params, body } = stateToPTIArray(state);
-        fetch(Oskari.urls.buildUrl(this.baseUrl, params), {
+        fetch(Oskari.urls.getRoute('CoordinateTransformation', params), {
             method: 'POST',
             headers: {
                 Accept: 'application/json'
