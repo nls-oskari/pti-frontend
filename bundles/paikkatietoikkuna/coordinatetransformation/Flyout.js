@@ -28,7 +28,7 @@ Oskari.clazz.define('Oskari.coordinatetransformation.Flyout',
         },
         getHandler: function () {
             if (!this.handler) {
-                this.handler = new ViewHandler(this.instance, this.loc);
+                this.handler = new ViewHandler(this.instance, this.loc, this.instance.getConfiguration()?.url);
                 this.handler.addStateListener(() => this.lazyRender());
             }
             return this.handler;
