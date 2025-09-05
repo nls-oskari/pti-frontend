@@ -193,33 +193,33 @@ Oskari.registerLocalization(
             "changeTooltip": "Observera att om du behåller valen och koordinaterna kan det leda till att resultaten inte matchar valen."
         },
         "fileSettings": {
+            "import" : "Utgångsmaterialets egenskaper",
+            "export": "Bildande av datamaterial",
             "rows": "rader",
             "columns": "fält",
             "previewTitle": "Förhandsvy",
             "options": {
+                "fileName": "Filnamn",
                 "decimalSeparator": "Skiljetecken för decimaler",
                 "coordinateSeparator": "Skiljetecken för fält",
-                "headerCount": "Antal rubrikrader",
+                "headerLineCount": "Antal rubrikrader",
                 "decimalCount": "Decimalernas precision",
                 "axisFlip": "Omvända koordinater",
-                "useId": { // Använd identifierare
+                "writeHeader": "Skriv rubrikraden i filen",
+                "writeCardinals": "Använd kardinalväderstreck (N,E,W,S)",
+                "writeLineEndings": "Ta med radavslutningarna i resultatet",
+                "lineSeparator": "Radavskiljare",
+                "unit": "Vinkelns form/enhet",
+                "prefixes": { // Använd identifierare
                     "input": "Koordinater innehåller identifierare",
                     "generate": "Skapa identifierare",
                     "add": "Lägg till identifierare",
                     "fromFile": "Lägg till utgångsfilens identifierare"
                 },
-                "writeHeader": "Skriv rubrikraden i filen",
-                "useCardinals": "Använd kardinalväderstreck (N,E,W,S)",
-                "lineEnds": "Ta med radavslutningarna i resultatet",
-                "choose": "Välj",
                 "degreeFormat":{
-                    "label": "Vinkelns form/enhet",
                     "degree": "Grad",
                     "gradian": "Gon (nygrad)",
                     "radian": "Radian"
-                },
-                "lineSeparator": {
-                    "label": "Radavskiljare"
                 },
                 "delimeters":{
                     "point": "Punkt",
@@ -229,13 +229,6 @@ Oskari.registerLocalization(
                     "semicolon": "Semikolon",
                     "pipe": "Vertikalstreck"
                 }
-            },
-            "export": {
-                "title": "Bildande av datamaterial",
-                "fileName": "Filnamn"
-            },
-            "import": {
-                "title": "Utgångsmaterialets egenskaper"
             }
         },
         "infoPopup": {

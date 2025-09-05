@@ -195,27 +195,29 @@ Oskari.registerLocalization(
             "changeTooltip": "Huomioi, että valintojen ja koordinaattien säilyttäminen voi johtaa tilanteeseen, jossa tulokset eivät vastaa valintoja."
         },
         "fileSettings": {
+            "import": "Lähtöaineiston ominaisuudet",
+            "export": "Aineiston muodostaminen",
             "rows": "riviä",
             "columns": "saraketta",
             "previewTitle": "Esikatselu",
             "options": {
+                "fileName": "Tiedoston nimi",
                 "decimalSeparator": "Desimaalierotin",
                 "coordinateSeparator": "Sarake-erotin",
                 "headerLineCount": "Otsakerivien määrä",
                 "decimalCount": "Desimaalien tarkkuus",
                 "axisFlip": "Koordinaatit käänteisesti",
-                "prefixId": "Koordinaatit sisältävät tunnisteet",
-                "useId": {
-                    "generate": "Luo tunnisteet",
-                    "add": "Lisää tunnisteet",
-                    "fromFile": "Lisää tunnisteet lähtötiedostosta"
-                },
                 "writeHeader": "Kirjoita otsakerivi tiedostoon",
                 "writeCardinals": "Käytä kardinaaleja (N,E,W,S)",
                 "writeLineEndings": "Rivin loput tulokseen",
                 "lineSeparator": "Rivierotin",
                 "unit": "Kulman muoto/yksikkö",
-                "choose": "Valitse",
+                "prefixes": {
+                    "input": "Koordinaatit sisältävät tunnisteet",
+                    "generate": "Luo rivinumero tunnisteet",
+                    "add": "Lisää tunnisteet",
+                    "fromFile": "Lisää tunnisteet lähtötiedostosta"
+                },
                 "degreeFormat":{
                     "degree": "Aste",
                     "gradian": "Gooni (graadi)",
@@ -229,13 +231,6 @@ Oskari.registerLocalization(
                     "semicolon": "Puolipiste",
                     "pipe": "Pystyviiva"
                 }
-            },
-            "export": {
-                "title": "Aineiston muodostaminen",
-                "fileName": "Tiedoston nimi"
-            },
-            "import": {
-                "title": "Lähtöaineiston ominaisuudet"
             }
         },
         "infoPopup": {

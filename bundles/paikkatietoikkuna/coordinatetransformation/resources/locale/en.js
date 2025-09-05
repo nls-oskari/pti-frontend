@@ -193,33 +193,33 @@ Oskari.registerLocalization(
             "changeTooltip": "Note that keeping the selections and coordinates can lead to a situation where the results do not match the selections."
         },
         "fileSettings": {
+            "import": "Input properties",
+            "export": "Output properties",
             "rows": "rows",
             "columns": "columns",
             "previewTitle": "Preview",
             "options": {
+                "fileName": "File name",
                 "decimalSeparator": "Decimal separator",
                 "coordinateSeparator": "Field separator",
-                "headerCount": "Number of header rows",
+                "headerLineCount": "Number of header rows",
                 "decimalPrecision": "Decimal precision",
                 "axisFlip": "Coordinates reversed",
-                "useId": { // Use identifier, Use id infront
+                "writeHeader": "Write header row into file",
+                "writeCardinals": "Use cardinals (N,E,W,S)",
+                "writeLineEndings": "Add end-of-lines to output",
+                "lineSeparator": "Line separator", // Row separator
+                "unit": "Angle pattern", // Angle format/unit type/unit
+                "prefixes": { // Use identifier, Use id infront
                     "input": "Coordinates contain identifiers",
                     "generate": "Create identifers",
                     "add": "Add identifiers",
                     "fromFile": "Add input file identifiers"
                 },
-                "writeHeader": "Write header row into file",
-                "useCardinals": "Use cardinals (N,E,W,S)",
-                "lineEnds": "Add end-of-lines to output",
-                "choose": "Choose",
                 "degreeFormat":{
-                    "label": "Angle pattern", // Angle format/unit type/unit
                     "degree": "Degree",
                     "gradian": "Grade",
                     "radian": "Radian"
-                },
-                "lineSeparator": {
-                    "label": "Line separator" // Row separator
                 },
                 "delimeters":{
                     "point": "Point",
@@ -229,13 +229,6 @@ Oskari.registerLocalization(
                     "semicolon": "Semicolon",
                     "pipe": "Pipe"
                 }
-            },
-            "export": {
-                "title": "Output properties",
-                "fileName": "File name"
-            },
-            "import": {
-                "title": "Input properties"
             }
         },
         "infoPopup": {
