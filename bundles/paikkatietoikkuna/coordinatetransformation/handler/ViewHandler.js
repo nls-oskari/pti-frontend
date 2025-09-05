@@ -4,7 +4,7 @@ import { showFilePopup } from '../view/FilePopup';
 import { showConfirmPopup } from '../view/ConfirmPopup';
 import { showClipboardPopup } from '../view/ClipboardPopup';
 import { showMapSelectPopup, showMapPreviewPopup } from '../view/MapPopup';
-import { SOURCE, MAP, WATCH_JOB, WATCH_URL, FILE_DEFAULTS, SEPARATORS, ACTIONS, PAGINATION } from '../constants';
+import { SOURCE, MAP, WATCH_JOB, WATCH_URL, FILE_DEFAULTS, ACTIONS, PAGINATION } from '../constants';
 import { stateToPTIArray, stateToTransformRequest, stateToKomuRequest, parseKomuResponse, validateFileSettings, validateTransform, validateCoordinate, parseCoordinateValue, is3DSystem, getDimension, getLabelForMarker } from '../helper';
 import { parseFile, parseFileContents, parseValue } from './FileParser';
 import { exportStateToFile } from './FileWriter';
@@ -27,7 +27,7 @@ const getInitialState = () => ({
 });
 
 class UIHandler extends StateHandler {
-    constructor (instance, loc, serverUrl) {
+    constructor (instance, loc, conf = {}) {
         super();
         this.instance = instance;
         this.sandbox = instance.getSandbox();
@@ -39,8 +39,20 @@ class UIHandler extends StateHandler {
         this.confirmPopup = null;
         this.setState(getInitialState());
         this.addStateListener(state => this.filePopup?.update(state));
-        this.baseUrl = serverUrl;
+        this.baseUrl = conf.url;
+        this.transformFunction = this.getTransformFunction(conf);
         Oskari.urls.set(WATCH_JOB, WATCH_URL);
+    }
+
+    getTransformFunction = ({ url, contentType = '' }) => {
+        // deprecated
+        if (!url) {
+            return () => this.transformToArray();
+        }
+        if (contentType.includes('json')) {
+            return () => this.transformJson();
+        }
+        return () => this.transformText();
     }
 
     reset (closeFlyout) {
@@ -472,7 +484,7 @@ class UIHandler extends StateHandler {
         const paragraphs = [this.loc('flyout.transform.warnings.message')];
         const onConfirm = () => {
             this.cleanInputCoordinates();
-            this.transformToArray();
+            this.transformFunction();
         };
         this.infoPopup = showInfoPopup(title, paragraphs, listItems, () => this.closeInfoPopup(), onConfirm);
     }
@@ -500,14 +512,7 @@ class UIHandler extends StateHandler {
             this.showConfirmTransform(warnings);
             return;
         }
-        // This is little hacky (will be removed)
-        if (!this.baseUrl) {
-            this.transformToArray();
-        } else if (this.baseUrl.endsWith('komu')) {
-            this.transformText();
-        } else {
-            this.transformJson();
-        }
+        this.transformFunction();
     }
 
     importFileContentsToInputTable () {
