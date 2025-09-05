@@ -236,7 +236,7 @@ Oskari.registerLocalization(
         },
         "infoPopup": {
             "description": "Description",
-            "keyboard": {
+            "table": {
                 "title": "Coordinate information source - table",
                 "paragraphs": [
                     "Put the input information into the Input coordinates table."
@@ -306,7 +306,7 @@ Oskari.registerLocalization(
                 "paragraphs" : [],
                 "listItems" : []
             },
-            "decimalPrecision":{
+            "decimalCount":{
                 "title":"Decimal precision",
                 "info": "Number of decimals included in the output",
                 "paragraphs": [
@@ -340,7 +340,7 @@ Oskari.registerLocalization(
                 ],
                 "listItems" : []
             },
-            "unitFormat":{
+            "unit":{
                 "title":"Angle pattern",
                 "info": "Unit of a geodetic coordinates",
                 "paragraphs": [
@@ -395,7 +395,7 @@ Oskari.registerLocalization(
                 ],
                 "listItems" : []
             },
-            "lineEnds":{
+            "writeLineEndings":{
                 "title":"Include end-of-row markers in output",
                 "info": "End-of-lines are added to the output file",
                 "paragraphs": [
@@ -404,7 +404,7 @@ Oskari.registerLocalization(
                 ],
                 "listItems" : []
             },
-            "useCardinals":{
+            "writeCardinals":{
                 "title":"Use cardinals",
                 "info": "Coordinate values are followed by cardinal directions (N, E, W or S).",
                 "paragraphs": [

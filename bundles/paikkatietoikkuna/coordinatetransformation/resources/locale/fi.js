@@ -310,7 +310,7 @@ Oskari.registerLocalization(
                 "paragraphs" : [],
                 "listItems" : []
             },
-            "decimalPrecision":{
+            "decimalCount":{
                 "title":"Desimaalien tarkkuus",
                 "info": "Tulokseen tulevien desimaalien määrä",
                 "paragraphs": [
@@ -344,7 +344,7 @@ Oskari.registerLocalization(
                 ],
                 "listItems" : []
             },
-            "unitFormat":{
+            "unit":{
                 "title":"Kulman muoto/yksikkö",
                 "info": "Geodeettisten koordinaattien yksikkö",
                 "paragraphs": [

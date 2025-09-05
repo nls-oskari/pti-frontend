@@ -236,7 +236,7 @@ Oskari.registerLocalization(
         },
         "infoPopup": {
             "description": "Beskrivning",
-            "keyboard": {
+            "table": {
                 "title": "Källa för koordinatuppgifter - tabell",
                 "paragraphs": [
                     "Mata in utgångsuppgifter i tabellen Koordinater som ska omvandlas."
@@ -306,7 +306,7 @@ Oskari.registerLocalization(
                 "paragraphs" : [],
                 "listItems" : []
             },
-            "decimalPrecision":{
+            "decimalCount":{
                 "title":"Decimalernas precision",
                 "info": "Antalet decimaler som visas i resultatet.",
                 "paragraphs": [
@@ -340,7 +340,7 @@ Oskari.registerLocalization(
                 ],
                 "listItems" : []
             },
-            "unitFormat":{
+            "unit":{
                 "title":"Vinkelns form/enhet",
                 "info": "Enhet för geodetiska koordinater",
                 "paragraphs": [
@@ -394,7 +394,7 @@ Oskari.registerLocalization(
                 ],
                 "listItems" : []
             },
-            "lineEnds":{
+            "writeLineEndings":{
                 "title":"Ta med radavslutningarna i resultatet",
                 "info": "Inkludera radsluten i utgångsfilen i resultatfilen",
                 "paragraphs": [
@@ -404,7 +404,7 @@ Oskari.registerLocalization(
                 ],
                 "listItems" : []
             },
-            "useCardinals":{
+            "writeCardinals":{
                 "title":"Använd kardinalväderstreck",
                 "info": "Lägg till väderstrecken (N, E, W eller S) efter koordinatvärdena",
                 "paragraphs": [
