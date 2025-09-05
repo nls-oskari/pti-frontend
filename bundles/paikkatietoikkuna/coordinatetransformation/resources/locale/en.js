@@ -216,7 +216,7 @@ Oskari.registerLocalization(
                     "add": "Add identifiers",
                     "fromFile": "Add input file identifiers"
                 },
-                "degreeFormat":{
+                "degrees":{
                     "degree": "Degree",
                     "gradian": "Grade",
                     "radian": "Radian"

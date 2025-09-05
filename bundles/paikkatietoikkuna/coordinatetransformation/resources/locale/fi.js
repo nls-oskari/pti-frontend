@@ -218,12 +218,12 @@ Oskari.registerLocalization(
                     "add": "Lisää tunnisteet",
                     "fromFile": "Lisää tunnisteet lähtötiedostosta"
                 },
-                "degreeFormat":{
+                "degrees": {
                     "degree": "Aste",
                     "gradian": "Gooni (graadi)",
                     "radian": "Radiaani"
                 },
-                "delimeters":{
+                "delimeters": {
                     "point": "Piste",
                     "comma": "Pilkku",
                     "tab": "Tabulaattori",

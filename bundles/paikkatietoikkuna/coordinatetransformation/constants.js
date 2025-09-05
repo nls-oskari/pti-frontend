@@ -1,6 +1,6 @@
 export const BUNDLE = 'coordinatetransformation';
-export const WATCH_JOB = 'CoordinateTransformJob';
-export const WATCH_URL = '/coordinatetransform/watch/';
+export const WATCH_JOB = 'CoordinateTransformJob'; // deprecated
+export const WATCH_URL = '/coordinatetransform/watch/'; // deprecated
 export const ID_PREFIX = 'coord_marker_';
 export const SOURCE = ['table', 'file', 'map']; // deprecated
 export const LON_AXES = ['E', 'φ', 'X'];
@@ -71,9 +71,9 @@ export const DECIMAL = [
 ];
 
 export const DEGREE = [
-    { loc: 'fileSettings.options.degreeFormat.degree', value: 'degree', decimals: 8 },
-    { loc: 'fileSettings.options.degreeFormat.gradian', value: 'gradian', decimals: 8 },
-    { loc: 'fileSettings.options.degreeFormat.radian', value: 'radian', decimals: 10 },
+    { loc: 'fileSettings.options.degrees.degree', value: 'degree', decimals: 8 },
+    { loc: 'fileSettings.options.degrees.gradian', value: 'gradian', decimals: 8 },
+    { loc: 'fileSettings.options.degrees.radian', value: 'radian', decimals: 10 },
     { label: 'DD', value: 'DD', decimals: 8 },
     { label: 'DD MM', value: 'DD MM', decimals: 6 },
     { label: 'DD MM SS', value: 'DD MM SS', decimals: 4 },

@@ -73,7 +73,7 @@ export const ExportFile = ({ export: values, outputSrs, controller }) => {
     const onChange = (key, value) => controller.setFileSetting('export', key, value);
     return (
         <Content>
-            <LabeledInput label='fileSettings.export.fileName' value={values.fileName} onChange={evt => onChange('fileName', evt.target.value)} controller={controller}/>
+            <LabeledInput label='fileSettings.options.fileName' value={values.fileName} onChange={evt => onChange('fileName', evt.target.value)} controller={controller}/>
             { showDegreeUnit(outputSrs) && <SelectOption id='unit' controller={controller} onChange={onChange} value={values.unit}/> }
             { OPTIONS.exportSelect.map(id => <SelectOption key={id} id={id} controller={controller} onChange={onChange} value={values[id]}/>)}
             { OPTIONS.exportCheckbox.map(id => <CheckboxOption key={id} id={id} controller={controller} onChange={onChange} checked={values[id]}/>)}
