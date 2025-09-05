@@ -9,6 +9,10 @@ Oskari.registerLocalization(
         },
         "flyout": {
             "title":"Koordinattransformation",
+            "mandatory": {
+                "symbol": "Fält markerade med en asterisk (",
+                "desc": ") är obligatoriska."
+            },
             "filterSystems": {
                 "title": "Filtrera referenssystem för koordinater",
                 "epsg": "Med EPSG-kod",

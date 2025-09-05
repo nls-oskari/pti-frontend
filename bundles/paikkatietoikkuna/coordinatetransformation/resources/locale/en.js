@@ -9,6 +9,10 @@ Oskari.registerLocalization(
         },
         "flyout": {
             "title":"Coordinate Transformation",
+            "mandatory": {
+                "symbol": "Fields marked with an asterisk (",
+                "desc": ") are required."
+            },
             "filterSystems": {
                 "title": "Filter coordinate reference systems",
                 "epsg": "With EPSG code",
