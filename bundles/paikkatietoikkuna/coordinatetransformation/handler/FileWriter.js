@@ -15,11 +15,11 @@ const toDegree = (coord, unit, decimals, isLon) => {
         // TODO: prefix 0 ??
         return coord.toFixed(decimals);
     }
-    if (unit ===  'gradian') {
+    if (unit === 'gradian') {
         coord *= DEC_TO_GRAD;
         return coord.toFixed(decimals);
     }
-    if (unit ===  'radian') {
+    if (unit === 'radian') {
         coord *= DEC_TO_RAD;
         return coord.toFixed(decimals);
     }
@@ -29,10 +29,10 @@ const toDegree = (coord, unit, decimals, isLon) => {
     const dd = isLon && d < 100 ? '0' + d : d.toString();
     let mm = m.toFixed(decimals);
     if (m < 10) {
-            mm = '0' + mm;
-        }
+        mm = '0' + mm;
+    }
     if (unit === 'DDMM' || unit === 'DD MM') {
-        return ddmm = dd + separator + mm;
+        return dd + separator + mm;
     }
     const s = (m - Math.floor(m)) * HOUR_TO_MIN;
     let ss = s.toFixed(decimals);
@@ -66,14 +66,14 @@ const getFileContent = ({
         writeCardinals,
         writeLineEndings
     } = settings;
-    const { prefixes = [], lineEndings=[] } = fileContents || {};
+    const { prefixes = [], lineEndings = [] } = fileContents || {};
 
     const dimension = getDimension(outputSrs, outputHeightSrs);
     const isDegree = isDegreeSystem(outputSrs);
     // Force to 'metric' for non degree as select isn't shown for user
     const decimalUnit = isDegree ? unit : 'metric';
     const decimals = getDecimalCount(decimalCount, decimalUnit);
-    
+
     const lonFirst = axisFlip ? !isLonFirst(outputSrs) : isLonFirst(outputSrs);
     const lonIndex = lonFirst ? 0 : 1;
     const prefixesFromImport = prefixes.length > 0;
@@ -82,20 +82,20 @@ const getFileContent = ({
     return results.map((coord, index) => {
         const x = axisFlip ? coord.y : coord.x;
         const y = axisFlip ? coord.x : coord.y;
-        const array = dimension == 3 ? [x, y ,z] : [x, y];
+        const array = dimension === 3 ? [x, y, coord.z] : [x, y];
         let row = isDegree
             ? array.map((c, i) => toDegree(c, unit, decimals, i === lonIndex))
             : array.map(c => c.toFixed(decimals));
-        
+
         // replace point and writeCardinals if needed
-        row = row.map(r =>  replace ? r.replace('.', ',') : r)
+        row = row.map(r => replace ? r.replace('.', ',') : r)
             .map((r, i) => writeCardinals ? addCardinal(r, i === lonIndex) : r);
-        
+
         if (prefixId) {
             // use stored from imported file if available
             const ids = prefixesFromImport
                 ? prefixes[index] || ['']
-                : [index + 1]
+                : [index + 1];
             ids.forEach(p => row.unshift(p));
         }
         if (writeLineEndings) {
@@ -113,11 +113,11 @@ const createHeader = (srs, height, axisFlip, decimalUnit) => {
     const { unit: systemUnit } = SYSTEM.find(s => s.value === system) || {};
     let heightName = '';
     if (height) {
-        const { axis = 'H', name} = SRS_H.find(h => h.value === height) || {};
+        const { axis = 'H', name } = SRS_H.find(h => h.value === height) || {};
         axes.push(axis);
         heightName = ` + ${name}`;
     }
-    const modAxes = axisFlip ? [...axes.slice(0,2).toReversed(), ...axes.slice(2)] : axes;
+    const modAxes = axisFlip ? [...axes.slice(0, 2).toReversed(), ...axes.slice(2)] : axes;
     const selectedUnit = isDegreeSystem(srs) && decimalUnit ? ` (${decimalUnit}` : '';
     return `${CRS}: ${srs} - ${label}${heightName} - axes: ${modAxes.join()}${axisFlip ? ' (reversed)' : ''} - unit: ${systemUnit}${selectedUnit}`;
 };
@@ -125,7 +125,7 @@ const createHeader = (srs, height, axisFlip, decimalUnit) => {
 export const exportStateToFile = (state) => {
     const { outputSrs, outputHeightSrs, fileContents } = state;
     const { fileName, lineSeparator, writeHeader, axisFlip, unit } = state.export;
-    
+
     const content = [];
     if (writeHeader) {
         const { headerLines = [] } = fileContents || {};

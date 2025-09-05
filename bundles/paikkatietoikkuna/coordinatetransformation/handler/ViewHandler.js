@@ -44,12 +44,12 @@ class UIHandler extends StateHandler {
         Oskari.urls.set(WATCH_JOB, WATCH_URL);
     }
 
-    getTransformFunction = ({ url, contentType = '' }) => {
+    getTransformFunction = ({ url, contentType }) => {
         // deprecated
         if (!url) {
             return () => this.transformToArray();
         }
-        if (contentType.includes('json')) {
+        if (contentType?.includes('json')) {
             return () => this.transformJson();
         }
         return () => this.transformText();

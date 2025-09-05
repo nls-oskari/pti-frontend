@@ -31,8 +31,8 @@ export const getSrsUnit = srs => {
 export const isLonFirst = (srs) => {
     const { axes = [] } = SRS.find(s => s.value === srs) || {};
     if (axes.length < 2) {
-       Oskari.log('CoordTransHelper').warn('Misconfigured srs coordinate axes - cannot get lon first');
-       return false;
+        Oskari.log('CoordTransHelper').warn('Misconfigured srs coordinate axes - cannot get lon first');
+        return false;
     }
     return LON_AXES.some(axis => axis === axes[0]);
 };
@@ -143,7 +143,7 @@ export const getDecimalCount = (decimals, unit) => {
 };
 
 export const validateCoordInBounds = (coord, srs) => {
-    const { bounds, axes } = SRS.find(s => s.value === srs) || {};
+    const { bounds } = SRS.find(s => s.value === srs) || {};
     if (!bounds || bounds.length !== 4) {
         return true;
     }
@@ -252,7 +252,7 @@ export const stateToKomuRequest = (state) => {
 
 export const parseKomuResponse = (text) => {
     return text.split(`;`).map(coord => {
-        const [x,y,z] = coord.split(',');
+        const [x, y, z] = coord.split(',');
         return { x, y, z };
     });
 };

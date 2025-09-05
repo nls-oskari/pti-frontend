@@ -1,4 +1,4 @@
-import { DEGREE, SEPARATORS } from '../constants';
+import { DEGREE } from '../constants';
 
 export const parseFile = (file) => {
     return new Promise((resolve, reject) => {

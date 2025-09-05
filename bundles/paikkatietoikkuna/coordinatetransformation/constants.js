@@ -47,8 +47,8 @@ export const FILE_DEFAULTS = {
 
 export const SEPARATORS = {
     lineSeparator: [
-        { label: 'Windows / DOS', value: '\r\n'},
-        { label: 'UNIX / Mac', value: '\n'}
+        { label: 'Windows / DOS', value: '\r\n' },
+        { label: 'UNIX / Mac', value: '\n' }
     ],
     coordinateSeparator: [
         { loc: 'fileSettings.options.delimeters.tab', value: '\t' },
