@@ -107,8 +107,8 @@ Oskari.registerLocalization(
             "errors": {
                 "transform": "Error in transformation!",
                 "import": "Error in reading file!", // Not all rows of the file were read successfully.
-                "paste": "Failed to parse coordinates!",
-                "export": "The transformation of coordinates failed.",
+                "paste": "Failed to import coordinates from clipboard!",
+                "export": "Failed to write coordinates to file.",
                 "invalidLine": "The file's row {index, number} contains an invalid coordinate: {line}. Check that the selected decimal and coordinate separators and number of header rows match the contents of the file.",
                 "generic": "Coordinate transformation failed.",
                 //error codes

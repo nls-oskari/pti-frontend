@@ -107,8 +107,8 @@ Oskari.registerLocalization(
             },
             "errors": {
                 "transform": "Virhe muunnoksessa!",
-                "import": "Virhe tiedoston lukemisessa!",
-                "paste": "Koordinaattien muodostamisessa virhe",
+                "import": "Virhe tiedoston lukemisessa!", // Tiedostosta ei onnistuttu lukemaan kaikkia rivejä.
+                "paste": "Koordinaattien tuominen leikepöydältä epäonnistui.",
                 "export": "Koordinaattien kirjoittaminen tiedostoonn epäonnistui.",
                 "invalidLine": "Tiedostossa on rivillä: {index, number} virheellinen koordinaattirivi: {line} <br /> Tarkasta, että kyseinen rivi on kelvollinen ja vastaa lähtöaineiston ominaisuuksien valintoja.",
                 "generic": "Koordinaattimuunnos epäonnistui.",
