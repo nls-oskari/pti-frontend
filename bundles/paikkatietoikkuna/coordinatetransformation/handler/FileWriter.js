@@ -1,4 +1,4 @@
-import { SRS, SRS_H, SYSTEM, DEGREE } from '../constants';
+import { SRS, SRS_H, SYSTEM } from '../constants';
 import { getDimension, isDegreeSystem, isLonFirst, getDecimalCount } from '../helper';
 
 const HOUR_TO_MIN = 60;
@@ -39,7 +39,7 @@ const toDegree = (coord, unit, decimals, isLon) => {
     if (s < 10) {
         ss = '0' + ss;
     }
-    return dd + separator + mm.substring(0,2) + separator + ss;
+    return dd + separator + mm.substring(0, 2) + separator + ss;
 };
 
 const addCardinal = (coord, isLon) => {
