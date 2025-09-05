@@ -76,55 +76,51 @@ Oskari.registerLocalization(
                 "outdated": "The selections or coordinates have changed. Transform coordinates to get updated results.",
                 "clearTables": "Remove all coordinates",
                 "confirmClear": "Are you sure you want to remove all coordinates from tables?"
+            }
+        },
+        "transform": {
+            "warnings": {
+                "title": "Warning!",
+                "message": "Please note the following restrictions on selections or coordinates before the transform. Do you want to continue?",
+                "3DTo2D": "The selected input information contains height values, but the output information does not. Output coordinates will therefore not include height values.",
+                "2DTo3D": "The selected output information contains height values, but the input information does not. The height values 0 and height system N2000 will be added to the input information.",
+                "coordinates": "There are invalid rows in the coordinates to be transformed. The invalid rows will be removed before transform.",
+                "bbox": "The coordinates to be transformed are outside the coverage area of ​​the source coordinate system. The coordinate values ​​must be in the axis order defined by the source coordinate system.",
+                "largeFile": "The transformation of large files can take several minutes."
             },
-            "transform": {
-                "warnings": {
-                    "title": "Warning!",
-                    "message": "Please note the following restrictions on selections or coordinates before the transform. Do you want to continue?",
-                    "3DTo2D": "The selected input information contains height values, but the output information does not. Output coordinates will therefore not include height values.",
-                    "2DTo3D": "The selected output information contains height values, but the input information does not. The height values 0 and height system N2000 will be added to the input information.",
-                    "coordinates": "There are invalid rows in the coordinates to be transformed. The invalid rows will be removed before transform.",
-                    "bbox": "The coordinates to be transformed are outside the coverage area of ​​the source coordinate system. The coordinate values ​​must be in the axis order defined by the source coordinate system.",
-                    "largeFile": "The transformation of large files can take several minutes."
-                },
-                "validateErrors": {
-                    "title": "Error!", // Error in coordinate system selections
-                    "message": "Selections are incomplete or contain errors. Note the following requirements and try again.",
-                    "xyz": "No height system has been selected for the input coordinate system. It is not possible to transform this input information into a projected 3D system.",
-                    "crs": "A geodetic coordinate reference system must be selected both in the input and the output information.",
-                    "noInputData": "No input coordinates.",
-                    "noInputFile": "The file containing input information must be selected.",
-                    "noFileName": "The output file must be named.",
-                    "decimalCount": "The decimal number must be 0 or a positive integer.",
-                    "headerCount": "The number of header rows must be 0 or a positive integer.",
-                    "doubleComma": "The decimal and coordinate separators cannot both be commas.",
-                    "doubleSpace": "The format/unit of an angle cannot contain spaces if the coordinate separator is Space.", //angle pattern
-                    "noFileSettings": "No file settings.",
-                    "noCoordinateSeparator": "Coordinate separator must be selected.",
-                    "noDecimalSeparator": "Decimal separator must be selected."
-                },
-                "responseErrors": {
-                    "titleTransform": "Error in transformation!",
-                    "titleRead": "Error in reading file!",
-                    "readFileError" : "Not all rows of the file were read successfully.",
-                    "transformFileError": "The transformation of coordinates failed.",
-                    "invalidLine": "The file's row {index, number} contains an invalid coordinate: {line}. Check that the selected decimal and coordinate separators and number of header rows match the contents of the file.",
-                    "generic": "Coordinate transformation failed.",
-                    //error codes
-                    "invalid_coord": "Error in coordinate. Check that coordinates to be transformed are in correct format and that the geodetic coordinate reference system and height system are correct.",
-                    //"invalid_number": "Invalid coordinate.",
-                    //"invalid_coord_in_array": "Invalid coordinate.",
-                    "no_coordinates": "No coordinates.",
-                    "invalid_file_settings": "Error in file settings.",
-                    "no_file": "No file matching the request could be found.",
-                    "invalid_first_coord": "It was not possible to produce coordinates with these selections. Check that the coordinate separator, number of headers, geodetic coordinate and height system (dimension) selections as well as the option to use identifier or not match the contents of the file.",
-                    "transformation_error": "Coordinate transformation failed. Service responded with error:",
-                    "service_busy": "The transformation service is busy right now. Please try again later."
-                },
-                "responseFile": {
-                    "title": "Attention!",
-                    "hasMoreCoordinates": "It is not possible to transform more than {maxCoordsToArray, number} coordinates from the input information into the table. If you want to transform all coordinates, select Output to file."
-                }
+            "validate": {
+                "title": "Error!", // Error in coordinate system selections
+                "message": "Selections are incomplete or contain errors. Note the following requirements and try again.",
+                "xyz": "No height system has been selected for the input coordinate system. It is not possible to transform this input information into a projected 3D system.",
+                "crs": "A geodetic coordinate reference system must be selected both in the input and the output information.",
+                "noInputData": "No input coordinates.",
+                "noInputFile": "The file containing input information must be selected.",
+                "noFileName": "The output file must be named.",
+                "decimalCount": "The decimal number must be 0 or a positive integer.",
+                "headerCount": "The number of header rows must be 0 or a positive integer.",
+                "doubleComma": "The decimal and coordinate separators cannot both be commas.",
+                "doubleSpace": "The format/unit of an angle cannot contain spaces if the coordinate separator is Space.", //angle pattern
+                "noFileSettings": "No file settings.",
+                "noCoordinateSeparator": "Coordinate separator must be selected.",
+                "noDecimalSeparator": "Decimal separator must be selected."
+            },
+            "errors": {
+                "transform": "Error in transformation!",
+                "import": "Error in reading file!", // Not all rows of the file were read successfully.
+                "paste": "Failed to parse coordinates!",
+                "export": "The transformation of coordinates failed.",
+                "invalidLine": "The file's row {index, number} contains an invalid coordinate: {line}. Check that the selected decimal and coordinate separators and number of header rows match the contents of the file.",
+                "generic": "Coordinate transformation failed.",
+                //error codes
+                "invalid_coord": "Error in coordinate. Check that coordinates to be transformed are in correct format and that the geodetic coordinate reference system and height system are correct.",
+                //"invalid_number": "Invalid coordinate.",
+                //"invalid_coord_in_array": "Invalid coordinate.",
+                "no_coordinates": "No coordinates.",
+                "invalid_file_settings": "Error in file settings.",
+                "no_file": "No file matching the request could be found.",
+                "invalid_first_coord": "It was not possible to produce coordinates with these selections. Check that the coordinate separator, number of headers, geodetic coordinate and height system (dimension) selections as well as the option to use identifier or not match the contents of the file.",
+                "transformation_error": "Coordinate transformation failed. Service responded with error:",
+                "service_busy": "The transformation service is busy right now. Please try again later."
             }
         },
         "dataSource": {

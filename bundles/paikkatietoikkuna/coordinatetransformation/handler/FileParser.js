@@ -54,8 +54,6 @@ export const parseFileContents = (lines = [], delimiter = ';', headerLineCount =
 
     return {
         delimiter,
-        // TODO: we don't need this when we don't send the file to backend
-        delimiterValueForBackend: delimiter,
         decimalSeparator,
         prefixColCount,
         data,

@@ -76,55 +76,51 @@ Oskari.registerLocalization(
                 "outdated": "Valen eller koordinaterna har ändrats. Transformera koordinaterna för att få uppdaterade resultat.",
                 "clearTables": "Ta bort alla koordinater",
                 "confirmClear": "Är du säker på att du vill ta bort alla koordinater från tabellerna?"
+            }
+        },
+        "transform": {
+            "warnings": {
+                "title": "Observera!",
+                "message": "Observera följande begränsningar för val eller koordinater före transformationen. Vill du fortsätta?",
+                "3DTo2D": "I de utgångsuppgifter du valt finns höjdvärden, men inte i resultatuppgifterna. Höjvärden ingår alltså inte i resultatkoordinaterna.",
+                "2DTo3D": "I de resultatuppgifter du valt finns höjdvärden, men inte i utgångsuppgifterna. Utgångsmaterialet ges höjdvärdet 0 och höjdsystemet N2000.",
+                "coordinates": "Det finns ogiltiga rader i koordinaterna som ska transformeras. De ogiltiga raderna kommer att tas bort före transformationen.",
+                "bbox": "Koordinaterna som ska transformeras ligger utanför täckningsområde av referenssystemet för koordinater. Koordinatvärdena måste vara i den axelordning som definieras av referenssystemet för koordinater.",
+                "largeFile": "Transformation av stora filer kan ta flera minuter."
             },
-            "transform": {
-                "warnings": {
-                    "title": "Observera!",
-                    "message": "Observera följande begränsningar för val eller koordinater före transformationen. Vill du fortsätta?",
-                    "3DTo2D": "I de utgångsuppgifter du valt finns höjdvärden, men inte i resultatuppgifterna. Höjvärden ingår alltså inte i resultatkoordinaterna.",
-                    "2DTo3D": "I de resultatuppgifter du valt finns höjdvärden, men inte i utgångsuppgifterna. Utgångsmaterialet ges höjdvärdet 0 och höjdsystemet N2000.",
-                    "coordinates": "Det finns ogiltiga rader i koordinaterna som ska transformeras. De ogiltiga raderna kommer att tas bort före transformationen.",
-                    "bbox": "Koordinaterna som ska transformeras ligger utanför täckningsområde av referenssystemet för koordinater. Koordinatvärdena måste vara i den axelordning som definieras av referenssystemet för koordinater.",
-                    "largeFile": "Transformation av stora filer kan ta flera minuter."
-                },
-                "validateErrors": {
-                    "title": "Fel!",
-                    "message": "Det finns brister eller fel i valen. Beakta följande krav och försök på nytt.",
-                    "xyz": "I valen som berör utgångsreferenssystemet för koordinater finns inget höjdsystem. En omvandling till ett kartesiskt 3D-system kan inte göras.",
-                    "crs": "Ett geodetiskt referenssystem för koordinater ska vara valt både i utgångs- och resultatuppgifterna.",
-                    "noInputData": "Det finns inga koordinater som kan transformeras.",
-                    "noInputFile": "Filen som innehåller utgångsmaterial ska vara vald.",
-                    "noFileName": "Filen som bildas ska ges ett filnamn.",
-                    "decimalCount": "Decimalernas antalet ska vara 0 eller ett positivt heltal.",
-                    "headerCount": "Antalet rubrikrader ska vara 0 eller ett positivt heltal.",
-                    "doubleComma": "Skiljetecknen för decimaler och koordinater kan inte båda vara kommatecken.",
-                    "doubleSpace": "Vinkelns form/enhet kan inte innehålla mellanslag, om koordinatskiljetecknet är Mellanslag.",
-                    "noFileSettings": "Inga filinställningar har angetts..",
-                    "noCoordinateSeparator": "Skiljetecknet för koordinater ska vara valt.",
-                    "noDecimalSeparator": "Skiljetecknet för decimaler ska vara valt."
-                },
-                "responseErrors": {
-                    "titleTransform": "Fel i transformation!",
-                    "titleRead": "Fel i inläsningen av filen!",
-                    "readFileError" : "Inläsningen av alla rader i filen lyckades inte.",
-                    "transformFileError": "Transformationen av koordinater i filen lyckades inte.",
-                    "invalidLine": "I filen finns på rad: {index, number} felaktig koordinatrad: {line} Kontrollera att valen av skiljetecknen för decimaler och koordinater samt antalet rubrikrader motsvarar filens innehåll.",
-                    "generic": "Koordinattransformationen misslyckades.",
-                    //error codes
-                    "invalid_coord": "Fel i koordinaten. Kontrollera att koordinaterna som ska omvandlas är i rätt format och att de geodetiska referenssystemen för koordinater och höjder är korrekta.",
-                    //"invalid_number": "",
-                    //"invalid_coord_in_array": "",
-                    "no_coordinates": "Inga koordinater",
-                    "invalid_file_settings": "Felaktiga filinställningar.",
-                    "no_file": "Det fanns ingen fil för begäran.",
-                    "invalid_first_coord": "Det var inte möjligt att bilda en koordinat med de angivna inställningarna. Kontrollera att valen av skiljetecken för koordinater, antalet rubrikrader, huruvida identifierare används eller inte samt geodetiska referenssystem för koordinater och höjdsystem (dimension) motsvarar filens innehåll.",
-                    "transformation_error": "Koordinatomvandlingen misslyckades. Koordinattransformation service respons:", //TODO
-                    "service_busy": "Det finns trängsel i tjänsten. Var så vänlig och prova åter senare."
-                },
-                "responseFile": {
-                    "title": "Observera!",
-                    "hasMoreCoordinates": "Det är inte möjligt att från utgångsmaterialet transformera fler än {maxCoordsToArray, number} koordinater i tabellen. Om du vill transformera alla koordinater, använd funktionen För in resultaten i en fil."
-                }
+            "validate": {
+                "title": "Fel!",
+                "message": "Det finns brister eller fel i valen. Beakta följande krav och försök på nytt.",
+                "xyz": "I valen som berör utgångsreferenssystemet för koordinater finns inget höjdsystem. En omvandling till ett kartesiskt 3D-system kan inte göras.",
+                "crs": "Ett geodetiskt referenssystem för koordinater ska vara valt både i utgångs- och resultatuppgifterna.",
+                "noInputData": "Det finns inga koordinater som kan transformeras.",
+                "noInputFile": "Filen som innehåller utgångsmaterial ska vara vald.",
+                "noFileName": "Filen som bildas ska ges ett filnamn.",
+                "decimalCount": "Decimalernas antalet ska vara 0 eller ett positivt heltal.",
+                "headerCount": "Antalet rubrikrader ska vara 0 eller ett positivt heltal.",
+                "doubleComma": "Skiljetecknen för decimaler och koordinater kan inte båda vara kommatecken.",
+                "doubleSpace": "Vinkelns form/enhet kan inte innehålla mellanslag, om koordinatskiljetecknet är Mellanslag.",
+                "noFileSettings": "Inga filinställningar har angetts..",
+                "noCoordinateSeparator": "Skiljetecknet för koordinater ska vara valt.",
+                "noDecimalSeparator": "Skiljetecknet för decimaler ska vara valt."
+            },
+            "errors": {
+                "transform": "Fel i transformation!",
+                "import": "Fel i inläsningen av filen!", // Inläsningen av alla rader i filen lyckades inte.
+                "paste" : "Importera koordinater från urklipp lyckades inte!",
+                "export": "Utskrift koordinater i filen lyckades inte.",
+                "invalidLine": "I filen finns på rad: {index, number} felaktig koordinatrad: {line} Kontrollera att valen av skiljetecknen för decimaler och koordinater samt antalet rubrikrader motsvarar filens innehåll.",
+                "generic": "Koordinattransformationen misslyckades.",
+                //error codes
+                "invalid_coord": "Fel i koordinaten. Kontrollera att koordinaterna som ska omvandlas är i rätt format och att de geodetiska referenssystemen för koordinater och höjder är korrekta.",
+                //"invalid_number": "",
+                //"invalid_coord_in_array": "",
+                "no_coordinates": "Inga koordinater",
+                "invalid_file_settings": "Felaktiga filinställningar.",
+                "no_file": "Det fanns ingen fil för begäran.",
+                "invalid_first_coord": "Det var inte möjligt att bilda en koordinat med de angivna inställningarna. Kontrollera att valen av skiljetecken för koordinater, antalet rubrikrader, huruvida identifierare används eller inte samt geodetiska referenssystem för koordinater och höjdsystem (dimension) motsvarar filens innehåll.",
+                "transformation_error": "Koordinatomvandlingen misslyckades. Koordinattransformation service respons:", //TODO
+                "service_busy": "Det finns trängsel i tjänsten. Var så vänlig och prova åter senare."
             }
         },
         "dataSource": {
