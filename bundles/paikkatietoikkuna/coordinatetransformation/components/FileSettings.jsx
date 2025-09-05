@@ -16,11 +16,9 @@ const FILE_INPUT_PROPS = {
 };
 
 const OPTIONS = {
-    importSelect: ['coordinateSeparator', 'decimalSeparator'],
-    importCheckbox: ['prefixId' /*, 'axisFlip' */],
-    exportSelect: ['decimalCount', 'decimalSeparator', 'coordinateSeparator', 'lineSeparator'],
-    exportCheckbox: ['prefixId', 'axisFlip', 'writeHeader', 'writeLineEndings', 'writeCardinals'],
-    options: {...SEPARATORS, decimalCount: DECIMAL, unit: DEGREE }
+   ...SEPARATORS,
+    decimalCount: DECIMAL,
+    unit: DEGREE
 };
 
 const Content = styled.div`
@@ -41,10 +39,11 @@ const showDegreeUnit = srs => {
     return isDegreeSystem(srs);
 };
 
-const CheckboxOption = ({id, checked, onChange, controller}) => (
+// locPath is used if options.[id] loc doesn't exist
+const CheckboxOption = ({id, values, onChange, controller, locPath}) => (
     <Wrapper>
-        <Checkbox checked={checked} onChange={evt => onChange(id, evt.target.checked)}>
-            <Message messageKey={`fileSettings.options.${id}`} />
+        <Checkbox checked={values[id]} onChange={evt => onChange(id, evt.target.checked)}>
+            <Message messageKey={`fileSettings.options.${locPath || id}`} />
         </Checkbox>
         <span onClick={() => controller.showInfo(id)}>
             <InfoIcon title={<Message messageKey={`infoPopup.${id}.title`}/>}/>
@@ -52,8 +51,9 @@ const CheckboxOption = ({id, checked, onChange, controller}) => (
     </Wrapper>
 );
 
-const SelectOption = ({id, value, onChange, controller}) =>
-    <LabeledSelect localize mandatory label={`fileSettings.options.${id}`} info={id} value={value} options={OPTIONS.options[id]} onChange={value => onChange(id, value)} controller={controller}/>
+
+const SelectOption = ({id, values, onChange, controller, mandatory = true}) =>
+    <LabeledSelect localize mandatory={mandatory} label={`fileSettings.options.${id}`} info={id} value={values[id]} options={OPTIONS[id]} onChange={value => onChange(id, value)} controller={controller}/>
 
 export const ImportFile = ({ import: values, inputSrs, files, fileContents, controller }) => {
     const onChange = (key, value) => controller.setFileSetting('import', key, value);
@@ -61,22 +61,35 @@ export const ImportFile = ({ import: values, inputSrs, files, fileContents, cont
         <Content>
             <FileInput mandatory onFiles={controller.setFiles} files={files} { ...FILE_INPUT_PROPS } />
             <LabeledInput number min={0} label='fileSettings.options.headerLineCount' value={values.headerLineCount} onChange={value => onChange('headerLineCount', value)} controller={controller}/>
-            { OPTIONS.importSelect.map(id => <SelectOption key={id} id={id} controller={controller} onChange={onChange} value={values[id]}/>)}
-            { showDegreeUnit(inputSrs) && <SelectOption id='unit' controller={controller} onChange={onChange} value={values.unit}/> }
-            { OPTIONS.importCheckbox.map(id => <CheckboxOption key={id} id={id} controller={controller} onChange={onChange} checked={values[id]}/>)}
+            <SelectOption id='coordinateSeparator' controller={controller} onChange={onChange} values={values}/>
+            <SelectOption id='decimalSeparator' controller={controller} onChange={onChange} values={values}/>
+            { showDegreeUnit(inputSrs) && <SelectOption id='unit' mandatory={isDegreeSystem(inputSrs)} controller={controller} onChange={onChange} values={values}/> }
+            <CheckboxOption id='prefixId' locPath='prefixes.input' controller={controller} onChange={onChange} values={values}/>
             <FilePreview fileContents={fileContents} dataFormat={values.unit} />
         </Content>
     );
 };
 
-export const ExportFile = ({ export: values, outputSrs, controller }) => {
+export const ExportFile = ({ export: values, outputSrs, controller, fileContents }) => {
     const onChange = (key, value) => controller.setFileSetting('export', key, value);
+    const { lineEndings = [], headerLines = [] , prefixColCount } = fileContents || {};
+    const prefixIdLocPath = prefixColCount > 0 ? 'prefixes.fromFile' : 'prefixes.generate'; // or prefixes.length > 0
+    const hasLineEndings = lineEndings.length > 0;
+    const hasHeaders = headerLines.length > 0;
     return (
         <Content>
             <LabeledInput label='fileSettings.options.fileName' value={values.fileName} onChange={evt => onChange('fileName', evt.target.value)} controller={controller}/>
-            { showDegreeUnit(outputSrs) && <SelectOption id='unit' controller={controller} onChange={onChange} value={values.unit}/> }
-            { OPTIONS.exportSelect.map(id => <SelectOption key={id} id={id} controller={controller} onChange={onChange} value={values[id]}/>)}
-            { OPTIONS.exportCheckbox.map(id => <CheckboxOption key={id} id={id} controller={controller} onChange={onChange} checked={values[id]}/>)}
+            <SelectOption id='coordinateSeparator' controller={controller} onChange={onChange} values={values}/>
+            <SelectOption id='decimalSeparator' controller={controller} onChange={onChange} values={values}/>
+            <SelectOption id='decimalCount' controller={controller} onChange={onChange} values={values}/>
+            { showDegreeUnit(outputSrs) && <SelectOption id='unit' controller={controller} onChange={onChange} values={values}/> }
+            <SelectOption id='lineSeparator' controller={controller} onChange={onChange} values={values}/>
+            <CheckboxOption id='createHeader' controller={controller} onChange={onChange} values={values}/>
+            { hasHeaders && <CheckboxOption id='writeHeaders' controller={controller} onChange={onChange} values={values}/> }
+            <CheckboxOption id='prefixId' locPath={prefixIdLocPath} controller={controller} onChange={onChange} values={values}/>
+            <CheckboxOption id='axisFlip' controller={controller} onChange={onChange} values={values}/>
+            <CheckboxOption id='writeCardinals' controller={controller} onChange={onChange} values={values}/>
+            { hasLineEndings && <CheckboxOption id='writeLineEndings' controller={controller} onChange={onChange} values={values}/> }
         </Content>
     );
 };

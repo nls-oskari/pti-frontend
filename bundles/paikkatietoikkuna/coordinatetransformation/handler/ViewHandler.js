@@ -18,6 +18,7 @@ const getInitialState = () => ({
     inputHeightSrs: null,
     outputHeightSrs: null,
     files: [],
+    fileContents: null,
     import: { ...FILE_DEFAULTS.import },
     export: { ...FILE_DEFAULTS.export },
     coordinates: [],

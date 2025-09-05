@@ -124,17 +124,15 @@ const createHeader = (srs, height, axisFlip, decimalUnit) => {
 
 export const exportStateToFile = (state) => {
     const { outputSrs, outputHeightSrs, fileContents } = state;
-    const { fileName, lineSeparator, writeHeader, axisFlip, unit } = state.export;
+    const { fileName, lineSeparator, createHeader, writeHeaders, axisFlip, unit } = state.export;
 
     const content = [];
-    if (writeHeader) {
-        const { headerLines = [] } = fileContents || {};
-        if (headerLines.length) {
-            headerLines.forEach(header => content.push(header));
-        } else {
-            const header = createHeader(outputSrs, outputHeightSrs, axisFlip, unit);
-            content.push(header);
-        }
+    if (createHeader) {
+        const header = createHeader(outputSrs, outputHeightSrs, axisFlip, unit);
+        content.push(header);
+    }
+    if (writeHeaders) {
+        fileContents?.headerLines?.forEach(header => content.push(header));
     }
     const text = getFileContent(state);
     content.push(text);
