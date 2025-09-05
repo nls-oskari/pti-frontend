@@ -569,7 +569,7 @@ class UIHandler extends StateHandler {
             return response.json();
         }).then(json => {
             if (!Array.isArray(json)) {
-                this.showResponseError(json)
+                this.showResponseError(json);
                 return;
             }
             this.updateState({ results: json, loading: false, transformed: true });
