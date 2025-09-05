@@ -205,15 +205,15 @@ Oskari.registerLocalization(
                 "headerLineCount": "Antal rubrikrader",
                 "decimalCount": "Decimalernas precision",
                 "axisFlip": "Omvända koordinater",
-                "writeHeader": "Skriv rubrikraden i filen",
-                "writeCardinals": "Använd kardinalväderstreck (N,E,W,S)",
-                "writeLineEndings": "Ta med radavslutningarna i resultatet",
+                "writeCardinals": "Lägg till kardinalväderstreck (N,E,W,S)",
+                "writeLineEndings": "Lägg till utgångsfilens radavslutningarna",
                 "lineSeparator": "Radavskiljare",
                 "unit": "Vinkelns form/enhet",
+                "createHeader": "Skapa koordinatuppgifter rubrikraden",
+                "writeHeaders": "Lägg till utgångsfilens rubrikraden", // (${count})??
                 "prefixes": { // Använd identifierare
                     "input": "Koordinater innehåller identifierare",
-                    "generate": "Skapa identifierare",
-                    "add": "Lägg till identifierare",
+                    "generate": "Skapa identifierare för rader",
                     "fromFile": "Lägg till utgångsfilens identifierare"
                 },
                 "degrees":{
@@ -382,8 +382,15 @@ Oskari.registerLocalization(
                 ],
                 "listItems" : []
             },
-            "writeHeader":{
-                "title":"Skriv rubrikraden i filen",
+            "createHeader": {
+                "title":"Skriv referenssystemet rubrikraden",
+                "info": "info",
+                "paragrapsh": [
+                    "Rubrikraden som ska läggas till skapas från data i det koordinatsystem du valt. Som visas i följande exempel:"
+                ]
+            },
+            "writeHeaders":{
+                "title":"Skriv rubrikraden från utgångsmaterialet",
                 "info": "Inkludera rubrikraderna i början av resultatfilen",
                 "paragraphs": [
                     "Med denna egenskap kan användaren ta med metadata om koordinaterna på rubrikraden i resultatfilen. Namnet på referenssystemet för koordinater läggs till på rubrikraden.",

@@ -205,16 +205,16 @@ Oskari.registerLocalization(
                 "headerLineCount": "Number of header rows",
                 "decimalPrecision": "Decimal precision",
                 "axisFlip": "Coordinates reversed",
-                "writeHeader": "Write header row into file",
-                "writeCardinals": "Use cardinals (N,E,W,S)",
-                "writeLineEndings": "Add end-of-lines to output",
+                "writeCardinals": "Add cardinals (N,E,W,S)",
+                "writeLineEndings": "Add end-of-lines from input file",
                 "lineSeparator": "Line separator", // Row separator
                 "unit": "Angle pattern", // Angle format/unit type/unit
+                "createHeader": "Add CRS header",
+                "writeHeaders": "Add header rows from input file", // (${count})??
                 "prefixes": { // Use identifier, Use id infront
                     "input": "Coordinates contain identifiers",
-                    "generate": "Create identifers",
-                    "add": "Add identifiers",
-                    "fromFile": "Add input file identifiers"
+                    "generate": "Generate identifers for rows",
+                    "fromFile": "Add identifiers from input file"
                 },
                 "degrees":{
                     "degree": "Degree",
@@ -383,9 +383,16 @@ Oskari.registerLocalization(
                 ],
                 "listItems" : []
             },
-            "writeHeader":{
-                "title":"Include header rows",
-                "info": "Include header rows in the output",
+            "createHeader": {
+                "title":"Create CRS header",
+                "info": "The header row to be added is created from the data in the coordinate system you selected",
+                "paragrapsh": [
+                    "The header row to be added is created from the data in the coordinate system you selected. As shown in the following example:"
+                ]
+            },
+            "writeHeaders":{
+                "title":"Add header rows",
+                "info": "Add header rows from the imported file to the result",
                 "paragraphs": [
                     "This property is used to include metadata about coordinates in the header row. The code of the coordinate reference system is added to the header row.",
                     "When transforming from one file into another, any header rows in the input file in addition to the coordinate reference system information are added to the output file."

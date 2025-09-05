@@ -207,15 +207,15 @@ Oskari.registerLocalization(
                 "headerLineCount": "Otsakerivien määrä",
                 "decimalCount": "Desimaalien tarkkuus",
                 "axisFlip": "Koordinaatit käänteisesti",
-                "writeHeader": "Kirjoita otsakerivi tiedostoon",
-                "writeCardinals": "Käytä kardinaaleja (N,E,W,S)",
-                "writeLineEndings": "Rivin loput tulokseen",
+                "writeCardinals": "Lisää kardinaalit (N,E,W,S)",
+                "writeLineEndings": "Lisää lähtötiedoston rivien loput",
                 "lineSeparator": "Rivierotin",
                 "unit": "Kulman muoto/yksikkö",
+                "createHeader": "Lisää koordinaattjijärjestelmä otsakerivi",
+                "writeHeaders": "Lisää otsakerivit lähtötiedostosta", // (${count})??
                 "prefixes": {
                     "input": "Koordinaatit sisältävät tunnisteet",
-                    "generate": "Luo rivinumero tunnisteet",
-                    "add": "Lisää tunnisteet",
+                    "generate": "Luo riveille tunnisteet",
                     "fromFile": "Lisää tunnisteet lähtötiedostosta"
                 },
                 "degrees": {
@@ -385,9 +385,16 @@ Oskari.registerLocalization(
                 ],
                 "listItems" : []
             },
-            "writeHeader":{
-                "title":"Lisää otsakerivit",
-                "info": "Tuloksen alkuun otsakerivit mukaan",
+            "createHeader": {
+                "title":"Luo otsakerivi",
+                "info": "Lisättävä otsakerivi luodaan valitsemasi koordinaattijärjestelmän tiedoista",
+                "paragrapsh": [
+                    "Lisättävä otsakerivi luodaan valitsemasi koordinaattijärjestelmän tiedoista. Seuraavan esimerkin mukaisesti:"
+                ]
+            },
+            "writeHeaders":{
+                "title":"Lisää otsakerivit tulokseen",
+                "info": "Lisää tulokseen otsakerivit tuodusta tiedostosta",
                 "paragraphs": [
                     "Ominaisuuden avulla käyttäjä voi kertoa haluaako tulostiedostoon metatietoa koordinaateista otsakeriville.",
                     "Tiedostosta tiedostoon muunnoksessa alkuperäisen tiedoston mahdolliset otsakerivit tulevat myös mukaan"
@@ -395,7 +402,7 @@ Oskari.registerLocalization(
                 "listItems" : []
             },
             "writeLineEndings":{
-                "title":"Rivin loput tulokseen",
+                "title": "Rivin loput tulokseen",
                 "info": "Lähtötiedoston rivin loput lisätään tulostiedostoon",
                 "paragraphs": [
                     "Ominaisuuden avulla pystyy kertomaan haluaako tulokseen kirjoitettavan myös jokaisella rivillä annetun pisteen koordinaatteja seuraavan merkkijonon.",
