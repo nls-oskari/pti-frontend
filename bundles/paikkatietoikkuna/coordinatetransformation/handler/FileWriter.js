@@ -112,10 +112,10 @@ const getFileContent = ({
     }).join(lineSeparator);
 };
 
-const createHeader = (srs, height, axisFlip) => {
+const createHeader = (srs, height, axisFlip, decimalUnit) => {
     // name for KKJ (no need to localize zones)
     const { name, label = name, axes = [], system } = SRS.find(s => s.value === srs) || {};
-    const { unit } = SYSTEM.find(s => s.value === system) || {};
+    const { unit: systemUnit } = SYSTEM.find(s => s.value === system) || {};
     let heightName = '';
     if (height) {
         const { axis = 'H', name} = SRS_H.find(h => h.value === height) || {};
@@ -123,12 +123,13 @@ const createHeader = (srs, height, axisFlip) => {
         heightName = ` + ${name}`;
     }
     const modAxes = axisFlip ? [...axes.slice(0,2).toReversed(), ...axes.slice(2)] : axes;
-    return `${CRS}: ${srs} - ${label}${heightName} - axes: ${modAxes.join()}${axisFlip ? ' (reversed)' : ''} - unit: ${unit}`;
+    const selectedUnit = isDegreeSystem(srs) && decimalUnit ? ` (${decimalUnit}` : '';
+    return `${CRS}: ${srs} - ${label}${heightName} - axes: ${modAxes.join()}${axisFlip ? ' (reversed)' : ''} - unit: ${systemUnit}${selectedUnit}`;
 };
 
 export const exportStateToFile = (state) => {
     const { outputSrs, outputHeightSrs, fileContents } = state;
-    const { fileName, lineSeparator, writeHeader, axisFlip } = state.export;
+    const { fileName, lineSeparator, writeHeader, axisFlip, unit } = state.export;
     
     const content = [];
     if (writeHeader) {
@@ -136,7 +137,7 @@ export const exportStateToFile = (state) => {
         if (headerLines.length) {
             headerLines.forEach(header => content.push(header));
         } else {
-            const header = createHeader(outputSrs, outputHeightSrs, axisFlip);
+            const header = createHeader(outputSrs, outputHeightSrs, axisFlip, unit);
             content.push(header);
         }
     }

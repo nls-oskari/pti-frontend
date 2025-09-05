@@ -106,13 +106,13 @@ export const SYSTEM = [
         value: 'PROJ_2D',
         loc: 'flyout.coordinateSystem.coordinateSystem.proj2D',
         datums: ['KKJ', 'EUREF-FIN', 'ETRS89'],
-        unit: 'metric',
+        unit: 'metre',
         dimension: 2
     }, {
         value: 'PROJ_3D',
         loc: 'flyout.coordinateSystem.coordinateSystem.proj3D',
         datums: ['EUREF-FIN'],
-        unit: 'geocentric',
+        unit: 'metre (geocentric)',
         dimension: 3
     }, {
         value: 'GEOG_2D',
@@ -124,7 +124,7 @@ export const SYSTEM = [
         value: 'GEOG_3D',
         loc: 'flyout.coordinateSystem.coordinateSystem.geo3D',
         datums: ['EUREF-FIN'],
-        unit: 'degree3D',
+        unit: 'degree',
         dimension: 3
     }
 ];
