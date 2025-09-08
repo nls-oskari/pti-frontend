@@ -7,7 +7,10 @@ export const LON_AXES = ['E', 'φ', 'X'];
 export const LAN_AXES = ['N', 'φ', 'Y'];
 export const MAP = {
     ADD: 'add',
-    REMOVE: 'remove'
+    REMOVE: 'remove',
+    STORE: 'store',
+    POPUP: 'showPopup',
+    SHOW: 'showOnMap'
 };
 
 export const ACTIONS = {

@@ -12,6 +12,8 @@ import { exportStateToFile } from './FileWriter';
 const getInitialState = () => ({
     loading: false,
     source: SOURCE[0], // deprecated
+    // TODO: maybe this isn't needed !!fileContents => source === 'file'
+    // only file has special handling
     sources: [],
     inputSrs: null,
     outputSrs: null,
@@ -154,11 +156,6 @@ class UIHandler extends StateHandler {
     closeConfirmPopup () {
         this.confirmPopup?.close();
         this.confirmPopup = null;
-    }
-
-    addCoordinate (coordinate) {
-        const { coordinates } = this.getState();
-        this.updateState({ coordinates: [...coordinates, coordinate] });
     }
 
     cleanInputCoordinates () {
@@ -354,14 +351,29 @@ class UIHandler extends StateHandler {
         if (id === 'file') {
             this.showFileSettings('import');
         }
-        if (id === 'store') {
-            const coordinates = this.instance.getMapCoordinates();
-            this.instance.setMapSelectionMode();
-            this.addSourceToState(ACTIONS.MAP);
-            this.updateState({ coordinates, transformed: false });
-        }
-        if (Object.values(MAP).includes(id)) {
-            this.instance.setMapSelectionMode(id);
+    }
+
+    setMapSelectionMode (mode) {
+        switch (mode) {
+            case MAP.POPUP:
+                const { coordinates } = this.getState();
+                this.instance.setMapSelectionMode(MAP.ADD);
+                this.instance.setMapCoordinates(coordinates);
+                this.showMapPopup();
+                break;
+            case MAP.STORE:
+                const mapCoordinates = this.instance.getMapCoordinates();
+                this.instance.setMapSelectionMode();
+                this.addSourceToState(ACTIONS.MAP);
+                this.updateState({ coordinates: mapCoordinates, transformed: false });
+                break;
+            case MAP.REMOVE:
+            case MAP.ADD:
+                this.instance.setMapSelectionMode(mode);
+                break;
+            case MAP.SHOW:
+                this.showOnMap();
+                break;
         }
     }
 
@@ -700,7 +712,6 @@ class UIHandler extends StateHandler {
 }
 
 const wrapped = controllerMixin(UIHandler, [
-    'setSource',
     'setSrs',
     'setHeightSrs',
     'updateCoordinate',
@@ -715,6 +726,7 @@ const wrapped = controllerMixin(UIHandler, [
     'showInfo',
     'showFileSettings',
     'onAction',
+    'setMapSelectionMode',
     'reset',
     'importFileContentsToInputTable',
     'addFromSource',
