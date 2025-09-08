@@ -29,7 +29,7 @@ const getLocalized = options => options.map(opt => opt.label ? opt : ({ ...opt, 
 
 const Info = ({ info, controller }) => (
     <span onClick={() => controller.showInfo(info)}>
-        <InfoIcon space={false} title={<Message messageKey={`infoPopup.${info}.title`}/>}/>
+        <InfoIcon space={false} title={<Message messageKey={`infoPopup.${info}.info`}/>}/>
     </span>
 );
 
