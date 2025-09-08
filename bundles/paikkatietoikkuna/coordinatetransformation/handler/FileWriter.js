@@ -10,7 +10,7 @@ const DEC_TO_RAD = PI2 / 360;
 
 const CRS = 'Coordinate Reference System';
 
-const toDegree = (coord, unit, decimals, isLon) => {
+const toDegree = (coord, unit, decimals) => { //, isLon)
     if (unit === 'DD' || unit === 'degree') {
         // TODO: prefix 0 ??
         return coord.toFixed(decimals);
@@ -26,7 +26,8 @@ const toDegree = (coord, unit, decimals, isLon) => {
     const separator = unit.includes(' ') ? ' ' : '';
     const d = Math.floor(coord);
     const m = (coord - d) * HOUR_TO_MIN;
-    const dd = isLon && d < 100 ? '0' + d : d.toString();
+    const dd = d < 10 ? '0' + d : d.toString();
+    // const dd = isLon && d < 100 ? '0' + d : d.toString();
     let mm = m.toFixed(decimals);
     if (m < 10) {
         mm = '0' + mm;
