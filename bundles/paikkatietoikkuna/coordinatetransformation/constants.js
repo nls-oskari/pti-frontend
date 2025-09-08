@@ -5,6 +5,14 @@ export const ID_PREFIX = 'coord_marker_';
 export const SOURCE = ['table', 'file', 'map']; // deprecated
 export const LON_AXES = ['E', 'φ', 'X'];
 export const LAN_AXES = ['N', 'φ', 'Y'];
+
+export const HOUR_TO_MIN = 60; // MIN_TO_SEC
+export const HOUR_TO_SEC = 3600;
+// 2 * pi =~ 6.283185307179586476925286766559
+const PI2 = Math.PI * 2;
+export const DEC_TO_GRAD = 10 / 9;
+export const DEC_TO_RAD = PI2 / 360;
+
 export const MAP = {
     ADD: 'add',
     REMOVE: 'remove',

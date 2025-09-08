@@ -1,12 +1,5 @@
-import { SRS, SRS_H, SYSTEM } from '../constants';
+import { SRS, SRS_H, SYSTEM, HOUR_TO_MIN, DEC_TO_GRAD, DEC_TO_RAD } from '../constants';
 import { getDimension, isDegreeSystem, isLonFirst, getDecimalCount } from '../helper';
-
-const HOUR_TO_MIN = 60;
-// const HOUR_TO_SEC = 3600;
-// 2 * pi =~ 6.283185307179586476925286766559
-const PI2 = Math.PI * 2;
-const DEC_TO_GRAD = 10 / 9;
-const DEC_TO_RAD = PI2 / 360;
 
 const CRS = 'Coordinate Reference System';
 
