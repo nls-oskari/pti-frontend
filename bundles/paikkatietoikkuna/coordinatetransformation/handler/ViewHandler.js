@@ -538,7 +538,7 @@ class UIHandler extends StateHandler {
         const coordinates = fileContents.data.map(([x, y, z]) => ({
             x: parseValue(x, unit),
             y: parseValue(y, unit),
-            z: parseValue(z, unit)
+            z: parseValue(z) // always metric
         }));
         // sets all coordinates from file so one source only
         this.updateState({ coordinates, sources: [ACTIONS.IMPORT] });

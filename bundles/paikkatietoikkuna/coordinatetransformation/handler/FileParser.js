@@ -65,14 +65,14 @@ export const parseFileContents = (lines = [], delimiter = ';', headerLineCount =
 };
 
 // https://github.com/nls-oskari/kartta.paikkatietoikkuna.fi/blob/master/service-coordtransform/src/main/java/fi/nls/paikkatietoikkuna/coordtransform/CoordTransService.java#L25-L26
-export const parseValue = (value, format = 'default') => {
+export const parseValue = (value, format = 'metric') => {
     if (typeof value === 'undefined') {
         return NaN;
     }
     const asNumber = parseFloat(value);
     const unitItem = DEGREE.find(unit => unit.value === format);
     if (!unitItem) {
-        return parseFloat(value);
+        return asNumber;
     }
     if (format === 'gradian') {
         return asNumber / DEC_TO_GRAD;
