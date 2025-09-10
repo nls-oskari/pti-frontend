@@ -597,6 +597,10 @@ class UIHandler extends StateHandler {
             },
             body
         }).then(response => {
+            if (!response.ok) {
+                throw new Error(response.statusText);
+                // return response.json(); => typeof text !== 'string' => showResponseError(text)
+            }
             return response.text();
         }).then(text => {
             const results = parseKomuResponse(text);
