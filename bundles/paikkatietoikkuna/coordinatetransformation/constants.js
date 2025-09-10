@@ -3,7 +3,7 @@ export const WATCH_JOB = 'CoordinateTransformJob'; // deprecated
 export const WATCH_URL = '/coordinatetransform/watch/'; // deprecated
 export const ID_PREFIX = 'coord_marker_';
 export const SOURCE = ['table', 'file', 'map']; // deprecated
-export const LON_AXES = ['E', 'φ', 'X'];
+export const LON_AXES = ['E', 'λ', 'X'];
 export const LAN_AXES = ['N', 'φ', 'Y'];
 
 export const HOUR_TO_MIN = 60; // MIN_TO_SEC
@@ -54,6 +54,7 @@ export const FILE_DEFAULTS = {
         lineSeparator: '\r\n'
     }
 };
+
 // const closestZoom = 6;
 
 export const SEPARATORS = {
