@@ -101,7 +101,7 @@ const getFileContent = ({
     }).join(lineSeparator);
 };
 
-const createHeader = (srs, height, axisFlip, decimalUnit) => {
+const createSrsHeader = (srs, height, axisFlip, decimalUnit) => {
     // name for KKJ (no need to localize zones)
     const { name, label = name, axes = [], system } = SRS.find(s => s.value === srs) || {};
     const { unit: systemUnit } = SYSTEM.find(s => s.value === system) || {};
@@ -122,7 +122,7 @@ export const exportStateToFile = (state) => {
 
     const content = [];
     if (createHeader) {
-        const header = createHeader(outputSrs, outputHeightSrs, axisFlip, unit);
+        const header = createSrsHeader(outputSrs, outputHeightSrs, axisFlip, unit);
         content.push(header);
     }
     if (writeHeaders) {

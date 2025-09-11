@@ -1,4 +1,4 @@
-import { DEGREE, HOUR_TO_MIN, HOUR_TO_SEC, DEC_TO_GRAD, DEC_TO_RAD  } from '../constants';
+import { DEGREE, HOUR_TO_MIN, HOUR_TO_SEC, DEC_TO_GRAD, DEC_TO_RAD } from '../constants';
 
 export const parseFile = (file) => {
     return new Promise((resolve, reject) => {

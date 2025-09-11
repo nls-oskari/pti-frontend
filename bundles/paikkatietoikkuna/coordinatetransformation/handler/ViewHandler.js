@@ -295,7 +295,7 @@ class UIHandler extends StateHandler {
             });
         }).catch(err => {
             console.log(err);
-            Messaging.error(this.log('transform.errors.import'))
+            Messaging.error(this.log('transform.errors.import'));
         });
     }
 
@@ -355,25 +355,23 @@ class UIHandler extends StateHandler {
 
     setMapSelectionMode (mode) {
         switch (mode) {
-            case MAP.POPUP:
-                const { coordinates } = this.getState();
-                this.instance.setMapSelectionMode(MAP.ADD);
-                this.instance.setMapCoordinates(coordinates);
-                this.showMapPopup();
-                break;
-            case MAP.STORE:
-                const mapCoordinates = this.instance.getMapCoordinates();
-                this.instance.setMapSelectionMode();
-                this.addSourceToState(ACTIONS.MAP);
-                this.updateState({ coordinates: mapCoordinates, transformed: false });
-                break;
-            case MAP.REMOVE:
-            case MAP.ADD:
-                this.instance.setMapSelectionMode(mode);
-                break;
-            case MAP.SHOW:
-                this.showOnMap();
-                break;
+        case MAP.POPUP:
+            this.instance.setMapSelectionMode(MAP.ADD);
+            this.instance.setMapCoordinates(this.getState().coordinates);
+            this.showMapPopup();
+            break;
+        case MAP.STORE:
+            this.updateState({ coordinates: this.instance.getMapCoordinates(), transformed: false });
+            this.addSourceToState(ACTIONS.MAP);
+            this.instance.setMapSelectionMode();
+            break;
+        case MAP.REMOVE:
+        case MAP.ADD:
+            this.instance.setMapSelectionMode(mode);
+            break;
+        case MAP.SHOW:
+            this.showOnMap();
+            break;
         }
     }
 
