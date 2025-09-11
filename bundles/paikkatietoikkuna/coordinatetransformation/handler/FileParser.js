@@ -1,4 +1,4 @@
-import { DEGREE, SEPARATORS } from '../constants';
+import { DEGREE } from '../constants';
 
 export const parseFile = (file) => {
     return new Promise((resolve, reject) => {
@@ -13,7 +13,15 @@ export const parseFile = (file) => {
     });
 };
 
-export const parseFileContents = (lines = [], delimiter = ';', headerLineCount = 0, prefixColCount = 0) => {
+const addToArray = (array, index, value) => {
+    if (array[index]) {
+        array[index].push(value);
+    } else {
+        array[index] = [value];
+    }
+};
+
+export const parseFileContents = (lines = [], delimiter = ';', headerLineCount = 0, prefixColCount = 0, dimension = 2) => {
     const headerMetadata = {
         headerLines: [],
         headers: []
@@ -28,22 +36,31 @@ export const parseFileContents = (lines = [], delimiter = ';', headerLineCount =
         linesWithData = lines.slice(headerLineCount);
     }
     const decimalSeparator = detectDecimalSeparator(linesWithData[0], delimiter);
-    const data = linesWithData.map(line =>
-        line.split(delimiter)
-            // remove possible id column(s) at the start
-            .slice(prefixColCount)
-            .map(cell => cell.trim())
-            .map(cell => decimalSeparator === ',' ? cell.replace(',', '.') : cell)
-            // TODO: detect non decimal cells?
-    );
+    const data = [];
+    const prefixes = [];
+    const lineEndings = [];
+    linesWithData.forEach((line, lineIndex) => {
+        line.split(delimiter).forEach((cell, cellIndex) => {
+            if (cellIndex < prefixColCount) {
+                addToArray(prefixes, lineIndex, cell);
+            } else if (cellIndex < prefixColCount + dimension) {
+                const coord = decimalSeparator === ',' ? cell.replace(',', '.') : cell;
+                addToArray(data, lineIndex, coord.trim());
+            } else {
+                addToArray(lineEndings, lineIndex, cell);
+            }
+        });
+    });
 
     return {
         delimiter,
         // TODO: we don't need this when we don't send the file to backend
-        delimiterValueForBackend: SEPARATORS.coordinateSeparator.find(sep => sep.char === delimiter)?.value,
+        delimiterValueForBackend: delimiter,
         decimalSeparator,
         prefixColCount,
         data,
+        prefixes,
+        lineEndings,
         lines,
         ...headerMetadata
     };
@@ -107,6 +124,8 @@ export const parseValue = (value, format = 'default') => {
 };
 
 const interpretFileContents = (lines = []) => {
+    // TODO: doesn't work correctly with quite common files (header, semicolon, point)
+    // Maybe try to detect headers first as header line spaces leads to ' ' delimeter
     const delimiter = detectDelimiter(lines[0]);
     const headerLineCount = countHeaders(lines, delimiter);
     return parseFileContents(lines, delimiter, headerLineCount);

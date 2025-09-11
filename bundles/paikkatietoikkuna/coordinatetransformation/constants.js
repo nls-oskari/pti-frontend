@@ -2,7 +2,9 @@ export const BUNDLE = 'coordinatetransformation';
 export const WATCH_JOB = 'CoordinateTransformJob';
 export const WATCH_URL = '/coordinatetransform/watch/';
 export const ID_PREFIX = 'coord_marker_';
-export const SOURCE = ['table', 'file', 'map'];
+export const SOURCE = ['table', 'file', 'map']; // deprecated
+export const LON_AXES = ['E', 'φ', 'X'];
+export const LAN_AXES = ['N', 'φ', 'Y'];
 export const MAP = {
     ADD: 'add',
     REMOVE: 'remove'
@@ -37,23 +39,23 @@ export const FILE_DEFAULTS = {
         unit: 'degree',
         decimalCount: 3,
         decimalSeparator: Oskari.getDecimalSeparator(),
-        coordinateSeparator: 'semicolon',
-        lineSeparator: 'win'
+        coordinateSeparator: ';',
+        lineSeparator: '\r\n'
     }
 };
 // const closestZoom = 6;
 
 export const SEPARATORS = {
     lineSeparator: [
-        { label: 'Windows / DOS', value: 'win' },
-        { label: 'UNIX / Mac', value: 'unix' }
+        { label: 'Windows / DOS', value: '\r\n' },
+        { label: 'UNIX / Mac', value: '\n' }
     ],
     coordinateSeparator: [
-        { loc: 'fileSettings.options.delimeters.tab', value: 'tab', char: '\t' },
-        { loc: 'fileSettings.options.delimeters.space', value: 'space', char: ' ' },
-        { loc: 'fileSettings.options.delimeters.comma', value: 'comma', char: ',' },
-        { loc: 'fileSettings.options.delimeters.semicolon', value: 'semicolon', char: ';' },
-        { loc: 'fileSettings.options.delimeters.pipe', value: 'pipe', char: '|' }
+        { loc: 'fileSettings.options.delimeters.tab', value: '\t' },
+        { loc: 'fileSettings.options.delimeters.space', value: ' ' },
+        { loc: 'fileSettings.options.delimeters.comma', value: ',' },
+        { loc: 'fileSettings.options.delimeters.semicolon', value: ';' },
+        { loc: 'fileSettings.options.delimeters.pipe', value: '|' }
     ],
     decimalSeparator: [
         { loc: 'fileSettings.options.delimeters.point', value: '.' },
@@ -104,13 +106,13 @@ export const SYSTEM = [
         value: 'PROJ_2D',
         loc: 'flyout.coordinateSystem.coordinateSystem.proj2D',
         datums: ['KKJ', 'EUREF-FIN', 'ETRS89'],
-        unit: 'metric',
+        unit: 'metre',
         dimension: 2
     }, {
         value: 'PROJ_3D',
         loc: 'flyout.coordinateSystem.coordinateSystem.proj3D',
         datums: ['EUREF-FIN'],
-        unit: 'geocentric',
+        unit: 'metre (geocentric)',
         dimension: 3
     }, {
         value: 'GEOG_2D',
@@ -122,7 +124,7 @@ export const SYSTEM = [
         value: 'GEOG_3D',
         loc: 'flyout.coordinateSystem.coordinateSystem.geo3D',
         datums: ['EUREF-FIN'],
-        unit: 'degree3D',
+        unit: 'degree',
         dimension: 3
     }
 ];

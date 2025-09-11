@@ -18,18 +18,6 @@ Oskari.registerLocalization(
                 "epsg": "EPSG-koodilla",
                 "systems": "Datumilla ja koordinaatistolla"
             },
-            "steps": {
-                "inputSrs": "Lähtökoordinaattijärjestelmä",
-                "outputSrs": "Tuloskoordinaattijärjestelmä",
-                "srs": "Koordinaattijärjestelmät",
-                "importFile": "Lähtöaineisto",
-                "exportFile": "Tulosaineisto",
-                "mapSelect": "Valitse sijainnit",
-                "inputTable": "Lähtökoordinaatit",
-                "mapInputTable": "Kartan koordinaatit",
-                "resultTable": "Tuloskoordinaatit",
-                "resultTable2": "Lähtö ja tuloskoordinaatit"
-            },
             "coordinateSystem": {
                 "title": "Koordinaattijärjestelmän tiedot",
                 "input": {

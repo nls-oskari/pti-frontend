@@ -1,4 +1,4 @@
-import { SRS, SRS_H, SYSTEM, MARKER, DEGREE_DECIMALS, DMS } from './constants';
+import { SRS, SRS_H, SYSTEM, MARKER, DEGREE_DECIMALS, DMS, LON_AXES } from './constants';
 
 export const getDimension = (srs, srsHeight) => {
     const { system } = SRS.find(s => s.value === srs) || {};
@@ -26,6 +26,15 @@ export const getSrsUnit = srs => {
     const { unit } = SYSTEM.find(c => c.value === system) || {};
 
     return unit || 'metric';
+};
+
+export const isLonFirst = (srs) => {
+    const { axes = [] } = SRS.find(s => s.value === srs) || {};
+    if (axes.length < 2) {
+        Oskari.log('CoordTransHelper').warn('Misconfigured srs coordinate axes - cannot get lon first');
+        return false;
+    }
+    return LON_AXES.some(axis => axis === axes[0]);
 };
 
 export const validateCoordinate = (coord, is3D) => {
@@ -88,9 +97,9 @@ export const validateFileSettings = (state, type) => {
     if (type === 'import') {
         if (!state.files.length) {
             errors.push('noInputFile');
-        }
-        if (!state.fileContents) {
+        } else if (!state.fileContents) {
             // TODO: invalidFile, failedToParse, etc..
+            // use else if for now to avoid duplicate error message without input file
             errors.push('noInputFile');
         }
         if (typeof selects.headerLineCount !== 'number' || selects.headerLineCount < 0) {
@@ -133,45 +142,12 @@ export const getDecimalCount = (decimals, unit) => {
     }
 };
 
-export const getSystemsFromCompound = (epsg) => {
-    switch (epsg) {
-    case 'EPSG:3901': // YKJ + N60
-        return {
-            srs: 'EPSG:2393',
-            height: 'EPSG:5717'
-        };
-    case 'EPSG:3902': // ETRS-TM35FIN (N,E) + N60
-        return {
-            srs: 'EPSG:3067', // CoordTrans service doesn't support EPSG:5048, use EPSG:3047 (Identical except for area of use) or 3067 and axisFlip
-            height: 'EPSG:5717',
-            reversed: 'EPSG:5048'
-        };
-    case 'EPSG:3903': // ETRS-TM35FIN (N,E) + N2000
-        return {
-            srs: 'EPSG:3067', // CoordTrans service doesn't support EPSG:5048, use EPSG:3047 (Identical except for area of use) or 3067 and axisFlip
-            height: 'EPSG:3900',
-            reversed: 'EPSG:5048'
-        };
-    case 'EPSG:7409': // ETRS89 + EVRF2000 (EUREF-FIN-GRS80 + N60)
-        return {
-            srs: 'EPSG:4258',
-            height: 'EPSG:5717'
-        };
-    case 'EPSG:7423': // ETRS89 + EVRF2007 (EUREF-FIN-GRS80 + N2000)
-        return {
-            srs: 'EPSG:4258',
-            height: 'EPSG:3900'
-        };
-    }
-    return null;
-};
-
 export const validateCoordInBounds = (coord, srs) => {
-    const { bounds, axes } = SRS.find(s => s.value === srs) || {};
+    const { bounds } = SRS.find(s => s.value === srs) || {};
     if (!bounds || bounds.length !== 4) {
         return true;
     }
-    const swap = ['N', 'φ', 'Y'].some(axis => axis === axes[0]);
+    const swap = !isLonFirst(srs);
     const x = swap ? coord.y : coord.x;
     const y = swap ? coord.x : coord.y;
     return bounds[0] <= x && x <= bounds[2] && bounds[1] <= y && y <= bounds[3];
@@ -239,8 +215,51 @@ export const coordinateToMarker = (coord, isNew) => {
     return { ...props, x, y, msg, color };
 };
 
-export const stateToPTIArray = (state, transformType, toFile) => {
-    const { source, inputSrs, outputSrs, inputHeightSrs, outputHeightSrs } = state;
+export const stateToTransformRequest = (state) => {
+    const { inputSrs, outputSrs, inputHeightSrs, outputHeightSrs, coordinates } = state;
+    let from = inputSrs;
+    if (inputHeightSrs) {
+        from += '+' + inputHeightSrs;
+    }
+    let to = outputSrs;
+    if (outputHeightSrs) {
+        to += '+' + outputHeightSrs;
+    }
+    const params = { from, to };
+    const body = JSON.stringify(coordinates);
+    return { params, body };
+};
+
+export const stateToKomuRequest = (state) => {
+    const { inputSrs, outputSrs, inputHeightSrs, outputHeightSrs, coordinates } = state;
+    const is2D = getDimension(inputSrs, inputHeightSrs) === 2;
+    let sourceCRS = inputSrs;
+    if (inputHeightSrs) {
+        sourceCRS += ',' + inputHeightSrs;
+    }
+    let targetCRS = outputSrs;
+    if (outputHeightSrs) {
+        targetCRS += ',' + outputHeightSrs;
+    }
+    const params = { sourceCRS, targetCRS };
+    // x,y,z;x,y,z,..
+    const body = coordinates
+        .map(({ x, y, z }) => is2D ? [x, y] : [x, y, z])
+        .map(coord => coord.join())
+        .join(';');
+    return { params, body };
+};
+
+export const parseKomuResponse = (text) => {
+    return text.split(`;`).map(coord => {
+        const [x, y, z] = coord.split(',');
+        return { x, y, z };
+    });
+};
+
+// deprecated
+export const stateToPTIArray = (state, transformType = 'A2A', toFile) => {
+    const { source = 'table', inputSrs, outputSrs, inputHeightSrs, outputHeightSrs } = state;
     const dimension = transformType === 'F2R' ? 3 : getDimension(inputSrs, inputHeightSrs);
     const params = {
         sourceCrs: inputSrs,
@@ -302,15 +321,4 @@ export const parseCoordinateValue = value => {
         // TODO: or split filter empty map parseFloat / 60 ** i
     }
     return parseFloat(value.replace(',', '.'));
-};
-
-export const loadFile = (file, name) => {
-    const elem = document.createElement('a');
-    const href = window.URL.createObjectURL(file);
-    elem.href = href;
-    elem.download = name || 'results.txt';
-    document.body.appendChild(elem);
-    elem.click();
-    document.body.removeChild(elem);
-    window.URL.revokeObjectURL(href);
 };

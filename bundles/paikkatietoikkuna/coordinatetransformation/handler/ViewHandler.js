@@ -4,15 +4,15 @@ import { showFilePopup } from '../view/FilePopup';
 import { showConfirmPopup } from '../view/ConfirmPopup';
 import { showClipboardPopup } from '../view/ClipboardPopup';
 import { showMapSelectPopup, showMapPreviewPopup } from '../view/MapPopup';
-import { SOURCE, MAP, WATCH_JOB, WATCH_URL, FILE_DEFAULTS, SEPARATORS, ACTIONS, PAGINATION } from '../constants';
-import { stateToPTIArray, loadFile, validateFileSettings, validateTransform, validateCoordinate, parseCoordinateValue, is3DSystem, getDimension, getLabelForMarker } from '../helper';
+import { SOURCE, MAP, WATCH_JOB, WATCH_URL, FILE_DEFAULTS, ACTIONS, PAGINATION } from '../constants';
+import { stateToPTIArray, stateToTransformRequest, stateToKomuRequest, parseKomuResponse, validateFileSettings, validateTransform, validateCoordinate, parseCoordinateValue, is3DSystem, getDimension, getLabelForMarker } from '../helper';
 import { parseFile, parseFileContents, parseValue } from './FileParser';
+import { exportStateToFile } from './FileWriter';
 
 const getInitialState = () => ({
     loading: false,
-    source: SOURCE[0],
+    source: SOURCE[0], // deprecated
     sources: [],
-    transformType: null,
     inputSrs: null,
     outputSrs: null,
     inputHeightSrs: null,
@@ -27,7 +27,7 @@ const getInitialState = () => ({
 });
 
 class UIHandler extends StateHandler {
-    constructor (instance, loc, serverUrl) {
+    constructor (instance, loc, conf = {}) {
         super();
         this.instance = instance;
         this.sandbox = instance.getSandbox();
@@ -39,20 +39,32 @@ class UIHandler extends StateHandler {
         this.confirmPopup = null;
         this.setState(getInitialState());
         this.addStateListener(state => this.filePopup?.update(state));
-        this.baseUrl = serverUrl || Oskari.urls.getRoute('CoordinateTransformation');
+        this.baseUrl = conf.url;
+        this.transformFunction = this.getTransformFunction(conf);
         Oskari.urls.set(WATCH_JOB, WATCH_URL);
     }
 
+    getTransformFunction ({ url, contentType }) {
+        // deprecated
+        if (!url) {
+            return () => this.transformToArray();
+        }
+        if (contentType?.includes('json')) {
+            return () => this.transformJson();
+        }
+        return () => this.transformText();
+    }
+
     reset (closeFlyout) {
-        // TODO: close popups? see onFlyoutClose
         const state = getInitialState();
-        this.updateState(state); // TODO: set or update
+        this.updateState(state);
         if (closeFlyout) {
             const flyout = this.instance.getFlyout();
             flyout.close();
         }
     }
 
+    // deprecated
     setSource (source) {
         if (source === this.getState().source) {
             return;
@@ -175,7 +187,8 @@ class UIHandler extends StateHandler {
             this.addSourceToState('clipboard');
             this.updateState({ coordinates, transformed: false });
         } catch {
-
+            // TODO: error handling
+            Messaging.error(this.loc('flyout.transform.responseErrors.generic'));
         }
     }
 
@@ -196,7 +209,6 @@ class UIHandler extends StateHandler {
         this.updateState({ coordinates: swapped, transformed: false });
     }
 
-    // TODO: refactor
     setSrs (type, srs, forced) {
         if (type === 'input' && !forced) {
             this.inputSrsChange(srs);
@@ -212,6 +224,7 @@ class UIHandler extends StateHandler {
             this.setHeightSrs(type, null);
         }
     }
+
     inputSrsChange (srs) {
         const { coordinates, inputSrs } = this.getState();
         if (!inputSrs || !coordinates.length) {
@@ -272,6 +285,7 @@ class UIHandler extends StateHandler {
             return;
         }
         parseFile(files[0]).then(contents => {
+            // TODO: maybe set from content only if default settings (don't override user selects)
             this.updateState({
                 files,
                 fileContents: contents,
@@ -306,19 +320,19 @@ class UIHandler extends StateHandler {
                 }
 
                 // parseFileContents() to update parsing based on the new selection
-                const coordSeparator = SEPARATORS.coordinateSeparator.find(sep => sep.value === newTypeState.import.coordinateSeparator)?.char;
+                const coordSeparator = newTypeState.import.coordinateSeparator;
                 newTypeState.fileContents = parseFileContents(fileContents.lines, coordSeparator, newTypeState.import.headerLineCount, prefixColCount);
             }
         }
 
         this.updateState(newTypeState);
     }
-    // TODO: refactor
+
     setImport (key, value) {
         const current = this.getState().import;
         this.updateState({ import: { ...current, [key]: value } });
     }
-    // TODO: refactor
+
     setExport (key, value) {
         const current = this.getState().export;
         this.updateState({ export: { ...current, [key]: value } });
@@ -332,15 +346,13 @@ class UIHandler extends StateHandler {
         this.confirmPopup = showConfirmPopup('flyout.coordinateTable.clearTables', 'flyout.coordinateTable.confirmClear', onConfirm, () => this.closeConfirmPopup());
     }
 
+    // deprecated
     onAction (id) {
         if (id === 'map') {
             this.selectFromMap();
         }
         if (id === 'file') {
             this.showFileSettings('import');
-        }
-        if (id === 'preview') {
-            this.transformToArray('F2R');
         }
         if (id === 'store') {
             const coordinates = this.instance.getMapCoordinates();
@@ -416,7 +428,7 @@ class UIHandler extends StateHandler {
     }
 
     showFileSettings (type) {
-        this.filePopup?.close(); // TODO: change, reset???
+        this.filePopup?.close();
         this.filePopup = showFilePopup(type, this.getState(), this.getController(), () => this.closeFileSettings());
     }
 
@@ -472,7 +484,7 @@ class UIHandler extends StateHandler {
         const paragraphs = [this.loc('flyout.transform.warnings.message')];
         const onConfirm = () => {
             this.cleanInputCoordinates();
-            this.transformToArray();
+            this.transformFunction();
         };
         this.infoPopup = showInfoPopup(title, paragraphs, listItems, () => this.closeInfoPopup(), onConfirm);
     }
@@ -500,30 +512,7 @@ class UIHandler extends StateHandler {
             this.showConfirmTransform(warnings);
             return;
         }
-        this.transformToArray();
-    }
-
-    transformToFile () {
-        const state = this.getState();
-        this.updateState({ loading: true });
-        const transformType = 'A2F';
-        const { params, body } = stateToPTIArray(state, transformType, true);
-        const { fileName } = state.export;
-        fetch(Oskari.urls.buildUrl(this.baseUrl, params), {
-            method: 'POST',
-            body
-        }).then(response => {
-            if (!response.ok) {
-                throw new Error(response.statusText);
-            }
-            return response.json();
-        }).then(json => {
-            const { jobId } = json;
-            this.watchFileJob(jobId, fileName);
-        }).catch(() => {
-            Messaging.error(this.loc('transform.responseErrors.generic'));
-            this.updateState({ loading: false });
-        });
+        this.transformFunction();
     }
 
     importFileContentsToInputTable () {
@@ -556,24 +545,71 @@ class UIHandler extends StateHandler {
     }
 
     exportResultsToFile () {
-        const errors = validateFileSettings(this.getState(), 'export');
+        const state = this.getState();
+        const errors = validateFileSettings(state, 'export');
         if (errors.length) {
             this.showValidationError(errors);
             return false;
         }
-        // TODO: write file content from results using export settings
-        this.transformToFile();
+        exportStateToFile(state);
         return true;
     }
 
+    transformJson () {
+        this.updateState({ loading: true });
+        const { params, body } = stateToTransformRequest(this.getState());
+        fetch(Oskari.urls.buildUrl(this.baseUrl, params), {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body
+        }).then(response => {
+            return response.json();
+        }).then(json => {
+            if (!Array.isArray(json)) {
+                this.showResponseError(json);
+                return;
+            }
+            this.updateState({ results: json, loading: false, transformed: true });
+        }).catch((e) => {
+            Messaging.error(this.loc('flyout.transform.responseErrors.generic'));
+            this.updateState({ loading: false });
+        });
+    }
+
+    transformText () {
+        this.updateState({ loading: true });
+        const { params, body } = stateToKomuRequest(this.getState());
+        fetch(Oskari.urls.buildUrl(this.baseUrl, params), {
+            method: 'POST',
+            headers: {
+                Accept: 'text/plain'
+            },
+            body
+        }).then(response => {
+            return response.text();
+        }).then(text => {
+            const results = parseKomuResponse(text);
+            this.updateState({ results, loading: false, transformed: true });
+        }).catch((e) => {
+            Messaging.error(this.loc('flyout.transform.responseErrors.generic'));
+            this.updateState({ loading: false });
+        });
+    }
+
+    // deprecated
     transformToMapSrs (values, callback) {
         const state = { ...this.getState(), ...values };
-        if (this.validate('inputSrs')) {
+        const { errors } = validateTransform(state);
+        if (errors.length) {
+            this.showValidationError(errors);
             return;
         }
         this.updateState({ loading: true });
-        const { params, body } = stateToPTIArray(state, 'A2A', false);
-        fetch(Oskari.urls.buildUrl(this.baseUrl, params), {
+        const { params, body } = stateToPTIArray(state);
+        fetch(Oskari.urls.getRoute('CoordinateTransformation', params), {
             method: 'POST',
             headers: {
                 Accept: 'application/json'
@@ -593,12 +629,12 @@ class UIHandler extends StateHandler {
             this.updateState({ loading: false });
         });
     }
-    // TODO: replace with new
+
+    // deprecated
     transformToArray () {
-        const transformType = 'A2A';
         this.updateState({ loading: true });
-        const { params, body } = stateToPTIArray(this.getState(), transformType, false);
-        fetch(Oskari.urls.buildUrl(this.baseUrl, params), {
+        const { params, body } = stateToPTIArray(this.getState());
+        fetch(Oskari.urls.getRoute('CoordinateTransformation', params), {
             method: 'POST',
             headers: {
                 Accept: 'application/json'
@@ -623,7 +659,7 @@ class UIHandler extends StateHandler {
         });
     }
 
-    // For now use same function for show on map transformation
+    // deprecated
     watchJsonJob (jobId, callback) {
         fetch(Oskari.urls.getLocation(WATCH_JOB) + jobId, {
             method: 'GET',
@@ -652,32 +688,6 @@ class UIHandler extends StateHandler {
             } else {
                 this.showResponseError(json);
             }
-        }).catch(() => {
-            Messaging.error(this.loc('flyout.transform.responseErrors.generic'));
-            this.updateState({ loading: false });
-        });
-    }
-
-    watchFileJob (jobId, fileName) {
-        fetch(Oskari.urls.getLocation(WATCH_JOB) + jobId, {
-            method: 'GET',
-            headers: {
-                Accept: 'application/json'
-            }
-        }).then(response => {
-            if (!response.ok) {
-                throw new Error(response.statusText);
-            }
-            // getFileNameFromResponse
-            return response.blob();
-        }).then(blob => {
-            if (!blob) {
-                // set timeout??
-                this.watchFileJob(jobId, fileName);
-                return;
-            }
-            loadFile(blob, fileName);
-            this.updateState({ loading: false });
         }).catch(() => {
             Messaging.error(this.loc('flyout.transform.responseErrors.generic'));
             this.updateState({ loading: false });
