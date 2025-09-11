@@ -289,7 +289,7 @@ class UIHandler extends StateHandler {
                 fileContents: contents,
                 import: {
                     headerLineCount: contents.headerLines.length,
-                    coordinateSeparator: contents.delimiterValueForBackend,
+                    coordinateSeparator: contents.delimiter,
                     decimalSeparator: contents.decimalSeparator
                 }
             });
