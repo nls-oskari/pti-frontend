@@ -47,7 +47,7 @@ export const validateCoordinate = (coord, is3D) => {
 };
 
 export const validateTransform = (state) => {
-    const { inputSrs, outputSrs, inputHeightSrs, outputHeightSrs, coordinates } = state;
+    const { inputSrs, outputSrs, inputHeightSrs, outputHeightSrs, coordinates, files } = state;
     const errors = [];
     const warnings = [];
     const input3D = getDimension(inputSrs, inputHeightSrs) === 3;
@@ -73,7 +73,9 @@ export const validateTransform = (state) => {
     if (coordinates.some(coord => !validateCoordInBounds(coord, inputSrs))) {
         warnings.push('bbox');
     }
-    // previously: show warning for > 10MB files => coordinates.length > 1000 etc??
+    if (files.length && files[0].size > 10 * 1024 * 1024) {
+        warnings.push('largeFile');
+    }
     return { errors, warnings };
 };
 

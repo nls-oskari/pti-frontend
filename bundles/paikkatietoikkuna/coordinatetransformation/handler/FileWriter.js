@@ -1,16 +1,9 @@
-import { SRS, SRS_H, SYSTEM } from '../constants';
+import { SRS, SRS_H, SYSTEM, HOUR_TO_MIN, DEC_TO_GRAD, DEC_TO_RAD } from '../constants';
 import { getDimension, isDegreeSystem, isLonFirst, getDecimalCount } from '../helper';
-
-const HOUR_TO_MIN = 60;
-// const HOUR_TO_SEC = 3600;
-// 2 * pi =~ 6.283185307179586476925286766559
-const PI2 = Math.PI * 2;
-const DEC_TO_GRAD = 10 / 9;
-const DEC_TO_RAD = PI2 / 360;
 
 const CRS = 'Coordinate Reference System';
 
-const toDegree = (coord, unit, decimals, isLon) => {
+const toDegree = (coord, unit, decimals) => { //, isLon)
     if (unit === 'DD' || unit === 'degree') {
         // TODO: prefix 0 ??
         return coord.toFixed(decimals);
@@ -26,7 +19,8 @@ const toDegree = (coord, unit, decimals, isLon) => {
     const separator = unit.includes(' ') ? ' ' : '';
     const d = Math.floor(coord);
     const m = (coord - d) * HOUR_TO_MIN;
-    const dd = isLon && d < 100 ? '0' + d : d.toString();
+    const dd = d < 10 ? '0' + d : d.toString();
+    // const dd = isLon && d < 100 ? '0' + d : d.toString();
     let mm = m.toFixed(decimals);
     if (m < 10) {
         mm = '0' + mm;
@@ -107,7 +101,7 @@ const getFileContent = ({
     }).join(lineSeparator);
 };
 
-const createHeader = (srs, height, axisFlip, decimalUnit) => {
+const createSrsHeader = (srs, height, axisFlip, decimalUnit) => {
     // name for KKJ (no need to localize zones)
     const { name, label = name, axes = [], system } = SRS.find(s => s.value === srs) || {};
     const { unit: systemUnit } = SYSTEM.find(s => s.value === system) || {};
@@ -124,17 +118,15 @@ const createHeader = (srs, height, axisFlip, decimalUnit) => {
 
 export const exportStateToFile = (state) => {
     const { outputSrs, outputHeightSrs, fileContents } = state;
-    const { fileName, lineSeparator, writeHeader, axisFlip, unit } = state.export;
+    const { fileName, lineSeparator, createHeader, writeHeaders, axisFlip, unit } = state.export;
 
     const content = [];
-    if (writeHeader) {
-        const { headerLines = [] } = fileContents || {};
-        if (headerLines.length) {
-            headerLines.forEach(header => content.push(header));
-        } else {
-            const header = createHeader(outputSrs, outputHeightSrs, axisFlip, unit);
-            content.push(header);
-        }
+    if (createHeader) {
+        const header = createSrsHeader(outputSrs, outputHeightSrs, axisFlip, unit);
+        content.push(header);
+    }
+    if (writeHeaders) {
+        fileContents?.headerLines?.forEach(header => content.push(header));
     }
     const text = getFileContent(state);
     content.push(text);

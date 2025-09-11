@@ -1,4 +1,4 @@
-import { DEGREE } from '../constants';
+import { DEGREE, HOUR_TO_MIN, HOUR_TO_SEC, DEC_TO_GRAD, DEC_TO_RAD } from '../constants';
 
 export const parseFile = (file) => {
     return new Promise((resolve, reject) => {
@@ -54,8 +54,6 @@ export const parseFileContents = (lines = [], delimiter = ';', headerLineCount =
 
     return {
         delimiter,
-        // TODO: we don't need this when we don't send the file to backend
-        delimiterValueForBackend: delimiter,
         decimalSeparator,
         prefixColCount,
         data,
@@ -66,22 +64,15 @@ export const parseFileContents = (lines = [], delimiter = ';', headerLineCount =
     };
 };
 
-const HOUR_TO_MIN = 60;
-const HOUR_TO_SEC = 3600;
-// 2 * pi =~ 6.283185307179586476925286766559
-const PI2 = Math.PI * 2;
-const DEC_TO_GRAD = 10 / 9;
-const DEC_TO_RAD = PI2 / 360;
-
 // https://github.com/nls-oskari/kartta.paikkatietoikkuna.fi/blob/master/service-coordtransform/src/main/java/fi/nls/paikkatietoikkuna/coordtransform/CoordTransService.java#L25-L26
-export const parseValue = (value, format = 'default') => {
+export const parseValue = (value, format = 'metric') => {
     if (typeof value === 'undefined') {
         return NaN;
     }
     const asNumber = parseFloat(value);
     const unitItem = DEGREE.find(unit => unit.value === format);
     if (!unitItem) {
-        return parseFloat(value);
+        return asNumber;
     }
     if (format === 'gradian') {
         return asNumber / DEC_TO_GRAD;

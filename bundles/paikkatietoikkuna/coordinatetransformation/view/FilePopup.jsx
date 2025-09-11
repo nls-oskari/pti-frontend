@@ -4,7 +4,6 @@ import { showPopup } from 'oskari-ui/components/window';
 import { LocaleProvider } from 'oskari-ui/util';
 import { Message, Button } from 'oskari-ui';
 import { SecondaryButton, ButtonContainer } from 'oskari-ui/components/buttons';
-import { validateFileSettings } from '../helper';
 import { ImportFile, ExportFile } from '../components/FileSettings';
 
 import { BUNDLE } from '../constants';
@@ -46,7 +45,7 @@ const getContent = (type, state, controller, onClose) => {
 };
 
 export const showFilePopup = (type, state, controller, onClose) => {
-    const title = <Message messageKey={`fileSettings.${type}.title`} bundleKey={BUNDLE} />
+    const title = <Message messageKey={`fileSettings.${type}`} bundleKey={BUNDLE} />
     const controls = showPopup(
         title,
         getContent(type, state, controller, onClose),

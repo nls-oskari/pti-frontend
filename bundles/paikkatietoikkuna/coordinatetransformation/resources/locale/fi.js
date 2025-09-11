@@ -76,56 +76,52 @@ Oskari.registerLocalization(
                 "outdated": "Valinnat tai koordinatit muuttuneet. Muunna koordinaatit, jotta tulokset päivittyvät.",
                 "clearTables": "Poista kaikki koordinaatit",
                 "confirmClear": "Haluatko poistaa taulukoista kaikki koordinaatit?"
+            }
+        },
+        "transform": {
+            "warnings": {
+                "title": "Huomio!",
+                "message": "Huomioi seuraavat rajoitukset valinnoissa tai koordinaateissa ennnen kuin teeet muunnoksen. Haluatko jatkaa?",
+                "3DTo2D": "Valitsemissasi lähtötiedoissa on mukana korkeusarvoja, mutta tulostiedoissa ei. Tuloskoordinaatteihin ei siis tule korkeusarvoja mukaan.",
+                "2DTo3D": "Valitsemissasi lähtötiedoissa ei ole korkeusarvoja, mutta tulostiedoissa on. Lähtöaineiston korkeusarvoiksi lisätään 0 ja korkeusjärjestelmäksi N2000.",
+                "coordinates": "Muunnettavissa koordinaateissa on virheellisiä rivejä. Virheelliset rivit poistetaan ennen muunnosta.",
+                "bbox": "Muunnettavia koordinaatteja on lähtökoordinaattijärjestelmän kattavuusalueen ulkopuolella. Koordinaattien arvot tulee olla lähdejärjestelmän määrittelemässä järjestyksessä.",
+                "largeFile": "Isojen tiedostojen muuntaminen voi kestää useita minuutteja."
             },
-            "transform": {
-                "warnings": {
-                    "title": "Huomio!",
-                    "message": "Huomioi seuraavat rajoitukset valinnoissa tai koordinaateissa ennnen kuin teeet muunnoksen. Haluatko jatkaa?",
-                    "3DTo2D": "Valitsemissasi lähtötiedoissa on mukana korkeusarvoja, mutta tulostiedoissa ei. Tuloskoordinaatteihin ei siis tule korkeusarvoja mukaan.",
-                    "2DTo3D": "Valitsemissasi lähtötiedoissa ei ole korkeusarvoja, mutta tulostiedoissa on. Lähtöaineiston korkeusarvoiksi lisätään 0 ja korkeusjärjestelmäksi N2000.",
-                    "coordinates": "Muunnettavissa koordinaateissa on virheellisiä rivejä. Virheelliset rivit poistetaan ennen muunnosta.",
-                    "bbox": "Muunnettavia koordinaatteja on lähtökoordinaattijärjestelmän kattavuusalueen ulkopuolella. Koordinaattien arvot tulee olla lähdejärjestelmän määrittelemässä järjestyksessä.",
-                    "largeFile": "Isojen tiedostojen muuntaminen voi kestää useita minuutteja."
-                },
-                "validateErrors": {
-                    "title": "Virhe!",
-                    "message": "Valinnoissa on puutteita tai virheitä. Ota huomioon seuraavat vaatimukset ja yritä uudelleen.",
-                    "xyz": "Lähtökoordinaattijärjestelmän valinnoissa ei ole korkeusjärjestelmää. Muunnos suorakulmaiseen 3D -järjestelmään ei ole mahdollinen.",
-                    "crs": "Geodeettinen koordinaattijärjestelmä pitää olla valittuna sekä lähtö- että tulostiedoissa.",
-                    "srs": "Geodeettinen koordinaattijärjestelmä pitää olla valittuna.",
-                    "noInputData": "Ei muunnettavia koordinaatteja.",
-                    "noInputFile": "Lähtöaineiston sisältävä tiedosto pitää olla valittuna.",
-                    "noFileName": "Muodostettavalle tiedostolle pitää antaa tiedostonimi.",
-                    "decimalCount": "Desimaalien määrän pitää olla 0 tai positiivinen kokonaisluku.",
-                    "headerCount": "Otsakerivien määrän pitää olla 0 tai positiivinen kokonaisluku.",
-                    "doubleComma": "Desimaali- ja koordinaattierotin eivät voi molemmat olla pilkkuja.",
-                    "doubleSpace": "Kulman muoto/yksikkö ei voi sisältää välilyöntejä, jos koordinaattierotin on Välilyönti.",
-                    "noFileSettings": "Tiedostoasetuksia ei ole annettu.",
-                    "noCoordinateSeparator": "Koordinaattierotin pitää olla valittuna.",
-                    "noDecimalSeparator":"Desimaalierotin pitää olla valittuna."
-                },
-                "responseErrors": {
-                    "titleTransform": "Virhe muunnoksessa!",
-                    "titleRead": "Virhe tiedoston lukemisessa!",
-                    "readFileError" : "Tiedostosta ei onnistuttu lukemaan kaikkia rivejä.",
-                    "transformFileError": "Tiedoston koordinaatteja ei onnistuttu muuntamaan.",
-                    "invalidLine": "Tiedostossa on rivillä: {index, number} virheellinen koordinaattirivi: {line} <br /> Tarkasta, että kyseinen rivi on kelvollinen ja vastaa lähtöaineiston ominaisuuksien valintoja.",
-                    "generic": "Koordinaattimuunnos epäonnistui.",
-                    //error codes
-                    "invalid_coord": "Koordinaatti virheellinen. Tarkasta, että muunnettavat koordinaatit ovat oikeassa muodossa sekä geodeettinen koordinaatti- ja korkeusjärjestelmä ovat oikein.",
-                    "invalid_number": "Koordinaatti virheellinen.",
-                    "invalid_coord_in_array": "Koordinaatti virheellinen.",
-                    "no_coordinates": "Tiedostosta ei löytynyt koordinaatteja. Tarkasta tiedosto sekä asetettu otsakerivien määrä.",
-                    "invalid_file_settings": "Tiedoston asetukset virheelliset.",
-                    "no_file": "Lähetetystä pyynnöstä ei löytynyt tiedostoa.",
-                    "invalid_first_coord": "Tiedostosta ei saatu muodostettua koordinaattia annetuilla asetuksilla. Tarkasta, että koordinaattierotin, otsakerivien määrä, käytä tunnistetta sekä geodeettinen koordinaatti- ja korkeusjärjestelmä (dimensio) -valinnat vastaavat tiedoston sisältöä.",
-                    "transformation_error": "Koordinaattimuunnos epäonnistui. Koordinaattimuunnospalvelusta palautui virhe:",
-                    "service_busy": "Palvelussa on ruuhkaa juuri nyt, ole hyvä ja yritä myöhemmin uudelleen."
-                },
-                "responseFile": {
-                    "title": "Huomio!",
-                    "hasMoreCoordinates": "Lähtöaineistosta ei voida muuntaa käyttöliittymän taulukkoon yli {maxCoordsToArray, number} koordinaattia. Jos haluat muuntaa kaikki koordinaatit, käytä Muunna tiedostoon -toimintoa."
-                }
+            "validate": {
+                "title": "Virhe!",
+                "message": "Valinnoissa on puutteita tai virheitä. Ota huomioon seuraavat vaatimukset ja yritä uudelleen.",
+                "xyz": "Lähtökoordinaattijärjestelmän valinnoissa ei ole korkeusjärjestelmää. Muunnos suorakulmaiseen 3D -järjestelmään ei ole mahdollinen.",
+                "crs": "Geodeettinen koordinaattijärjestelmä pitää olla valittuna sekä lähtö- että tulostiedoissa.",
+                "srs": "Geodeettinen koordinaattijärjestelmä pitää olla valittuna.",
+                "noInputData": "Ei muunnettavia koordinaatteja.",
+                "noInputFile": "Lähtöaineiston sisältävä tiedosto pitää olla valittuna.",
+                "noFileName": "Muodostettavalle tiedostolle pitää antaa tiedostonimi.",
+                "decimalCount": "Desimaalien määrän pitää olla 0 tai positiivinen kokonaisluku.",
+                "headerCount": "Otsakerivien määrän pitää olla 0 tai positiivinen kokonaisluku.",
+                "doubleComma": "Desimaali- ja koordinaattierotin eivät voi molemmat olla pilkkuja.",
+                "doubleSpace": "Kulman muoto/yksikkö ei voi sisältää välilyöntejä, jos koordinaattierotin on Välilyönti.",
+                "noFileSettings": "Tiedostoasetuksia ei ole annettu.",
+                "noCoordinateSeparator": "Koordinaattierotin pitää olla valittuna.",
+                "noDecimalSeparator":"Desimaalierotin pitää olla valittuna."
+            },
+            "errors": {
+                "transform": "Virhe muunnoksessa!",
+                "import": "Virhe tiedoston lukemisessa!", // Tiedostosta ei onnistuttu lukemaan kaikkia rivejä.
+                "paste": "Koordinaattien tuominen leikepöydältä epäonnistui.",
+                "export": "Koordinaattien kirjoittaminen tiedostoonn epäonnistui.",
+                "invalidLine": "Tiedostossa on rivillä: {index, number} virheellinen koordinaattirivi: {line} <br /> Tarkasta, että kyseinen rivi on kelvollinen ja vastaa lähtöaineiston ominaisuuksien valintoja.",
+                "generic": "Koordinaattimuunnos epäonnistui.",
+                //error codes
+                "invalid_coord": "Koordinaatti virheellinen. Tarkasta, että muunnettavat koordinaatit ovat oikeassa muodossa sekä geodeettinen koordinaatti- ja korkeusjärjestelmä ovat oikein.",
+                "invalid_number": "Koordinaatti virheellinen.",
+                "invalid_coord_in_array": "Koordinaatti virheellinen.",
+                "no_coordinates": "Tiedostosta ei löytynyt koordinaatteja. Tarkasta tiedosto sekä asetettu otsakerivien määrä.",
+                "invalid_file_settings": "Tiedoston asetukset virheelliset.",
+                "no_file": "Lähetetystä pyynnöstä ei löytynyt tiedostoa.",
+                "invalid_first_coord": "Tiedostosta ei saatu muodostettua koordinaattia annetuilla asetuksilla. Tarkasta, että koordinaattierotin, otsakerivien määrä, käytä tunnistetta sekä geodeettinen koordinaatti- ja korkeusjärjestelmä (dimensio) -valinnat vastaavat tiedoston sisältöä.",
+                "transformation_error": "Koordinaattimuunnos epäonnistui. Koordinaattimuunnospalvelusta palautui virhe:",
+                "service_busy": "Palvelussa on ruuhkaa juuri nyt, ole hyvä ja yritä myöhemmin uudelleen."
             }
         },
         "dataSource": {
@@ -195,33 +191,35 @@ Oskari.registerLocalization(
             "changeTooltip": "Huomioi, että valintojen ja koordinaattien säilyttäminen voi johtaa tilanteeseen, jossa tulokset eivät vastaa valintoja."
         },
         "fileSettings": {
+            "import": "Lähtöaineiston ominaisuudet",
+            "export": "Aineiston muodostaminen",
             "rows": "riviä",
             "columns": "saraketta",
             "previewTitle": "Esikatselu",
             "options": {
+                "fileName": "Tiedoston nimi",
                 "decimalSeparator": "Desimaalierotin",
                 "coordinateSeparator": "Sarake-erotin",
                 "headerLineCount": "Otsakerivien määrä",
                 "decimalCount": "Desimaalien tarkkuus",
                 "axisFlip": "Koordinaatit käänteisesti",
-                "prefixId": "Koordinaatit sisältävät tunnisteet",
-                "useId": {
-                    "generate": "Luo tunnisteet",
-                    "add": "Lisää tunnisteet",
-                    "fromFile": "Lisää tunnisteet lähtötiedostosta"
-                },
-                "writeHeader": "Kirjoita otsakerivi tiedostoon",
-                "writeCardinals": "Käytä kardinaaleja (N,E,W,S)",
-                "writeLineEndings": "Rivin loput tulokseen",
+                "writeCardinals": "Lisää kardinaalit (N,E,W,S)",
+                "writeLineEndings": "Lisää lähtötiedoston rivien loput",
                 "lineSeparator": "Rivierotin",
                 "unit": "Kulman muoto/yksikkö",
-                "choose": "Valitse",
-                "degreeFormat":{
+                "createHeader": "Lisää koordinaattjijärjestelmä otsakerivi",
+                "writeHeaders": "Lisää otsakerivit lähtötiedostosta", // (${count})??
+                "prefixes": {
+                    "input": "Koordinaatit sisältävät tunnisteet",
+                    "generate": "Luo riveille tunnisteet",
+                    "fromFile": "Lisää tunnisteet lähtötiedostosta"
+                },
+                "degrees": {
                     "degree": "Aste",
                     "gradian": "Gooni (graadi)",
                     "radian": "Radiaani"
                 },
-                "delimeters":{
+                "delimeters": {
                     "point": "Piste",
                     "comma": "Pilkku",
                     "tab": "Tabulaattori",
@@ -229,13 +227,6 @@ Oskari.registerLocalization(
                     "semicolon": "Puolipiste",
                     "pipe": "Pystyviiva"
                 }
-            },
-            "export": {
-                "title": "Aineiston muodostaminen",
-                "fileName": "Tiedoston nimi"
-            },
-            "import": {
-                "title": "Lähtöaineiston ominaisuudet"
             }
         },
         "infoPopup": {
@@ -310,7 +301,7 @@ Oskari.registerLocalization(
                 "paragraphs" : [],
                 "listItems" : []
             },
-            "decimalPrecision":{
+            "decimalCount":{
                 "title":"Desimaalien tarkkuus",
                 "info": "Tulokseen tulevien desimaalien määrä",
                 "paragraphs": [
@@ -344,7 +335,7 @@ Oskari.registerLocalization(
                 ],
                 "listItems" : []
             },
-            "unitFormat":{
+            "unit":{
                 "title":"Kulman muoto/yksikkö",
                 "info": "Geodeettisten koordinaattien yksikkö",
                 "paragraphs": [
@@ -390,9 +381,16 @@ Oskari.registerLocalization(
                 ],
                 "listItems" : []
             },
-            "writeHeader":{
-                "title":"Lisää otsakerivit",
-                "info": "Tuloksen alkuun otsakerivit mukaan",
+            "createHeader": {
+                "title":"Luo otsakerivi",
+                "info": "Lisättävä otsakerivi luodaan valitsemasi koordinaattijärjestelmän tiedoista",
+                "paragrapsh": [
+                    "Lisättävä otsakerivi luodaan valitsemasi koordinaattijärjestelmän tiedoista. Seuraavan esimerkin mukaisesti:"
+                ]
+            },
+            "writeHeaders":{
+                "title":"Lisää otsakerivit tulokseen",
+                "info": "Lisää tulokseen otsakerivit tuodusta tiedostosta",
                 "paragraphs": [
                     "Ominaisuuden avulla käyttäjä voi kertoa haluaako tulostiedostoon metatietoa koordinaateista otsakeriville.",
                     "Tiedostosta tiedostoon muunnoksessa alkuperäisen tiedoston mahdolliset otsakerivit tulevat myös mukaan"
@@ -400,7 +398,7 @@ Oskari.registerLocalization(
                 "listItems" : []
             },
             "writeLineEndings":{
-                "title":"Rivin loput tulokseen",
+                "title": "Rivin loput tulokseen",
                 "info": "Lähtötiedoston rivin loput lisätään tulostiedostoon",
                 "paragraphs": [
                     "Ominaisuuden avulla pystyy kertomaan haluaako tulokseen kirjoitettavan myös jokaisella rivillä annetun pisteen koordinaatteja seuraavan merkkijonon.",

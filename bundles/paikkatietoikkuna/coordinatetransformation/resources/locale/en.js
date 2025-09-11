@@ -9,6 +9,10 @@ Oskari.registerLocalization(
         },
         "flyout": {
             "title":"Coordinate Transformation",
+            "mandatory": {
+                "symbol": "Fields marked with an asterisk (",
+                "desc": ") are required."
+            },
             "filterSystems": {
                 "title": "Filter coordinate reference systems",
                 "epsg": "With EPSG code",
@@ -72,55 +76,51 @@ Oskari.registerLocalization(
                 "outdated": "The selections or coordinates have changed. Transform coordinates to get updated results.",
                 "clearTables": "Remove all coordinates",
                 "confirmClear": "Are you sure you want to remove all coordinates from tables?"
+            }
+        },
+        "transform": {
+            "warnings": {
+                "title": "Warning!",
+                "message": "Please note the following restrictions on selections or coordinates before the transform. Do you want to continue?",
+                "3DTo2D": "The selected input information contains height values, but the output information does not. Output coordinates will therefore not include height values.",
+                "2DTo3D": "The selected output information contains height values, but the input information does not. The height values 0 and height system N2000 will be added to the input information.",
+                "coordinates": "There are invalid rows in the coordinates to be transformed. The invalid rows will be removed before transform.",
+                "bbox": "The coordinates to be transformed are outside the coverage area of ​​the source coordinate system. The coordinate values ​​must be in the axis order defined by the source coordinate system.",
+                "largeFile": "The transformation of large files can take several minutes."
             },
-            "transform": {
-                "warnings": {
-                    "title": "Warning!",
-                    "message": "Please note the following restrictions on selections or coordinates before the transform. Do you want to continue?",
-                    "3DTo2D": "The selected input information contains height values, but the output information does not. Output coordinates will therefore not include height values.",
-                    "2DTo3D": "The selected output information contains height values, but the input information does not. The height values 0 and height system N2000 will be added to the input information.",
-                    "coordinates": "There are invalid rows in the coordinates to be transformed. The invalid rows will be removed before transform.",
-                    "bbox": "The coordinates to be transformed are outside the coverage area of ​​the source coordinate system. The coordinate values ​​must be in the axis order defined by the source coordinate system.",
-                    "largeFile": "The transformation of large files can take several minutes."
-                },
-                "validateErrors": {
-                    "title": "Error!", // Error in coordinate system selections
-                    "message": "Selections are incomplete or contain errors. Note the following requirements and try again.",
-                    "xyz": "No height system has been selected for the input coordinate system. It is not possible to transform this input information into a projected 3D system.",
-                    "crs": "A geodetic coordinate reference system must be selected both in the input and the output information.",
-                    "noInputData": "No input coordinates.",
-                    "noInputFile": "The file containing input information must be selected.",
-                    "noFileName": "The output file must be named.",
-                    "decimalCount": "The decimal number must be 0 or a positive integer.",
-                    "headerCount": "The number of header rows must be 0 or a positive integer.",
-                    "doubleComma": "The decimal and coordinate separators cannot both be commas.",
-                    "doubleSpace": "The format/unit of an angle cannot contain spaces if the coordinate separator is Space.", //angle pattern
-                    "noFileSettings": "No file settings.",
-                    "noCoordinateSeparator": "Coordinate separator must be selected.",
-                    "noDecimalSeparator": "Decimal separator must be selected."
-                },
-                "responseErrors": {
-                    "titleTransform": "Error in transformation!",
-                    "titleRead": "Error in reading file!",
-                    "readFileError" : "Not all rows of the file were read successfully.",
-                    "transformFileError": "The transformation of coordinates failed.",
-                    "invalidLine": "The file's row {index, number} contains an invalid coordinate: {line}. Check that the selected decimal and coordinate separators and number of header rows match the contents of the file.",
-                    "generic": "Coordinate transformation failed.",
-                    //error codes
-                    "invalid_coord": "Error in coordinate. Check that coordinates to be transformed are in correct format and that the geodetic coordinate reference system and height system are correct.",
-                    //"invalid_number": "Invalid coordinate.",
-                    //"invalid_coord_in_array": "Invalid coordinate.",
-                    "no_coordinates": "No coordinates.",
-                    "invalid_file_settings": "Error in file settings.",
-                    "no_file": "No file matching the request could be found.",
-                    "invalid_first_coord": "It was not possible to produce coordinates with these selections. Check that the coordinate separator, number of headers, geodetic coordinate and height system (dimension) selections as well as the option to use identifier or not match the contents of the file.",
-                    "transformation_error": "Coordinate transformation failed. Service responded with error:",
-                    "service_busy": "The transformation service is busy right now. Please try again later."
-                },
-                "responseFile": {
-                    "title": "Attention!",
-                    "hasMoreCoordinates": "It is not possible to transform more than {maxCoordsToArray, number} coordinates from the input information into the table. If you want to transform all coordinates, select Output to file."
-                }
+            "validate": {
+                "title": "Error!", // Error in coordinate system selections
+                "message": "Selections are incomplete or contain errors. Note the following requirements and try again.",
+                "xyz": "No height system has been selected for the input coordinate system. It is not possible to transform this input information into a projected 3D system.",
+                "crs": "A geodetic coordinate reference system must be selected both in the input and the output information.",
+                "noInputData": "No input coordinates.",
+                "noInputFile": "The file containing input information must be selected.",
+                "noFileName": "The output file must be named.",
+                "decimalCount": "The decimal number must be 0 or a positive integer.",
+                "headerCount": "The number of header rows must be 0 or a positive integer.",
+                "doubleComma": "The decimal and coordinate separators cannot both be commas.",
+                "doubleSpace": "The format/unit of an angle cannot contain spaces if the coordinate separator is Space.", //angle pattern
+                "noFileSettings": "No file settings.",
+                "noCoordinateSeparator": "Coordinate separator must be selected.",
+                "noDecimalSeparator": "Decimal separator must be selected."
+            },
+            "errors": {
+                "transform": "Error in transformation!",
+                "import": "Error in reading file!", // Not all rows of the file were read successfully.
+                "paste": "Failed to import coordinates from clipboard!",
+                "export": "Failed to write coordinates to file.",
+                "invalidLine": "The file's row {index, number} contains an invalid coordinate: {line}. Check that the selected decimal and coordinate separators and number of header rows match the contents of the file.",
+                "generic": "Coordinate transformation failed.",
+                //error codes
+                "invalid_coord": "Error in coordinate. Check that coordinates to be transformed are in correct format and that the geodetic coordinate reference system and height system are correct.",
+                //"invalid_number": "Invalid coordinate.",
+                //"invalid_coord_in_array": "Invalid coordinate.",
+                "no_coordinates": "No coordinates.",
+                "invalid_file_settings": "Error in file settings.",
+                "no_file": "No file matching the request could be found.",
+                "invalid_first_coord": "It was not possible to produce coordinates with these selections. Check that the coordinate separator, number of headers, geodetic coordinate and height system (dimension) selections as well as the option to use identifier or not match the contents of the file.",
+                "transformation_error": "Coordinate transformation failed. Service responded with error:",
+                "service_busy": "The transformation service is busy right now. Please try again later."
             }
         },
         "dataSource": {
@@ -189,33 +189,33 @@ Oskari.registerLocalization(
             "changeTooltip": "Note that keeping the selections and coordinates can lead to a situation where the results do not match the selections."
         },
         "fileSettings": {
+            "import": "Input properties",
+            "export": "Output properties",
             "rows": "rows",
             "columns": "columns",
             "previewTitle": "Preview",
             "options": {
+                "fileName": "File name",
                 "decimalSeparator": "Decimal separator",
                 "coordinateSeparator": "Field separator",
-                "headerCount": "Number of header rows",
+                "headerLineCount": "Number of header rows",
                 "decimalPrecision": "Decimal precision",
                 "axisFlip": "Coordinates reversed",
-                "useId": { // Use identifier, Use id infront
+                "writeCardinals": "Add cardinals (N,E,W,S)",
+                "writeLineEndings": "Add end-of-lines from input file",
+                "lineSeparator": "Line separator", // Row separator
+                "unit": "Angle pattern", // Angle format/unit type/unit
+                "createHeader": "Add CRS header",
+                "writeHeaders": "Add header rows from input file", // (${count})??
+                "prefixes": { // Use identifier, Use id infront
                     "input": "Coordinates contain identifiers",
-                    "generate": "Create identifers",
-                    "add": "Add identifiers",
-                    "fromFile": "Add input file identifiers"
+                    "generate": "Generate identifers for rows",
+                    "fromFile": "Add identifiers from input file"
                 },
-                "writeHeader": "Write header row into file",
-                "useCardinals": "Use cardinals (N,E,W,S)",
-                "lineEnds": "Add end-of-lines to output",
-                "choose": "Choose",
-                "degreeFormat":{
-                    "label": "Angle pattern", // Angle format/unit type/unit
+                "degrees":{
                     "degree": "Degree",
                     "gradian": "Grade",
                     "radian": "Radian"
-                },
-                "lineSeparator": {
-                    "label": "Line separator" // Row separator
                 },
                 "delimeters":{
                     "point": "Point",
@@ -225,18 +225,11 @@ Oskari.registerLocalization(
                     "semicolon": "Semicolon",
                     "pipe": "Pipe"
                 }
-            },
-            "export": {
-                "title": "Output properties",
-                "fileName": "File name"
-            },
-            "import": {
-                "title": "Input properties"
             }
         },
         "infoPopup": {
             "description": "Description",
-            "keyboard": {
+            "table": {
                 "title": "Coordinate information source - table",
                 "paragraphs": [
                     "Put the input information into the Input coordinates table."
@@ -306,7 +299,7 @@ Oskari.registerLocalization(
                 "paragraphs" : [],
                 "listItems" : []
             },
-            "decimalPrecision":{
+            "decimalCount":{
                 "title":"Decimal precision",
                 "info": "Number of decimals included in the output",
                 "paragraphs": [
@@ -340,7 +333,7 @@ Oskari.registerLocalization(
                 ],
                 "listItems" : []
             },
-            "unitFormat":{
+            "unit":{
                 "title":"Angle pattern",
                 "info": "Unit of a geodetic coordinates",
                 "paragraphs": [
@@ -386,16 +379,23 @@ Oskari.registerLocalization(
                 ],
                 "listItems" : []
             },
-            "writeHeader":{
-                "title":"Include header rows",
-                "info": "Include header rows in the output",
+            "createHeader": {
+                "title":"Create CRS header",
+                "info": "The header row to be added is created from the data in the coordinate system you selected",
+                "paragrapsh": [
+                    "The header row to be added is created from the data in the coordinate system you selected. As shown in the following example:"
+                ]
+            },
+            "writeHeaders":{
+                "title":"Add header rows",
+                "info": "Add header rows from the imported file to the result",
                 "paragraphs": [
                     "This property is used to include metadata about coordinates in the header row. The code of the coordinate reference system is added to the header row.",
                     "When transforming from one file into another, any header rows in the input file in addition to the coordinate reference system information are added to the output file."
                 ],
                 "listItems" : []
             },
-            "lineEnds":{
+            "writeLineEndings":{
                 "title":"Include end-of-row markers in output",
                 "info": "End-of-lines are added to the output file",
                 "paragraphs": [
@@ -404,7 +404,7 @@ Oskari.registerLocalization(
                 ],
                 "listItems" : []
             },
-            "useCardinals":{
+            "writeCardinals":{
                 "title":"Use cardinals",
                 "info": "Coordinate values are followed by cardinal directions (N, E, W or S).",
                 "paragraphs": [

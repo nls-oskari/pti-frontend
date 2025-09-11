@@ -17,7 +17,7 @@ const ContentWrapper = styled.div`
 
 const Content = ({ controller, onClose }) => {
     const onPrimary = () => {
-        controller.onAction('store');
+        controller.setMapSelectionMode('store');
         onClose();
     };
 

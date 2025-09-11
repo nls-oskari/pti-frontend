@@ -12,12 +12,15 @@ import { exportStateToFile } from './FileWriter';
 const getInitialState = () => ({
     loading: false,
     source: SOURCE[0], // deprecated
+    // TODO: maybe this isn't needed !!fileContents => source === 'file'
+    // only file has special handling
     sources: [],
     inputSrs: null,
     outputSrs: null,
     inputHeightSrs: null,
     outputHeightSrs: null,
     files: [],
+    fileContents: null,
     import: { ...FILE_DEFAULTS.import },
     export: { ...FILE_DEFAULTS.export },
     coordinates: [],
@@ -155,11 +158,6 @@ class UIHandler extends StateHandler {
         this.confirmPopup = null;
     }
 
-    addCoordinate (coordinate) {
-        const { coordinates } = this.getState();
-        this.updateState({ coordinates: [...coordinates, coordinate] });
-    }
-
     cleanInputCoordinates () {
         const { coordinates, inputSrs, inputHeightSrs } = this.getState();
         const input3D = getDimension(inputSrs, inputHeightSrs) === 3;
@@ -188,7 +186,7 @@ class UIHandler extends StateHandler {
             this.updateState({ coordinates, transformed: false });
         } catch {
             // TODO: error handling
-            Messaging.error(this.loc('flyout.transform.responseErrors.generic'));
+            Messaging.error(this.loc('transform.errors.paste'));
         }
     }
 
@@ -291,14 +289,13 @@ class UIHandler extends StateHandler {
                 fileContents: contents,
                 import: {
                     headerLineCount: contents.headerLines.length,
-                    coordinateSeparator: contents.delimiterValueForBackend,
+                    coordinateSeparator: contents.delimiter,
                     decimalSeparator: contents.decimalSeparator
                 }
             });
         }).catch(err => {
-            // TODO: error handling
             console.log(err);
-            this.showValidationError(['noFileSettings']);
+            Messaging.error(this.log('transform.errors.import'));
         });
     }
 
@@ -354,14 +351,27 @@ class UIHandler extends StateHandler {
         if (id === 'file') {
             this.showFileSettings('import');
         }
-        if (id === 'store') {
-            const coordinates = this.instance.getMapCoordinates();
-            this.instance.setMapSelectionMode();
+    }
+
+    setMapSelectionMode (mode) {
+        switch (mode) {
+        case MAP.POPUP:
+            this.instance.setMapSelectionMode(MAP.ADD);
+            this.instance.setMapCoordinates(this.getState().coordinates);
+            this.showMapPopup();
+            break;
+        case MAP.STORE:
+            this.updateState({ coordinates: this.instance.getMapCoordinates(), transformed: false });
             this.addSourceToState(ACTIONS.MAP);
-            this.updateState({ coordinates, transformed: false });
-        }
-        if (Object.values(MAP).includes(id)) {
-            this.instance.setMapSelectionMode(id);
+            this.instance.setMapSelectionMode();
+            break;
+        case MAP.REMOVE:
+        case MAP.ADD:
+            this.instance.setMapSelectionMode(mode);
+            break;
+        case MAP.SHOW:
+            this.showOnMap();
+            break;
         }
     }
 
@@ -471,17 +481,17 @@ class UIHandler extends StateHandler {
 
     showValidationError (errorKeys) {
         this.infoPopup?.close();
-        const listItems = errorKeys.map(key => this.loc(`flyout.transform.validateErrors.${key}`));
-        const title = this.loc('flyout.transform.validateErrors.title');
-        const paragraphs = [this.loc('flyout.transform.validateErrors.message')];
+        const listItems = errorKeys.map(key => this.loc(`transform.validate.${key}`));
+        const title = this.loc('transform.validate.title');
+        const paragraphs = [this.loc('transform.validate.message')];
         this.infoPopup = showInfoPopup(title, paragraphs, listItems, () => this.closeInfoPopup());
     }
 
     showConfirmTransform (warningKeys) {
         this.infoPopup?.close();
-        const listItems = warningKeys.map(key => this.loc(`flyout.transform.warnings.${key}`));
-        const title = this.loc('flyout.transform.warnings.title');
-        const paragraphs = [this.loc('flyout.transform.warnings.message')];
+        const listItems = warningKeys.map(key => this.loc(`transform.warnings.${key}`));
+        const title = this.loc('transform.warnings.title');
+        const paragraphs = [this.loc('transform.warnings.message')];
         const onConfirm = () => {
             this.cleanInputCoordinates();
             this.transformFunction();
@@ -516,17 +526,6 @@ class UIHandler extends StateHandler {
     }
 
     importFileContentsToInputTable () {
-        /* {
-            delimiter,
-            // TODO: we don't need this when we don't send the file to backend
-            delimiterValueForBackend: SEPARATORS.coordinateSeparator.find(sep => sep.char === delimiter)?.value,
-            decimalSeparator,
-            data,
-            lines,
-            headerLines,
-            headers
-        }
-        */
         const errors = validateFileSettings(this.getState(), 'import');
         if (errors.length) {
             this.showValidationError(errors);
@@ -537,7 +536,7 @@ class UIHandler extends StateHandler {
         const coordinates = fileContents.data.map(([x, y, z]) => ({
             x: parseValue(x, unit),
             y: parseValue(y, unit),
-            z: parseValue(z, unit)
+            z: parseValue(z) // always metric
         }));
         // sets all coordinates from file so one source only
         this.updateState({ coordinates, sources: [ACTIONS.IMPORT] });
@@ -551,7 +550,14 @@ class UIHandler extends StateHandler {
             this.showValidationError(errors);
             return false;
         }
-        exportStateToFile(state);
+        this.updateState({ loading: true });
+        try {
+            exportStateToFile(state);
+        } catch (err) {
+            console.log(err);
+            Messaging.error(this.loc('transform.errors.export'));
+        }
+        this.updateState({ loading: false });
         return true;
     }
 
@@ -574,7 +580,7 @@ class UIHandler extends StateHandler {
             }
             this.updateState({ results: json, loading: false, transformed: true });
         }).catch((e) => {
-            Messaging.error(this.loc('flyout.transform.responseErrors.generic'));
+            Messaging.error(this.loc('transform.errors.generic'));
             this.updateState({ loading: false });
         });
     }
@@ -589,12 +595,16 @@ class UIHandler extends StateHandler {
             },
             body
         }).then(response => {
+            if (!response.ok) {
+                throw new Error(response.statusText);
+                // return response.json(); => typeof text !== 'string' => showResponseError(text)
+            }
             return response.text();
         }).then(text => {
             const results = parseKomuResponse(text);
             this.updateState({ results, loading: false, transformed: true });
         }).catch((e) => {
-            Messaging.error(this.loc('flyout.transform.responseErrors.generic'));
+            Messaging.error(this.loc('transform.errors.generic'));
             this.updateState({ loading: false });
         });
     }
@@ -625,7 +635,7 @@ class UIHandler extends StateHandler {
                 this.showResponseError(json);
             }
         }).catch((e) => {
-            Messaging.error(this.loc('flyout.transform.responseErrors.generic'));
+            Messaging.error(this.loc('transform.errors.generic'));
             this.updateState({ loading: false });
         });
     }
@@ -654,7 +664,7 @@ class UIHandler extends StateHandler {
                 this.showResponseError(json);
             }
         }).catch((e) => {
-            Messaging.error(this.loc('flyout.transform.responseErrors.generic'));
+            Messaging.error(this.loc('transform.errors.generic'));
             this.updateState({ loading: false });
         });
     }
@@ -689,7 +699,7 @@ class UIHandler extends StateHandler {
                 this.showResponseError(json);
             }
         }).catch(() => {
-            Messaging.error(this.loc('flyout.transform.responseErrors.generic'));
+            Messaging.error(this.loc('transform.errors.generic'));
             this.updateState({ loading: false });
         });
     }
@@ -698,13 +708,12 @@ class UIHandler extends StateHandler {
         const { error, info } = response || {};
         const key = info?.errorKey || error?.errorKey || 'generic';
         Oskari.log('CoordTransHandler').error(error);
-        Messaging.error(this.loc(`flyout.transform.responseErrors.${key}`));
+        Messaging.error(this.loc(`transform.errors.${key}`));
         this.updateState({ loading: false });
     }
 }
 
 const wrapped = controllerMixin(UIHandler, [
-    'setSource',
     'setSrs',
     'setHeightSrs',
     'updateCoordinate',
@@ -719,6 +728,7 @@ const wrapped = controllerMixin(UIHandler, [
     'showInfo',
     'showFileSettings',
     'onAction',
+    'setMapSelectionMode',
     'reset',
     'importFileContentsToInputTable',
     'addFromSource',

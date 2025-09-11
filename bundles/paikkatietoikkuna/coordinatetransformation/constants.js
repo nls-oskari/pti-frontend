@@ -1,13 +1,24 @@
 export const BUNDLE = 'coordinatetransformation';
-export const WATCH_JOB = 'CoordinateTransformJob';
-export const WATCH_URL = '/coordinatetransform/watch/';
+export const WATCH_JOB = 'CoordinateTransformJob'; // deprecated
+export const WATCH_URL = '/coordinatetransform/watch/'; // deprecated
 export const ID_PREFIX = 'coord_marker_';
 export const SOURCE = ['table', 'file', 'map']; // deprecated
-export const LON_AXES = ['E', 'φ', 'X'];
+export const LON_AXES = ['E', 'λ', 'X'];
 export const LAN_AXES = ['N', 'φ', 'Y'];
+
+export const HOUR_TO_MIN = 60; // MIN_TO_SEC
+export const HOUR_TO_SEC = 3600;
+// 2 * pi =~ 6.283185307179586476925286766559
+const PI2 = Math.PI * 2;
+export const DEC_TO_GRAD = 10 / 9;
+export const DEC_TO_RAD = PI2 / 360;
+
 export const MAP = {
     ADD: 'add',
-    REMOVE: 'remove'
+    REMOVE: 'remove',
+    STORE: 'store',
+    POPUP: 'showPopup',
+    SHOW: 'showOnMap'
 };
 
 export const ACTIONS = {
@@ -43,6 +54,7 @@ export const FILE_DEFAULTS = {
         lineSeparator: '\r\n'
     }
 };
+
 // const closestZoom = 6;
 
 export const SEPARATORS = {
@@ -71,9 +83,9 @@ export const DECIMAL = [
 ];
 
 export const DEGREE = [
-    { loc: 'fileSettings.options.degreeFormat.degree', value: 'degree', decimals: 8 },
-    { loc: 'fileSettings.options.degreeFormat.gradian', value: 'gradian', decimals: 8 },
-    { loc: 'fileSettings.options.degreeFormat.radian', value: 'radian', decimals: 10 },
+    { loc: 'fileSettings.options.degrees.degree', value: 'degree', decimals: 8 },
+    { loc: 'fileSettings.options.degrees.gradian', value: 'gradian', decimals: 8 },
+    { loc: 'fileSettings.options.degrees.radian', value: 'radian', decimals: 10 },
     { label: 'DD', value: 'DD', decimals: 8 },
     { label: 'DD MM', value: 'DD MM', decimals: 6 },
     { label: 'DD MM SS', value: 'DD MM SS', decimals: 4 },

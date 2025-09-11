@@ -19,9 +19,12 @@ export const MapSelect = ({ controller }) => {
     const [value, setValue] = useState(MAP.ADD);
     const onRadio = value => {
         setValue(value);
-        controller.onAction(value);
+        controller.setMapSelectionMode(value);
     };
-    const options = Object.values(MAP).map(value => ({ value, label: <Message messageKey={`mapMarkers.select.${value}`} bundleKey={BUNDLE} />}));
+    const options = [
+        { value: MAP.ADD, label: <Message messageKey='mapMarkers.select.add' bundleKey={BUNDLE} /> },
+        { value: MAP.REMOVE, label: <Message messageKey='mapMarkers.select.remove' bundleKey={BUNDLE} /> }
+    ];
     return (
         <Content>
             <Message messageKey='mapMarkers.select.info' bundleKey={BUNDLE} />
