@@ -427,6 +427,13 @@ class UIHandler extends StateHandler {
 
     showFileSettings (type) {
         this.filePopup?.close();
+        const state = this.getState();
+        if (type === 'export' && state.fileContents) {
+            const { headerLineCount, ...restSettings } = state.fileContents.settings;
+            const writeHeaders = headerLineCount > 0;
+            // use default values from import file
+            this.updateState({ export: { ...state.export, ...restSettings, writeHeaders }});
+        }
         this.filePopup = showFilePopup(type, this.getState(), this.getController(), () => this.closeFileSettings());
     }
 
