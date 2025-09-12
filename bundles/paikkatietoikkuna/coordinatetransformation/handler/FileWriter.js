@@ -5,7 +5,6 @@ const CRS = 'Coordinate Reference System';
 
 const toDegree = (coord, unit, decimals) => { //, isLon)
     if (unit === 'DD' || unit === 'degree') {
-        // TODO: prefix 0 ??
         return coord.toFixed(decimals);
     }
     if (unit === 'gradian') {
@@ -56,7 +55,7 @@ const getFileContent = ({
         coordinateSeparator,
         lineSeparator,
         axisFlip,
-        prefixId,
+        prefixColCount,
         writeCardinals,
         writeLineEndings
     } = settings;
@@ -85,7 +84,7 @@ const getFileContent = ({
         row = row.map(r => replace ? r.replace('.', ',') : r)
             .map((r, i) => writeCardinals ? addCardinal(r, i === lonIndex) : r);
 
-        if (prefixId) {
+        if (prefixColCount > 0) {
             // use stored from imported file if available
             const ids = prefixesFromImport
                 ? prefixes[index] || ['']
@@ -97,6 +96,8 @@ const getFileContent = ({
             const ending = lineEndings[index] || [''];
             ending.forEach(p => row.push(p));
         }
+        // TODO: can prefixes and lineEndings lengths vary? now adds only one empty if missing
+        // => every row length must be same to get valid csv
         return row.join(coordinateSeparator);
     }).join(lineSeparator);
 };

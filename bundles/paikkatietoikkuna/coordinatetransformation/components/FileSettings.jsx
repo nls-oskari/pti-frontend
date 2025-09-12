@@ -57,6 +57,8 @@ const SelectOption = ({id, values, onChange, controller, mandatory = true}) =>
 
 export const ImportFile = ({ import: values, inputSrs, files, fileContents, controller }) => {
     const onChange = (key, value) => controller.setFileSetting('import', key, value);
+    // file parser handles count instead of boolean TODO: change to number input ?
+    const onPrefix = (key, checked) => controller.setFileSetting('import', 'prefixColCount', checked ? 1 : 0);
     return (
         <Content>
             <FileInput mandatory onFiles={controller.setFiles} files={files} { ...FILE_INPUT_PROPS } />
@@ -64,7 +66,7 @@ export const ImportFile = ({ import: values, inputSrs, files, fileContents, cont
             <SelectOption id='coordinateSeparator' controller={controller} onChange={onChange} values={values}/>
             <SelectOption id='decimalSeparator' controller={controller} onChange={onChange} values={values}/>
             { showDegreeUnit(inputSrs) && <SelectOption id='unit' mandatory={isDegreeSystem(inputSrs)} controller={controller} onChange={onChange} values={values}/> }
-            <CheckboxOption id='prefixId' locPath='prefixes.input' controller={controller} onChange={onChange} values={values}/>
+            <CheckboxOption id='prefixColCount' locPath='prefixes.input' controller={controller} onChange={onPrefix} values={values}/>
             <FilePreview fileContents={fileContents} dataFormat={values.unit} />
         </Content>
     );
@@ -72,8 +74,10 @@ export const ImportFile = ({ import: values, inputSrs, files, fileContents, cont
 
 export const ExportFile = ({ export: values, outputSrs, controller, fileContents }) => {
     const onChange = (key, value) => controller.setFileSetting('export', key, value);
-    const { lineEndings = [], headerLines = [] , prefixColCount } = fileContents || {};
-    const prefixIdLocPath = prefixColCount > 0 ? 'prefixes.fromFile' : 'prefixes.generate'; // or prefixes.length > 0
+    // file writer handles count instead of boolean TODO: change to number input ?
+    const onPrefix = (key, checked) => controller.setFileSetting('export', 'prefixColCount', checked ? 1 : 0);
+    const { lineEndings = [], headerLines = [], prefixes = [] } = fileContents || {};
+    const prefixLocPath = prefixes.length > 0 ? 'prefixes.fromFile' : 'prefixes.generate';
     const hasLineEndings = lineEndings.length > 0;
     const hasHeaders = headerLines.length > 0;
     return (
@@ -86,7 +90,7 @@ export const ExportFile = ({ export: values, outputSrs, controller, fileContents
             <SelectOption id='lineSeparator' controller={controller} onChange={onChange} values={values}/>
             <CheckboxOption id='createHeader' controller={controller} onChange={onChange} values={values}/>
             { hasHeaders && <CheckboxOption id='writeHeaders' controller={controller} onChange={onChange} values={values}/> }
-            <CheckboxOption id='prefixId' locPath={prefixIdLocPath} controller={controller} onChange={onChange} values={values}/>
+            <CheckboxOption id='prefixColCount' locPath={prefixLocPath} controller={controller} onChange={onPrefix} values={values}/>
             <CheckboxOption id='axisFlip' controller={controller} onChange={onChange} values={values}/>
             <CheckboxOption id='writeCardinals' controller={controller} onChange={onChange} values={values}/>
             { hasLineEndings && <CheckboxOption id='writeLineEndings' controller={controller} onChange={onChange} values={values}/> }

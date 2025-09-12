@@ -359,7 +359,7 @@ Oskari.registerLocalization(
                 ],
                 "listItems" : []
             },
-            "prefixId":{
+            "prefixColCount":{
                 "title":"Use identifiers",
                 "info": "Coordinate row starts with identifier",
                 "paragraphs": [

@@ -361,7 +361,7 @@ Oskari.registerLocalization(
                 ],
                 "listItems" : []
             },
-            "prefixId":{
+            "prefixColCount":{
                 "title":"Koordinaattiarvoja edeltää pisteen tunniste",
                 "info": "Koordinaattirivi alkaa tunnistetiedolla",
                 "paragraphs": [
