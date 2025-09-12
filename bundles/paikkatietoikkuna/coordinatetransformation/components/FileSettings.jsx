@@ -46,7 +46,7 @@ const CheckboxOption = ({id, values, onChange, controller, locPath}) => (
             <Message messageKey={`fileSettings.options.${locPath || id}`} />
         </Checkbox>
         <span onClick={() => controller.showInfo(id)}>
-            <InfoIcon title={<Message messageKey={`infoPopup.${id}.title`}/>}/>
+            <InfoIcon title={<Message messageKey={`infoPopup.${id}.info`}/>}/>
         </span>
     </Wrapper>
 );
