@@ -254,7 +254,7 @@ export const stateToKomuRequest = (state) => {
 
 export const parseKomuResponse = (text) => {
     return text.split(`;`).map(coord => {
-        const [x, y, z] = coord.split(',');
+        const [x, y, z] = coord.split(',').map(c => parseFloat(c));
         return { x, y, z };
     });
 };
