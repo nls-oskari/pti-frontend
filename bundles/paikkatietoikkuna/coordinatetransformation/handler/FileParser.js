@@ -38,6 +38,7 @@ export const parseFileContents = (lines = [], delimiter = ';', headerLineCount =
         linesWithData = lines.slice(headerLineCount);
         headerMetadata.srs = headerLines.map(line => detectEpsgCode(line)).find(found => found);
     }
+    // TODO: always uses detected => remove option from import settings OR pass & use selected
     const decimalSeparator = detectDecimalSeparator(linesWithData[0], delimiter);
     const data = [];
     const prefixes = [];
