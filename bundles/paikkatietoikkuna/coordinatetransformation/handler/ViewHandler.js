@@ -276,22 +276,27 @@ class UIHandler extends StateHandler {
         if (files.length === 0) {
             this.updateState({
                 files: [],
-                fileContents: undefined
+                fileContents: null
             });
         }
         if (files.length !== 1) {
             return;
         }
         parseFile(files[0]).then(contents => {
-            // TODO: maybe set from content only if default settings (don't override user selects)
+            const { inputSrs, import: settings } = this.getState();
+            // use detected settings only if user hasn't selected value
+            // Maybe this isn't needed if detect functions works right
+            const newSettings = { ...settings };
+            Object.keys(contents.settings).forEach(key => {
+                if (newSettings[key] === FILE_DEFAULTS.import[key]) {
+                    newSettings[key] = contents.settings[key];
+                }
+            });
             this.updateState({
+                inputSrs: contents.srs || inputSrs,
                 files,
                 fileContents: contents,
-                import: {
-                    headerLineCount: contents.headerLines.length,
-                    coordinateSeparator: contents.delimiter,
-                    decimalSeparator: contents.decimalSeparator
-                }
+                import: newSettings // { ...settings, ...contents.settings }
             });
         }).catch(err => {
             console.log(err);
@@ -301,7 +306,7 @@ class UIHandler extends StateHandler {
 
     setFileSetting (type, key, value) {
         const settings = this.getState()[type];
-        const newTypeState = {
+        const updated = {
             [type]: {
                 ...settings,
                 [key]: value
@@ -310,29 +315,12 @@ class UIHandler extends StateHandler {
         if (type === 'import') {
             const { fileContents } = this.getState();
             if (fileContents) {
-                // The UI is only a checkbox atm but parser takes a number of prefix columns
-                let prefixColCount = fileContents.prefixColCount;
-                if (key === 'prefixId') {
-                    prefixColCount = value ? 1 : 0;
-                }
-
+                const { headerLineCount, coordinateSeparator, prefixColCount } = updated[type];
                 // parseFileContents() to update parsing based on the new selection
-                const coordSeparator = newTypeState.import.coordinateSeparator;
-                newTypeState.fileContents = parseFileContents(fileContents.lines, coordSeparator, newTypeState.import.headerLineCount, prefixColCount);
+                updated.fileContents = parseFileContents(fileContents.lines, coordinateSeparator, headerLineCount, prefixColCount);
             }
         }
-
-        this.updateState(newTypeState);
-    }
-
-    setImport (key, value) {
-        const current = this.getState().import;
-        this.updateState({ import: { ...current, [key]: value } });
-    }
-
-    setExport (key, value) {
-        const current = this.getState().export;
-        this.updateState({ export: { ...current, [key]: value } });
+        this.updateState(updated);
     }
 
     confirmClearTables () {
