@@ -54,7 +54,14 @@ export const parseFileContents = (lines = [], delimiter = ';', headerLineCount =
                 addToArray(lineEndings, lineIndex, cell);
             }
         });
+        // Fix for strange error: prefixColCount and wrong headerLineCount (too small)
+        // linesWithData gets header row which may not have delimeter => whole header line goes to prefix array
+        // to be sure that data get filled correctly for preview and parsing
+        if (!data[lineIndex]) {
+            data[lineIndex] = [];
+        }
     });
+
     const settings = {
         decimalSeparator,
         coordinateSeparator: delimiter,
