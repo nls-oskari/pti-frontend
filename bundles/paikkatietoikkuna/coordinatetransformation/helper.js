@@ -209,6 +209,46 @@ export const getLabelForMarker = (coord, srs) => {
     */
 };
 
+// Added for debugging
+export const getCoordinatesExtent = (coordinates, srs) => {
+    if (!coordinates.length) {
+        return {};
+    }
+    const swap = !isLonFirst(srs);
+    let minX = Infinity;
+    let maxX = -Infinity;
+    let minY = Infinity;
+    let maxY = -Infinity;
+    coordinates.forEach(({ x, y }, i) => {
+        const coord = swap ? [y, x] : [x, y];
+        if (coord.some(c => typeof c !== 'number' || isNaN(c))) {
+            Oskari.log('CoordTransHelper').warn('Invalid coord:', coord, 'at:', i);
+            return;
+        }
+        if (coord[0] < minX) {
+            minX = coord[0];
+        }
+        if (coord[0] > maxX) {
+            maxX = coord[0];
+        }
+        if (coord[1] < minY) {
+            minY = coord[1];
+        }
+        if (coord[1] > maxY) {
+            maxY = coord[1];
+        }
+    });
+    // wkt: left-bottom counterclockwise closed
+    return {
+        extent: [minX, minY, maxX, maxY],
+        bbox: { left: minX, bottom: minY, right: maxX, top: maxY },
+        min: { x: swap ? minY : minX, y: swap ? minX : minY},
+        max: { x: swap ? maxY : maxX, y: swap ? maxX : maxY},
+        wkt: `POLYGON ((${minX} ${minY}, ${maxX} ${minY}, ${maxX} ${maxY}, ${minX} ${maxY}, ${minX} ${minY}))`
+    };
+    // Oskari.getSandbox().postRequestByName('MapModulePlugin.AddFeaturesToMapRequest', [wkt, { layerId: 'komu', centerTo: true }]);
+};
+
 export const coordinateToMarker = (coord, isNew) => {
     const { colors, ...props } = MARKER;
     const { x, y, label } = coord;

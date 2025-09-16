@@ -4,8 +4,8 @@ import { showFilePopup } from '../view/FilePopup';
 import { showConfirmPopup } from '../view/ConfirmPopup';
 import { showClipboardPopup } from '../view/ClipboardPopup';
 import { showMapSelectPopup, showMapPreviewPopup } from '../view/MapPopup';
-import { SOURCE, MAP, WATCH_JOB, WATCH_URL, FILE_DEFAULTS, ACTIONS, PAGINATION } from '../constants';
-import { stateToPTIArray, stateToTransformRequest, stateToKomuRequest, parseKomuResponse, validateFileSettings, validateTransform, validateCoordinate, parseCoordinateValue, is3DSystem, getDimension, getLabelForMarker } from '../helper';
+import { SOURCE, MAP, WATCH_JOB, WATCH_URL, FILE_DEFAULTS, ACTIONS, PAGINATION, SRS } from '../constants';
+import { stateToPTIArray, stateToTransformRequest, stateToKomuRequest, parseKomuResponse, validateFileSettings, validateTransform, validateCoordinate, parseCoordinateValue, is3DSystem, getDimension, getLabelForMarker, getCoordinatesExtent } from '../helper';
 import { parseFile, parseFileContents, parseValue } from './FileParser';
 import { exportStateToFile } from './FileWriter';
 
@@ -45,6 +45,7 @@ class UIHandler extends StateHandler {
         this.baseUrl = conf.url;
         this.transformFunction = this.getTransformFunction(conf);
         Oskari.urls.set(WATCH_JOB, WATCH_URL);
+        this.log = Oskari.log('CoordTransHandler');
     }
 
     getTransformFunction ({ url, contentType }) {
@@ -184,8 +185,8 @@ class UIHandler extends StateHandler {
                 .map(([x, y, z]) => ({ x, y, z }));
             this.addSourceToState('clipboard');
             this.updateState({ coordinates, transformed: false });
-        } catch {
-            // TODO: error handling
+        } catch (err) {
+            this.log.debug(err);
             Messaging.error(this.loc('transform.errors.paste'));
         }
     }
@@ -299,7 +300,7 @@ class UIHandler extends StateHandler {
                 import: newSettings // { ...settings, ...contents.settings }
             });
         }).catch(err => {
-            console.log(err);
+            this.log.debug(err);
             Messaging.error(this.log('transform.errors.import'));
         });
     }
@@ -517,8 +518,20 @@ class UIHandler extends StateHandler {
             this.showConfirmTransform(warnings);
             return;
         }
+        if (this.log.isDebug()) {
+            this.debugTransform();
+        }
         this.transformFunction();
     }
+
+    debugTransform () {
+        const { inputSrs, coordinates } = this.getState();
+        const { bounds = [] } = SRS.find(s => s.value === inputSrs) || {};
+        const info = getCoordinatesExtent(coordinates, inputSrs);
+        this.log.debug('Projected bounds for:', inputSrs, bounds);
+        Object.keys(info).forEach(key => this.log.debug(key, '=>', info[key]));
+    }
+
 
     importFileContentsToInputTable () {
         const errors = validateFileSettings(this.getState(), 'import');
@@ -549,7 +562,7 @@ class UIHandler extends StateHandler {
         try {
             exportStateToFile(state);
         } catch (err) {
-            console.log(err);
+            this.log.debug(err);
             Messaging.error(this.loc('transform.errors.export'));
         }
         this.updateState({ loading: false });
@@ -702,7 +715,6 @@ class UIHandler extends StateHandler {
     showResponseError (response) {
         const { error, info } = response || {};
         const key = info?.errorKey || error?.errorKey || 'generic';
-        Oskari.log('CoordTransHandler').error(error);
         Messaging.error(this.loc(`transform.errors.${key}`));
         this.updateState({ loading: false });
     }
