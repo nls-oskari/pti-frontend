@@ -309,8 +309,8 @@ Oskari.registerLocalization(
                 "precisionTable": {
                     "title": "Number of decimals of angle pattern in metric equivalent",
                     "unit": "Angle pattern", // Angle shape/unit
-                    "deg": "Degree, Grade and DD",
-                    "rad": "Radian",
+                    "degree": "Degree, Grade and DD",
+                    "radian": "Radian",
                     "min": "DDMM and DD MM",
                     "sec": "DDMMSS and DD MM SS"
                 }

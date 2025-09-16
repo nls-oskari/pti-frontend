@@ -309,8 +309,8 @@ Oskari.registerLocalization(
                 "precisionTable": {
                     "title": "Antalet decimaler av vinkels form/enhet i metrisk ekvivalent",
                     "unit": "Vinkelns form/enhet",
-                    "deg": "Grad, gon och DD",
-                    "rad": "Radian",
+                    "degree": "Grad, gon och DD",
+                    "radian": "Radian",
                     "min": "DDMM och DD MM",
                     "sec": "DDMMSS och DD MM SS"
                 }

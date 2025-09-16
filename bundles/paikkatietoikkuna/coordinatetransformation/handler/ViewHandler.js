@@ -456,11 +456,11 @@ class UIHandler extends StateHandler {
     }
 
     showInfo (key) {
-        const { title, info = '', listItems = [], paragraphs = [info] } = this.loc(`infoPopup.${key}`);
+        const { info = '', listItems = [], paragraphs = [info] } = this.loc(`infoPopup.${key}`);
         if (this.infoPopup) {
-            this.infoPopup.update(title, paragraphs, listItems);
+            this.infoPopup.update(key, paragraphs, listItems);
         } else {
-            this.infoPopup = showInfoPopup(title, paragraphs, listItems, () => this.closeInfoPopup());
+            this.infoPopup = showInfoPopup(key, paragraphs, listItems, () => this.closeInfoPopup());
         }
     }
 

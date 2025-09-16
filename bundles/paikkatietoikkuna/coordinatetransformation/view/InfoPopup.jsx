@@ -1,12 +1,17 @@
 import React from 'react';
 import styled from 'styled-components';
 import { showPopup } from 'oskari-ui/components/window';
-import { ButtonContainer, PrimaryButton, SecondaryButton } from 'oskari-ui/components/buttons';
-import { BUNDLE } from '../constants';
+import { ButtonContainer, PrimaryButton } from 'oskari-ui/components/buttons';
+import { Table } from 'oskari-ui/components/Table';
+import { Message } from 'oskari-ui';
+import { BUNDLE, DECIMAL } from '../constants';
+import { getDecimalCount } from '../helper';
 
 const POPUP_OPTIONS = {
     id: BUNDLE + '-info'
 };
+
+const PRECISION_UNITS = ['degree', 'radian', 'min', 'sec'];
 
 const Content = styled.div`
     padding: 20px;
@@ -14,6 +19,32 @@ const Content = styled.div`
 const Paragraph = styled.p`
     padding-bottom: 12px;
 `;
+
+const StyledTable = styled(Table)`
+    margin-top: 1em;
+`;
+
+const PrecisionTable = () => {
+    const columns = [
+        {
+            title: <Message messageKey='infoPopup.decimalCount.precisionTable.unit' bundleKey={BUNDLE}/>,
+            dataIndex: 'unit'
+        },
+        ...DECIMAL.map(d => ({ title: d.label, dataIndex: d.value }))
+    ];
+    const dataSource = PRECISION_UNITS.map(unit => ({
+        key: unit,
+        unit: <Message messageKey={`infoPopup.decimalCount.precisionTable.${unit}`} bundleKey={BUNDLE}/>,
+        ...DECIMAL.reduce((decimals, { value }) => ({ ...decimals, [value]: getDecimalCount(value, unit) }), {})
+    }));
+    return (
+        <StyledTable bordered
+            title={() => <Message messageKey='infoPopup.decimalCount.precisionTable.title' bundleKey={BUNDLE}/>}
+            columns={columns}
+            dataSource={dataSource}
+            pagination={false}/>
+    );
+};
 
 const List = ({ items }) => {
     if (!items.length) {
@@ -25,35 +56,33 @@ const List = ({ items }) => {
         </ul>
     )
 };
-const getContent = (paragraphs, listItems, onClose, onConfirm) => {
-    const renderButtons = typeof onClose === 'function' && typeof onConfirm === 'function';
-    const confirm = () => {
-        onConfirm();
-        onClose();
-    };
+const getContent = (key, paragraphs, listItems, onClose) => {
+    const showPrecisions = key === 'decimalCount';
     return(
         <Content>
             {paragraphs.map((p,i) => <Paragraph key={`p_${i}`}>{p}</Paragraph>)}
             <List items={listItems} />
-            { renderButtons && (
-                <ButtonContainer>
-                    <SecondaryButton type='cancel' onClick={() => onClose()} />
-                    <PrimaryButton type='yes' onClick={() => confirm()}/>
-                </ButtonContainer>
-            )}
+            { showPrecisions && <PrecisionTable /> }
+            <ButtonContainer>
+                <PrimaryButton type='close' onClick={() => onClose()}/>
+            </ButtonContainer>
         </Content>
     );
 };
 
-export const showInfoPopup = (title, paragraphs, listItems, onClose, onConfirm) => {
+export const showInfoPopup = (key, paragraphs, listItems, onClose) => {
     const controls = showPopup(
-        title,
-        getContent(paragraphs, listItems, onClose, onConfirm),
+        <Message messageKey={`infoPopup.${key}.title`} bundleKey={BUNDLE}/>,
+        getContent(key, paragraphs, listItems, onClose),
         onClose,
         POPUP_OPTIONS
     );
     return {
         ...controls,
-        update: (title, paragraphs, listItems) => controls.update(title, getContent(paragraphs, listItems))
+        update: (key, paragraphs, listItems) =>
+            controls.update(
+                <Message messageKey={`infoPopup.${key}.title`} bundleKey={BUNDLE}/>,
+                getContent(key, paragraphs, listItems, onClose)
+            )
     };
 };

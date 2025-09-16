@@ -311,8 +311,8 @@ Oskari.registerLocalization(
                 "precisionTable": {
                     "title": "Kulman muodon/yksikön desimaalien määrä metrisenä tarkkuutena",
                     "unit": "Kulman muoto/yksikkö",
-                    "deg": "Aste, gooni ja DD",
-                    "rad": "Radiaanit",
+                    "degree": "Aste, gooni ja DD",
+                    "radian": "Radiaanit",
                     "min": "DDMM ja DD MM",
                     "sec": "DDMMSS ja DD MM SS"
                 }
