@@ -20,6 +20,10 @@ const Paragraph = styled.p`
     padding-bottom: 12px;
 `;
 
+const StyledList = styled.ul`
+    padding: 0 1em;
+`;
+
 const StyledTable = styled(Table)`
     margin-top: 1em;
 `;
@@ -51,18 +55,19 @@ const List = ({ items }) => {
         return null;
     }
     return (
-        <ul>
-            {items.map((item, i) => <li key={`li_${i}`}>{item}</li>)}
-        </ul>
+        <StyledList>
+            { items.map((item, i) => <li key={`li_${i}`}>{item}</li>) }
+        </StyledList>
     )
 };
-const getContent = (key, paragraphs, listItems, onClose) => {
-    const showPrecisions = key === 'decimalCount';
+
+const getContent = (locObject, onClose) => {
+    const { info = '', listItems = [], paragraphs = [info], precisionTable } = locObject;
     return(
         <Content>
-            {paragraphs.map((p,i) => <Paragraph key={`p_${i}`}>{p}</Paragraph>)}
+            { paragraphs.map((p, i) => <Paragraph key={`p_${i}`}>{p}</Paragraph>) }
             <List items={listItems} />
-            { showPrecisions && <PrecisionTable /> }
+            { precisionTable && <PrecisionTable /> }
             <ButtonContainer>
                 <PrimaryButton type='close' onClick={() => onClose()}/>
             </ButtonContainer>
@@ -70,19 +75,15 @@ const getContent = (key, paragraphs, listItems, onClose) => {
     );
 };
 
-export const showInfoPopup = (key, paragraphs, listItems, onClose) => {
+export const showInfoPopup = (loc, onClose) => {
     const controls = showPopup(
-        <Message messageKey={`infoPopup.${key}.title`} bundleKey={BUNDLE}/>,
-        getContent(key, paragraphs, listItems, onClose),
+        loc.title,
+        getContent(loc, onClose),
         onClose,
         POPUP_OPTIONS
     );
     return {
         ...controls,
-        update: (key, paragraphs, listItems) =>
-            controls.update(
-                <Message messageKey={`infoPopup.${key}.title`} bundleKey={BUNDLE}/>,
-                getContent(key, paragraphs, listItems, onClose)
-            )
+        update: (loc) => controls.update(loc.title, getContent(loc, onClose))
     };
 };
