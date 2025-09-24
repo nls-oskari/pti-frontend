@@ -83,7 +83,7 @@ Oskari.registerLocalization(
         "transform": {
             "warnings": {
                 "title": "Warning!",
-                "message": "Please note the following restrictions on selections or coordinates before the transform. Do you want to continue?",
+                "message": "Please note the following restrictions on selections or coordinates before the transform.",
                 "3DTo2D": "The selected input information contains height values, but the output information does not. Output coordinates will therefore not include height values.",
                 "2DTo3D": "The selected output information contains height values, but the input information does not. The height values 0 and height system N2000 will be added to the input information.",
                 "coordinates": "There are invalid rows in the coordinates to be transformed. The invalid rows will be removed before transform.",
@@ -183,6 +183,7 @@ Oskari.registerLocalization(
         },
         "confirm": {
             "title": "Coordinate information selections",
+            "continue": "Do you want to continue?",
             "reset": "All coordinates and selections will be removed. Do you want to continue?",
             "coordinates": "Input coordinates will be removed. Do you want to continue?",
             "results": "Input coordinates will be removed and new transformation will be done with new selections. Do you want to continue?",

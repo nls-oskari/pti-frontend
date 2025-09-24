@@ -83,7 +83,7 @@ Oskari.registerLocalization(
         "transform": {
             "warnings": {
                 "title": "Observera!",
-                "message": "Observera följande begränsningar för val eller koordinater före transformationen. Vill du fortsätta?",
+                "message": "Observera följande begränsningar för val eller koordinater före transformationen.",
                 "3DTo2D": "I de utgångsuppgifter du valt finns höjdvärden, men inte i resultatuppgifterna. Höjvärden ingår alltså inte i resultatkoordinaterna.",
                 "2DTo3D": "I de resultatuppgifter du valt finns höjdvärden, men inte i utgångsuppgifterna. Utgångsmaterialet ges höjdvärdet 0 och höjdsystemet N2000.",
                 "coordinates": "Det finns ogiltiga rader i koordinaterna som ska transformeras. De ogiltiga raderna kommer att tas bort före transformationen.",
@@ -183,6 +183,7 @@ Oskari.registerLocalization(
         },
         "confirm": {
             "title": "Val av koordinatuppgifter",
+            "continue": "Vill du fortsätta?",
             "reset": "Alla koordinater och val kommer att tas bort. Vill du fortsätta?.",
             "coordinates": "Koordinaterna som ska transformeras töms. Vill du fortsätta?",
             "results": "Resultatkoordinater töms och ny transformation kommer att göras med nya val. Vill du fortsätta?",
