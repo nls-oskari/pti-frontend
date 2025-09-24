@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { showPopup, PLACEMENTS } from 'oskari-ui/components/window';
 import { SecondaryButton, ButtonContainer, PrimaryButton } from 'oskari-ui/components/buttons';
-import { Message, Label, Radio, Button } from 'oskari-ui';
+import { Message, Button } from 'oskari-ui';
 import { MapSelect } from '../components/MapSelect';
-import { BUNDLE, MAP } from '../constants';
+import { BUNDLE } from '../constants';
 
 const POPUP_OPTIONS = {
     id: BUNDLE + '-map',
@@ -35,16 +35,20 @@ const Content = ({ controller, onClose }) => {
 };
 
 export const showMapSelectPopup = (controller, onClose) => {
-    return showPopup(
+    const controls = showPopup(
         <Message messageKey='mapMarkers.select.title' bundleKey={BUNDLE} />,
         <Content controller={controller} onClose={onClose} />,
         onClose,
         POPUP_OPTIONS
     );
+    return {
+        ...controls,
+        update: state => {} // noop
+    };
 };
 
 export const showMapPreviewPopup = (onClose) => {
-    return showPopup(
+    const controls = showPopup(
         <Message messageKey='mapMarkers.show.title' bundleKey={BUNDLE} />,
         (<ContentWrapper>
             <Message messageKey='mapMarkers.show.info' bundleKey={BUNDLE} />
@@ -55,4 +59,8 @@ export const showMapPreviewPopup = (onClose) => {
         onClose,
         POPUP_OPTIONS
     );
+    return {
+        ...controls,
+        update: state => {} // noop
+    };
 };
