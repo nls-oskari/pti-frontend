@@ -4,8 +4,8 @@ import { showFilePopup } from '../view/FilePopup';
 import { showConfirmPopup } from '../view/ConfirmPopup';
 import { showClipboardPopup } from '../view/ClipboardPopup';
 import { showMapSelectPopup, showMapPreviewPopup } from '../view/MapPopup';
-import { SOURCE, MAP, WATCH_JOB, WATCH_URL, FILE_DEFAULTS, ACTIONS, PAGINATION } from '../constants';
-import { stateToPTIArray, stateToTransformRequest, stateToKomuRequest, parseKomuResponse, validateFileSettings, validateTransform, validateCoordinate, parseCoordinateValue, is3DSystem, getDimension, getLabelForMarker } from '../helper';
+import { SOURCE, MAP, WATCH_JOB, WATCH_URL, FILE_DEFAULTS, ACTIONS, PAGINATION, SRS } from '../constants';
+import { stateToPTIArray, stateToTransformRequest, stateToKomuRequest, parseKomuResponse, validateFileSettings, validateTransform, validateCoordinate, parseCoordinateValue, is3DSystem, getDimension, getLabelForMarker, getCoordinatesExtent } from '../helper';
 import { parseFile, parseFileContents, parseValue } from './FileParser';
 import { exportStateToFile } from './FileWriter';
 
@@ -45,6 +45,7 @@ class UIHandler extends StateHandler {
         this.baseUrl = conf.url;
         this.transformFunction = this.getTransformFunction(conf);
         Oskari.urls.set(WATCH_JOB, WATCH_URL);
+        this.log = Oskari.log('CoordTransHandler');
     }
 
     getTransformFunction ({ url, contentType }) {
@@ -184,8 +185,8 @@ class UIHandler extends StateHandler {
                 .map(([x, y, z]) => ({ x, y, z }));
             this.addSourceToState('clipboard');
             this.updateState({ coordinates, transformed: false });
-        } catch {
-            // TODO: error handling
+        } catch (err) {
+            this.log.debug(err);
             Messaging.error(this.loc('transform.errors.paste'));
         }
     }
@@ -276,32 +277,37 @@ class UIHandler extends StateHandler {
         if (files.length === 0) {
             this.updateState({
                 files: [],
-                fileContents: undefined
+                fileContents: null
             });
         }
         if (files.length !== 1) {
             return;
         }
         parseFile(files[0]).then(contents => {
-            // TODO: maybe set from content only if default settings (don't override user selects)
-            this.updateState({
-                files,
-                fileContents: contents,
-                import: {
-                    headerLineCount: contents.headerLines.length,
-                    coordinateSeparator: contents.delimiter,
-                    decimalSeparator: contents.decimalSeparator
+            const { inputSrs, import: settings } = this.getState();
+            // use detected settings only if user hasn't selected value
+            // Maybe this isn't needed if detect functions works right
+            const newSettings = { ...settings };
+            Object.keys(contents.settings).forEach(key => {
+                if (newSettings[key] === FILE_DEFAULTS.import[key]) {
+                    newSettings[key] = contents.settings[key];
                 }
             });
+            this.updateState({
+                inputSrs: contents.srs || inputSrs,
+                files,
+                fileContents: contents,
+                import: newSettings // { ...settings, ...contents.settings }
+            });
         }).catch(err => {
-            console.log(err);
+            this.log.debug(err);
             Messaging.error(this.log('transform.errors.import'));
         });
     }
 
     setFileSetting (type, key, value) {
         const settings = this.getState()[type];
-        const newTypeState = {
+        const updated = {
             [type]: {
                 ...settings,
                 [key]: value
@@ -310,29 +316,12 @@ class UIHandler extends StateHandler {
         if (type === 'import') {
             const { fileContents } = this.getState();
             if (fileContents) {
-                // The UI is only a checkbox atm but parser takes a number of prefix columns
-                let prefixColCount = fileContents.prefixColCount;
-                if (key === 'prefixId') {
-                    prefixColCount = value ? 1 : 0;
-                }
-
+                const { headerLineCount, coordinateSeparator, prefixColCount } = updated[type];
                 // parseFileContents() to update parsing based on the new selection
-                const coordSeparator = newTypeState.import.coordinateSeparator;
-                newTypeState.fileContents = parseFileContents(fileContents.lines, coordSeparator, newTypeState.import.headerLineCount, prefixColCount);
+                updated.fileContents = parseFileContents(fileContents.lines, coordinateSeparator, headerLineCount, prefixColCount);
             }
         }
-
-        this.updateState(newTypeState);
-    }
-
-    setImport (key, value) {
-        const current = this.getState().import;
-        this.updateState({ import: { ...current, [key]: value } });
-    }
-
-    setExport (key, value) {
-        const current = this.getState().export;
-        this.updateState({ export: { ...current, [key]: value } });
+        this.updateState(updated);
     }
 
     confirmClearTables () {
@@ -439,6 +428,13 @@ class UIHandler extends StateHandler {
 
     showFileSettings (type) {
         this.filePopup?.close();
+        const state = this.getState();
+        if (type === 'export' && state.fileContents) {
+            const { headerLineCount, ...restSettings } = state.fileContents.settings;
+            const writeHeaders = headerLineCount > 0;
+            // use default values from import file
+            this.updateState({ export: { ...state.export, ...restSettings, writeHeaders } });
+        }
         this.filePopup = showFilePopup(type, this.getState(), this.getController(), () => this.closeFileSettings());
     }
 
@@ -522,7 +518,18 @@ class UIHandler extends StateHandler {
             this.showConfirmTransform(warnings);
             return;
         }
+        if (this.log.isDebug()) {
+            this.debugTransform();
+        }
         this.transformFunction();
+    }
+
+    debugTransform () {
+        const { inputSrs, coordinates } = this.getState();
+        const { bounds = [] } = SRS.find(s => s.value === inputSrs) || {};
+        const info = getCoordinatesExtent(coordinates, inputSrs);
+        this.log.debug('Projected bounds for:', inputSrs, bounds);
+        Object.keys(info).forEach(key => this.log.debug(key, '=>', info[key]));
     }
 
     importFileContentsToInputTable () {
@@ -554,7 +561,7 @@ class UIHandler extends StateHandler {
         try {
             exportStateToFile(state);
         } catch (err) {
-            console.log(err);
+            this.log.debug(err);
             Messaging.error(this.loc('transform.errors.export'));
         }
         this.updateState({ loading: false });
@@ -707,7 +714,6 @@ class UIHandler extends StateHandler {
     showResponseError (response) {
         const { error, info } = response || {};
         const key = info?.errorKey || error?.errorKey || 'generic';
-        Oskari.log('CoordTransHandler').error(error);
         Messaging.error(this.loc(`transform.errors.${key}`));
         this.updateState({ loading: false });
     }

@@ -358,7 +358,7 @@ Oskari.registerLocalization(
                 ],
                 "listItems" : []
             },
-            "prefixId":{
+            "prefixColCount":{
                 "title":"Använd identifierare",
                 "info": "Koordinatraden börjar med identifieraruppgift",
                 "paragraphs": [
