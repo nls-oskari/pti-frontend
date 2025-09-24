@@ -1,4 +1,4 @@
-import { SRS, DEGREE, HOUR_TO_MIN, HOUR_TO_SEC, DEC_TO_GRAD, DEC_TO_RAD  } from '../constants';
+import { SRS, DEGREE, HOUR_TO_MIN, HOUR_TO_SEC, DEC_TO_GRAD, DEC_TO_RAD } from '../constants';
 
 export const parseFile = (file) => {
     return new Promise((resolve, reject) => {
@@ -23,7 +23,7 @@ const addToArray = (array, index, value) => {
 
 export const parseFileContents = (lines = [], delimiter = ';', headerLineCount = 0, prefixColCount = 0) => {
     // parse always x,y,z to data
-    const dimension = 3; //TODO: data[2] or z could contain lineEnding stuff for 2D
+    const dimension = 3; // TODO: data[2] or z could contain lineEnding stuff for 2D
     const headerMetadata = {
         headerLines: [],
         headers: []
@@ -173,6 +173,7 @@ const detectEpsgCode = (headerLine) => {
     return codes.find(code => SRS.find(s => s.value === code));
 };
 
+// eslint-disable-next-line no-unused-vars
 const isNumericRow = (row, delimiter) => {
     const cells = row.split(delimiter).map(cell => cell.trim());
 

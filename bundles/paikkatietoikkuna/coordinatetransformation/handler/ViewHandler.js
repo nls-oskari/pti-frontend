@@ -433,7 +433,7 @@ class UIHandler extends StateHandler {
             const { headerLineCount, ...restSettings } = state.fileContents.settings;
             const writeHeaders = headerLineCount > 0;
             // use default values from import file
-            this.updateState({ export: { ...state.export, ...restSettings, writeHeaders }});
+            this.updateState({ export: { ...state.export, ...restSettings, writeHeaders } });
         }
         this.filePopup = showFilePopup(type, this.getState(), this.getController(), () => this.closeFileSettings());
     }
@@ -531,7 +531,6 @@ class UIHandler extends StateHandler {
         this.log.debug('Projected bounds for:', inputSrs, bounds);
         Object.keys(info).forEach(key => this.log.debug(key, '=>', info[key]));
     }
-
 
     importFileContentsToInputTable () {
         const errors = validateFileSettings(this.getState(), 'import');

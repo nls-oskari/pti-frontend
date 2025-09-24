@@ -242,8 +242,8 @@ export const getCoordinatesExtent = (coordinates, srs) => {
     return {
         extent: [minX, minY, maxX, maxY],
         bbox: { left: minX, bottom: minY, right: maxX, top: maxY },
-        min: { x: swap ? minY : minX, y: swap ? minX : minY},
-        max: { x: swap ? maxY : maxX, y: swap ? maxX : maxY},
+        min: { x: swap ? minY : minX, y: swap ? minX : minY },
+        max: { x: swap ? maxY : maxX, y: swap ? maxX : maxY },
         wkt: `POLYGON ((${minX} ${minY}, ${maxX} ${minY}, ${maxX} ${maxY}, ${minX} ${maxY}, ${minX} ${minY}))`
     };
     // Oskari.getSandbox().postRequestByName('MapModulePlugin.AddFeaturesToMapRequest', [wkt, { layerId: 'komu', centerTo: true }]);
