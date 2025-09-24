@@ -53,8 +53,10 @@ Oskari.registerLocalization(
                     "label": "Höjdsystem",
                     "none": "Ingenting",
                     "n43": {
-                        "info": "Observera, att deltanätet N43 inte täcker hela Norra Finland, och transformationen kan p.g.a detta eventuellt inte utföras. Tilläggsinformation (endast på finska, se Liite 2, bild 3) på sidan:",
-                        "url": "https://www.suomidigi.fi/ohjeet-ja-tuki/jhs-suositukset/jhs-163-suomen-korkeusjarjestelma-n2000"
+                        "info": "Observera, att deltanätet N43 inte täcker hela Norra Finland, och transformationen kan p.g.a detta eventuellt inte utföras.",
+                        "label": "Tilläggsinformation (endast på finska) på sidan:",
+                        "link": "JHS163 Finlands höjdsystem N2000, bilaga 2 (bild 3)",
+                        "url": "https://geoforum.fi/jhs-163-suomen-korkeusjarjestelma-n2000/"
                     }
                 }
             },

@@ -53,8 +53,10 @@ Oskari.registerLocalization(
                     "label": "Korkeusjärjestelmä",
                     "none": "Ei mitään",
                     "n43": {
-                        "info": "Huomaa, että N43 kolmioverkko ei kata koko Pohjois-Suomea, eikä muunnosta siksi voida välttämättä tehdä. Katso lisätietoja N60-N43 muunnospisteistön kolmioverkon kattavuudesta: JHS163 Suomen korkeusjärjestelmä N2000 Liite 2 (kuva 3):",
-                        "url": "https://www.suomidigi.fi/ohjeet-ja-tuki/jhs-suositukset/jhs-163-suomen-korkeusjarjestelma-n2000"
+                        "info": "Huomaa, että N43 kolmioverkko ei kata koko Pohjois-Suomea, eikä muunnosta siksi voida välttämättä tehdä.",
+                        "label": "Katso lisätietoja N60-N43 muunnospisteistön kolmioverkon kattavuudesta:",
+                        "link": "JHS163 Suomen korkeusjärjestelmä N2000 Liite 2 (kuva 3)",
+                        "url": "https://geoforum.fi/jhs-163-suomen-korkeusjarjestelma-n2000/"
                     }
                 }
             },
@@ -183,6 +185,7 @@ Oskari.registerLocalization(
         },
         "confirm": {
             "title": "Koordinaattitietojen valinnat",
+            "continue": "Haluatko jatkaa?",
             "reset": "Kaikki koordinaatit ja valinnat tyhjennetään. Haluatko jatkaa?",
             "coordinates": "Muunnettavat koordinaatit tyhjennetään. Haluatko jatkaa?",
             "results": "Tuloskoordinaatit tyhjennetään ja muunnos tehdään uusilla valinnoilla. Haluatko jatkaa?",
