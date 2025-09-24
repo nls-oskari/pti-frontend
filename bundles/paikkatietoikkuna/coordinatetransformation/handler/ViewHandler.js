@@ -1,5 +1,6 @@
 import { StateHandler, controllerMixin, Messaging } from 'oskari-ui/util';
 import { showInfoPopup } from '../view/InfoPopup';
+import { showMessagePopup } from '../view/MessagePopup';
 import { showFilePopup } from '../view/FilePopup';
 import { showConfirmPopup } from '../view/ConfirmPopup';
 import { showClipboardPopup } from '../view/ClipboardPopup';
@@ -36,6 +37,7 @@ class UIHandler extends StateHandler {
         this.sandbox = instance.getSandbox();
         this.loc = loc;
         this.infoPopup = null;
+        this.msgPopup = null;
         this.filePopup = null;
         this.mapPopup = null;
         this.clipboardPopup = null;
@@ -100,7 +102,7 @@ class UIHandler extends StateHandler {
             this.selectFromMap();
         } else if (source === ACTIONS.IMPORT) {
             if (coordinates.length) {
-                this.confirmReset(() => this.showFileSettings('import'));
+                this.confirmFileImport();
                 return;
             }
             this.showFileSettings('import');
@@ -109,6 +111,7 @@ class UIHandler extends StateHandler {
         }
     }
 
+    // deprecated
     addSourceToState (source) {
         const { sources } = this.getState();
         if (!source || sources.includes(source)) {
@@ -117,41 +120,60 @@ class UIHandler extends StateHandler {
         this.updateState({ sources: [...sources, source] });
     }
 
-    confirmReset (callback = () => {}) {
+    confirmFileImport () {
         const onChange = () => {
             this.updateState({ coordinates: [], results: [], sources: [] });
-            this.closeConfirmPopup();
-            callback();
+            this.showFileSettings('import');
         };
         const onConfirm = () => {
             this.reset();
-            this.closeConfirmPopup();
-            callback();
+            this.showFileSettings('import');
         };
-        this.confirmPopup = showConfirmPopup('confirm.title', 'confirm.reset', onConfirm, () => this.closeConfirmPopup(), onChange);
+        this.showConfirm('confirm.title', 'confirm.reset', { onConfirm });
     }
 
     confirmMapSrs (mapSrs) {
         const onChange = () => {
             this.setSrs('input', mapSrs, true);
-            this.closeConfirmPopup();
             this.selectFromMap();
         };
         const onConfirm = () => {
             this.reset();
             onChange();
-            this.closeConfirmPopup();
         };
-        this.confirmPopup = showConfirmPopup('confirm.title', 'confirm.mapSrs', onConfirm, () => this.closeConfirmPopup(), onChange);
+        this.showConfirm('confirm.title', 'confirm.mapSrs', { onConfirm, onChange });
     }
 
+    // deprecated
     confirmSourceChange (source) {
         const onConfirm = () => {
             this.reset();
             this.setSource(source);
-            this.closeConfirmPopup();
         };
-        this.confirmPopup = showConfirmPopup('dataSource.title', 'dataSource.confirmChange', onConfirm, () => this.closeConfirmPopup());
+        showConfirm('dataSource.title', 'dataSource.confirmChange', { onConfirm });
+    }
+
+    confirmTransform (warningKeys) {
+        const title = 'transform.warnings.title';
+        const content = {
+            message: 'transform.warnings.message',
+            listItems: warningKeys.map(key => `transform.warnings.${key}`)
+        };
+        const onConfirm = () => {
+            this.cleanInputCoordinates();
+            this.transformFunction();
+        };
+        this.showConfirm(title, content, { onConfirm });
+    }
+
+    showConfirm (title, msgOrContent, actions) {
+        if (typeof actions.onConfirm !== 'function') {
+            this.log.warn('Callback missing');
+            return;
+        }
+        const content = typeof msgOrContent === 'string' ? { message: msgOrContent } : msgOrContent;
+        this.confirmPopup?.close();
+        this.confirmPopup = showConfirmPopup(title, content, actions, () => this.closeConfirmPopup());
     }
 
     closeConfirmPopup () {
@@ -225,45 +247,45 @@ class UIHandler extends StateHandler {
     }
 
     inputSrsChange (srs) {
+        const onChange = () => this.setSrs('input', srs, true);
         const { coordinates, inputSrs } = this.getState();
+
         if (!inputSrs || !coordinates.length) {
-            this.setSrs('input', srs, true);
+            onChange();
             return;
         }
-        const onChange = () => {
-            this.setSrs('input', srs, true);
-            this.closeConfirmPopup();
-        };
         const onConfirm = () => {
             this.reset();
             onChange();
         };
-        this.confirmPopup = showConfirmPopup('confirm.title', 'confirm.coordinates', onConfirm, () => this.closeConfirmPopup(), onChange);
+        this.showConfirm('confirm.title', 'confirm.coordinates', { onConfirm, onChange });
     }
 
     outputSrsChange (srs) {
+        const onChange = () => this.setSrs('output', srs, true);
         const { results, outputSrs } = this.getState();
+
         if (!outputSrs || !results.length) {
-            this.setSrs('output', srs, true);
+            onChange();
             return;
         }
-        const onChange = () => {
-            this.setSrs('output', srs, true);
-            this.closeConfirmPopup();
-        };
         const onConfirm = () => {
             this.updateState({ results: [] });
             onChange();
             this.transform();
         };
-        this.confirmPopup = showConfirmPopup('confirm.title', 'confirm.results', onConfirm, () => this.closeConfirmPopup(), onChange);
+        this.showConfirm('confirm.title', 'confirm.results', { onConfirm, onChange });
     }
 
     setHeightSrs (type, srs) {
         const prop = `${type}HeightSrs`;
         if (srs === 'EPSG:8675') {
-            // TODO: url isn't added because it did't work, find working url and refactor showInfoMessage
-            this.showInfoMessage('flyout.coordinateSystem.heightSystem.label', 'flyout.coordinateSystem.heightSystem.n43.info');
+            const title = 'flyout.coordinateSystem.heightSystem.label';
+            const content = {
+                message: 'flyout.coordinateSystem.heightSystem.n43.info',
+                link: this.loc('flyout.coordinateSystem.heightSystem.n43', null, null)
+            };
+            this.showMessage(title, content);
         }
         this.updateState({ [prop]: srs, transformed: false });
     }
@@ -327,9 +349,8 @@ class UIHandler extends StateHandler {
     confirmClearTables () {
         const onConfirm = () => {
             this.updateState({ coordinates: [], results: [], sources: [], transformed: false });
-            this.closeConfirmPopup();
         };
-        this.confirmPopup = showConfirmPopup('flyout.coordinateTable.clearTables', 'flyout.coordinateTable.confirmClear', onConfirm, () => this.closeConfirmPopup());
+        this.showConfirm('flyout.coordinateTable.clearTables', 'flyout.coordinateTable.confirmClear', { onConfirm });
     }
 
     // deprecated
@@ -371,8 +392,8 @@ class UIHandler extends StateHandler {
         }
         if (!coordinates.length || !inputSrs) {
             const title = 'mapMarkers.show.errorTitle';
-            const msg = `mapMarkers.show.${!inputSrs ? 'noSrs' : 'noCoordinates'}`;
-            this.showInfoMessage(title, msg);
+            const message = `mapMarkers.show.${!inputSrs ? 'noSrs' : 'noCoordinates'}`;
+            this.showMessage(title, message);
             return;
         }
         const { current, pageSize } = pagination;
@@ -414,20 +435,22 @@ class UIHandler extends StateHandler {
             return;
         }
         this.instance.toggleFlyout(false);
-        this.mapPopup = showMapSelectPopup(this.getController(), () => this.closeMapPopup(true));
-    }
-
-    closeMapPopup (fromPopup) {
-        this.mapPopup?.close();
-        this.mapPopup = null;
-        if (fromPopup) {
+        const onClose = () => {
             this.instance.setMapSelectionMode();
             this.instance.toggleFlyout(true);
+            this.closeMapPopup();
         }
+        this.closeInputPopups();
+        this.mapPopup = showMapSelectPopup(this.getController(), onClose);
+    }
+
+    closeMapPopup () {
+        this.mapPopup?.close();
+        this.mapPopup = null;
     }
 
     showFileSettings (type) {
-        this.filePopup?.close();
+        this.closeInputPopups();
         const state = this.getState();
         if (type === 'export' && state.fileContents) {
             const { headerLineCount, ...restSettings } = state.fileContents.settings;
@@ -447,6 +470,7 @@ class UIHandler extends StateHandler {
         if (this.clipboardPopup) {
             return;
         }
+        this.closeInputPopups();
         this.clipboardPopup = showClipboardPopup(this.getController(), () => this.closeClipboard());
     }
 
@@ -456,43 +480,16 @@ class UIHandler extends StateHandler {
     }
 
     showInfo (key) {
-        const { info = '', listItems = [], paragraphs = [info] } = this.loc(`infoPopup.${key}`);
-        if (this.infoPopup) {
-            this.infoPopup.update(key, paragraphs, listItems);
-        } else {
-            this.infoPopup = showInfoPopup(key, paragraphs, listItems, () => this.closeInfoPopup());
-        }
-    }
-
-    showInfoMessage (titleKey, msgKey) {
-        const title = this.loc(titleKey);
-        const paragraphs = [this.loc(msgKey)];
-        const listItems = [];
-        if (this.infoPopup) {
-            this.infoPopup.update(title, paragraphs, listItems);
+        const loc = this.loc(`infoPopup.${key}`, null, null);
+        if (!loc) {
+            this.log.warn('No info localization for:', key);
             return;
         }
-        this.infoPopup = showInfoPopup(title, paragraphs, listItems, () => this.closeInfoPopup());
-    }
-
-    showValidationError (errorKeys) {
-        this.infoPopup?.close();
-        const listItems = errorKeys.map(key => this.loc(`transform.validate.${key}`));
-        const title = this.loc('transform.validate.title');
-        const paragraphs = [this.loc('transform.validate.message')];
-        this.infoPopup = showInfoPopup(title, paragraphs, listItems, () => this.closeInfoPopup());
-    }
-
-    showConfirmTransform (warningKeys) {
-        this.infoPopup?.close();
-        const listItems = warningKeys.map(key => this.loc(`transform.warnings.${key}`));
-        const title = this.loc('transform.warnings.title');
-        const paragraphs = [this.loc('transform.warnings.message')];
-        const onConfirm = () => {
-            this.cleanInputCoordinates();
-            this.transformFunction();
-        };
-        this.infoPopup = showInfoPopup(title, paragraphs, listItems, () => this.closeInfoPopup(), onConfirm);
+        if (this.infoPopup) {
+            this.infoPopup.update(loc);
+            return;
+        }
+        this.infoPopup = showInfoPopup(loc, () => this.closeInfoPopup());
     }
 
     closeInfoPopup () {
@@ -500,12 +497,40 @@ class UIHandler extends StateHandler {
         this.infoPopup = null;
     }
 
+    showValidationError (errorKeys) {
+        const title = 'transform.validate.title';
+        const message = 'transform.validate.message';
+        const listItems = errorKeys.map(key => this.loc(`transform.validate.${key}`));
+        this.showMessage(title, { message, listItems });
+    }
+
+    showMessage (title, msgOrContent) {
+        const content = typeof msgOrContent === 'string' ? { message: msgOrContent } : msgOrContent;
+        if (this.msgPopup) {
+            this.msgPopup.update(title, content);
+            return;
+        }
+        this.msgPopup = showMessagePopup(title, content, () => this.closeMessagePopup());
+    }
+
+    closeMessagePopup () {
+        this.msgPopup?.close();
+        this.msgPopup = null;
+    }
+
     onFlyoutClose () {
         this.closeFileSettings();
         this.closeInfoPopup();
+        this.closeMessagePopup();
         this.closeMapPopup();
         this.closeConfirmPopup();
         this.closeClipboard();
+    }
+
+    closeInputPopups() {
+        this.closeFileSettings();
+        this.closeClipboard();
+        this.closeMapPopup();
     }
 
     transform () {
@@ -515,7 +540,7 @@ class UIHandler extends StateHandler {
             return;
         }
         if (warnings.length) {
-            this.showConfirmTransform(warnings);
+            this.confirmTransform(warnings);
             return;
         }
         if (this.log.isDebug()) {
