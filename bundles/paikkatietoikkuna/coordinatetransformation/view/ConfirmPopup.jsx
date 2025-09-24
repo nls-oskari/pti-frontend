@@ -33,14 +33,14 @@ const List = ({ items }) => {
 };
 
 export const showConfirmPopup = (title, content, actions, onClose) => {
-    const { message, listItems = [] } = content;
+    const { message, listItems = [] } = content || {};
     const change = typeof actions.onChange === 'function';
     const onConfirm = () => {
-        actions?.onConfirm();
+        actions?.onConfirm?.();
         onClose();
     };
     const onChange = () => {
-        actions?.onChange();
+        actions?.onChange?.();
         onClose();
     };
     return showPopup(
