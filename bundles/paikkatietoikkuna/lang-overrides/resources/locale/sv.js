@@ -60,19 +60,3 @@ Oskari.registerLocalization(
         ]
     }
 }, true);
-
-Oskari.registerLocalization(
-{
-    "lang": "sv",
-    "key": "Analyse",
-    "value": {
-        "NotLoggedView": {
-            "discountedNotice": "Analys-funktionen har tagits ur bruk i juni 2024. Vi beklagar de olägenheter som detta kan medföra.",
-            "text": "Sparade analyser kan ses via fliken Mina uppgifter fram till slutet av 2024. Mera information på finska: https://www.maanmittauslaitos.fi/palvelutiedotteet/analyysi-toiminnallisuus-ei-ole-kaytettavissa-paikkatietoikkunassa-1162024-alkaen"
-        },
-        "StartView": {
-            "discountedNotice": "Analys-funktionen har tagits ur bruk i juni 2024. Vi beklagar de olägenheter som detta kan medföra.",
-            "text": "Sparade analyser kan ses via fliken Mina uppgifter fram till slutet av 2024. Mera information på finska: https://www.maanmittauslaitos.fi/palvelutiedotteet/analyysi-toiminnallisuus-ei-ole-kaytettavissa-paikkatietoikkunassa-1162024-alkaen"
-        }
-    }
-}, true);
