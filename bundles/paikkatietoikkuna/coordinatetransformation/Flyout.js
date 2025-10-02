@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { FlyoutContent } from './view/FlyoutContent';
 import { LocaleProvider, ThemeProvider } from 'oskari-ui/util';
 import { Spin } from 'oskari-ui';
@@ -13,6 +13,7 @@ Oskari.clazz.define('Oskari.coordinatetransformation.Flyout',
         this.loc = Oskari.getMsg.bind(null, BUNDLE);
         this.container = null;
         this.handler = null;
+        this._reactRoot = null;
     }, {
         getName: function () {
             return 'Oskari.coordinatetransformation.Flyout';
@@ -24,6 +25,7 @@ Oskari.clazz.define('Oskari.coordinatetransformation.Flyout',
             flyout.addClass(BUNDLE);
             this.flyout = flyout;
             this.container = el[0];
+            this._reactRoot = createRoot(this.container);
             this.container.classList.add(BUNDLE);
         },
         getHandler: function () {
@@ -35,6 +37,9 @@ Oskari.clazz.define('Oskari.coordinatetransformation.Flyout',
         },
         teardown: function () {
             this.handler?.onFlyoutClose();
+            if (this._reactRoot) {
+                this._reactRoot.unmount();
+            }
         },
         // For some screen sizes css + media doesn't give enough space for content
         setContainerMaxHeight: function (mapHeight) {
@@ -64,7 +69,7 @@ Oskari.clazz.define('Oskari.coordinatetransformation.Flyout',
                     </ThemeProvider>
                 </LocaleProvider>
             );
-            ReactDOM.render(content, this.container);
+            this._reactRoot.render(content);
         }
     }, {
         extend: ['Oskari.userinterface.extension.DefaultFlyout']
