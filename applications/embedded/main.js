@@ -18,7 +18,7 @@ import 'oskari-bundle!oskari-frontend/bundles/framework/publishedstatehandler';
 import 'oskari-bundle!oskari-frontend/bundles/framework/coordinatetool';
 
 import 'oskari-bundle!oskari-frontend/bundles/framework/postprocessor';
-import 'oskari-loader!oskari-frontend/packages/framework/bundle/rpc/bundle.js';
+import 'oskari-bundle!oskari-frontend/bundles/framework/rpc';
 
 import 'oskari-lazy-bundle?maprotator!oskari-frontend/bundles/mapping/maprotator';
 import 'oskari-lazy-bundle?timeseries!oskari-frontend/bundles/framework/timeseries';
