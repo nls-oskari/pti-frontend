@@ -7,19 +7,20 @@ import 'oskari-loader!oskari-frontend/packages/framework/bundle/ui-components/bu
 import 'oskari-loader!oskari-frontend/packages/framework/bundle/divmanazer/bundle.js';
 
 // Then import mapmodule and rest of the application
-import 'oskari-loader!oskari-frontend/packages/mapping/ol/mapmodule/bundle.js';
+import 'oskari-bundle!oskari-frontend/bundles/mapping/mapmodule/map2d_ol';
 
-import 'oskari-loader!oskari-frontend/packages/mapping/ol/mapwmts/bundle.js';
-import 'oskari-loader!oskari-frontend/packages/mapping/ol/maparcgis/bundle.js';
-import 'oskari-loader!oskari-frontend/packages/mapping/ol/wfsvector/bundle.js';
-import 'oskari-loader!oskari-frontend/packages/mapping/ol/mapmyplaces/bundle.js';
-import 'oskari-loader!oskari-frontend/packages/mapping/ol/mapuserlayers/bundle.js';
-import 'oskari-loader!oskari-frontend/packages/mapping/ol/drawtools/bundle.js';
-import 'oskari-loader!oskari-frontend/packages/mapping/ol/toolbar/bundle.js';
-import 'oskari-loader!oskari-frontend/packages/mapping/ol/infobox/bundle.js';
-import 'oskari-loader!oskari-frontend/packages/mapping/ol/heatmap/bundle.js';
-import 'oskari-loader!oskari-frontend/packages/mapping/ol/maprotator/bundle.js';
-import 'oskari-loader!oskari-frontend/packages/mapping/ol/userstyle/bundle.js';
+import 'oskari-bundle!oskari-frontend/bundles/mapping/tiles3d';
+import 'oskari-bundle!oskari-frontend/bundles/mapping/maparcgis';
+// import 'oskari-loader!oskari-frontend/packages/mapping/ol/mapmyplaces/bundle.js';
+// import 'oskari-loader!oskari-frontend/packages/mapping/ol/mapuserlayers/bundle.js';
+import 'oskari-bundle!oskari-frontend/bundles/mapping/mapmyplaces';
+import 'oskari-bundle!oskari-frontend/bundles/framework/myplacesimport/mapuserlayers';
+import 'oskari-bundle!oskari-frontend/bundles/mapping/drawtools';
+import 'oskari-bundle!oskari-frontend/bundles/mapping/toolbar';
+import 'oskari-bundle!oskari-frontend/bundles/mapping/infobox';
+import 'oskari-bundle!oskari-frontend/bundles/mapping/heatmap';
+import 'oskari-bundle!oskari-frontend/bundles/mapping/maprotator';
+import 'oskari-bundle!oskari-frontend/bundles/mapping/userstyle';
 
 import 'oskari-bundle!oskari-frontend/bundles/framework/coordinatetool';
 import 'oskari-bundle!oskari-frontend/bundles/framework/layerlist';
@@ -48,16 +49,12 @@ import 'oskari-lazy-bundle?metadatasearch!oskari-frontend/bundles/catalogue/meta
 import 'oskari-lazy-bundle?terrain-profile!oskari-frontend-contrib/bundles/terrain-profile';
 
 import 'oskari-lazy-bundle?coordinatetransformation!../../bundles/paikkatietoikkuna/coordinatetransformation';
-// import 'oskari-lazy-loader?coordinatetransformation!../../packages/paikkatietoikkuna/bundle/coordinatetransformation/bundle.js';
-import 'oskari-lazy-loader?layerswipe!oskari-frontend/packages/mapping/ol/layerswipe/bundle.js';
+import 'oskari-lazy-bundle?layerswipe!oskari-frontend/bundles/mapping/layerswipe';
 // added for mobile
 import 'oskari-lazy-loader?mobileuserguide!../../bundles/paikkatietoikkuna/mobileuserguide/bundle.js';
 // end mobile tuning
 
 import 'oskari-bundle!oskari-frontend/bundles/mapping/dimension-change';
-
-// 3D layer support
-import 'oskari-loader!oskari-frontend/packages/mapping/olcs/map3dtiles/bundle.js';
 
 // pti
 import 'oskari-loader!../../packages/paikkatietoikkuna/bundle/register/bundle.js';
