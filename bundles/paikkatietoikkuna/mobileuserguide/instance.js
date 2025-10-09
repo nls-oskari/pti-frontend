@@ -72,11 +72,12 @@ Oskari.clazz.define('Oskari.pti.mobileuserguide.UserGuideBundleInstance',
         },
 
         addDesktopRequestLink: function () {
+            const containerElement = document.createElement('div');
             // generate root for React
-            const linkContainer = createRoot(document.createElement('div'));
+            const linkContainer = createRoot(containerElement);
             // attach under the disclaimer
             const disclaimerEl = document.getElementById('pti_disclaimer');
-            disclaimerEl.after(linkContainer);
+            disclaimerEl.after(containerElement);
             // render the link
             linkContainer.render(<DesktopLink href={ this.createLinkHref() }>
                 <Message bundleKey={ this.getName() } messageKey='requestDesktop' />
