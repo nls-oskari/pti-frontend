@@ -25,7 +25,6 @@ Oskari.clazz.define('Oskari.coordinatetransformation.Flyout',
             flyout.addClass(BUNDLE);
             this.flyout = flyout;
             this.container = el[0];
-            this._reactRoot = createRoot(this.container);
             this.container.classList.add(BUNDLE);
         },
         getHandler: function () {
@@ -35,10 +34,17 @@ Oskari.clazz.define('Oskari.coordinatetransformation.Flyout',
             }
             return this.handler;
         },
+        getReactRoot: function () {
+            if (!this._reactRoot && this.container) {
+                this._reactRoot = createRoot(this.container);
+            }
+            return this._reactRoot;
+        },
         teardown: function () {
             this.handler?.onFlyoutClose();
             if (this._reactRoot) {
                 this._reactRoot.unmount();
+                this._reactRoot = null;
             }
         },
         // For some screen sizes css + media doesn't give enough space for content
@@ -56,7 +62,8 @@ Oskari.clazz.define('Oskari.coordinatetransformation.Flyout',
         },
         lazyRender: function () {
             const handler = this.getHandler();
-            if (!this.container || !handler) {
+            const root = this.getReactRoot();
+            if (!root || !handler) {
                 return;
             }
             const state = handler.getState();
@@ -69,7 +76,7 @@ Oskari.clazz.define('Oskari.coordinatetransformation.Flyout',
                     </ThemeProvider>
                 </LocaleProvider>
             );
-            this._reactRoot.render(content);
+            root.render(content);
         }
     }, {
         extend: ['Oskari.userinterface.extension.DefaultFlyout']
