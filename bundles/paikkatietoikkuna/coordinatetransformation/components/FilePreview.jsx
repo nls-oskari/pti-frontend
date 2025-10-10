@@ -98,9 +98,10 @@ const ParseDataRow = ({ fileContents, dataFormat }) => {
 };
 
 const RawPreviewRow = ({ fileContents }) => {
-    const previewLines = fileContents.lines.slice(0, Math.min(5, fileContents.lines.length));
-
-    return (<RawPreviewNode>{ previewLines.join('\r\n') + '\r\n...' }</RawPreviewNode>);
+    const { lines = [] } = fileContents;
+    const previewLines = lines.slice(0, Math.min(5, lines.length));
+    const more = lines.length > previewLines.length ? '\r\n...' : '';
+    return (<RawPreviewNode>{ previewLines.join('\r\n') + more }</RawPreviewNode>);
 };
 
 export const FilePreview = ({ fileContents, dataFormat }) => {
