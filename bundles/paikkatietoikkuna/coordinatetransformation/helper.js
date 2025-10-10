@@ -349,6 +349,7 @@ export const parseCoordinateValue = value => {
     if (!value) {
         return NaN;
     }
+    value = value.trim();
     // TODO: Oskari.util has only mehtod for point => use fake point[1]
     // TODO: or DMS some value includes dms
     if (Oskari.util.coordinateIsDegrees([value, '0\u00B0'])) {
