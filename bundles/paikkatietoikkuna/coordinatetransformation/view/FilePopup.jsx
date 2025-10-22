@@ -35,7 +35,7 @@ const getContent = (type, state, controller, onClose) => {
                 <Node {...state} controller={controller}/>
                 <ButtonContainer>
                     <SecondaryButton type='cancel' onClick={onClose} />
-                    <Button type='primary' onClick={onPrimary}>
+                    <Button type='primary' onClick={onPrimary} className='t_done'>
                         <Message messageKey={type ==='import' ? 'actions.done' : 'actions.export'}/>
                     </Button>
                 </ButtonContainer>
