@@ -20,23 +20,28 @@ const toDegree = (coord, unit, decimals) => { //, isLon)
     const m = (coord - d) * HOUR_TO_MIN;
     const dd = d < 10 ? '0' + d : d.toString();
     // const dd = isLon && d < 100 ? '0' + d : d.toString();
-    let mm = m.toFixed(decimals);
-    if (m < 10) {
-        mm = '0' + mm;
-    }
     if (unit === 'DDMM' || unit === 'DD MM') {
+        let mm = m.toFixed(decimals);
+        if (m < 10) {
+            mm = '0' + mm;
+        }
         return dd + separator + mm;
     }
-    const s = (m - Math.floor(m)) * HOUR_TO_MIN;
+    const mInt = Math.floor(m);
+    const s = (m - mInt) * HOUR_TO_MIN;
+    const mm = mInt < 10 ? '0' + mInt : mInt;
     let ss = s.toFixed(decimals);
     if (s < 10) {
         ss = '0' + ss;
     }
-    return dd + separator + mm.substring(0, 2) + separator + ss;
+    return dd + separator + mm + separator + ss;
 };
 
 const addCardinal = (coord, isLon) => {
-    // TODO: S or W to negative and remove '-'
+    if (coord.startsWith('-')) {
+        const cardinal = isLon ? 'W' : 'S';
+        return coord.substring(1) + cardinal;
+    }
     const cardinal = isLon ? 'E' : 'N';
     return coord + cardinal;
 };
@@ -113,7 +118,7 @@ const createSrsHeader = (srs, height, axisFlip, decimalUnit) => {
         heightName = ` + ${name}`;
     }
     const modAxes = axisFlip ? [...axes.slice(0, 2).toReversed(), ...axes.slice(2)] : axes;
-    const selectedUnit = isDegreeSystem(srs) && decimalUnit ? ` (${decimalUnit}` : '';
+    const selectedUnit = isDegreeSystem(srs) && decimalUnit !== 'degree' ? ` (${decimalUnit})` : '';
     return `${CRS}: ${srs} - ${label}${heightName} - axes: ${modAxes.join()}${axisFlip ? ' (reversed)' : ''} - unit: ${systemUnit}${selectedUnit}`;
 };
 
