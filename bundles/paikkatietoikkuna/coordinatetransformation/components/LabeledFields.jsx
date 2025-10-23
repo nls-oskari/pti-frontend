@@ -42,6 +42,7 @@ export const LabeledSelect = ({
     mandatory,
     localize,
     options,
+    idForTests = info,
     controller,
     placeholder = mandatory ? phMandatory : phOptional,
     ...restForSelect
@@ -56,6 +57,7 @@ export const LabeledSelect = ({
         </StyledLabel>
         <StyledSelect
             { ...restForSelect }
+            popupRender={content => <div className={`t_dropdown_${idForTests}`}>{content}</div>}
             value={mandatory && !value ? placeholder : value}
             allowClear={!mandatory}
             options={localize ? getLocalized(options) : options}
