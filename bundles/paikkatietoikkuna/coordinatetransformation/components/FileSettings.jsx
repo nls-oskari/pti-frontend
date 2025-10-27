@@ -41,7 +41,7 @@ const showDegreeUnit = srs => {
 
 // locPath is used if options.[id] loc doesn't exist
 const CheckboxOption = ({id, values, onChange, controller, locPath}) => (
-    <Wrapper>
+    <Wrapper className={`t_${id}`}>
         <Checkbox checked={values[id]} onChange={evt => onChange(id, evt.target.checked)}>
             <Message messageKey={`fileSettings.options.${locPath || id}`} />
         </Checkbox>
@@ -62,7 +62,7 @@ export const ImportFile = ({ import: values, inputSrs, files, fileContents, cont
     return (
         <Content>
             <FileInput mandatory onFiles={controller.setFiles} files={files} { ...FILE_INPUT_PROPS } />
-            <LabeledInput number min={0} label='fileSettings.options.headerLineCount' value={values.headerLineCount} onChange={value => onChange('headerLineCount', value)} controller={controller}/>
+            <LabeledInput info='headerLineCount' number min={0} label='fileSettings.options.headerLineCount' value={values.headerLineCount} onChange={value => onChange('headerLineCount', value)} controller={controller}/>
             <SelectOption id='coordinateSeparator' controller={controller} onChange={onChange} values={values}/>
             <SelectOption id='decimalSeparator' controller={controller} onChange={onChange} values={values}/>
             { showDegreeUnit(inputSrs) && <SelectOption id='unit' mandatory={isDegreeSystem(inputSrs)} controller={controller} onChange={onChange} values={values}/> }
