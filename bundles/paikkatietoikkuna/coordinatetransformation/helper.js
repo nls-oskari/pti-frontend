@@ -1,4 +1,4 @@
-import { SRS, SRS_H, SYSTEM, MARKER, DEGREE_DECIMALS, DMS, LON_AXES } from './constants';
+import { SRS, SRS_H, SYSTEM, MARKER, DMS_PATTERNS, LON_AXES, HOUR_TO_MIN,  HOUR_TO_SEC} from './constants';
 
 export const getDimension = (srs, srsHeight) => {
     const { system } = SRS.find(s => s.value === srs) || {};
@@ -342,6 +342,31 @@ export const stateToPTIArray = (state, transformType = 'A2A', toFile) => {
     };
 };
 
+export const getDMS = value => {
+    const dms = DMS_PATTERNS.find(({ char }) => value.includes(char));
+    if (!dms) {
+        return {};
+    }
+    return {
+        ...dms,
+        regexp: new RegExp(dms.pattern)
+    };
+};
+
+const dmsToDegree =  (dms, id) => {
+    const parts = dms?.map(n => parseFloat(n)) || [];
+    if (id === 'DD' || parts.length === 1) {
+        return parts[0];
+    }
+    if (id === 'DDMM' || parts.length === 2) {
+        return parts[0] + (parts[1] / HOUR_TO_MIN);
+    }
+    if (id === 'DDMMSS' || parts.length === 3) {
+        return parts[0] + (parts[1] / HOUR_TO_MIN) + (parts[2] / HOUR_TO_SEC);
+    }
+    return NaN;
+};
+
 export const parseCoordinateValue = value => {
     if (typeof value === 'number') {
         return value;
@@ -349,18 +374,16 @@ export const parseCoordinateValue = value => {
     if (!value) {
         return NaN;
     }
-    // TODO: Oskari.util has only mehtod for point => use fake point[1]
-    // TODO: or DMS some value includes dms
-    if (Oskari.util.coordinateIsDegrees([value, '0\u00B0'])) {
-        return Oskari.util.coordinateDegreesToMetric([value, '0\u00B0'], DEGREE_DECIMALS)[0];
+    value = value.trim().replace(',', '.');
+    // DMS (° ' ")
+    const { regexp, id } = getDMS(value);
+    if (regexp) {
+        const dms = value.match(regexp)?.slice(1);
+        return dmsToDegree(dms, id);
     }
-    // TODO: refactor
-    // DMS with spaces only (not ° ' ")
-    if (value.includes(' ') && value.split(' ').filter(v => !isNaN(v).length > 1)) {
-        // double spaces??
-        const suffixed = value.split(' ').map((v, i) => v + DMS[i]).join(' ');
-        return Oskari.util.coordinateDegreesToMetric([suffixed, '0\u00B0'], DEGREE_DECIMALS)[0];
-        // TODO: or split filter empty map parseFloat / 60 ** i
+    // DMS with spaces only
+    if (value.includes(' ')) {
+        return dmsToDegree(value.split(' '));
     }
-    return parseFloat(value.replace(',', '.'));
+    return parseFloat(value);
 };

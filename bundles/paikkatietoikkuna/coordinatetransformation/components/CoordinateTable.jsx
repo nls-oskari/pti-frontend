@@ -111,7 +111,7 @@ export const CoordinatesTable = ({ coordinates, sources, inputSrs, inputHeightSr
     return (
         <Content className='t_table_input'>
             <ComponentLabel height={LABEL_HEIGHT} label='flyout.coordinateTable.input'>
-                <IconButton
+                <IconButton className='t_swap_coordinates'
                     icon={<SwapOutlined />}
                     title={<Message messageKey='actions.axisFlip'/>}
                     onClick={() => controller.swapCoordinates()} />

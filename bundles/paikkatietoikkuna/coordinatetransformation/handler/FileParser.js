@@ -148,20 +148,25 @@ const detectDecimalSeparator = (line = '', delimiter = ';') => {
 };
 
 const detectDelimiter = (line) => {
-    // comma as last as it very well be the decimal separator as well
-    const delimiters = [';', '\t', '|', ' ', ','];
+    const delimiters = [';', '\t', '|'];
     let maxCount = 0;
     let bestDelimiter = ';';
 
     for (const delim of delimiters) {
-        const count = line.split(delim).length;
+        const count = countNumericCells(line, delim);
         if (count > maxCount) {
             maxCount = count;
             bestDelimiter = delim;
         }
     }
-
-    return bestDelimiter;
+    if (maxCount > 1) {
+        return bestDelimiter;
+    }
+    // space (DD MM SS) and comma (decimal separator) as last
+    // const comma = countNumericCells(line, ',');
+    // const space = countNumericCells(line, ' ');
+    const pointDecimalSeparator = line.includes('.');
+    return pointDecimalSeparator ? ',' : ' ';
 };
 
 const detectEpsgCode = (headerLine) => {
@@ -186,7 +191,8 @@ const isNumericRow = (row, delimiter) => {
 const countNumericCells = (row, delimiter) => {
     const cells = row.split(delimiter).map(cell => cell.trim());
     return cells.filter(cell => {
-        const normalized = cell.replace(',', '.');
+        // Remove spaces for e.g. DD MM SS
+        const normalized = cell.replace(',', '.').replaceAll(' ', '');
         return !isNaN(normalized) && normalized !== '';
     }).length;
 };
@@ -211,7 +217,7 @@ const countPrefixColoumns = (row, nextRow, delimiter) => {
         return firstNumIndex;
     }
     // TODO: how to figure numeric prefix (line number, srs bbox)
-    if (countNumericCells(row, delimiter) == 2) {
+    if (countNumericCells(row, delimiter) === 2) {
         return 0;
     }
     if (nextRow) {
