@@ -1,4 +1,4 @@
-import { SRS, SRS_H, SYSTEM, MARKER, DEGREE_DECIMALS, DMS, DMS_PATTERNS, LON_AXES, HOUR_TO_MIN,  HOUR_TO_SEC} from './constants';
+import { SRS, SRS_H, SYSTEM, MARKER, DMS_PATTERNS, LON_AXES, HOUR_TO_MIN,  HOUR_TO_SEC} from './constants';
 
 export const getDimension = (srs, srsHeight) => {
     const { system } = SRS.find(s => s.value === srs) || {};
