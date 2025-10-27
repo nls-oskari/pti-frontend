@@ -217,7 +217,7 @@ const countPrefixColoumns = (row, nextRow, delimiter) => {
         return firstNumIndex;
     }
     // TODO: how to figure numeric prefix (line number, srs bbox)
-    if (countNumericCells(row, delimiter) == 2) {
+    if (countNumericCells(row, delimiter) === 2) {
         return 0;
     }
     if (nextRow) {
