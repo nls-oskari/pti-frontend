@@ -41,8 +41,8 @@ const showDegreeUnit = srs => {
 
 // locPath is used if options.[id] loc doesn't exist
 const CheckboxOption = ({id, values, onChange, controller, locPath}) => (
-    <Wrapper>
-        <Checkbox className={`t_${id}`} checked={values[id]} onChange={evt => onChange(id, evt.target.checked)}>
+    <Wrapper className={`t_${id}`}>
+        <Checkbox checked={values[id]} onChange={evt => onChange(id, evt.target.checked)}>
             <Message messageKey={`fileSettings.options.${locPath || id}`} />
         </Checkbox>
         <span onClick={() => controller.showInfo(id)}>
