@@ -12,7 +12,8 @@
     "oskari-frontend-contrib": "https://git@github.com/oskariorg/oskari-frontend-contrib.git#develop"
   },
   "devDependencies": {
-    "@cyclonedx/bom": "^3.10.1"
+    "@cyclonedx/bom": "^3.10.1",
+    "eslint": "9.37.0"
   },
   "scripts": {
     "dev-mode": "node ./node_modules/oskari-frontend/scripts/oskari-dev-mode",
@@ -27,7 +28,7 @@
     "build:dev": "npm run dev-mode:on && node ./node_modules/oskari-frontend/node_modules/webpack/bin/webpack.js --config ./node_modules/oskari-frontend/webpack.config.js --mode production --progress --env appdef=applications --env theme=theme.less",
     "start:dev": "npm run dev-mode:on && node ./node_modules/oskari-frontend/node_modules/webpack-dev-server/bin/webpack-dev-server.js --config ./node_modules/oskari-frontend/webpack.config.js --hot --env appdef=devapp:applications --env theme=theme.less",
     "sprite": "node ./node_modules/oskari-frontend/webpack/sprite.js",
-    "test": "eslint --config ./node_modules/oskari-frontend/.eslintrc.js bundles",
+    "test": "eslint --config ./node_modules/oskari-frontend/eslint.config.js bundles",
     "generate-bom": "cyclonedx-bom --include-dev -o frontend-bom.json"
   },
   "private": true
