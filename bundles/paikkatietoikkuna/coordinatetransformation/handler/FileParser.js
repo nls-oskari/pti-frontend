@@ -147,7 +147,7 @@ const detectDecimalSeparator = (line = '', delimiter = ';') => {
     return '.';
 };
 
-const detectDelimiter = (line) => {
+export const detectDelimiter = (line) => {
     const delimiters = [';', '\t', '|'];
     let maxCount = 0;
     let bestDelimiter = ';';
@@ -169,7 +169,7 @@ const detectDelimiter = (line) => {
     return pointDecimalSeparator ? ',' : ' ';
 };
 
-const detectEpsgCode = (headerLine) => {
+export const detectEpsgCode = (headerLine) => {
     const codes = headerLine
         .replace(/\D/g, ' ') // replace non digits with white space
         .split(' ')

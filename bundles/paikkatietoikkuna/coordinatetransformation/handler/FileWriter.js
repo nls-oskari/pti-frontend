@@ -3,7 +3,7 @@ import { getDimension, isDegreeSystem, isLonFirst, getDecimalCount } from '../he
 
 const CRS = 'Coordinate Reference System';
 
-const toDegree = (coord, unit, decimals) => { //, isLon)
+export const toDegree = (coord, unit, decimals) => { //, isLon)
     if (unit === 'DD' || unit === 'degree') {
         return coord.toFixed(decimals);
     }
@@ -37,7 +37,7 @@ const toDegree = (coord, unit, decimals) => { //, isLon)
     return dd + separator + mm + separator + ss;
 };
 
-const addCardinal = (coord, isLon) => {
+export const addCardinal = (coord, isLon) => {
     if (coord.startsWith('-')) {
         const cardinal = isLon ? 'W' : 'S';
         return coord.substring(1) + cardinal;
