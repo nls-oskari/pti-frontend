@@ -4,7 +4,7 @@ import { showFilePopup } from '../view/FilePopup';
 import { showConfirmPopup } from '../view/ConfirmPopup';
 import { showClipboardPopup } from '../view/ClipboardPopup';
 import { showMapSelectPopup, showMapPreviewPopup } from '../view/MapPopup';
-import { SOURCE, MAP, WATCH_JOB, WATCH_URL, FILE_DEFAULTS, ACTIONS, PAGINATION, SRS } from '../constants';
+import { SOURCE, MAP, BASE_URL, WATCH_JOB, WATCH_URL, FILE_DEFAULTS, ACTIONS, PAGINATION, SRS } from '../constants';
 import { stateToPTIArray, stateToTransformRequest, stateToKomuRequest, parseKomuResponse, validateFileSettings, validateTransform, validateCoordinate, parseCoordinateValue, is3DSystem, getDimension, getLabelForMarker, getCoordinatesExtent } from '../helper';
 import { parseFile, parseFileContents, parseValue } from './FileParser';
 import { exportStateToFile } from './FileWriter';
@@ -42,21 +42,9 @@ class UIHandler extends StateHandler {
         this.confirmPopup = null;
         this.setState(getInitialState());
         this.addStateListener(state => this.filePopup?.update(state));
-        this.baseUrl = conf.url;
-        this.transformFunction = this.getTransformFunction(conf);
+        this.baseUrl = conf.url || BASE_URL;
         Oskari.urls.set(WATCH_JOB, WATCH_URL);
         this.log = Oskari.log('CoordTransHandler');
-    }
-
-    getTransformFunction ({ url, contentType }) {
-        // deprecated
-        if (!url) {
-            return () => this.transformToArray();
-        }
-        if (contentType?.includes('json')) {
-            return () => this.transformJson();
-        }
-        return () => this.transformText();
     }
 
     reset (closeFlyout) {
@@ -490,7 +478,7 @@ class UIHandler extends StateHandler {
         const paragraphs = [this.loc('transform.warnings.message')];
         const onConfirm = () => {
             this.cleanInputCoordinates();
-            this.transformFunction();
+            this.transformText();
         };
         this.infoPopup = showInfoPopup(title, paragraphs, listItems, () => this.closeInfoPopup(), onConfirm);
     }
@@ -521,7 +509,7 @@ class UIHandler extends StateHandler {
         if (this.log.isDebug()) {
             this.debugTransform();
         }
-        this.transformFunction();
+        this.transformText();
     }
 
     debugTransform () {

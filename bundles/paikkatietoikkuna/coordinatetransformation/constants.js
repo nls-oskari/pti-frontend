@@ -1,6 +1,7 @@
 export const BUNDLE = 'coordinatetransformation';
 export const WATCH_JOB = 'CoordinateTransformJob'; // deprecated
 export const WATCH_URL = '/coordinatetransform/watch/'; // deprecated
+export const BASE_URL = '/action/KomuProj';
 export const ID_PREFIX = 'coord_marker_';
 export const SOURCE = ['table', 'file', 'map']; // deprecated
 export const LON_AXES = ['E', 'λ', 'X'];
