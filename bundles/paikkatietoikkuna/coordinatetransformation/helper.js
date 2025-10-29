@@ -257,21 +257,6 @@ export const coordinateToMarker = (coord, isNew) => {
     return { ...props, x, y, msg, color };
 };
 
-export const stateToTransformRequest = (state) => {
-    const { inputSrs, outputSrs, inputHeightSrs, outputHeightSrs, coordinates } = state;
-    let from = inputSrs;
-    if (inputHeightSrs) {
-        from += '+' + inputHeightSrs;
-    }
-    let to = outputSrs;
-    if (outputHeightSrs) {
-        to += '+' + outputHeightSrs;
-    }
-    const params = { from, to };
-    const body = JSON.stringify(coordinates);
-    return { params, body };
-};
-
 export const stateToKomuRequest = (state) => {
     const { inputSrs, outputSrs, inputHeightSrs, outputHeightSrs, coordinates } = state;
     const is2D = getDimension(inputSrs, inputHeightSrs) === 2;

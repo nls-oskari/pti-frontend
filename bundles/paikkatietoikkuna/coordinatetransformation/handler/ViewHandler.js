@@ -5,7 +5,7 @@ import { showConfirmPopup } from '../view/ConfirmPopup';
 import { showClipboardPopup } from '../view/ClipboardPopup';
 import { showMapSelectPopup, showMapPreviewPopup } from '../view/MapPopup';
 import { SOURCE, MAP, BASE_URL, WATCH_JOB, WATCH_URL, FILE_DEFAULTS, ACTIONS, PAGINATION, SRS } from '../constants';
-import { stateToPTIArray, stateToTransformRequest, stateToKomuRequest, parseKomuResponse, validateFileSettings, validateTransform, validateCoordinate, parseCoordinateValue, is3DSystem, getDimension, getLabelForMarker, getCoordinatesExtent } from '../helper';
+import { stateToPTIArray, stateToKomuRequest, parseKomuResponse, validateFileSettings, validateTransform, validateCoordinate, parseCoordinateValue, is3DSystem, getDimension, getLabelForMarker, getCoordinatesExtent } from '../helper';
 import { parseFile, parseFileContents, parseValue } from './FileParser';
 import { exportStateToFile } from './FileWriter';
 
@@ -554,30 +554,6 @@ class UIHandler extends StateHandler {
         }
         this.updateState({ loading: false });
         return true;
-    }
-
-    transformJson () {
-        this.updateState({ loading: true });
-        const { params, body } = stateToTransformRequest(this.getState());
-        fetch(Oskari.urls.buildUrl(this.baseUrl, params), {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body
-        }).then(response => {
-            return response.json();
-        }).then(json => {
-            if (!Array.isArray(json)) {
-                this.showResponseError(json);
-                return;
-            }
-            this.updateState({ results: json, loading: false, transformed: true });
-        }).catch((e) => {
-            Messaging.error(this.loc('transform.errors.generic'));
-            this.updateState({ loading: false });
-        });
     }
 
     transformText () {
