@@ -70,7 +70,7 @@ Oskari.clazz.define('Oskari.coordinatetransformation.Flyout',
             const content = (
                 <LocaleProvider value={{ bundleKey: BUNDLE }}>
                     <ThemeProvider>
-                        <Spin spinning={state.loading}>
+                        <Spin spinning={state.loading} percent={state.progress} size='large' showTip>
                             <FlyoutContent {...state} controller={handler.getController()}/>
                         </Spin>
                     </ThemeProvider>
