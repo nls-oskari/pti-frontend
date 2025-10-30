@@ -354,7 +354,7 @@ class UIHandler extends StateHandler {
         }
     }
 
-    showOnMap () {
+    async showOnMap () {
         const { coordinates, inputSrs, pagination } = this.getState();
         if (this.mapPopup) {
             return;
@@ -370,26 +370,19 @@ class UIHandler extends StateHandler {
         const start = end - pageSize;
         const toShow = coordinates.slice(start, end);
         const mapSrs = this.sandbox.getMap().getSrsName();
-
-        const callback = mapCoords => {
-            const labeled = mapCoords.map((coord, i) => {
-                // Use original coords and srs for label
-                const label = getLabelForMarker(toShow[i], inputSrs);
-                return { ...coord, label };
-            });
-            this.instance.setMapCoordinates(labeled);
-            this.instance.toggleFlyout(false);
-            this.mapPopup = showMapPreviewPopup(() => this.closeMapPopup(true));
-        };
-        if (mapSrs === inputSrs) {
-            callback(toShow);
-        } else {
-            this.transformToMapSrs({
-                coordinates: toShow,
-                inputSrs,
-                outputSrs: mapSrs
-            }, callback);
+        let mapCoords = toShow;
+        if (mapSrs !== inputSrs) {
+            const params = stateToKomuParams({ ...this.getState(), outputSrs: mapSrs });
+            mapCoords = await this.fetchCoordinates (params, mapCoords);
         }
+        const labeled = mapCoords.map((coord, i) => {
+            // Use original coords and srs for label
+            const label = getLabelForMarker(toShow[i], inputSrs);
+            return { ...coord, label };
+        });
+        this.instance.setMapCoordinates(labeled);
+        this.instance.toggleFlyout(false);
+        this.mapPopup = showMapPreviewPopup(() => this.closeMapPopup(true));
     }
 
     selectFromMap () {
