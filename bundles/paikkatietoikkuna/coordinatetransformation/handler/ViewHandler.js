@@ -473,7 +473,7 @@ class UIHandler extends StateHandler {
         const paragraphs = [this.loc('transform.warnings.message')];
         const onConfirm = () => {
             this.cleanInputCoordinates();
-            this.transformCSV();
+            this.validatedTransform();
         };
         this.infoPopup = showInfoPopup(title, paragraphs, listItems, () => this.closeInfoPopup(), onConfirm);
     }
@@ -501,10 +501,19 @@ class UIHandler extends StateHandler {
             this.showConfirmTransform(warnings);
             return;
         }
+        this.validatedTransform();
+    }
+
+    validatedTransform () {
         if (this.log.isDebug()) {
             this.debugTransform();
         }
-        this.transformParts();
+        const size = this.getState().coordinates.length;
+        if (this.fetchSize && size > this.fetchSize) {
+            this.transformParts();
+        } else {
+            this.transformCSV();
+        }
     }
 
     debugTransform () {
@@ -551,6 +560,10 @@ class UIHandler extends StateHandler {
         return true;
     }
 
+    abortTransform () {
+        this.updateState({ results: [], loading: false, progress: -1, transformed: false });
+    }
+
     async transformParts () {
         this.updateState({ loading: true, progress: -1 });
         const state = this.getState();
@@ -559,6 +572,10 @@ class UIHandler extends StateHandler {
         const params = stateToKomuParams(state);
         let results = [];
         for (let from = 0; from < size; from += this.fetchSize) {
+            if (!this.getState().loading) {
+                // aborted
+                return;
+            }
             const to = from + this.fetchSize;
             const progress = from / size * 100;
             this.log.debug(`Transform coordinates from index: ${from} to ${to}, progress: ${progress.toFixed()}%`);
@@ -741,7 +758,8 @@ const wrapped = controllerMixin(UIHandler, [
     'importFileContentsToInputTable',
     'addFromSource',
     'swapCoordinates',
-    'setPagination'
+    'setPagination',
+    'abortTransform'
 ]);
 
 export { wrapped as ViewHandler };
