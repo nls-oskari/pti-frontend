@@ -267,7 +267,7 @@ export const stateToKomuParams = (state) => {
     if (outputHeightSrs) {
         targetCRS += ',' + outputHeightSrs;
     }
-    const dimension = getDimension(inputSrs, inputHeightSrs)
+    const dimension = getDimension(inputSrs, inputHeightSrs);
     return { sourceCRS, targetCRS, dimension };
 };
 
