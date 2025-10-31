@@ -4,13 +4,14 @@ import { showFilePopup } from '../view/FilePopup';
 import { showConfirmPopup } from '../view/ConfirmPopup';
 import { showClipboardPopup } from '../view/ClipboardPopup';
 import { showMapSelectPopup, showMapPreviewPopup } from '../view/MapPopup';
-import { SOURCE, MAP, WATCH_JOB, WATCH_URL, FILE_DEFAULTS, ACTIONS, PAGINATION, SRS } from '../constants';
-import { stateToPTIArray, stateToTransformRequest, stateToKomuRequest, parseKomuResponse, validateFileSettings, validateTransform, validateCoordinate, parseCoordinateValue, is3DSystem, getDimension, getLabelForMarker, getCoordinatesExtent } from '../helper';
+import { SOURCE, MAP, BASE_URL, WATCH_JOB, WATCH_URL, FILE_DEFAULTS, ACTIONS, PAGINATION, SRS, FETCH_SIZE } from '../constants';
+import { stateToPTIArray, stateToKomuParams, coordinatesToCSV, parseKomuResponse, validateFileSettings, validateTransform, validateCoordinate, parseCoordinateValue, is3DSystem, getDimension, getLabelForMarker, getCoordinatesExtent } from '../helper';
 import { parseFile, parseFileContents, parseValue } from './FileParser';
 import { exportStateToFile } from './FileWriter';
 
 const getInitialState = () => ({
     loading: false,
+    progress: -1,
     source: SOURCE[0], // deprecated
     // TODO: maybe this isn't needed !!fileContents => source === 'file'
     // only file has special handling
@@ -42,21 +43,10 @@ class UIHandler extends StateHandler {
         this.confirmPopup = null;
         this.setState(getInitialState());
         this.addStateListener(state => this.filePopup?.update(state));
-        this.baseUrl = conf.url;
-        this.transformFunction = this.getTransformFunction(conf);
+        this.baseUrl = conf.url || BASE_URL;
+        this.fetchSize = conf.fetchSize || FETCH_SIZE;
         Oskari.urls.set(WATCH_JOB, WATCH_URL);
         this.log = Oskari.log('CoordTransHandler');
-    }
-
-    getTransformFunction ({ url, contentType }) {
-        // deprecated
-        if (!url) {
-            return () => this.transformToArray();
-        }
-        if (contentType?.includes('json')) {
-            return () => this.transformJson();
-        }
-        return () => this.transformText();
     }
 
     reset (closeFlyout) {
@@ -364,7 +354,7 @@ class UIHandler extends StateHandler {
         }
     }
 
-    showOnMap () {
+    async showOnMap () {
         const { coordinates, inputSrs, pagination } = this.getState();
         if (this.mapPopup) {
             return;
@@ -380,26 +370,19 @@ class UIHandler extends StateHandler {
         const start = end - pageSize;
         const toShow = coordinates.slice(start, end);
         const mapSrs = this.sandbox.getMap().getSrsName();
-
-        const callback = mapCoords => {
-            const labeled = mapCoords.map((coord, i) => {
-                // Use original coords and srs for label
-                const label = getLabelForMarker(toShow[i], inputSrs);
-                return { ...coord, label };
-            });
-            this.instance.setMapCoordinates(labeled);
-            this.instance.toggleFlyout(false);
-            this.mapPopup = showMapPreviewPopup(() => this.closeMapPopup(true));
-        };
-        if (mapSrs === inputSrs) {
-            callback(toShow);
-        } else {
-            this.transformToMapSrs({
-                coordinates: toShow,
-                inputSrs,
-                outputSrs: mapSrs
-            }, callback);
+        let mapCoords = toShow;
+        if (mapSrs !== inputSrs) {
+            const params = stateToKomuParams({ ...this.getState(), outputSrs: mapSrs });
+            mapCoords = await this.fetchCoordinates (params, mapCoords);
         }
+        const labeled = mapCoords.map((coord, i) => {
+            // Use original coords and srs for label
+            const label = getLabelForMarker(toShow[i], inputSrs);
+            return { ...coord, label };
+        });
+        this.instance.setMapCoordinates(labeled);
+        this.instance.toggleFlyout(false);
+        this.mapPopup = showMapPreviewPopup(() => this.closeMapPopup(true));
     }
 
     selectFromMap () {
@@ -490,7 +473,7 @@ class UIHandler extends StateHandler {
         const paragraphs = [this.loc('transform.warnings.message')];
         const onConfirm = () => {
             this.cleanInputCoordinates();
-            this.transformFunction();
+            this.validatedTransform();
         };
         this.infoPopup = showInfoPopup(title, paragraphs, listItems, () => this.closeInfoPopup(), onConfirm);
     }
@@ -518,10 +501,19 @@ class UIHandler extends StateHandler {
             this.showConfirmTransform(warnings);
             return;
         }
+        this.validatedTransform();
+    }
+
+    validatedTransform () {
         if (this.log.isDebug()) {
             this.debugTransform();
         }
-        this.transformFunction();
+        const size = this.getState().coordinates.length;
+        if (this.fetchSize && size > this.fetchSize) {
+            this.transformParts();
+        } else {
+            this.transformCSV();
+        }
     }
 
     debugTransform () {
@@ -568,39 +560,66 @@ class UIHandler extends StateHandler {
         return true;
     }
 
-    transformJson () {
-        this.updateState({ loading: true });
-        const { params, body } = stateToTransformRequest(this.getState());
-        fetch(Oskari.urls.buildUrl(this.baseUrl, params), {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body
-        }).then(response => {
-            return response.json();
-        }).then(json => {
-            if (!Array.isArray(json)) {
-                this.showResponseError(json);
-                return;
-            }
-            this.updateState({ results: json, loading: false, transformed: true });
-        }).catch((e) => {
-            Messaging.error(this.loc('transform.errors.generic'));
-            this.updateState({ loading: false });
-        });
+    abortTransform () {
+        this.updateState({ results: [], loading: false, progress: -1, transformed: false });
     }
 
-    transformText () {
+    async transformParts () {
+        this.updateState({ loading: true, progress: -1 });
+        const state = this.getState();
+        const coords = state.coordinates;
+        const size = coords.length;
+        const params = stateToKomuParams(state);
+        let results = [];
+        for (let from = 0; from < size; from += this.fetchSize) {
+            if (!this.getState().loading) {
+                // aborted
+                return;
+            }
+            const to = from + this.fetchSize;
+            const progress = from / size * 100;
+            this.log.debug(`Transform coordinates from index: ${from} to ${to}, progress: ${progress.toFixed()}%`);
+            this.updateState({ progress });
+            const transformed = await this.fetchCoordinates(params, coords.slice(from, to));
+            if (Array.isArray(transformed)) {
+                results = [...results, ...transformed];
+            } else {
+                results = [];
+                break;
+            }
+        }
+        this.updateState({ results, loading: false, progress: -1, transformed: true });
+    }
+
+    async fetchCoordinates (params, coordinates) {
+        try {
+            const response = await fetch(Oskari.urls.buildUrl(this.baseUrl, params), {
+                method: 'POST',
+                headers: {
+                    Accept: 'text/plain'
+                },
+                body: coordinatesToCSV(coordinates, params.dimension)
+            });
+            if (!response.ok) {
+                throw new Error(response.statusText);
+            }
+            const csv = await response.text();
+            return parseKomuResponse(csv);
+        } catch (e) {
+            Messaging.error(this.loc('transform.errors.generic'));
+        };
+    }
+
+    transformCSV () {
         this.updateState({ loading: true });
-        const { params, body } = stateToKomuRequest(this.getState());
+        const state = this.getState();
+        const params = stateToKomuParams(state);
         fetch(Oskari.urls.buildUrl(this.baseUrl, params), {
             method: 'POST',
             headers: {
                 Accept: 'text/plain'
             },
-            body
+            body: coordinatesToCSV(state.coordinates, params.dimension)
         }).then(response => {
             if (!response.ok) {
                 throw new Error(response.statusText);
@@ -739,7 +758,8 @@ const wrapped = controllerMixin(UIHandler, [
     'importFileContentsToInputTable',
     'addFromSource',
     'swapCoordinates',
-    'setPagination'
+    'setPagination',
+    'abortTransform'
 ]);
 
 export { wrapped as ViewHandler };
