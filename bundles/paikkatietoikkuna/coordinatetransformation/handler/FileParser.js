@@ -22,8 +22,9 @@ const addToArray = (array, index, value) => {
 };
 
 export const parseFileContents = (lines = [], delimiter = ';', headerLineCount = 0, prefixColCount = 0) => {
-    // parse always x,y,z to data
-    const dimension = 3; // TODO: data[2] or z could contain lineEnding stuff for 2D
+    // parse always x,y,z to data as input srs could be selected after import
+    // Note! data[2] or z will be possible lineEnding for 2D
+    const dimension = 3;
     const headerMetadata = {
         headerLines: [],
         headers: []
