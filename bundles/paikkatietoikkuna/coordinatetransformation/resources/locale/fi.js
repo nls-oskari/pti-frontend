@@ -81,7 +81,7 @@ Oskari.registerLocalization(
         "transform": {
             "warnings": {
                 "title": "Huomio!",
-                "message": "Huomioi seuraavat rajoitukset valinnoissa tai koordinaateissa ennnen kuin teet muunnoksen. Haluatko jatkaa?",
+                "message": "Huomioi seuraavat rajoitukset valinnoissa tai koordinaateissa ennen kuin teet muunnoksen. Haluatko jatkaa?",
                 "3DTo2D": "Valitsemissasi lähtötiedoissa on mukana korkeusarvoja, mutta tulostiedoissa ei. Tuloskoordinaatteihin ei siis tule korkeusarvoja mukaan.",
                 "2DTo3D": "Valitsemissasi lähtötiedoissa ei ole korkeusarvoja, mutta tulostiedoissa on. Lähtöaineiston korkeusarvoiksi lisätään 0 ja korkeusjärjestelmäksi N2000.",
                 "coordinates": "Muunnettavissa koordinaateissa on virheellisiä rivejä. Virheelliset rivit poistetaan ennen muunnosta.",
@@ -187,7 +187,7 @@ Oskari.registerLocalization(
             "coordinates": "Muunnettavat koordinaatit tyhjennetään. Haluatko jatkaa?",
             "results": "Tuloskoordinaatit tyhjennetään ja muunnos tehdään uusilla valinnoilla. Haluatko jatkaa?",
             "mapSrs": "Lähtökoordinaattijärjestelmän tiedot valitaan automaattisesti kartan käyttämän ETRS-TM35FIN-koordinaattijärjestelmän mukaisiksi. Tekemäsi lähtökoordinaattijärjestelmän valinnat korvataan ja koordinaatit tyhjennetään. Haluatko jatkaa?",
-            "change": "Säilytä muut valinnnat ja koordinaatit",
+            "change": "Säilytä muut valinnat ja koordinaatit",
             "changeTooltip": "Huomioi, että valintojen ja koordinaattien säilyttäminen voi johtaa tilanteeseen, jossa tulokset eivät vastaa valintoja."
         },
         "fileSettings": {
