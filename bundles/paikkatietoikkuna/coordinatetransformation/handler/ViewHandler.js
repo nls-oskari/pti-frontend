@@ -275,19 +275,11 @@ class UIHandler extends StateHandler {
         }
         parseFile(files[0]).then(contents => {
             const { inputSrs, import: settings } = this.getState();
-            // use detected settings only if user hasn't selected value
-            // Maybe this isn't needed if detect functions works right
-            const newSettings = { ...settings };
-            Object.keys(contents.settings).forEach(key => {
-                if (newSettings[key] === FILE_DEFAULTS.import[key]) {
-                    newSettings[key] = contents.settings[key];
-                }
-            });
             this.updateState({
                 inputSrs: contents.srs || inputSrs,
                 files,
                 fileContents: contents,
-                import: newSettings // { ...settings, ...contents.settings }
+                import: { ...settings, ...contents.settings }
             });
         }).catch(err => {
             this.log.debug(err);
