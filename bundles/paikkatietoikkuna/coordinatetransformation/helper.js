@@ -83,17 +83,17 @@ export const validateFileSettings = (state, type) => {
     const selects = state[type];
     const errors = [];
 
-    if (!selects.coordinateSeparator) {
-        errors.push('noCoordinateSeparator');
+    if (!selects.delimiter) {
+        errors.push('noDelimiter');
     }
     if (!selects.decimalSeparator) {
         errors.push('noDecimalSeparator');
     }
 
-    if (selects.decimalSeparator === ',' && selects.coordinateSeparator === 'comma') {
+    if (selects.decimalSeparator === ',' && selects.delimiter === 'comma') {
         errors.push('doubleComma');
     }
-    if (selects.coordinateSeparator === 'space' && (selects.unit === 'DD MM SS' || selects.unit === 'DD MM')) {
+    if (selects.delimiter === 'space' && (selects.unit === 'DD MM SS' || selects.unit === 'DD MM')) {
         errors.push('doubleSpace');
     }
     if (type === 'import') {

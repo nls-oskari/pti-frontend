@@ -61,7 +61,7 @@ export const ImportFile = ({ import: values, inputSrs, inputHeightSrs, importSrs
             <FileInput mandatory onFiles={controller.setFiles} files={files} { ...FILE_INPUT_PROPS } />
             <ImportSrsSelect type='import' srs={srs} heightSrs={heightSrs} controller={controller} />
             <LabeledInput info='headerLineCount' number min={0} label='fileSettings.options.headerLineCount' value={values.headerLineCount} onChange={value => onChange('headerLineCount', value)} controller={controller}/>
-            <SelectOption id='coordinateSeparator' controller={controller} onChange={onChange} values={values}/>
+            <SelectOption id='delimiter' controller={controller} onChange={onChange} values={values}/>
             <SelectOption id='decimalSeparator' controller={controller} onChange={onChange} values={values}/>
             { isDegreeSystem(srs) && <SelectOption id='unit' mandatory controller={controller} onChange={onChange} values={values}/> }
             <CheckboxOption id='prefixColCount' locPath='prefixes.input' controller={controller} onChange={onPrefix} values={values}/>
@@ -81,7 +81,7 @@ export const ExportFile = ({ export: values, outputSrs, controller, fileContents
     return (
         <Content>
             <LabeledInput label='fileSettings.options.fileName' value={values.fileName} onChange={evt => onChange('fileName', evt.target.value)} controller={controller}/>
-            <SelectOption id='coordinateSeparator' controller={controller} onChange={onChange} values={values}/>
+            <SelectOption id='delimiter' controller={controller} onChange={onChange} values={values}/>
             <SelectOption id='decimalSeparator' controller={controller} onChange={onChange} values={values}/>
             <SelectOption id='decimalCount' controller={controller} onChange={onChange} values={values}/>
             { showDegreeUnit(outputSrs) && <SelectOption id='unit' controller={controller} onChange={onChange} values={values}/> }

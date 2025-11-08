@@ -101,7 +101,7 @@ Oskari.registerLocalization(
                 "doubleComma": "The decimal and coordinate separators cannot both be commas.",
                 "doubleSpace": "The format/unit of an angle cannot contain spaces if the coordinate separator is Space.", //angle pattern
                 "noFileSettings": "No file settings.",
-                "noCoordinateSeparator": "Coordinate separator must be selected.",
+                "noDelimiter": "Coordinate separator must be selected.",
                 "noDecimalSeparator": "Decimal separator must be selected."
             },
             "errors": {
@@ -197,7 +197,7 @@ Oskari.registerLocalization(
             "options": {
                 "fileName": "File name",
                 "decimalSeparator": "Decimal separator",
-                "coordinateSeparator": "Field separator",
+                "delimiter": "Field separator",
                 "headerLineCount": "Number of header rows",
                 "decimalPrecision": "Decimal precision",
                 "axisFlip": "Coordinates reversed",
@@ -315,7 +315,7 @@ Oskari.registerLocalization(
                     "sec": "DDMMSS and DD MM SS"
                 }
             },
-            "coordinateSeparator":{
+            "delimiter":{
                 "title":"Field separator",
                 "info": "Defines by which delimeter the columns are separated from each other",
                 "paragraphs": [

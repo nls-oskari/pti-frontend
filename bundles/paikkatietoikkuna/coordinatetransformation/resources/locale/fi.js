@@ -102,7 +102,7 @@ Oskari.registerLocalization(
                 "doubleComma": "Desimaali- ja koordinaattierotin eivät voi molemmat olla pilkkuja.",
                 "doubleSpace": "Kulman muoto/yksikkö ei voi sisältää välilyöntejä, jos koordinaattierotin on Välilyönti.",
                 "noFileSettings": "Tiedostoasetuksia ei ole annettu.",
-                "noCoordinateSeparator": "Koordinaattierotin pitää olla valittuna.",
+                "noDelimiter": "Koordinaattierotin pitää olla valittuna.",
                 "noDecimalSeparator":"Desimaalierotin pitää olla valittuna."
             },
             "errors": {
@@ -199,7 +199,7 @@ Oskari.registerLocalization(
             "options": {
                 "fileName": "Tiedoston nimi",
                 "decimalSeparator": "Desimaalierotin",
-                "coordinateSeparator": "Sarake-erotin",
+                "delimiter": "Sarake-erotin",
                 "headerLineCount": "Otsakerivien määrä",
                 "decimalCount": "Desimaalien tarkkuus",
                 "axisFlip": "Koordinaatit käänteisesti",
@@ -317,7 +317,7 @@ Oskari.registerLocalization(
                     "sec": "DDMMSS ja DD MM SS"
                 }
             },
-            "coordinateSeparator":{
+            "delimiter":{
                 "title":"Sarake-erotin",
                 "info": "Sarakkeiden erottamiseen käytetty merkki",
                 "paragraphs": [

@@ -101,7 +101,7 @@ Oskari.registerLocalization(
                 "doubleComma": "Skiljetecknen för decimaler och koordinater kan inte båda vara kommatecken.",
                 "doubleSpace": "Vinkelns form/enhet kan inte innehålla mellanslag, om koordinatskiljetecknet är Mellanslag.",
                 "noFileSettings": "Inga filinställningar har angetts..",
-                "noCoordinateSeparator": "Skiljetecknet för koordinater ska vara valt.",
+                "noDelimiter": "Skiljetecknet för koordinater ska vara valt.",
                 "noDecimalSeparator": "Skiljetecknet för decimaler ska vara valt."
             },
             "errors": {
@@ -197,7 +197,7 @@ Oskari.registerLocalization(
             "options": {
                 "fileName": "Filnamn",
                 "decimalSeparator": "Skiljetecken för decimaler",
-                "coordinateSeparator": "Skiljetecken för fält",
+                "delimiter": "Skiljetecken för fält",
                 "headerLineCount": "Antal rubrikrader",
                 "decimalCount": "Decimalernas precision",
                 "axisFlip": "Omvända koordinater",
@@ -315,7 +315,7 @@ Oskari.registerLocalization(
                     "sec": "DDMMSS och DD MM SS"
                 }
             },
-            "coordinateSeparator":{
+            "delimiter":{
                 "title":"Skiljetecken för fält",
                 "info": "Definierar med vilket skiljetecken fält separeras",
                 "paragraphs": [

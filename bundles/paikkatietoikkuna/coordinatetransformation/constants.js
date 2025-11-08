@@ -52,7 +52,7 @@ export const FILE_DEFAULTS = {
         unit: 'degree',
         decimalCount: 3,
         decimalSeparator: Oskari.getDecimalSeparator(),
-        coordinateSeparator: ';',
+        delimeter: ';',
         lineSeparator: '\r\n'
     }
 };
@@ -64,7 +64,7 @@ export const SEPARATORS = {
         { label: 'Windows / DOS', value: '\r\n' },
         { label: 'UNIX / Mac', value: '\n' }
     ],
-    coordinateSeparator: [
+    delimiter: [
         { loc: 'fileSettings.options.delimeters.tab', value: '\t' },
         { loc: 'fileSettings.options.delimeters.space', value: ' ' },
         { loc: 'fileSettings.options.delimeters.comma', value: ',' },
