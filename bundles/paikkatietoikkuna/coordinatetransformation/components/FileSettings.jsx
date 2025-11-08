@@ -63,7 +63,7 @@ export const ImportFile = ({ import: values, inputSrs, inputHeightSrs, importSrs
             <LabeledInput info='headerLineCount' number min={0} label='fileSettings.options.headerLineCount' value={values.headerLineCount} onChange={value => onChange('headerLineCount', value)} controller={controller}/>
             <SelectOption id='coordinateSeparator' controller={controller} onChange={onChange} values={values}/>
             <SelectOption id='decimalSeparator' controller={controller} onChange={onChange} values={values}/>
-            { isDegreeSystem(inputSrs) && <SelectOption id='unit' mandatory controller={controller} onChange={onChange} values={values}/> }
+            { isDegreeSystem(srs) && <SelectOption id='unit' mandatory controller={controller} onChange={onChange} values={values}/> }
             <CheckboxOption id='prefixColCount' locPath='prefixes.input' controller={controller} onChange={onPrefix} values={values}/>
             <FilePreview fileContents={fileContents} dataFormat={values.unit} />
         </Content>
