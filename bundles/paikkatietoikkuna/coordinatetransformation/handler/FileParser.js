@@ -25,11 +25,11 @@ export const parseFileContents = (lines = [], importSettings = {}) => {
     const { delimiter, headerLineCount, prefixColCount, dimension } = importSettings;
     let headers = [];
     let linesWithData = lines;
-    let srs;
+    let srsFromFile;
     if (headerLineCount > 0) {
         const headerLines = lines.slice(0, headerLineCount);
         headers = headerLines.map(line => line.split(delimiter).map(cell => cell.trim()));
-        srs = headerLines.map(line => detectEpsgCode(line)).find(found => found);
+        srsFromFile = headerLines.map(line => detectEpsgCode(line)).find(found => found);
         linesWithData = lines.slice(headerLineCount);
     }
     // TODO: always uses detected => remove option from import settings OR pass & use selected
@@ -65,7 +65,7 @@ export const parseFileContents = (lines = [], importSettings = {}) => {
     };
     return {
         settings,
-        srs,
+        srsFromFile,
         data,
         prefixes,
         lineEndings,
