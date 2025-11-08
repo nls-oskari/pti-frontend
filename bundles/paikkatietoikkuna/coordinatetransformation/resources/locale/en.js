@@ -44,7 +44,7 @@ Oskari.registerLocalization(
                     "label": "System of map projections"
                 },
                 "geodeticCoordinateSystem":{
-                    "label": "Geodetic coordinate reference system",
+                    "label": "Coordinate reference system",
                     "choose": "Select", // Choose
                     "kkj": "KKJ zone {zone, number}",
                     "ykj": "KKJ zone 3 / YKJ"

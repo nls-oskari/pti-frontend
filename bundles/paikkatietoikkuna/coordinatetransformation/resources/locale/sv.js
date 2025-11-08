@@ -44,7 +44,7 @@ Oskari.registerLocalization(
                     "label": "Kartprojektionssystem"
                 },
                 "geodeticCoordinateSystem":{
-                    "label": "Geodetiskt referenssystem för koordinater", // Geodetiskt koordinatsystem
+                    "label": "Referenssystem för koordinater", // Geodetiskt koordinatsystem
                     "choose": "Välj",
                     "kkj": "KKS zon {zone, number}",
                     "ykj": "KKS zon 3 / EKS"

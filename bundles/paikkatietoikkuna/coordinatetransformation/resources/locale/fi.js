@@ -44,7 +44,7 @@ Oskari.registerLocalization(
                     "label": "Karttaprojektiojärjestelmä"
                 },
                 "geodeticCoordinateSystem":{
-                    "label": "Geodeettinen koordinaattijärjestelmä",
+                    "label": "Koordinaattijärjestelmä",
                     "choose": "Valitse",
                     "kkj": "KKJ kaista {zone, number}",
                     "ykj": "KKJ kaista 3 / YKJ"
