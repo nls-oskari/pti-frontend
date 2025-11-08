@@ -20,11 +20,7 @@ const Content = styled.div`
     flex-direction: column;
     gap: 1em;
 `;
-const SelectWrapper = styled.div`
-    display: flex;
-    flex-flow: row nowrap;
-    gap: 1em;
-`;
+
 const filter = (input, {label, value, replaced=''}) => `${label} ${value} ${replaced}`.toLowerCase().includes(input.toLowerCase());
 
 const Srs = ({ srs, options, type, controller, block = false, mandatory = true }) => {
