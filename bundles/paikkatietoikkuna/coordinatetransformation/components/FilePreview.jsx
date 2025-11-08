@@ -4,7 +4,7 @@ import { Message, Card, WarningIcon } from 'oskari-ui';
 import { ErrorBoundary } from 'oskari-ui/util';
 import { parseValue } from '../handler/FileParser';
 
-const MAX_COLUMNS = 4;
+const MAX_COLUMNS = 3;
 
 const PreviewCellStyle = styled.td`
 text-align: center;
@@ -25,14 +25,13 @@ const RawPreviewNode = styled.pre`
 `;
 
 const ParseHeaderRow = ({ fileContents }) => {
-    if (!fileContents.headers?.length || !fileContents.headerLines?.length) {
+    const headerLineCount = fileContents.headers?.length;
+    if (!headerLineCount) {
         return null;
     }
-    const headerLineCount = fileContents.headerLines.length;
-    let previewHeaders = fileContents.headers;
-    if (fileContents.headers.length > MAX_COLUMNS) {
-        previewHeaders = fileContents.headers.slice(0, MAX_COLUMNS);
-    }
+    const { prefixColCount = 0, dimension = MAX_COLUMNS } = fileContents.settings || {};
+    // remove possible id column(s) at the start and line endings
+    const previewHeaders = headers[0].slice(prefixColCount, prefixColCount + dimension);
     return (
         <thead>
             <tr>

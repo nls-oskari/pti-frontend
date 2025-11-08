@@ -74,10 +74,10 @@ export const ExportFile = ({ export: values, outputSrs, controller, fileContents
     const onChange = (key, value) => controller.setFileSetting('export', key, value);
     // file writer handles count instead of boolean TODO: change to number input ?
     const onPrefix = (key, checked) => controller.setFileSetting('export', 'prefixColCount', checked ? 1 : 0);
-    const { lineEndings = [], headerLines = [], prefixes = [] } = fileContents || {};
-    const prefixLocPath = prefixes.length > 0 ? 'prefixes.fromFile' : 'prefixes.generate';
-    const hasLineEndings = lineEndings.length > 0;
-    const hasHeaders = headerLines.length > 0;
+
+    const prefixLocPath = fileContents?.prefixes.length ? 'prefixes.fromFile' : 'prefixes.generate';
+    const hasLineEndings = fileContents?.lineEndings.length > 0;
+    const hasHeaders = fileContents?.headers.length > 0;
     return (
         <Content>
             <LabeledInput label='fileSettings.options.fileName' value={values.fileName} onChange={evt => onChange('fileName', evt.target.value)} controller={controller}/>
