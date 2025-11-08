@@ -59,7 +59,7 @@ const getFileContent = ({
         unit,
         decimalCount,
         decimalSeparator,
-        coordinateSeparator,
+        delimiter,
         lineSeparator,
         axisFlip,
         prefixColCount,
@@ -122,7 +122,7 @@ const getFileContent = ({
         if (lineEndingCount > 0) {
             collectedEndings[index].forEach(p => row.push(p));
         }
-        return row.join(coordinateSeparator);
+        return row.join(delimiter);
     }).join(lineSeparator);
 };
 
@@ -143,7 +143,7 @@ const createSrsHeader = (srs, height, axisFlip, decimalUnit) => {
 
 export const exportStateToFile = (state) => {
     const { outputSrs, outputHeightSrs, fileContents } = state;
-    const { fileName, lineSeparator, createHeader, writeHeaders, axisFlip, unit } = state.export;
+    const { fileName, lineSeparator, createHeader, writeHeaders, axisFlip, unit, delimiter } = state.export;
 
     const content = [];
     if (createHeader) {
@@ -151,7 +151,7 @@ export const exportStateToFile = (state) => {
         content.push(header);
     }
     if (writeHeaders) {
-        fileContents?.headerLines?.forEach(header => content.push(header));
+        fileContents?.headers?.forEach(header => content.push(header.join(delimiter)));
     }
     const text = getFileContent(state);
     content.push(text);
