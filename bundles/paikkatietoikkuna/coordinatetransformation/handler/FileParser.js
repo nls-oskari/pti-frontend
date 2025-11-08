@@ -56,12 +56,21 @@ export const parseFileContents = (lines = [], importSettings = {}) => {
         }
     });
 
+    let lineEndingCount = 0;
+    lineEndings.forEach(row => {
+        const size = row?.length;
+        if (size > lineEndingCount) {
+            lineEndingCount = size;
+        }
+    });
+
     const settings = {
-        dimension,
+        dimension, // data column count
         decimalSeparator,
         delimiter,
         headerLineCount,
-        prefixColCount
+        prefixColCount,
+        columns: dimension + prefixColCount + lineEndingCount
     };
     return {
         settings,

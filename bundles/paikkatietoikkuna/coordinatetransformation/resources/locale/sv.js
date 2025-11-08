@@ -193,7 +193,7 @@ Oskari.registerLocalization(
             "export": "Bildande av datamaterial",
             "rows": "rader",
             "columns": "fält",
-            "previewTitle": "Förhandsvy",
+            "previewTitle": "Förhandsvy av koordinaterna",
             "options": {
                 "fileName": "Filnamn",
                 "decimalSeparator": "Skiljetecken för decimaler",

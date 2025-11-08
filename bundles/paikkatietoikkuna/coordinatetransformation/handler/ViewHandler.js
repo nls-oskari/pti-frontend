@@ -251,6 +251,7 @@ class UIHandler extends StateHandler {
         };
         this.confirmPopup = showConfirmPopup('confirm.title', 'confirm.results', onConfirm, () => this.closeConfirmPopup(), onChange);
     }
+
     updateDimensions (type) {
         if (type !== 'import') {
             return;
@@ -258,6 +259,7 @@ class UIHandler extends StateHandler {
         // file parser requires dimension for parsing data and line endings correctly
         this.setFileSetting('import', 'dimension', this.getImportDimension());
     }
+
     getImportDimension () {
         const { inputSrs, inputHeightSrs, importSrs, importHeightSrs } = this.getState();
         // Note that removing value from select (ImportFile) sets undefined

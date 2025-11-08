@@ -193,7 +193,7 @@ Oskari.registerLocalization(
             "export": "Output properties",
             "rows": "rows",
             "columns": "columns",
-            "previewTitle": "Preview",
+            "previewTitle": "Preview of the coordinates",
             "options": {
                 "fileName": "File name",
                 "decimalSeparator": "Decimal separator",

@@ -195,7 +195,7 @@ Oskari.registerLocalization(
             "export": "Aineiston muodostaminen",
             "rows": "riviä",
             "columns": "saraketta",
-            "previewTitle": "Esikatselu",
+            "previewTitle": "Koordinaattien esikatselu",
             "options": {
                 "fileName": "Tiedoston nimi",
                 "decimalSeparator": "Desimaalierotin",

@@ -31,7 +31,7 @@ const ParseHeaderRow = ({ fileContents }) => {
     }
     const { prefixColCount = 0, dimension = MAX_COLUMNS } = fileContents.settings || {};
     // remove possible id column(s) at the start and line endings
-    const previewHeaders = headers[0].slice(prefixColCount, prefixColCount + dimension);
+    const previewHeaders = fileContents.headers[0].slice(prefixColCount, prefixColCount + dimension);
     return (
         <thead>
             <tr>
@@ -56,39 +56,32 @@ const PreviewCell = ({ data, dataFormat }) => {
 };
 
 const ParseDataRow = ({ fileContents, dataFormat }) => {
-    if (!fileContents.data || !fileContents.data.length) {
+    const dataCount = fileContents.data?.length;
+    if (!dataCount) {
         return null;
     }
-    // only show max 2 rows and 4 columns of data
-    let previewData = fileContents.data;
-    const dataCount = previewData.length;
-    if (previewData.length > 2) {
-        previewData = previewData.slice(0,2);
-    }
-    let colCountOriginal = previewData[0].length;
-    let colCount = colCountOriginal;
-    if (colCount > MAX_COLUMNS) {
-        previewData = previewData.map(data => data.slice(0, MAX_COLUMNS));
-        colCount = MAX_COLUMNS;
-    }
+    // only show max 2 rows
+    const previewData = fileContents.data.slice(0,2);
     const previewRows = previewData.map((data, i) => (
             <tr key={ 'data_' + i }>
                 { data.map(cell => (<PreviewCell key={i + '_' + cell} data={ cell } dataFormat={ dataFormat } />)) }
             </tr>
         ));
     let extraMessages = [];
-    if (dataCount > 2 ) {
-        extraMessages.push(<React.Fragment>{dataCount - 2} <Message messageKey='fileSettings.rows' /></React.Fragment>);
+    const moreCount = dataCount - previewData.length;
+    if (moreCount > 0) {
+        extraMessages.push(<React.Fragment>{moreCount} <Message messageKey='fileSettings.rows' /></React.Fragment>);
     }
-    if (colCountOriginal > colCount ) {
+    const { dimension, columns } = fileContents.settings;
+    if (columns > dimension ) {
         if (extraMessages.length) {
             extraMessages.push(' / ');
         }
-        extraMessages.push(<React.Fragment>{colCountOriginal - colCount} <Message messageKey='fileSettings.columns' /></React.Fragment>);
+        extraMessages.push(<React.Fragment>{columns - dimension} <Message messageKey='fileSettings.columns' /></React.Fragment>);
     }
     if (extraMessages.length) {
         previewRows.push(<tr key='metadata'>
-                <HasMoreCell colSpan={ colCount }>
+                <HasMoreCell colSpan={ dimension }>
                     + {extraMessages}
                 </HasMoreCell>
             </tr>);
