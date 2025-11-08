@@ -50,7 +50,7 @@ export const FILE_DEFAULTS = {
     },
     export: {
         unit: 'degree',
-        decimalCount: 3,
+        decimalCount: '3',
         decimalSeparator: Oskari.getDecimalSeparator(),
         delimeter: ';',
         lineSeparator: '\r\n'

@@ -112,15 +112,13 @@ export const validateFileSettings = (state, type) => {
         if (!selects.fileName) {
             errors.push('noFileName');
         }
-        if (typeof selects.decimalCount !== 'number' || selects.decimalCount < 0) {
-            errors.push('decimalCount');
-        }
     }
     return errors;
 };
 
-export const getDecimalCount = (decimals, unit) => {
-    if (typeof decimals !== 'number') {
+export const getDecimalCount = (decimalValue, unit) => {
+    const decimals = parseInt(decimalValue);
+    if (isNaN(decimals)) {
         return 0;
     }
     switch (unit) {

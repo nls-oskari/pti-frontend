@@ -84,7 +84,7 @@ export const ExportFile = ({ export: values, outputSrs, controller, fileContents
             <SelectOption id='delimiter' controller={controller} onChange={onChange} values={values}/>
             <SelectOption id='decimalSeparator' controller={controller} onChange={onChange} values={values}/>
             <SelectOption id='decimalCount' controller={controller} onChange={onChange} values={values}/>
-            { showDegreeUnit(outputSrs) && <SelectOption id='unit' controller={controller} onChange={onChange} values={values}/> }
+            { isDegreeSystem(outputSrs) && <SelectOption id='unit' controller={controller} onChange={onChange} values={values}/> }
             <SelectOption id='lineSeparator' controller={controller} onChange={onChange} values={values}/>
             <CheckboxOption id='createHeader' controller={controller} onChange={onChange} values={values}/>
             { hasHeaders && <CheckboxOption id='writeHeaders' controller={controller} onChange={onChange} values={values}/> }
