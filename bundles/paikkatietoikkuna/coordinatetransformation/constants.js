@@ -77,11 +77,11 @@ export const SEPARATORS = {
     ]
 };
 export const DECIMAL = [
-    { label: '~1 m', value: 0 },
-    { label: '~0.1 m', value: 1 },
-    { label: '~1 cm', value: 2 },
-    { label: '~1 mm', value: 3 },
-    { label: '~0.1 mm', value: 4 }
+    { label: '~1 m', value: '0' },
+    { label: '~0.1 m', value: '1' },
+    { label: '~1 cm', value: '2' },
+    { label: '~1 mm', value: '3' },
+    { label: '~0.1 mm', value: '4' }
 ];
 
 export const DEGREE = [
