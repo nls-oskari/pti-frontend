@@ -64,6 +64,15 @@ const Height = ({ srs, heightSrs, type, block = false, controller }) => {
         controller={controller}/>
 };
 
+export const ImportSrsSelect = ({ srs, heightSrs, controller }) => {
+    return (
+        <Content className='t_srs_import'>
+            <Srs mandatory={false} srs={srs} options={SRS_OPTIONS} type='import' controller={controller} />
+            <Height srs={srs} heightSrs={heightSrs} type='import' controller={controller} />
+        </Content>
+    );
+};
+
 export const SrsSelect = ({ srs, heightSrs, type, minimal, controller }) => {
     if (minimal) {
         return (
