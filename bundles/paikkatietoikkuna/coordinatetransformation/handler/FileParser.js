@@ -1,6 +1,6 @@
 import { SRS, DEGREE, HOUR_TO_MIN, HOUR_TO_SEC, DEC_TO_GRAD, DEC_TO_RAD } from '../constants';
 
-export const parseFile = (file) => {
+export const parseFile = (file, dimension) => {
     return new Promise((resolve, reject) => {
         if (!file || typeof file.text !== 'function') {
             reject(new Error('Unable to parse file'));
@@ -8,7 +8,7 @@ export const parseFile = (file) => {
         let lines = [];
         file.text().then(content => {
             lines = content.trim().split(/\r?\n/);
-            resolve(interpretFileContents(lines));
+            resolve(interpretFileContents(lines, dimension));
         });
     });
 };
@@ -21,23 +21,16 @@ const addToArray = (array, index, value) => {
     }
 };
 
-export const parseFileContents = (lines = [], delimiter = ';', headerLineCount = 0, prefixColCount = 0) => {
-    // parse always x,y,z to data as input srs could be selected after import
-    // Note! data[2] or z will be possible lineEnding for 2D
-    const dimension = 3;
-    const headerMetadata = {
-        headerLines: [],
-        headers: []
-    };
+export const parseFileContents = (lines = [], importSettings = {}) => {
+    const { delimiter, headerLineCount, prefixColCount, dimension } = importSettings;
+    let headers = [];
     let linesWithData = lines;
+    let srs;
     if (headerLineCount > 0) {
         const headerLines = lines.slice(0, headerLineCount);
-        const headers = headerLines[0].split(delimiter).map(cell => cell.trim());
-        headerMetadata.headerLines = headerLines;
-        // remove possible id column(s) at the start
-        headerMetadata.headers = headers.slice(prefixColCount);
+        headers = headerLines.map(line => line.split(delimiter).map(cell => cell.trim()));
+        srs = headerLines.map(line => detectEpsgCode(line)).find(found => found);
         linesWithData = lines.slice(headerLineCount);
-        headerMetadata.srs = headerLines.map(line => detectEpsgCode(line)).find(found => found);
     }
     // TODO: always uses detected => remove option from import settings OR pass & use selected
     const decimalSeparator = detectDecimalSeparator(linesWithData[0], delimiter);
@@ -64,18 +57,20 @@ export const parseFileContents = (lines = [], delimiter = ';', headerLineCount =
     });
 
     const settings = {
+        dimension,
         decimalSeparator,
-        coordinateSeparator: delimiter,
+        delimiter,
         headerLineCount,
         prefixColCount
     };
     return {
         settings,
+        srs,
         data,
         prefixes,
         lineEndings,
         lines,
-        ...headerMetadata
+        headers
     };
 };
 
@@ -129,13 +124,13 @@ export const parseValue = (value, format = 'metric') => {
     return asNumber;
 };
 
-const interpretFileContents = (lines = []) => {
+const interpretFileContents = (lines = [], dimension) => {
     const midIndex = Math.floor(lines.length / 2);
     const delimiter = detectDelimiter(lines[midIndex]);
     // could srs bbox be used to detect prefix
     const prefixColCount = countPrefixColoumns(lines[midIndex], lines[midIndex + 1], delimiter);
     const headerLineCount = countHeaders(lines, delimiter);
-    return parseFileContents(lines, delimiter, headerLineCount, prefixColCount);
+    return parseFileContents(lines, { delimiter, headerLineCount, prefixColCount, dimension });
 };
 
 const detectDecimalSeparator = (line = '', delimiter = ';') => {
