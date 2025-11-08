@@ -48,8 +48,6 @@ const addCardinal = (coord, isLon) => {
 
 const getFileContent = ({
     results,
-    inputSrs,
-    inputHeightSrs,
     outputSrs,
     outputHeightSrs,
     export: settings,
@@ -66,7 +64,7 @@ const getFileContent = ({
         writeCardinals,
         writeLineEndings
     } = settings;
-    const { prefixes = [], lineEndings = [], data = [] } = fileContents || {};
+    const { prefixes = [], lineEndings = [] } = fileContents || {};
     const dimension = getDimension(outputSrs, outputHeightSrs);
     const isDegree = isDegreeSystem(outputSrs);
     // Force to 'metric' for non degree as select isn't shown for user
@@ -77,28 +75,6 @@ const getFileContent = ({
     const lonIndex = lonFirst ? 0 : 1;
     const prefixesFromImport = prefixes.length > 0;
     const replace = decimalSeparator === ',';
-
-    let lineEndingCount = 0;
-    let collectedEndings = lineEndings;
-    if (writeLineEndings) {
-        lineEndings.forEach(row => {
-            const size = row?.length;
-            if (size > lineEndingCount) {
-                lineEndingCount = size;
-            }
-        });
-        // file parser uses dimension 3 for parsing data
-        // get first line ending column from data
-        if (getDimension(inputSrs, inputHeightSrs) === 2) {
-            collectedEndings = data.map((dataRow, i) => {
-                const first = dataRow[2] || '';
-                // missing value at the end should be fine for csv, could use lineEndingCount to fill array with ''
-                const rest = lineEndings[i] || [];
-                return [first, ...rest];
-            });
-            lineEndingCount++;
-        }
-    }
 
     return results.map((coord, index) => {
         const x = axisFlip ? coord.y : coord.x;
@@ -119,8 +95,10 @@ const getFileContent = ({
                 : [index + 1];
             ids.forEach(p => row.unshift(p));
         }
-        if (lineEndingCount > 0) {
-            collectedEndings[index].forEach(p => row.push(p));
+        if (writeLineEndings) {
+            // missing value at the end should be fine for csv
+            // could use settings.columns count to fill array with ''
+            lineEndings[index]?.forEach(p => row.push(p));
         }
         return row.join(delimiter);
     }).join(lineSeparator);
