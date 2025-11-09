@@ -219,7 +219,7 @@ Oskari.registerLocalization(
                     "gradian": "Gooni (graadi)",
                     "radian": "Radiaani"
                 },
-                "delimeters": {
+                "delimiters": {
                     "point": "Piste",
                     "comma": "Pilkku",
                     "tab": "Tabulaattori",

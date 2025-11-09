@@ -217,7 +217,7 @@ Oskari.registerLocalization(
                     "gradian": "Gon (nygrad)",
                     "radian": "Radian"
                 },
-                "delimeters":{
+                "delimiters":{
                     "point": "Punkt",
                     "comma": "Kommatecken",
                     "tab": "Tabulator",

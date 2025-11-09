@@ -52,7 +52,7 @@ export const FILE_DEFAULTS = {
         unit: 'degree',
         decimalCount: '3',
         decimalSeparator: Oskari.getDecimalSeparator(),
-        delimeter: ';',
+        delimiter: ';',
         lineSeparator: '\r\n'
     }
 };
@@ -65,15 +65,15 @@ export const SEPARATORS = {
         { label: 'UNIX / Mac', value: '\n' }
     ],
     delimiter: [
-        { loc: 'fileSettings.options.delimeters.tab', value: '\t' },
-        { loc: 'fileSettings.options.delimeters.space', value: ' ' },
-        { loc: 'fileSettings.options.delimeters.comma', value: ',' },
-        { loc: 'fileSettings.options.delimeters.semicolon', value: ';' },
-        { loc: 'fileSettings.options.delimeters.pipe', value: '|' }
+        { loc: 'fileSettings.options.delimiters.tab', value: '\t' },
+        { loc: 'fileSettings.options.delimiters.space', value: ' ' },
+        { loc: 'fileSettings.options.delimiters.comma', value: ',' },
+        { loc: 'fileSettings.options.delimiters.semicolon', value: ';' },
+        { loc: 'fileSettings.options.delimiters.pipe', value: '|' }
     ],
     decimalSeparator: [
-        { loc: 'fileSettings.options.delimeters.point', value: '.' },
-        { loc: 'fileSettings.options.delimeters.comma', value: ',' }
+        { loc: 'fileSettings.options.delimiters.point', value: '.' },
+        { loc: 'fileSettings.options.delimiters.comma', value: ',' }
     ]
 };
 export const DECIMAL = [

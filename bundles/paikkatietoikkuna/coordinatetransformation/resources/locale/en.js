@@ -217,7 +217,7 @@ Oskari.registerLocalization(
                     "gradian": "Grade",
                     "radian": "Radian"
                 },
-                "delimeters":{
+                "delimiters":{
                     "point": "Point",
                     "comma": "Comma",
                     "tab": "Tabulator",
@@ -317,9 +317,9 @@ Oskari.registerLocalization(
             },
             "delimiter":{
                 "title":"Field separator",
-                "info": "Defines by which delimeter the columns are separated from each other",
+                "info": "Defines by which delimiter the columns are separated from each other",
                 "paragraphs": [
-                    "Defines by which delimeter the columns are separated from each other in the file.",
+                    "Defines by which delimiter the columns are separated from each other in the file.",
                     "If the coordinates are preceded by an identifier or followed by a character string, these must also be separated from the coordinates using the same separator."
                 ],
                 "listItems" : []
