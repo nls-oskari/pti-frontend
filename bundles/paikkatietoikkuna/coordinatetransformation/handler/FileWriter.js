@@ -108,15 +108,18 @@ const createSrsHeader = (srs, height, axisFlip, decimalUnit) => {
     // name for KKJ (no need to localize zones)
     const { name, label = name, axes = [], system } = SRS.find(s => s.value === srs) || {};
     const { unit: systemUnit } = SYSTEM.find(s => s.value === system) || {};
-    let heightName = '';
+    const modAxes = axisFlip ? [...axes.slice(0, 2).toReversed(), ...axes.slice(2)] : [...axes];
+    const epsg = [srs];
+    const labels = [label];
     if (height) {
+        epsg.push(height);
         const { axis = 'H', name } = SRS_H.find(h => h.value === height) || {};
-        axes.push(axis);
-        heightName = ` + ${name}`;
+        modAxes.push(axis);
+        labels.push(name);
     }
-    const modAxes = axisFlip ? [...axes.slice(0, 2).toReversed(), ...axes.slice(2)] : axes;
     const selectedUnit = isDegreeSystem(srs) && decimalUnit !== 'degree' ? ` (${decimalUnit})` : '';
-    return `${CRS}: ${srs} - ${label}${heightName} - axes: ${modAxes.join()}${axisFlip ? ' (reversed)' : ''} - unit: ${systemUnit}${selectedUnit}`;
+    const reversed = axisFlip ? ' (reversed)' : '';
+    return `${CRS}: ${epsg.join(' + ')} - ${labels.join(' + ')} - axes: ${modAxes.join()}${reversed} - unit: ${systemUnit}${selectedUnit}`;
 };
 
 export const exportStateToFile = (state) => {
