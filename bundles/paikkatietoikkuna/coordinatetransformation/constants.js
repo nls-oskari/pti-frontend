@@ -7,6 +7,7 @@ export const ID_PREFIX = 'coord_marker_';
 export const SOURCE = ['table', 'file', 'map']; // deprecated
 export const LON_AXES = ['E', 'λ', 'X'];
 export const LAN_AXES = ['N', 'φ', 'Y'];
+export const CARDINALS = ['N', 'E', 'W', 'S'];
 
 export const HOUR_TO_MIN = 60; // MIN_TO_SEC
 export const HOUR_TO_SEC = 3600;
