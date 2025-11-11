@@ -1,4 +1,4 @@
-import { detectDelimiter, detectEpsgCodes, parseValue, parseFile } from './FileParser';
+import { detectDelimiter, detectEpsgCodes, parseValue, parseFile, countPrefixColoumns } from './FileParser';
 const text = () => new Promise (resolve => resolve(LINES));
 const LINES =
 `Coordinate Reference System: EPSG:3879 - ETRS-GK25 - axes: N,E - unit: metre
@@ -67,12 +67,42 @@ describe('detectDelimiter function', () => {
 });
 
 describe('detectEpsgCodes function', () => {
-    test('returns epsg code', () => {
+    test('returns epsg codes', () => {
         const headerLine = 'Coordinate Reference System: EPSG:3879 - ETRS-GK25 - axes: N,E - unit: metre';
         expect.assertions(4);
         expect(detectEpsgCodes(headerLine).srs).toEqual('EPSG:3879');
         expect(detectEpsgCodes('---3879---').srs).toEqual('EPSG:3879');
         expect(detectEpsgCodes('38795')).toBeFalsy();
         expect(detectEpsgCodes('3 8 7 9')).toBeFalsy();
+    });
+});
+
+describe('countPrefixColoumns function', () => {
+    test('returns prefix count', () => {
+        expect.assertions(14);
+        expect(countPrefixColoumns('60.16743026,24.95428515','', ',', 2)).toEqual(0);
+        expect(countPrefixColoumns('60.16743026,24.95428515,10.0','', ',', 2)).toEqual(0);
+        expect(countPrefixColoumns('60.16743026,24.95428515,10.0','', ',', 3)).toEqual(0);
+        expect(countPrefixColoumns('60.16743026,24.95428515,10.0,line ending','', ',', 3)).toEqual(0);
+
+        expect(countPrefixColoumns('60,16743026N ; 24,95428515E','', ';', 2)).toEqual(0);
+        expect(countPrefixColoumns('60 12 30,167;24 23 12,954','', ';', 2)).toEqual(0);
+        expect(countPrefixColoumns('60,16743026N ; 24,95428515E; 10','', ';', 3)).toEqual(0);
+
+        expect(countPrefixColoumns('Kauppatori;60.16743026;24,95428515','', ';', 2)).toEqual(1);
+        expect(countPrefixColoumns('Kauppatori;60,16743026;24,95428515;line ending;another','', ';', 2)).toEqual(1);
+        expect(countPrefixColoumns('Kauppatori;60,16743026;24,95428515;10','', ';', 3)).toEqual(1);
+        expect(countPrefixColoumns('Kauppatori,60.16743026;24.95428515,10.12,ending','', ',', 3)).toEqual(1);
+
+        // line numbers
+        const lineNumbers = [...Array(2)].map((r, i) => `${i+1};34.1;43.2`);
+        expect(countPrefixColoumns(...lineNumbers, ';', 2)).toEqual(1);
+
+        const degrees = [...Array(2)].map((r, i) => `${i + 60}.${i};34.1;43.2`);
+        expect(countPrefixColoumns(...degrees, ';', 2)).toEqual(0);
+
+        // for now doesn't detect numeric prefix
+        const numeric = [...Array(2)].map((r, i) => `${i*2};34.1;43.2`);
+        expect(countPrefixColoumns(...numeric, ';', 2)).toEqual(0);
     });
 });

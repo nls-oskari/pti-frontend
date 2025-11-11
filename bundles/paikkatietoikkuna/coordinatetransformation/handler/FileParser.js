@@ -233,7 +233,7 @@ const countHeaders = (lines = [], delimiter) => {
     return headerLines;
 };
 
-const countPrefixColoumns = (row, nextRow, delimiter, dimension) => {
+export const countPrefixColoumns = (row, nextRow, delimiter, dimension) => {
     const cells = row.split(delimiter).map(cell => normalizeForNaN(cell));
     if (cells.length <= dimension) {
         return 0;
