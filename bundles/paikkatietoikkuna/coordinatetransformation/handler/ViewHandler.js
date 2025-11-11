@@ -303,8 +303,8 @@ class UIHandler extends StateHandler {
             };
             // update both if some epsg code is detected
             if (srs || height) {
-                updated.importSrs = srs
-                updated.importHeightSrs = height
+                updated.importSrs = srs;
+                updated.importHeightSrs = height;
             }
             this.updateState(updated);
         }).catch(err => {
