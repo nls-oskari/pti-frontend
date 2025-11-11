@@ -1,4 +1,4 @@
-import { detectDelimiter, detectEpsgCode, parseValue, parseFile } from './FileParser';
+import { detectDelimiter, detectEpsgCodes, parseValue, parseFile } from './FileParser';
 const text = () => new Promise (resolve => resolve(LINES));
 const LINES =
 `Coordinate Reference System: EPSG:3879 - ETRS-GK25 - axes: N,E - unit: metre
@@ -7,16 +7,18 @@ const LINES =
 65,97937106;26,19211347
 `;
 
-describe('detectEpsgCode function', () => {
-    test('returns epsg code', () => {
+describe('parseFile function', () => {
+    test('returns detected settings and parsed data', () => {
         const lines = LINES.split('\n');
-        expect.assertions(4);        
+        expect.assertions(5);
         parseFile({ text }).then(contents => {
-            const { settings, data, headerLines } = contents;
+            const { settings, data, headers } = contents.fileContents;
             expect(data.length).toEqual(3);
+            expect(headers.length).toEqual(1);
+            expect(headers).toEqual([lines.slice(0,1)]);
+            // settings
             expect(settings.headerLineCount).toEqual(1);
             expect(settings.prefixColCount).toEqual(0);
-            expect(headerLines).toEqual(lines.slice(0,1));
         });
     });
 });
@@ -60,9 +62,9 @@ describe('detectEpsgCode function', () => {
     test('returns epsg code', () => {
         const headerLine = 'Coordinate Reference System: EPSG:3879 - ETRS-GK25 - axes: N,E - unit: metre';
         expect.assertions(4);
-        expect(detectEpsgCode(headerLine)).toEqual('EPSG:3879');
-        expect(detectEpsgCode('---3879---')).toEqual('EPSG:3879');
-        expect(detectEpsgCode('38795')).toBeFalsy();
-        expect(detectEpsgCode('3 8 7 9')).toBeFalsy();
+        expect(detectEpsgCodes(headerLine).srs).toEqual('EPSG:3879');
+        expect(detectEpsgCodes('---3879---').srs).toEqual('EPSG:3879');
+        expect(detectEpsgCodes('38795')).toBeFalsy();
+        expect(detectEpsgCodes('3 8 7 9')).toBeFalsy();
     });
 });
