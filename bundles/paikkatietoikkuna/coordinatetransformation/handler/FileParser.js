@@ -135,7 +135,6 @@ const interpretFileContents = (lines = [], dimension) => {
     const midIndex = Math.floor(lines.length / 2);
     const dataLine = lines[midIndex];
     const delimiter = detectDelimiter(dataLine);
-    const prefixColCount = countPrefixColoumns(lines[midIndex], lines[midIndex + 1], delimiter);
     const headerLineCount = countHeaders(lines, delimiter);
     const decimalSeparator = detectDecimalSeparator(dataLine, delimiter);
 
@@ -148,6 +147,7 @@ const interpretFileContents = (lines = [], dimension) => {
         dimension = getDimension(srs, height);
     }
 
+    const prefixColCount = countPrefixColoumns(lines[midIndex], lines[midIndex + 1], delimiter, dimension);
     const settings = { delimiter, decimalSeparator, headerLineCount, prefixColCount, dimension };
     const fileContents = parseFileContents(lines, settings);
     return { srs, height, fileContents };
@@ -199,27 +199,25 @@ const detectEpsgCodes = (headerLine) => {
     return null;
 };
 
+const normalizeForNaN = cell => {
+    // Remove spaces for e.g. DD MM SS
+    const normalized = cell.replace(',', '.').replaceAll(' ', '');
+    // remove cardinal
+    if (CARDINALS.some(c => normalized.endsWith(c))) {
+        return normalized.substring(0, normalized.length - 1);
+    }
+    return normalized;
+};
+
 // eslint-disable-next-line no-unused-vars
 const isNumericRow = (row, delimiter) => {
-    const cells = row.split(delimiter).map(cell => cell.trim());
-
-    return cells.every(cell => {
-        const normalized = cell.replace(',', '.');
-        return !isNaN(normalized) && normalized !== '';
-    });
+    const cells = row.split(delimiter).map(cell => normalizeForNaN(cell));
+    return cells.every(normalized => !isNaN(normalized) && normalized !== '');
 };
 
 const countNumericCells = (row, delimiter) => {
-    const cells = row.split(delimiter).map(cell => cell.trim());
-    return cells.filter(cell => {
-        // Remove spaces for e.g. DD MM SS
-        let normalized = cell.replace(',', '.').replaceAll(' ', '');
-        // remove cardinal
-        if (CARDINALS.some(c => normalized.endsWith(c))) {
-            normalized = normalized.substring(0, normalized.length - 1);
-        }
-        return !isNaN(normalized) && normalized !== '';
-    }).length;
+    const cells = row.split(delimiter).map(cell => normalizeForNaN(cell));
+    return cells.filter(normalized => !isNaN(normalized) && normalized !== '').length;
 };
 
 const countHeaders = (lines = [], delimiter) => {
@@ -235,16 +233,20 @@ const countHeaders = (lines = [], delimiter) => {
     return headerLines;
 };
 
-const countPrefixColoumns = (row, nextRow, delimiter) => {
-    const cells = row.split(delimiter).map(cell => cell.trim());
-    const firstNumIndex = cells.findIndex(cell => !isNaN(cell));
-    if (firstNumIndex > 0) {
-        return firstNumIndex;
-    }
-    // TODO: how to figure numeric prefix (line number, srs bbox)
-    if (countNumericCells(row, delimiter) === 2) {
+const countPrefixColoumns = (row, nextRow, delimiter, dimension) => {
+    const cells = row.split(delimiter).map(cell => normalizeForNaN(cell));
+    if (cells.length <= dimension) {
         return 0;
     }
+    const firstNumIndex = cells.findIndex(cell => !isNaN(cell));
+    if (firstNumIndex > 0) {
+        // UI has checkbox
+        return 1; // firstNumIndex;
+    }
+    // Cases:
+    // 3D data without srs selections (dimension === 2)
+    // line endings (number || string)
+    // numeric prefix
     if (nextRow) {
         const nextCells = nextRow.split(delimiter).map(cell => cell.trim());
         // use parse float (degree)
