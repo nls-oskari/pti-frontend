@@ -1,4 +1,5 @@
-import { SRS, DEGREE, HOUR_TO_MIN, HOUR_TO_SEC, DEC_TO_GRAD, DEC_TO_RAD } from '../constants';
+import { SRS, SRS_H, DEGREE, HOUR_TO_MIN, HOUR_TO_SEC, DEC_TO_GRAD, DEC_TO_RAD } from '../constants';
+import { getDimension } from '../helper';
 
 export const parseFile = (file, dimension) => {
     return new Promise((resolve, reject) => {
@@ -22,18 +23,15 @@ const addToArray = (array, index, value) => {
 };
 
 export const parseFileContents = (lines = [], importSettings = {}) => {
-    const { delimiter, headerLineCount, prefixColCount, dimension } = importSettings;
+    const { delimiter, decimalSeparator, headerLineCount, prefixColCount, dimension } = importSettings;
+
     let headers = [];
     let linesWithData = lines;
-    let srsFromFile;
     if (headerLineCount > 0) {
         const headerLines = lines.slice(0, headerLineCount);
         headers = headerLines.map(line => line.split(delimiter).map(cell => cell.trim()));
-        srsFromFile = headerLines.map(line => detectEpsgCode(line)).find(found => found);
         linesWithData = lines.slice(headerLineCount);
     }
-    // TODO: always uses detected => remove option from import settings OR pass & use selected
-    const decimalSeparator = detectDecimalSeparator(linesWithData[0], delimiter);
     const data = [];
     const prefixes = [];
     const lineEndings = [];
@@ -64,6 +62,7 @@ export const parseFileContents = (lines = [], importSettings = {}) => {
         }
     });
 
+    // store values for export & preview
     const settings = {
         dimension, // data column count
         decimalSeparator,
@@ -74,7 +73,6 @@ export const parseFileContents = (lines = [], importSettings = {}) => {
     };
     return {
         settings,
-        srsFromFile,
         data,
         prefixes,
         lineEndings,
@@ -135,11 +133,24 @@ export const parseValue = (value, format = 'metric') => {
 
 const interpretFileContents = (lines = [], dimension) => {
     const midIndex = Math.floor(lines.length / 2);
-    const delimiter = detectDelimiter(lines[midIndex]);
-    // could srs bbox be used to detect prefix
+    const dataLine = lines[midIndex];
+    const delimiter = detectDelimiter(dataLine);
     const prefixColCount = countPrefixColoumns(lines[midIndex], lines[midIndex + 1], delimiter);
     const headerLineCount = countHeaders(lines, delimiter);
-    return parseFileContents(lines, { delimiter, headerLineCount, prefixColCount, dimension });
+    const decimalSeparator = detectDecimalSeparator(dataLine, delimiter);
+
+    const detectedSrs = lines.slice(0, headerLineCount)
+        .map(line => detectEpsgCodes(line))
+        .find(found => found);
+
+    const { srs, height } = detectedSrs || {};
+    if (detectedSrs) {
+        dimension = getDimension(srs, height);
+    }
+
+    const settings = { delimiter, decimalSeparator, headerLineCount, prefixColCount, dimension };
+    const fileContents = parseFileContents(lines, settings);
+    return { srs, height, fileContents };
 };
 
 const detectDecimalSeparator = (line = '', delimiter = ';') => {
@@ -174,13 +185,18 @@ const detectDelimiter = (line) => {
     return pointDecimalSeparator ? ',' : ' ';
 };
 
-const detectEpsgCode = (headerLine) => {
+const detectEpsgCodes = (headerLine) => {
     const codes = headerLine
         .replace(/\D/g, ' ') // replace non digits with white space
         .split(' ')
         .filter(num => num.length === 4 || num.length === 5)
         .map(num => `EPSG:${num}`);
-    return codes.find(code => SRS.find(s => s.value === code));
+    const srs = codes.find(code => SRS.find(s => s.value === code));
+    const height = codes.find(code => SRS_H.find(s => s.value === code));
+    if (srs || height) {
+        return { srs, height };
+    }
+    return null;
 };
 
 // eslint-disable-next-line no-unused-vars

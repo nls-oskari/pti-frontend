@@ -295,16 +295,21 @@ class UIHandler extends StateHandler {
         }
         const dimension = this.getImportDimension();
         parseFile(files[0], dimension).then(contents => {
-            const { importSrs, import: settings } = this.getState();
-            this.updateState({
-                importSrs: contents.srsFromFile || importSrs,
+            const { srs, height, fileContents } = contents;
+            const updated = {
                 files,
-                fileContents: contents,
-                import: { ...settings, ...contents.settings }
-            });
+                fileContents,
+                import: { ...this.getState().import, ...fileContents.settings }
+            };
+            // update both if some epsg code is detected
+            if (srs || height) {
+                updated.importSrs = srs
+                updated.importHeightSrs = height
+            }
+            this.updateState(updated);
         }).catch(err => {
             this.log.debug(err);
-            Messaging.error(this.log('transform.errors.import'));
+            Messaging.error(this.loc('transform.errors.import'));
         });
     }
 
@@ -553,11 +558,10 @@ class UIHandler extends StateHandler {
         }));
         // sets all coordinates from file so one source only
         const updatedState = { coordinates, sources: [ACTIONS.IMPORT] };
-        // TODO: confirm changes?: inputSrs && importSrs && inputSrs !== importSrs
-        if (importSrs) {
+        // sync both as srs setters removes and disables height for 3D
+        if (importSrs || importHeightSrs) {
+            // TODO: confirm changes?: inputSrs && importSrs && inputSrs !== importSrs
             updatedState.inputSrs = importSrs;
-        }
-        if (importHeightSrs) {
             updatedState.inputHeightSrs = importHeightSrs;
         }
         this.updateState(updatedState);
