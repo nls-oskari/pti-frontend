@@ -33,9 +33,9 @@ import 'oskari-bundle!oskari-frontend/bundles/mapping/toolbar';
 import 'oskari-bundle!oskari-frontend/bundles/mapping/dimension-change';
 
 // pti
-import 'oskari-loader!../../packages/paikkatietoikkuna/bundle/register/bundle.js';
-import 'oskari-loader!../../packages/paikkatietoikkuna/bundle/telemetry/bundle.js'
-import 'oskari-loader!../../packages/paikkatietoikkuna/lang-overrides/bundle.js';
+import 'oskari-bundle!../../bundles/paikkatietoikkuna/register';
+import 'oskari-bundle!../../bundles/paikkatietoikkuna/telemetry'
+import 'oskari-bundle!../../bundles/paikkatietoikkuna/lang-overrides';
 
 // mobile tuning
 import 'oskari-lazy-bundle?feedbackService!oskari-frontend/bundles/framework/feedbackService';
@@ -55,7 +55,7 @@ import 'oskari-lazy-bundle?featuredata!oskari-frontend/bundles/framework/feature
 import 'oskari-lazy-bundle?metadataflyout!oskari-frontend/bundles/catalogue/metadataflyout'
 import 'oskari-lazy-bundle?metadatasearch!oskari-frontend/bundles/catalogue/metadatasearch';
 // added for mobile
-import 'oskari-lazy-loader?mobileuserguide!../../bundles/paikkatietoikkuna/mobileuserguide/bundle.js';
+import 'oskari-lazy-bundle?mobileuserguide!../../bundles/paikkatietoikkuna/mobileuserguide';
 // end mobile tuning
 // lazy
 import 'oskari-lazy-bundle?admin-permissions!oskari-frontend/bundles/admin/admin-permissions';

@@ -8,8 +8,8 @@
   ],
   "dependencies": {
     "fs-extra": "^8.1.0",
-    "oskari-frontend": "https://git@github.com/oskariorg/oskari-frontend.git#develop",
-    "oskari-frontend-contrib": "https://git@github.com/oskariorg/oskari-frontend-contrib.git#develop"
+    "oskari-frontend": "../oskari-frontend",
+    "oskari-frontend-contrib": "../oskari-frontend-contrib"
   },
   "devDependencies": {
     "@cyclonedx/bom": "^3.10.1",

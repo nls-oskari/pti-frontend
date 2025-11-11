@@ -11,8 +11,6 @@ import 'oskari-bundle!oskari-frontend/bundles/mapping/mapmodule/map2d_ol';
 
 import 'oskari-bundle!oskari-frontend/bundles/mapping/tiles3d';
 import 'oskari-bundle!oskari-frontend/bundles/mapping/maparcgis';
-// import 'oskari-loader!oskari-frontend/packages/mapping/ol/mapmyplaces/bundle.js';
-// import 'oskari-loader!oskari-frontend/packages/mapping/ol/mapuserlayers/bundle.js';
 import 'oskari-bundle!oskari-frontend/bundles/mapping/mapmyplaces';
 import 'oskari-bundle!oskari-frontend/bundles/framework/myplacesimport/mapuserlayers';
 import 'oskari-bundle!oskari-frontend/bundles/mapping/drawtools';
@@ -51,16 +49,17 @@ import 'oskari-lazy-bundle?terrain-profile!oskari-frontend-contrib/bundles/terra
 import 'oskari-lazy-bundle?coordinatetransformation!../../bundles/paikkatietoikkuna/coordinatetransformation';
 import 'oskari-lazy-bundle?layerswipe!oskari-frontend/bundles/mapping/layerswipe';
 // added for mobile
-import 'oskari-lazy-loader?mobileuserguide!../../bundles/paikkatietoikkuna/mobileuserguide/bundle.js';
+import 'oskari-lazy-bundle?mobileuserguide!../../bundles/paikkatietoikkuna/mobileuserguide';
 // end mobile tuning
 
 import 'oskari-bundle!oskari-frontend/bundles/mapping/dimension-change';
 
 // pti
-import 'oskari-loader!../../packages/paikkatietoikkuna/bundle/register/bundle.js';
-import 'oskari-loader!../../packages/paikkatietoikkuna/bundle/telemetry/bundle.js';
-import 'oskari-loader!../../packages/paikkatietoikkuna/lang-overrides/bundle.js';
-import 'oskari-loader!../../packages/paikkatietoikkuna/bundle/inspire/bundle.js';
+import 'oskari-bundle!../../bundles/paikkatietoikkuna/register';
+import 'oskari-bundle!../../bundles/paikkatietoikkuna/telemetry'
+import 'oskari-bundle!../../bundles/paikkatietoikkuna/inspire';
+
+import 'oskari-bundle!../../bundles/paikkatietoikkuna/lang-overrides';
 import 'oskari-bundle!oskari-frontend/bundles/framework/layeranalytics';
 
 // lazy

@@ -1,4 +1,4 @@
-import 'oskari-loader!../../packages/paikkatietoikkuna/lang-overrides/bundle.js';
+import 'oskari-bundle!../../bundles/paikkatietoikkuna/lang-overrides';
 
 import 'oskari-bundle!oskari-frontend/bundles/framework/mapfull';
 import 'oskari-loader!oskari-frontend/packages/framework/bundle/oskariui/bundle.js';
