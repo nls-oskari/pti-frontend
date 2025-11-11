@@ -7,7 +7,9 @@ import { parseValue } from '../handler/FileParser';
 const MAX_COLUMNS = 3;
 
 const PreviewCellStyle = styled.td`
-text-align: center;
+&&& {
+    text-align: center;
+}
 &.invalid {
     box-shadow: inset 0 0 2px 2px rgba(255,50,0,0.4);
     padding: 8px;
@@ -32,13 +34,14 @@ const ParseHeaderRow = ({ fileContents }) => {
     const { prefixColCount = 0, dimension = MAX_COLUMNS } = fileContents.settings || {};
     // remove possible id column(s) at the start and line endings
     const previewHeaders = fileContents.headers[0].slice(prefixColCount, prefixColCount + dimension);
+    const columns = previewHeaders.length === dimension ? 1 : dimension;
     return (
         <thead>
             <tr>
-                { previewHeaders.map(h => (<th key={h}>{ h }</th>)) }
+                { previewHeaders.map(h => (<th key={h} colSpan={columns}>{ h }</th>)) }
             </tr>
             { headerLineCount > 1 && <tr>
-                <HasMoreCell colSpan={ previewHeaders.length }>
+                <HasMoreCell colSpan={ dimension }>
                    + {headerLineCount - 1} <Message messageKey='fileSettings.rows' />
                 </HasMoreCell>
             </tr>}
