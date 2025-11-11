@@ -48,7 +48,7 @@ import 'oskari-lazy-bundle?userguide!oskari-frontend/bundles/framework/userguide
 import 'oskari-lazy-bundle?statsgrid!oskari-frontend/bundles/statistics/statsgrid';
 import 'oskari-lazy-bundle?terrain-profile!oskari-frontend-contrib/bundles/terrain-profile';
 
-import 'oskari-lazy-loader?coordinatetransformation!../../packages/paikkatietoikkuna/bundle/coordinatetransformation/bundle.js';
+import 'oskari-lazy-bundle?coordinatetransformation!../../bundles/paikkatietoikkuna/coordinatetransformation';
 
 import 'oskari-lazy-bundle?maprotator!oskari-frontend/bundles/mapping/maprotator';
 import 'oskari-lazy-bundle?featuredata!oskari-frontend/bundles/framework/featuredata';
