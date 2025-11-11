@@ -57,7 +57,7 @@ const getFileContent = ({
         unit,
         decimalCount,
         decimalSeparator,
-        coordinateSeparator,
+        delimiter,
         lineSeparator,
         axisFlip,
         prefixColCount,
@@ -65,7 +65,6 @@ const getFileContent = ({
         writeLineEndings
     } = settings;
     const { prefixes = [], lineEndings = [] } = fileContents || {};
-
     const dimension = getDimension(outputSrs, outputHeightSrs);
     const isDegree = isDegreeSystem(outputSrs);
     // Force to 'metric' for non degree as select isn't shown for user
@@ -92,18 +91,16 @@ const getFileContent = ({
         if (prefixColCount > 0) {
             // use stored from imported file if available
             const ids = prefixesFromImport
-                ? prefixes[index] || ['']
+                ? prefixes[index] || [...Array(prefixColCount)].map(() => '')
                 : [index + 1];
             ids.forEach(p => row.unshift(p));
         }
         if (writeLineEndings) {
-            // use stored from input file if available
-            const ending = lineEndings[index] || [''];
-            ending.forEach(p => row.push(p));
+            // missing value at the end should be fine for csv
+            // could use settings.columns count to fill array with ''
+            lineEndings[index]?.forEach(p => row.push(p));
         }
-        // TODO: can prefixes and lineEndings lengths vary? now adds only one empty if missing
-        // => every row length must be same to get valid csv
-        return row.join(coordinateSeparator);
+        return row.join(delimiter);
     }).join(lineSeparator);
 };
 
@@ -111,20 +108,23 @@ const createSrsHeader = (srs, height, axisFlip, decimalUnit) => {
     // name for KKJ (no need to localize zones)
     const { name, label = name, axes = [], system } = SRS.find(s => s.value === srs) || {};
     const { unit: systemUnit } = SYSTEM.find(s => s.value === system) || {};
-    let heightName = '';
+    const modAxes = axisFlip ? [...axes.slice(0, 2).toReversed(), ...axes.slice(2)] : [...axes];
+    const epsg = [srs];
+    const labels = [label];
     if (height) {
+        epsg.push(height);
         const { axis = 'H', name } = SRS_H.find(h => h.value === height) || {};
-        axes.push(axis);
-        heightName = ` + ${name}`;
+        modAxes.push(axis);
+        labels.push(name);
     }
-    const modAxes = axisFlip ? [...axes.slice(0, 2).toReversed(), ...axes.slice(2)] : axes;
     const selectedUnit = isDegreeSystem(srs) && decimalUnit !== 'degree' ? ` (${decimalUnit})` : '';
-    return `${CRS}: ${srs} - ${label}${heightName} - axes: ${modAxes.join()}${axisFlip ? ' (reversed)' : ''} - unit: ${systemUnit}${selectedUnit}`;
+    const reversed = axisFlip ? ' (reversed)' : '';
+    return `${CRS}: ${epsg.join(' + ')} - ${labels.join(' + ')} - axes: ${modAxes.join()}${reversed} - unit: ${systemUnit}${selectedUnit}`;
 };
 
 export const exportStateToFile = (state) => {
     const { outputSrs, outputHeightSrs, fileContents } = state;
-    const { fileName, lineSeparator, createHeader, writeHeaders, axisFlip, unit } = state.export;
+    const { fileName, lineSeparator, createHeader, writeHeaders, axisFlip, unit, delimiter } = state.export;
 
     const content = [];
     if (createHeader) {
@@ -132,7 +132,7 @@ export const exportStateToFile = (state) => {
         content.push(header);
     }
     if (writeHeaders) {
-        fileContents?.headerLines?.forEach(header => content.push(header));
+        fileContents?.headers?.forEach(header => content.push(header.join(delimiter)));
     }
     const text = getFileContent(state);
     content.push(text);

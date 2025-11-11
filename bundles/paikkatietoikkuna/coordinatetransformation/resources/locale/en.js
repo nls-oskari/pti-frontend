@@ -44,7 +44,7 @@ Oskari.registerLocalization(
                     "label": "System of map projections"
                 },
                 "geodeticCoordinateSystem":{
-                    "label": "Geodetic coordinate reference system",
+                    "label": "Coordinate reference system",
                     "choose": "Select", // Choose
                     "kkj": "KKJ zone {zone, number}",
                     "ykj": "KKJ zone 3 / YKJ"
@@ -101,7 +101,7 @@ Oskari.registerLocalization(
                 "doubleComma": "The decimal and coordinate separators cannot both be commas.",
                 "doubleSpace": "The format/unit of an angle cannot contain spaces if the coordinate separator is Space.", //angle pattern
                 "noFileSettings": "No file settings.",
-                "noCoordinateSeparator": "Coordinate separator must be selected.",
+                "noDelimiter": "Coordinate separator must be selected.",
                 "noDecimalSeparator": "Decimal separator must be selected."
             },
             "errors": {
@@ -193,11 +193,11 @@ Oskari.registerLocalization(
             "export": "Output properties",
             "rows": "rows",
             "columns": "columns",
-            "previewTitle": "Preview",
+            "previewTitle": "Preview of the coordinates",
             "options": {
                 "fileName": "File name",
                 "decimalSeparator": "Decimal separator",
-                "coordinateSeparator": "Field separator",
+                "delimiter": "Field separator",
                 "headerLineCount": "Number of header rows",
                 "decimalPrecision": "Decimal precision",
                 "axisFlip": "Coordinates reversed",
@@ -217,7 +217,7 @@ Oskari.registerLocalization(
                     "gradian": "Grade",
                     "radian": "Radian"
                 },
-                "delimeters":{
+                "delimiters":{
                     "point": "Point",
                     "comma": "Comma",
                     "tab": "Tabulator",
@@ -315,11 +315,11 @@ Oskari.registerLocalization(
                     "sec": "DDMMSS and DD MM SS"
                 }
             },
-            "coordinateSeparator":{
+            "delimiter":{
                 "title":"Field separator",
-                "info": "Defines by which delimeter the columns are separated from each other",
+                "info": "Defines by which delimiter the columns are separated from each other",
                 "paragraphs": [
-                    "Defines by which delimeter the columns are separated from each other in the file.",
+                    "Defines by which delimiter the columns are separated from each other in the file.",
                     "If the coordinates are preceded by an identifier or followed by a character string, these must also be separated from the coordinates using the same separator."
                 ],
                 "listItems" : []

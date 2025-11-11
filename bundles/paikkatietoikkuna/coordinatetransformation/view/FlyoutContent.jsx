@@ -8,6 +8,7 @@ import { CoordinatesTable, ResultsTable } from '../components/CoordinateTable.js
 import { SrsSelect } from '../components/SrsSelect';
 import { MandatoryDescription } from '../components/MandatoryDescription';
 import { getDimension } from '../helper';
+import { Progress as AntProgress } from 'antd';
 
 const Content = styled.div`
     display: flex;
@@ -18,7 +19,7 @@ const Content = styled.div`
 const Splitter = styled.div`
     display: flex;
     flex-flow: row nowrap;
-    gap: 1em;
+    gap: 2em;
 `;
 const MinimizeButton = styled(Button)`
     justify-content: flex-start;
@@ -27,6 +28,21 @@ const MinimizeButton = styled(Button)`
 const StyledButtonContainer = styled(ButtonContainer)`
     justify-content: space-between;
 `;
+
+export const Progress = ({ progress, abort }) => {
+    if (progress === -1) {
+        return null;
+    }
+    return (
+        <div>
+            <AntProgress percent={progress} size="small" style={{ width: 200 }}/>
+            <br/>
+            <Button className='t_abort' type='text' onClick={() => abort()}>
+                <Message messageKey='actions.cancel'/>
+            </Button>
+        </div>
+    );
+};
 
 export const FlyoutContent = ({
     controller,

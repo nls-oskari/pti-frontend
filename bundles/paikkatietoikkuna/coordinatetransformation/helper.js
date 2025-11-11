@@ -83,17 +83,17 @@ export const validateFileSettings = (state, type) => {
     const selects = state[type];
     const errors = [];
 
-    if (!selects.coordinateSeparator) {
-        errors.push('noCoordinateSeparator');
+    if (!selects.delimiter) {
+        errors.push('noDelimiter');
     }
     if (!selects.decimalSeparator) {
         errors.push('noDecimalSeparator');
     }
 
-    if (selects.decimalSeparator === ',' && selects.coordinateSeparator === 'comma') {
+    if (selects.decimalSeparator === ',' && selects.delimiter === 'comma') {
         errors.push('doubleComma');
     }
-    if (selects.coordinateSeparator === 'space' && (selects.unit === 'DD MM SS' || selects.unit === 'DD MM')) {
+    if (selects.delimiter === 'space' && (selects.unit === 'DD MM SS' || selects.unit === 'DD MM')) {
         errors.push('doubleSpace');
     }
     if (type === 'import') {
@@ -112,15 +112,13 @@ export const validateFileSettings = (state, type) => {
         if (!selects.fileName) {
             errors.push('noFileName');
         }
-        if (typeof selects.decimalCount !== 'number' || selects.decimalCount < 0) {
-            errors.push('decimalCount');
-        }
     }
     return errors;
 };
 
-export const getDecimalCount = (decimals, unit) => {
-    if (typeof decimals !== 'number') {
+export const getDecimalCount = (decimalValue, unit) => {
+    const decimals = parseInt(decimalValue);
+    if (isNaN(decimals)) {
         return 0;
     }
     switch (unit) {
@@ -257,24 +255,8 @@ export const coordinateToMarker = (coord, isNew) => {
     return { ...props, x, y, msg, color };
 };
 
-export const stateToTransformRequest = (state) => {
-    const { inputSrs, outputSrs, inputHeightSrs, outputHeightSrs, coordinates } = state;
-    let from = inputSrs;
-    if (inputHeightSrs) {
-        from += '+' + inputHeightSrs;
-    }
-    let to = outputSrs;
-    if (outputHeightSrs) {
-        to += '+' + outputHeightSrs;
-    }
-    const params = { from, to };
-    const body = JSON.stringify(coordinates);
-    return { params, body };
-};
-
-export const stateToKomuRequest = (state) => {
-    const { inputSrs, outputSrs, inputHeightSrs, outputHeightSrs, coordinates } = state;
-    const is2D = getDimension(inputSrs, inputHeightSrs) === 2;
+export const stateToKomuParams = (state) => {
+    const { inputSrs, outputSrs, inputHeightSrs, outputHeightSrs } = state;
     let sourceCRS = inputSrs;
     if (inputHeightSrs) {
         sourceCRS += ',' + inputHeightSrs;
@@ -283,13 +265,17 @@ export const stateToKomuRequest = (state) => {
     if (outputHeightSrs) {
         targetCRS += ',' + outputHeightSrs;
     }
-    const params = { sourceCRS, targetCRS };
+    const dimension = getDimension(inputSrs, inputHeightSrs);
+    return { sourceCRS, targetCRS, dimension };
+};
+
+export const coordinatesToCSV = (coordinates, dimension) => {
+    const is2D = dimension === 2;
     // x,y,z;x,y,z,..
-    const body = coordinates
+    return coordinates
         .map(({ x, y, z }) => is2D ? [x, y] : [x, y, z])
         .map(coord => coord.join())
         .join(';');
-    return { params, body };
 };
 
 export const parseKomuResponse = (text) => {

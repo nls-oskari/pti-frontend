@@ -10,7 +10,7 @@ const Wrapper = styled.div`
     gap: ${props => props.$block ? 0 : '1em'};
 `;
 const StyledLabel = styled(Label)`
-    width: ${props => props.$block ? 360 : 160}px;
+    width: ${props => props.$block ? 360 : 165}px;
 `;
 const StyledSelect = styled(Select)`
     width: 240px;
@@ -21,16 +21,19 @@ const StyledTextInput = styled(TextInput)`
 const StyledNumberInput = styled(NumberInput)`
     width: 240px;
 `;
+const InfoWrapper = styled.span`
+    ${props => props.$block && 'margin-left: 0.5em'}
+`;
 
 const phMandatory = <Message messageKey='actions.select' />;
 const phOptional = <Message messageKey='flyout.coordinateSystem.noFilter' />;
 const phNone = <Message messageKey='flyout.coordinateSystem.heightSystem.none' />;
 const getLocalized = options => options.map(opt => opt.label ? opt : ({ ...opt, label: <Message messageKey={opt.loc} messageArgs={opt.args} /> }));
 
-const Info = ({ info, controller }) => (
-    <span onClick={() => controller.showInfo(info)}>
+const Info = ({ info, controller, block = false }) => (
+    <InfoWrapper $block={block} onClick={() => controller.showInfo(info)}>
         <InfoIcon space={false} title={<Message messageKey={`infoPopup.${info}.info`}/>}/>
-    </span>
+    </InfoWrapper>
 );
 
 // placeholder is used as value for using same styling as selected value for mandatory fields
@@ -49,11 +52,10 @@ export const LabeledSelect = ({
 }) => (
     <Wrapper $block={block} className={`t_${info}`}>
         <StyledLabel $block={block}>
-            <Message messageKey={label} />
-            &nbsp;
-            { mandatory &&  <MandatoryIcon isValid={value === 0 || !!value} /> }
-            &nbsp;
-            { (info && block) && <Info info={info} controller={controller}/> }
+            <Message messageKey={label}>
+                { mandatory &&  <MandatoryIcon isValid={value === 0 || !!value} /> }
+                { (info && block) && <Info block info={info} controller={controller}/> }
+            </Message>
         </StyledLabel>
         <StyledSelect
             { ...restForSelect }

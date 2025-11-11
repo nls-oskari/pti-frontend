@@ -1,10 +1,13 @@
 export const BUNDLE = 'coordinatetransformation';
 export const WATCH_JOB = 'CoordinateTransformJob'; // deprecated
 export const WATCH_URL = '/coordinatetransform/watch/'; // deprecated
+export const BASE_URL = '/action/KomuProj';
+export const FETCH_SIZE = 10000;
 export const ID_PREFIX = 'coord_marker_';
 export const SOURCE = ['table', 'file', 'map']; // deprecated
 export const LON_AXES = ['E', 'λ', 'X'];
 export const LAN_AXES = ['N', 'φ', 'Y'];
+export const CARDINALS = ['N', 'E', 'W', 'S'];
 
 export const HOUR_TO_MIN = 60; // MIN_TO_SEC
 export const HOUR_TO_SEC = 3600;
@@ -48,9 +51,9 @@ export const FILE_DEFAULTS = {
     },
     export: {
         unit: 'degree',
-        decimalCount: 3,
+        decimalCount: '3',
         decimalSeparator: Oskari.getDecimalSeparator(),
-        coordinateSeparator: ';',
+        delimiter: ';',
         lineSeparator: '\r\n'
     }
 };
@@ -62,24 +65,24 @@ export const SEPARATORS = {
         { label: 'Windows / DOS', value: '\r\n' },
         { label: 'UNIX / Mac', value: '\n' }
     ],
-    coordinateSeparator: [
-        { loc: 'fileSettings.options.delimeters.tab', value: '\t' },
-        { loc: 'fileSettings.options.delimeters.space', value: ' ' },
-        { loc: 'fileSettings.options.delimeters.comma', value: ',' },
-        { loc: 'fileSettings.options.delimeters.semicolon', value: ';' },
-        { loc: 'fileSettings.options.delimeters.pipe', value: '|' }
+    delimiter: [
+        { loc: 'fileSettings.options.delimiters.tab', value: '\t' },
+        { loc: 'fileSettings.options.delimiters.space', value: ' ' },
+        { loc: 'fileSettings.options.delimiters.comma', value: ',' },
+        { loc: 'fileSettings.options.delimiters.semicolon', value: ';' },
+        { loc: 'fileSettings.options.delimiters.pipe', value: '|' }
     ],
     decimalSeparator: [
-        { loc: 'fileSettings.options.delimeters.point', value: '.' },
-        { loc: 'fileSettings.options.delimeters.comma', value: ',' }
+        { loc: 'fileSettings.options.delimiters.point', value: '.' },
+        { loc: 'fileSettings.options.delimiters.comma', value: ',' }
     ]
 };
 export const DECIMAL = [
-    { label: '~1 m', value: 0 },
-    { label: '~0.1 m', value: 1 },
-    { label: '~1 cm', value: 2 },
-    { label: '~1 mm', value: 3 },
-    { label: '~0.1 mm', value: 4 }
+    { label: '~1 m', value: '0' },
+    { label: '~0.1 m', value: '1' },
+    { label: '~1 cm', value: '2' },
+    { label: '~1 mm', value: '3' },
+    { label: '~0.1 mm', value: '4' }
 ];
 
 export const DEGREE = [

@@ -4,21 +4,24 @@ import { showFilePopup } from '../view/FilePopup';
 import { showConfirmPopup } from '../view/ConfirmPopup';
 import { showClipboardPopup } from '../view/ClipboardPopup';
 import { showMapSelectPopup, showMapPreviewPopup } from '../view/MapPopup';
-import { SOURCE, MAP, WATCH_JOB, WATCH_URL, FILE_DEFAULTS, ACTIONS, PAGINATION, SRS } from '../constants';
-import { stateToPTIArray, stateToTransformRequest, stateToKomuRequest, parseKomuResponse, validateFileSettings, validateTransform, validateCoordinate, parseCoordinateValue, is3DSystem, getDimension, getLabelForMarker, getCoordinatesExtent } from '../helper';
+import { SOURCE, MAP, BASE_URL, WATCH_JOB, WATCH_URL, FILE_DEFAULTS, ACTIONS, PAGINATION, SRS, FETCH_SIZE } from '../constants';
+import { stateToPTIArray, stateToKomuParams, coordinatesToCSV, parseKomuResponse, validateFileSettings, validateTransform, validateCoordinate, parseCoordinateValue, is3DSystem, getDimension, getLabelForMarker, getCoordinatesExtent } from '../helper';
 import { parseFile, parseFileContents, parseValue } from './FileParser';
 import { exportStateToFile } from './FileWriter';
 
 const getInitialState = () => ({
     loading: false,
+    progress: -1,
     source: SOURCE[0], // deprecated
     // TODO: maybe this isn't needed !!fileContents => source === 'file'
     // only file has special handling
     sources: [],
     inputSrs: null,
     outputSrs: null,
+    importSrs: null,
     inputHeightSrs: null,
     outputHeightSrs: null,
+    importHeightSrs: null,
     files: [],
     fileContents: null,
     import: { ...FILE_DEFAULTS.import },
@@ -42,21 +45,10 @@ class UIHandler extends StateHandler {
         this.confirmPopup = null;
         this.setState(getInitialState());
         this.addStateListener(state => this.filePopup?.update(state));
-        this.baseUrl = conf.url;
-        this.transformFunction = this.getTransformFunction(conf);
+        this.baseUrl = conf.url || BASE_URL;
+        this.fetchSize = conf.fetchSize || FETCH_SIZE;
         Oskari.urls.set(WATCH_JOB, WATCH_URL);
         this.log = Oskari.log('CoordTransHandler');
-    }
-
-    getTransformFunction ({ url, contentType }) {
-        // deprecated
-        if (!url) {
-            return () => this.transformToArray();
-        }
-        if (contentType?.includes('json')) {
-            return () => this.transformJson();
-        }
-        return () => this.transformText();
     }
 
     reset (closeFlyout) {
@@ -222,6 +214,7 @@ class UIHandler extends StateHandler {
         if (is3DSystem(srs)) {
             this.setHeightSrs(type, null);
         }
+        this.updateDimensions(type);
     }
 
     inputSrsChange (srs) {
@@ -259,6 +252,22 @@ class UIHandler extends StateHandler {
         this.confirmPopup = showConfirmPopup('confirm.title', 'confirm.results', onConfirm, () => this.closeConfirmPopup(), onChange);
     }
 
+    updateDimensions (type) {
+        if (type !== 'import') {
+            return;
+        }
+        // file parser requires dimension for parsing data and line endings correctly
+        this.setFileSetting('import', 'dimension', this.getImportDimension());
+    }
+
+    getImportDimension () {
+        const { inputSrs, inputHeightSrs, importSrs, importHeightSrs } = this.getState();
+        // Note that removing value from select (ImportFile) sets undefined
+        const srs = importSrs === null ? inputSrs : importSrs;
+        const height = importHeightSrs === null ? inputHeightSrs : importHeightSrs;
+        return getDimension(srs, height);
+    }
+
     setHeightSrs (type, srs) {
         const prop = `${type}HeightSrs`;
         if (srs === 'EPSG:8675') {
@@ -266,6 +275,7 @@ class UIHandler extends StateHandler {
             this.showInfoMessage('flyout.coordinateSystem.heightSystem.label', 'flyout.coordinateSystem.heightSystem.n43.info');
         }
         this.updateState({ [prop]: srs, transformed: false });
+        this.updateDimensions(type);
     }
 
     setPagination (current, pageSize) {
@@ -283,25 +293,23 @@ class UIHandler extends StateHandler {
         if (files.length !== 1) {
             return;
         }
-        parseFile(files[0]).then(contents => {
-            const { inputSrs, import: settings } = this.getState();
-            // use detected settings only if user hasn't selected value
-            // Maybe this isn't needed if detect functions works right
-            const newSettings = { ...settings };
-            Object.keys(contents.settings).forEach(key => {
-                if (newSettings[key] === FILE_DEFAULTS.import[key]) {
-                    newSettings[key] = contents.settings[key];
-                }
-            });
-            this.updateState({
-                inputSrs: contents.srs || inputSrs,
+        const dimension = this.getImportDimension();
+        parseFile(files[0], dimension).then(contents => {
+            const { srs, height, fileContents } = contents;
+            const updated = {
                 files,
-                fileContents: contents,
-                import: newSettings // { ...settings, ...contents.settings }
-            });
+                fileContents,
+                import: { ...this.getState().import, ...fileContents.settings }
+            };
+            // update both if some epsg code is detected
+            if (srs || height) {
+                updated.importSrs = srs;
+                updated.importHeightSrs = height;
+            }
+            this.updateState(updated);
         }).catch(err => {
             this.log.debug(err);
-            Messaging.error(this.log('transform.errors.import'));
+            Messaging.error(this.loc('transform.errors.import'));
         });
     }
 
@@ -316,9 +324,8 @@ class UIHandler extends StateHandler {
         if (type === 'import') {
             const { fileContents } = this.getState();
             if (fileContents) {
-                const { headerLineCount, coordinateSeparator, prefixColCount } = updated[type];
-                // parseFileContents() to update parsing based on the new selection
-                updated.fileContents = parseFileContents(fileContents.lines, coordinateSeparator, headerLineCount, prefixColCount);
+                // parseFileContents to update parsing based on the new selections
+                updated.fileContents = parseFileContents(fileContents.lines, updated[type]);
             }
         }
         this.updateState(updated);
@@ -364,7 +371,7 @@ class UIHandler extends StateHandler {
         }
     }
 
-    showOnMap () {
+    async showOnMap () {
         const { coordinates, inputSrs, pagination } = this.getState();
         if (this.mapPopup) {
             return;
@@ -380,26 +387,19 @@ class UIHandler extends StateHandler {
         const start = end - pageSize;
         const toShow = coordinates.slice(start, end);
         const mapSrs = this.sandbox.getMap().getSrsName();
-
-        const callback = mapCoords => {
-            const labeled = mapCoords.map((coord, i) => {
-                // Use original coords and srs for label
-                const label = getLabelForMarker(toShow[i], inputSrs);
-                return { ...coord, label };
-            });
-            this.instance.setMapCoordinates(labeled);
-            this.instance.toggleFlyout(false);
-            this.mapPopup = showMapPreviewPopup(() => this.closeMapPopup(true));
-        };
-        if (mapSrs === inputSrs) {
-            callback(toShow);
-        } else {
-            this.transformToMapSrs({
-                coordinates: toShow,
-                inputSrs,
-                outputSrs: mapSrs
-            }, callback);
+        let mapCoords = toShow;
+        if (mapSrs !== inputSrs) {
+            const params = stateToKomuParams({ ...this.getState(), outputSrs: mapSrs });
+            mapCoords = await this.fetchCoordinates (params, mapCoords);
         }
+        const labeled = mapCoords.map((coord, i) => {
+            // Use original coords and srs for label
+            const label = getLabelForMarker(toShow[i], inputSrs);
+            return { ...coord, label };
+        });
+        this.instance.setMapCoordinates(labeled);
+        this.instance.toggleFlyout(false);
+        this.mapPopup = showMapPreviewPopup(() => this.closeMapPopup(true));
     }
 
     selectFromMap () {
@@ -490,7 +490,7 @@ class UIHandler extends StateHandler {
         const paragraphs = [this.loc('transform.warnings.message')];
         const onConfirm = () => {
             this.cleanInputCoordinates();
-            this.transformFunction();
+            this.validatedTransform();
         };
         this.infoPopup = showInfoPopup(title, paragraphs, listItems, () => this.closeInfoPopup(), onConfirm);
     }
@@ -518,10 +518,19 @@ class UIHandler extends StateHandler {
             this.showConfirmTransform(warnings);
             return;
         }
+        this.validatedTransform();
+    }
+
+    validatedTransform () {
         if (this.log.isDebug()) {
             this.debugTransform();
         }
-        this.transformFunction();
+        const size = this.getState().coordinates.length;
+        if (this.fetchSize && size > this.fetchSize) {
+            this.transformParts();
+        } else {
+            this.transformCSV();
+        }
     }
 
     debugTransform () {
@@ -538,15 +547,24 @@ class UIHandler extends StateHandler {
             this.showValidationError(errors);
             return false;
         }
-        const { fileContents, import: importSettings } = this.getState();
+        const { fileContents, import: importSettings, importSrs, importHeightSrs } = this.getState();
         const { unit } = importSettings;
-        const coordinates = fileContents.data.map(([x, y, z]) => ({
+        const { data, settings } = fileContents;
+        const is3D = settings.dimension === 3;
+        const coordinates = data.map(([x, y, z]) => ({
             x: parseValue(x, unit),
             y: parseValue(y, unit),
-            z: parseValue(z) // always metric
+            z: is3D ? parseValue(z) : undefined // always metric TODO: '', null, undefined
         }));
         // sets all coordinates from file so one source only
-        this.updateState({ coordinates, sources: [ACTIONS.IMPORT] });
+        const updatedState = { coordinates, sources: [ACTIONS.IMPORT] };
+        // sync both as srs setters removes and disables height for 3D
+        if (importSrs || importHeightSrs) {
+            // TODO: confirm changes?: inputSrs && importSrs && inputSrs !== importSrs
+            updatedState.inputSrs = importSrs;
+            updatedState.inputHeightSrs = importHeightSrs;
+        }
+        this.updateState(updatedState);
         return true;
     }
 
@@ -568,39 +586,66 @@ class UIHandler extends StateHandler {
         return true;
     }
 
-    transformJson () {
-        this.updateState({ loading: true });
-        const { params, body } = stateToTransformRequest(this.getState());
-        fetch(Oskari.urls.buildUrl(this.baseUrl, params), {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body
-        }).then(response => {
-            return response.json();
-        }).then(json => {
-            if (!Array.isArray(json)) {
-                this.showResponseError(json);
-                return;
-            }
-            this.updateState({ results: json, loading: false, transformed: true });
-        }).catch((e) => {
-            Messaging.error(this.loc('transform.errors.generic'));
-            this.updateState({ loading: false });
-        });
+    abortTransform () {
+        this.updateState({ results: [], loading: false, progress: -1, transformed: false });
     }
 
-    transformText () {
+    async transformParts () {
+        this.updateState({ loading: true, progress: -1 });
+        const state = this.getState();
+        const coords = state.coordinates;
+        const size = coords.length;
+        const params = stateToKomuParams(state);
+        let results = [];
+        for (let from = 0; from < size; from += this.fetchSize) {
+            if (!this.getState().loading) {
+                // aborted
+                return;
+            }
+            const to = from + this.fetchSize;
+            const progress = from / size * 100;
+            this.log.debug(`Transform coordinates from index: ${from} to ${to}, progress: ${progress.toFixed()}%`);
+            this.updateState({ progress });
+            const transformed = await this.fetchCoordinates(params, coords.slice(from, to));
+            if (Array.isArray(transformed)) {
+                results = [...results, ...transformed];
+            } else {
+                results = [];
+                break;
+            }
+        }
+        this.updateState({ results, loading: false, progress: -1, transformed: true });
+    }
+
+    async fetchCoordinates (params, coordinates) {
+        try {
+            const response = await fetch(Oskari.urls.buildUrl(this.baseUrl, params), {
+                method: 'POST',
+                headers: {
+                    Accept: 'text/plain'
+                },
+                body: coordinatesToCSV(coordinates, params.dimension)
+            });
+            if (!response.ok) {
+                throw new Error(response.statusText);
+            }
+            const csv = await response.text();
+            return parseKomuResponse(csv);
+        } catch (e) {
+            Messaging.error(this.loc('transform.errors.generic'));
+        };
+    }
+
+    transformCSV () {
         this.updateState({ loading: true });
-        const { params, body } = stateToKomuRequest(this.getState());
+        const state = this.getState();
+        const params = stateToKomuParams(state);
         fetch(Oskari.urls.buildUrl(this.baseUrl, params), {
             method: 'POST',
             headers: {
                 Accept: 'text/plain'
             },
-            body
+            body: coordinatesToCSV(state.coordinates, params.dimension)
         }).then(response => {
             if (!response.ok) {
                 throw new Error(response.statusText);
@@ -739,7 +784,8 @@ const wrapped = controllerMixin(UIHandler, [
     'importFileContentsToInputTable',
     'addFromSource',
     'swapCoordinates',
-    'setPagination'
+    'setPagination',
+    'abortTransform'
 ]);
 
 export { wrapped as ViewHandler };
