@@ -2,23 +2,31 @@ import { detectDelimiter, detectEpsgCodes, parseValue, parseFile } from './FileP
 const text = () => new Promise (resolve => resolve(LINES));
 const LINES =
 `Coordinate Reference System: EPSG:3879 - ETRS-GK25 - axes: N,E - unit: metre
-65,82977715;26,80196470
-65,65785282;26,20213645
-65,97937106;26,19211347
+65,82977715 ; 26,80196470
+65,65785282 ; 26,20213645
+65,97937106 ; 26,19211347
 `;
 
 describe('parseFile function', () => {
     test('returns detected settings and parsed data', () => {
         const lines = LINES.split('\n');
-        expect.assertions(5);
+        expect.assertions(10);
         parseFile({ text }).then(contents => {
             const { settings, data, headers } = contents.fileContents;
             expect(data.length).toEqual(3);
             expect(headers.length).toEqual(1);
-            expect(headers).toEqual([lines.slice(0,1)]);
+            const header = lines[0];
+            expect(headers[0]).toEqual([header]); // header parts splited with delimiter
             // settings
-            expect(settings.headerLineCount).toEqual(1);
+            expect(settings.dimension).toEqual(2); // data columns
             expect(settings.prefixColCount).toEqual(0);
+            expect(settings.headerLineCount).toEqual(1);
+            expect(settings.delimiter).toEqual(';');
+            expect(settings.decimalSeparator).toEqual(',');
+            expect(settings.columns).toEqual(2); // data colums
+            // data
+            const cells = lines[1].split(';').map(cell => cell.replace(',', '.').trim());
+            expect(data[0]).toEqual(cells);
         });
     });
 });
@@ -58,7 +66,7 @@ describe('detectDelimiter function', () => {
     });
 });
 
-describe('detectEpsgCode function', () => {
+describe('detectEpsgCodes function', () => {
     test('returns epsg code', () => {
         const headerLine = 'Coordinate Reference System: EPSG:3879 - ETRS-GK25 - axes: N,E - unit: metre';
         expect.assertions(4);
