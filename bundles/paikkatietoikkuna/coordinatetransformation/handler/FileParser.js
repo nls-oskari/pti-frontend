@@ -1,4 +1,4 @@
-import { SRS, SRS_H, DEGREE, HOUR_TO_MIN, HOUR_TO_SEC, DEC_TO_GRAD, DEC_TO_RAD } from '../constants';
+import { SRS, SRS_H, DEGREE, HOUR_TO_MIN, HOUR_TO_SEC, DEC_TO_GRAD, DEC_TO_RAD, CARDINALS } from '../constants';
 import { getDimension } from '../helper';
 
 export const parseFile = (file, dimension) => {
@@ -213,7 +213,11 @@ const countNumericCells = (row, delimiter) => {
     const cells = row.split(delimiter).map(cell => cell.trim());
     return cells.filter(cell => {
         // Remove spaces for e.g. DD MM SS
-        const normalized = cell.replace(',', '.').replaceAll(' ', '');
+        let normalized = cell.replace(',', '.').replaceAll(' ', '');
+        // remove cardinal
+        if (CARDINALS.some(c => normalized.endsWith(c))) {
+            normalized = normalized.substring(0, normalized.length - 1);
+        }
         return !isNaN(normalized) && normalized !== '';
     }).length;
 };
