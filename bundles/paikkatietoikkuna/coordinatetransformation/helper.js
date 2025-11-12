@@ -83,17 +83,17 @@ export const validateFileSettings = (state, type) => {
     const selects = state[type];
     const errors = [];
 
-    if (!selects.coordinateSeparator) {
-        errors.push('noCoordinateSeparator');
+    if (!selects.delimiter) {
+        errors.push('noDelimiter');
     }
     if (!selects.decimalSeparator) {
         errors.push('noDecimalSeparator');
     }
 
-    if (selects.decimalSeparator === ',' && selects.coordinateSeparator === 'comma') {
+    if (selects.decimalSeparator === ',' && selects.delimiter === 'comma') {
         errors.push('doubleComma');
     }
-    if (selects.coordinateSeparator === 'space' && (selects.unit === 'DD MM SS' || selects.unit === 'DD MM')) {
+    if (selects.delimiter === 'space' && (selects.unit === 'DD MM SS' || selects.unit === 'DD MM')) {
         errors.push('doubleSpace');
     }
     if (type === 'import') {
@@ -112,15 +112,13 @@ export const validateFileSettings = (state, type) => {
         if (!selects.fileName) {
             errors.push('noFileName');
         }
-        if (typeof selects.decimalCount !== 'number' || selects.decimalCount < 0) {
-            errors.push('decimalCount');
-        }
     }
     return errors;
 };
 
-export const getDecimalCount = (decimals, unit) => {
-    if (typeof decimals !== 'number') {
+export const getDecimalCount = (decimalValue, unit) => {
+    const decimals = parseInt(decimalValue);
+    if (isNaN(decimals)) {
         return 0;
     }
     switch (unit) {

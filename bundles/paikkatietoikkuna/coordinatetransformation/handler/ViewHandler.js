@@ -18,8 +18,10 @@ const getInitialState = () => ({
     sources: [],
     inputSrs: null,
     outputSrs: null,
+    importSrs: null,
     inputHeightSrs: null,
     outputHeightSrs: null,
+    importHeightSrs: null,
     files: [],
     fileContents: null,
     import: { ...FILE_DEFAULTS.import },
@@ -212,6 +214,7 @@ class UIHandler extends StateHandler {
         if (is3DSystem(srs)) {
             this.setHeightSrs(type, null);
         }
+        this.updateDimensions(type);
     }
 
     inputSrsChange (srs) {
@@ -249,6 +252,22 @@ class UIHandler extends StateHandler {
         this.confirmPopup = showConfirmPopup('confirm.title', 'confirm.results', onConfirm, () => this.closeConfirmPopup(), onChange);
     }
 
+    updateDimensions (type) {
+        if (type !== 'import') {
+            return;
+        }
+        // file parser requires dimension for parsing data and line endings correctly
+        this.setFileSetting('import', 'dimension', this.getImportDimension());
+    }
+
+    getImportDimension () {
+        const { inputSrs, inputHeightSrs, importSrs, importHeightSrs } = this.getState();
+        // Note that removing value from select (ImportFile) sets undefined
+        const srs = importSrs === null ? inputSrs : importSrs;
+        const height = importHeightSrs === null ? inputHeightSrs : importHeightSrs;
+        return getDimension(srs, height);
+    }
+
     setHeightSrs (type, srs) {
         const prop = `${type}HeightSrs`;
         if (srs === 'EPSG:8675') {
@@ -256,6 +275,7 @@ class UIHandler extends StateHandler {
             this.showInfoMessage('flyout.coordinateSystem.heightSystem.label', 'flyout.coordinateSystem.heightSystem.n43.info');
         }
         this.updateState({ [prop]: srs, transformed: false });
+        this.updateDimensions(type);
     }
 
     setPagination (current, pageSize) {
@@ -273,25 +293,23 @@ class UIHandler extends StateHandler {
         if (files.length !== 1) {
             return;
         }
-        parseFile(files[0]).then(contents => {
-            const { inputSrs, import: settings } = this.getState();
-            // use detected settings only if user hasn't selected value
-            // Maybe this isn't needed if detect functions works right
-            const newSettings = { ...settings };
-            Object.keys(contents.settings).forEach(key => {
-                if (newSettings[key] === FILE_DEFAULTS.import[key]) {
-                    newSettings[key] = contents.settings[key];
-                }
-            });
-            this.updateState({
-                inputSrs: contents.srs || inputSrs,
+        const dimension = this.getImportDimension();
+        parseFile(files[0], dimension).then(contents => {
+            const { srs, height, fileContents } = contents;
+            const updated = {
                 files,
-                fileContents: contents,
-                import: newSettings // { ...settings, ...contents.settings }
-            });
+                fileContents,
+                import: { ...this.getState().import, ...fileContents.settings }
+            };
+            // update both if some epsg code is detected
+            if (srs || height) {
+                updated.importSrs = srs;
+                updated.importHeightSrs = height;
+            }
+            this.updateState(updated);
         }).catch(err => {
             this.log.debug(err);
-            Messaging.error(this.log('transform.errors.import'));
+            Messaging.error(this.loc('transform.errors.import'));
         });
     }
 
@@ -306,9 +324,8 @@ class UIHandler extends StateHandler {
         if (type === 'import') {
             const { fileContents } = this.getState();
             if (fileContents) {
-                const { headerLineCount, coordinateSeparator, prefixColCount } = updated[type];
-                // parseFileContents() to update parsing based on the new selection
-                updated.fileContents = parseFileContents(fileContents.lines, coordinateSeparator, headerLineCount, prefixColCount);
+                // parseFileContents to update parsing based on the new selections
+                updated.fileContents = parseFileContents(fileContents.lines, updated[type]);
             }
         }
         this.updateState(updated);
@@ -530,15 +547,24 @@ class UIHandler extends StateHandler {
             this.showValidationError(errors);
             return false;
         }
-        const { fileContents, import: importSettings } = this.getState();
+        const { fileContents, import: importSettings, importSrs, importHeightSrs } = this.getState();
         const { unit } = importSettings;
-        const coordinates = fileContents.data.map(([x, y, z]) => ({
+        const { data, settings } = fileContents;
+        const is3D = settings.dimension === 3;
+        const coordinates = data.map(([x, y, z]) => ({
             x: parseValue(x, unit),
             y: parseValue(y, unit),
-            z: parseValue(z) // always metric
+            z: is3D ? parseValue(z) : undefined // always metric TODO: '', null, undefined
         }));
         // sets all coordinates from file so one source only
-        this.updateState({ coordinates, sources: [ACTIONS.IMPORT] });
+        const updatedState = { coordinates, sources: [ACTIONS.IMPORT] };
+        // sync both as srs setters removes and disables height for 3D
+        if (importSrs || importHeightSrs) {
+            // TODO: confirm changes?: inputSrs && importSrs && inputSrs !== importSrs
+            updatedState.inputSrs = importSrs;
+            updatedState.inputHeightSrs = importHeightSrs;
+        }
+        this.updateState(updatedState);
         return true;
     }
 
