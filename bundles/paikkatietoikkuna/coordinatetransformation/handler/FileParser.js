@@ -131,7 +131,7 @@ export const parseValue = (value, format = 'metric') => {
     return asNumber;
 };
 
-const interpretFileContents = (lines = [], dimension) => {
+const interpretFileContents = (lines = [], dimension = 2) => {
     const midIndex = Math.floor(lines.length / 2);
     const dataLine = lines[midIndex];
     const delimiter = detectDelimiter(dataLine);
