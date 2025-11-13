@@ -86,7 +86,7 @@ const getCoordinates = ({
 
         // replace point and writeCardinals if needed
         row = row.map(r => replace ? r.replace('.', ',') : r)
-            .map((r, i) => writeCardinals ? addCardinal(r, i === lonIndex) : r);
+            .map((r, i) => writeCardinals && i < 2 ? addCardinal(r, i === lonIndex) : r);
 
         if (prefixColCount > 0) {
             // use stored from imported file if available
