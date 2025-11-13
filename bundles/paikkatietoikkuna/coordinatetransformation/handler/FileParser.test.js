@@ -79,7 +79,7 @@ describe('parseFile function', () => {
         const text = getTextPromise(CSV);
         const line = 'p1;6994350.131;23675008.210;10;line ending 1';
         parseFile({ text }).then(({ fileContents }) => {
-            const { data, headers } = fileContents;
+            const { data, headers, prefixes, lineEndings } = fileContents;
             expect(headers.length).toEqual(1);
             expect(headers[0].length).toEqual(5);
             expect(data[0].length).toEqual(2); // without srs and dimension defaults to 2D
@@ -89,7 +89,7 @@ describe('parseFile function', () => {
         const dimension = 3;
         parseFile({ text }, dimension).then(({ fileContents }) => {
             const { data, prefixes, lineEndings } = fileContents;
-            expect(data[0].length).toEqual(3)
+            expect(data[0].length).toEqual(3);
             const array = [...prefixes[0], ...data[0], ...lineEndings[0]];
             expect(array.join(';')).toEqual(line);
         });
