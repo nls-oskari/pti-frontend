@@ -1,4 +1,4 @@
-import { parseCoordinateValue, getDMS, getDimension, isDegreeSystem, is3DSystem, getSrsUnit, isLonFirst, validateCoordinate, validateFileSettings } from './helper';
+import { parseCoordinateValue, getDMS, getDimension, isDegreeSystem, is3DSystem, getSrsUnit, isLonFirst, validateCoordinate, validateFileSettings, validateTransform } from './helper';
 import { FILE_DEFAULTS } from './constants';
 
 describe('srs functions', () => {
@@ -26,18 +26,18 @@ describe('srs functions', () => {
 describe('validateCoordinate function', () => {
     const is3D = true;
     test('returns true for valid', () => {
-        const coord = { x:10.4, y:20.4, z:10 };
+        const coord = { x: 10.4, y: 20.4, z: 10 };
         expect(validateCoordinate(coord)).toBe(true);
         expect(validateCoordinate(coord, is3D)).toBe(true);
     });
     test('returns false for invalid', () => {
-        expect(validateCoordinate({ x:'10', y:'20' })).toBe(false); // not number
-        expect(validateCoordinate({ x:10, y:20 }, is3D)).toBe(false); // z missing
+        expect(validateCoordinate({ x: '10', y: '20' })).toBe(false); // not number
+        expect(validateCoordinate({ x: 10, y: 20 }, is3D)).toBe(false); // z missing
     });
 });
 
 describe('validateFileSettings function', () => {
-    test('returns true for valid', () => {
+    test('returns error keys or empty array', () => {
         const valid = []; // no errors
         //  (state, type) => selects = state[type] => use 'test' for common
         expect(validateFileSettings({ test: {} }, 'test')).toEqual(['noDelimiter', 'noDecimalSeparator']);
@@ -53,6 +53,37 @@ describe('validateFileSettings function', () => {
         // export
         expect(validateFileSettings({ ...FILE_DEFAULTS }, 'export')).toEqual(['noFileName']);
         expect(validateFileSettings({ export: { ...FILE_DEFAULTS.export, fileName: 'test' }}, 'export')).toEqual(valid);
+    });
+});
+
+describe('validateTransform function', () => {
+    test('returns error keys or empty array', () => {
+        expect.assertions(10);
+        const valid = { errors: [], warnings: [] };
+        const state = {
+            inputSrs: 'EPSG:3067', // TM35FIN (E,N)
+            outputSrs: 'EPSG:3877', // GK23
+            inputHeightSrs: 'EPSG:3900', // N2000
+            outputHeightSrs: 'EPSG:5717', // N60
+            coordinates: [{ x:383715, y: 6676275, z: 0 }],
+            files: []
+        };
+        const coordinates = state.coordinates.map(({ x, y, z }) => ({ x: y, y: x, z})); // axis flip => N,E
+
+        expect(validateTransform(state)).toEqual(valid);
+        expect(validateTransform({ ...state, coordinates, inputSrs: 'EPSG:5048' })).toEqual(valid); // TM35FIN (N,E)
+
+        // localization keys (transform.validate) for errors
+        expect(validateTransform({ ...state, coordinates: [] }).errors).toEqual(['noInputData']);
+        expect(validateTransform({ ...state, inputSrs: null }).errors).toEqual(['crs']);
+        expect(validateTransform({ ...state, outputSrs: null }).errors).toEqual(['crs']);
+        expect(validateTransform({ ...state, inputHeightSrs: null }).errors).toEqual(['2DTo3D']);
+
+        // localization keys (transform.validate) for warnings
+        expect(validateTransform({ ...state, outputHeightSrs: null }).warnings).toEqual(['3DTo2D']);
+        expect(validateTransform({ ...state, coordinates }).warnings).toEqual(['bbox']);
+        expect(validateTransform({ ...state, coordinates: [{}] }).warnings).toEqual(['coordinates']); // skips bbox check 
+        expect(validateTransform({ ...state, coordinates: [...coordinates, {}] }).warnings).toEqual(['coordinates', 'bbox']);
     });
 });
 
