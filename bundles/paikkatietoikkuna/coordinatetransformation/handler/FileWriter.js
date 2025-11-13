@@ -46,7 +46,7 @@ export const addCardinal = (coord, isLon) => {
     return coord + cardinal;
 };
 
-const getFileContent = ({
+const getCoordinates = ({
     results,
     outputSrs,
     outputHeightSrs,
@@ -122,9 +122,9 @@ const createSrsHeader = (srs, height, axisFlip, decimalUnit) => {
     return `${CRS}: ${epsg.join(' + ')} - ${labels.join(' + ')} - axes: ${modAxes.join()}${reversed} - unit: ${systemUnit}${selectedUnit}`;
 };
 
-export const exportStateToFile = (state) => {
+export const getFileContent = (state) => {
     const { outputSrs, outputHeightSrs, fileContents } = state;
-    const { fileName, lineSeparator, createHeader, writeHeaders, axisFlip, unit, delimiter } = state.export;
+    const { lineSeparator, createHeader, writeHeaders, axisFlip, unit, delimiter } = state.export;
 
     const content = [];
     if (createHeader) {
@@ -134,9 +134,15 @@ export const exportStateToFile = (state) => {
     if (writeHeaders) {
         fileContents?.headers?.forEach(header => content.push(header.join(delimiter)));
     }
-    const text = getFileContent(state);
-    content.push(text);
-    const file = new Blob([content.join(lineSeparator)], { type: 'text/plain' }); // transparent, native
+    const coords = getCoordinates(state);
+    content.push(coords);
+    return content.join(lineSeparator);
+};
+
+export const exportStateToFile = (state) => {
+    const content = getFileContent(state);
+    const file = new Blob([content], { type: 'text/plain' });
+    const { fileName } = state.export;
     loadFile(file, fileName);
 };
 
