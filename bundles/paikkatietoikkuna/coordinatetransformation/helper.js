@@ -90,10 +90,10 @@ export const validateFileSettings = (state, type) => {
         errors.push('noDecimalSeparator');
     }
 
-    if (selects.decimalSeparator === ',' && selects.delimiter === 'comma') {
+    if (selects.decimalSeparator === ',' && selects.delimiter === ',') {
         errors.push('doubleComma');
     }
-    if (selects.delimiter === 'space' && (selects.unit === 'DD MM SS' || selects.unit === 'DD MM')) {
+    if (selects.delimiter === ' ' && (selects.unit === 'DD MM SS' || selects.unit === 'DD MM')) {
         errors.push('doubleSpace');
     }
     if (type === 'import') {
