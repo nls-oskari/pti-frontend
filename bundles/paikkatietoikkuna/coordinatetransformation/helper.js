@@ -25,7 +25,7 @@ export const getSrsUnit = srs => {
     const { system } = SRS.find(s => s.value === srs) || {};
     const { unit } = SYSTEM.find(c => c.value === system) || {};
 
-    return unit || 'metric';
+    return unit || 'metre';
 };
 
 export const isLonFirst = (srs) => {
@@ -116,12 +116,12 @@ export const validateFileSettings = (state, type) => {
     return errors;
 };
 
-export const getDecimalCount = (decimalValue, unit) => {
+export const getDecimalCount = (decimalValue, format) => {
     const decimals = parseInt(decimalValue);
     if (isNaN(decimals)) {
         return 0;
     }
-    switch (unit) {
+    switch (format) {
     case 'metric':
         return decimals;
     case 'DD MM SS':

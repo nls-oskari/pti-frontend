@@ -1,4 +1,39 @@
-import { parseCoordinateValue, getDMS } from './helper';
+import { parseCoordinateValue, getDMS, getDimension, isDegreeSystem, is3DSystem, getSrsUnit, isLonFirst, validateCoordinate } from './helper';
+
+describe('srs functions', () => {
+    test('returns defaults', () => {
+        expect(getDimension()).toEqual(2);
+        expect(isDegreeSystem()).toEqual(false);
+        expect(is3DSystem()).toEqual(false);
+        expect(isLonFirst()).toEqual(false);
+        expect(getSrsUnit()).toEqual('metre');
+    });
+    test('returns default dimension', () => {
+        const srs = 'EPSG:10689'; // GRS80h
+        expect(getDimension(srs)).toEqual(3);
+        expect(isDegreeSystem(srs)).toEqual(true);
+        expect(getSrsUnit(srs)).toEqual('degree');
+    });
+    test('returns default dimension', () => {
+        const srs = 'EPSG:3067'; // TM35FIN
+        expect(isLonFirst(srs)).toEqual(true);
+        expect(getSrsUnit(srs)).toEqual('metre');
+    });
+});
+
+
+describe('validateCoordinate function', () => {
+    const is3D = true;
+    test('returns true for valid', () => {
+        const coord = { x:10.4, y:20.4, z:10 };
+        expect(validateCoordinate(coord)).toBe(true);
+        expect(validateCoordinate(coord, is3D)).toBe(true);
+    });
+    test('returns false for invalid', () => {
+        expect(validateCoordinate({ x:'10', y:'20' })).toBe(false); // not number
+        expect(validateCoordinate({ x:10, y:20 }, is3D)).toBe(false); // z missing
+    });
+});
 
 describe('parseCoordinateValue function', () => {
     test('returns float', () => {

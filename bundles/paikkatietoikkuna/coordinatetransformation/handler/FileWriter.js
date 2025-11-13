@@ -68,8 +68,8 @@ const getCoordinates = ({
     const dimension = getDimension(outputSrs, outputHeightSrs);
     const isDegree = isDegreeSystem(outputSrs);
     // Force to 'metric' for non degree as select isn't shown for user
-    const decimalUnit = isDegree ? unit : 'metric';
-    const decimals = getDecimalCount(decimalCount, decimalUnit);
+    const decimalFormat = isDegree ? unit : 'metric';
+    const decimals = getDecimalCount(decimalCount, decimalFormat);
 
     const lonFirst = axisFlip ? !isLonFirst(outputSrs) : isLonFirst(outputSrs);
     const lonIndex = lonFirst ? 0 : 1;
