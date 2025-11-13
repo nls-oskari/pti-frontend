@@ -52,27 +52,31 @@ export const validateTransform = (state) => {
     const warnings = [];
     const input3D = getDimension(inputSrs, inputHeightSrs) === 3;
     const output3D = getDimension(outputSrs, outputHeightSrs) === 3;
+    const { bounds = [] } = SRS.find(s => s.value === inputSrs) || {};
 
+    if (!coordinates.length) {
+        errors.push('noInputData');
+    }
     if (!inputSrs || !outputSrs) {
         errors.push('crs');
     }
-    const { system: outputSystem } = SRS.find(s => s.value === outputSrs) || {};
-    if (!input3D && outputSystem === 'PROJ_3D') {
-        errors.push('xyz');
+    if (!input3D && output3D) {
+        errors.push('2DTo3D');
     }
     // No need to check warnings
     if (errors.length) {
         return { errors, warnings };
     }
-    if (input3D !== output3D) {
-        warnings.push(input3D ? '3DTo2D' : '2DTo3D');
+    if (input3D && !output3D) {
+        warnings.push('3DTo2D');
     }
     if (coordinates.some(coord => !validateCoordinate(coord, input3D))) {
         warnings.push('coordinates');
     }
-    if (coordinates.some(coord => !validateCoordInBounds(coord, inputSrs))) {
+    if (bounds.length === 4 && coordinates.some(coord => !validateCoordInBounds(coord, inputSrs, bounds))) {
         warnings.push('bbox');
     }
+    // FIXME?: coordinates.length / FETCH_SIZE > 10 etc.. or remove
     if (files.length && files[0].size > 10 * 1024 * 1024) {
         warnings.push('largeFile');
     }
@@ -142,10 +146,10 @@ export const getDecimalCount = (decimalValue, format) => {
     }
 };
 
-export const validateCoordInBounds = (coord, srs) => {
-    const { bounds } = SRS.find(s => s.value === srs) || {};
-    if (!bounds || bounds.length !== 4) {
-        return true;
+const validateCoordInBounds = (coord, srs, bounds) => {
+    // used only after validateCoordinate in validateTransform
+    if (typeof coord.x !== 'number' || typeof coord.y !== 'number') {
+        return true; // skip bbox check for invalid
     }
     const swap = !isLonFirst(srs);
     const x = swap ? coord.y : coord.x;
