@@ -1,4 +1,5 @@
-import { parseCoordinateValue, getDMS, getDimension, isDegreeSystem, is3DSystem, getSrsUnit, isLonFirst, validateCoordinate } from './helper';
+import { parseCoordinateValue, getDMS, getDimension, isDegreeSystem, is3DSystem, getSrsUnit, isLonFirst, validateCoordinate, validateFileSettings } from './helper';
+import { FILE_DEFAULTS } from './constants';
 
 describe('srs functions', () => {
     test('returns defaults', () => {
@@ -32,6 +33,26 @@ describe('validateCoordinate function', () => {
     test('returns false for invalid', () => {
         expect(validateCoordinate({ x:'10', y:'20' })).toBe(false); // not number
         expect(validateCoordinate({ x:10, y:20 }, is3D)).toBe(false); // z missing
+    });
+});
+
+describe('validateFileSettings function', () => {
+    test('returns true for valid', () => {
+        const valid = []; // no errors
+        //  (state, type) => selects = state[type] => use 'test' for common
+        expect(validateFileSettings({ test: {} }, 'test')).toEqual(['noDelimiter', 'noDecimalSeparator']);
+        const test = { delimiter: ',', decimalSeparator: ','};
+        expect(validateFileSettings({ test }, 'test')).toEqual(['doubleComma']);
+        test.delimiter = ' ';
+        test.unit = 'DD MM';
+        expect(validateFileSettings({ test }, 'test')).toEqual(['doubleSpace']);
+        // import
+        const importSettings = { ...FILE_DEFAULTS.import, delimiter: ' ', decimalSeparator: ','};
+        expect(validateFileSettings({ import: importSettings, files: [] }, 'import')).toEqual(['noInputFile']);
+        expect(validateFileSettings({ import: importSettings, files: [''], fileContents: {} }, 'import')).toEqual(valid);
+        // export
+        expect(validateFileSettings({ ...FILE_DEFAULTS }, 'export')).toEqual(['noFileName']);
+        expect(validateFileSettings({ export: { ...FILE_DEFAULTS.export, fileName: 'test' }}, 'export')).toEqual(valid);
     });
 });
 
