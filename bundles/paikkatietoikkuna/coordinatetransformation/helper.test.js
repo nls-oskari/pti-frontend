@@ -1,5 +1,19 @@
-import { parseCoordinateValue, getDMS, getDimension, isDegreeSystem, is3DSystem, getSrsUnit, isLonFirst, validateCoordinate, validateFileSettings, validateTransform } from './helper';
 import { FILE_DEFAULTS } from './constants';
+import {
+    parseCoordinateValue,
+    getDMS,
+    getDimension,
+    isDegreeSystem,
+    is3DSystem,
+    getSrsUnit,
+    isLonFirst,
+    validateCoordinate,
+    validateFileSettings,
+    validateTransform,
+    getLabelForMarker,
+    coordinatesToCSV,
+    parseKomuResponse
+} from './helper';
 
 describe('srs functions', () => {
     test('returns defaults', () => {
@@ -19,6 +33,27 @@ describe('srs functions', () => {
         const srs = 'EPSG:3067'; // TM35FIN
         expect(isLonFirst(srs)).toEqual(true);
         expect(getSrsUnit(srs)).toEqual('metre');
+    });
+});
+
+describe('request & response', () => {
+    test('returns true for valid', () => {
+        const coordinates = [...Array(5)].map((empty, z) => ({ x:383715, y: 6676275, z }));
+        const csv3D = coordinatesToCSV(coordinates, 3);
+        expect(parseKomuResponse(csv3D)).toEqual(coordinates);
+        // z is ignored for 2D
+        const csv2D = coordinatesToCSV(coordinates, 2);
+        expect(parseKomuResponse(csv2D)).toEqual(coordinates.map(c => ({ ...c, z: undefined })));
+    });
+});
+
+describe('getLabelForMarker function', () => {
+    test('returns label', () => {
+        const coordinate = { x: 10.1, y: 12.2, z: 10 };
+        expect(getLabelForMarker(coordinate, 'EPSG:3067')).toEqual('E: 10,1, N: 12,2');
+        expect(getLabelForMarker(coordinate, 'EPSG:5048')).toEqual('N: 10,1, E: 12,2');
+        expect(getLabelForMarker(coordinate, 'EPSG:10689')).toEqual('Lat: 10,1, Lon: 12,2, h: 10');
+        expect(getLabelForMarker(coordinate, 'EPSG:10688')).toEqual('X: 10,1, Y: 12,2, Z: 10');
     });
 });
 
@@ -82,7 +117,7 @@ describe('validateTransform function', () => {
         // localization keys (transform.validate) for warnings
         expect(validateTransform({ ...state, outputHeightSrs: null }).warnings).toEqual(['3DTo2D']);
         expect(validateTransform({ ...state, coordinates }).warnings).toEqual(['bbox']);
-        expect(validateTransform({ ...state, coordinates: [{}] }).warnings).toEqual(['coordinates']); // skips bbox check 
+        expect(validateTransform({ ...state, coordinates: [{}] }).warnings).toEqual(['coordinates']); // skips bbox check
         expect(validateTransform({ ...state, coordinates: [...coordinates, {}] }).warnings).toEqual(['coordinates', 'bbox']);
     });
 });
