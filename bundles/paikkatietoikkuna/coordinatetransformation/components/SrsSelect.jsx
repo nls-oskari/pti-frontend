@@ -4,12 +4,13 @@ import styled from 'styled-components';
 import { Message } from 'oskari-ui';
 import { LabeledSelect } from './LabeledFields';
 import { ComponentLabel } from './ComponentLabel';
-import { BUNDLE, DATUM, SYSTEM, PROJECTION, SRS, SRS_H } from '../constants';
+import { BUNDLE, DATUM, SYSTEM, PROJECTION, SRS, SRS_H, SRS_C } from '../constants';
 import { getDimension } from '../helper';
 
 // Use EPSG code as data-value (tests) and title
 const SRS_OPTIONS = SRS.map(opt => ({ ...opt, title: opt.value, 'data-value': opt.value }));
 const HEIGHT_OPTIONS = SRS_H.map(opt => ({ ...opt, title: opt.value, 'data-value': opt.value }));
+const COMPOUND_OPTIONS = SRS_C.map(opt => ({ ...opt, title: opt.value, 'data-value': opt.value }));
 // data-value for tests
 const DATUM_OPTIONS = DATUM.map(opt => ({ ...opt, 'data-value': opt.value }));
 const SYSTEM_OPTIONS = SYSTEM.map(opt => ({ ...opt, 'data-value': opt.value }));
@@ -25,6 +26,7 @@ const filter = (input, {label, value, replaced=''}) => `${label} ${value} ${repl
 
 const Srs = ({ srs, options, type, controller, block = false, mandatory = true }) => {
     const [isOpen, setOpen] = useState(false);
+    const [isSearch, setSearch] = useState(false);
     const placeholder = Oskari.getMsg(BUNDLE, `actions.${isOpen ? 'search': 'select'}`);
     // For some reason onOpenChange={open => setOpen(open)} doesn't work, use focus & blur
     return <LabeledSelect localize showSearch
@@ -38,8 +40,10 @@ const Srs = ({ srs, options, type, controller, block = false, mandatory = true }
         info='geodeticCoordinateSystem'
         value={srs}
         placeholder={placeholder}
-        options={options}
+        options={isSearch ? [...options, ...COMPOUND_OPTIONS] : options}
         controller={controller}
+        onSearch={value => setSearch(value?.length > 1)}
+        onSelect={() => setSearch(false)}
         onChange={val => controller.setSrs(type, val)}/>
 };
 
