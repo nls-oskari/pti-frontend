@@ -7,14 +7,28 @@ import { ComponentLabel } from './ComponentLabel';
 import { BUNDLE, DATUM, SYSTEM, PROJECTION, SRS, SRS_H, SRS_C } from '../constants';
 import { getDimension } from '../helper';
 
-// Use EPSG code as data-value (tests) and title
-const SRS_OPTIONS = SRS.map(opt => ({ ...opt, title: opt.value, 'data-value': opt.value }));
-const HEIGHT_OPTIONS = SRS_H.map(opt => ({ ...opt, title: opt.value, 'data-value': opt.value }));
-const COMPOUND_OPTIONS = SRS_C.map(opt => ({ ...opt, title: opt.value, 'data-value': opt.value }));
-// data-value for tests
-const DATUM_OPTIONS = DATUM.map(opt => ({ ...opt, 'data-value': opt.value }));
-const SYSTEM_OPTIONS = SYSTEM.map(opt => ({ ...opt, 'data-value': opt.value }));
-const PROJECTION_OPTIONS = PROJECTION.map(opt => ({ ...opt, 'data-value': opt.value }));
+// Use EPSG code as data-value (tests) and title for srs options
+const mapForOptions = (list, addTitle) => {
+    return list.map(({ name, axes, reversed, ...opt }) => { // remove name
+        const option = {...opt, 'data-value': opt.value };
+        if (addTitle) {
+            option.title = opt.value;
+        }
+        if (reversed && axes) {
+            option.label = opt.label + ` (${axes.join()})`
+        }
+        return option;
+    });
+};
+// Show only E,N option for TMx, TM35FIN
+const SIMPLE_SRS = SRS.filter(opt => !opt.reversed || opt.axes[0] === 'E')
+    .map(({ value, label, replaced, loc, args }) => ({ value, label, replaced, loc, args, 'data-value': value, title: value }));
+
+const SRS_OPTIONS = mapForOptions([...SRS, ...SRS_C], true);
+const HEIGHT_OPTIONS = mapForOptions(SRS_H, true);
+const DATUM_OPTIONS = mapForOptions(DATUM);
+const SYSTEM_OPTIONS = mapForOptions(SYSTEM);
+const PROJECTION_OPTIONS = mapForOptions(PROJECTION);
 
 const Content = styled.div`
     display: flex;
@@ -24,7 +38,7 @@ const Content = styled.div`
 
 const filter = (input, {label, value, replaced=''}) => `${label} ${value} ${replaced}`.toLowerCase().includes(input.toLowerCase());
 
-const Srs = ({ srs, options, type, controller, block = false, mandatory = true }) => {
+const Srs = ({ srs, options = SIMPLE_SRS, type, controller, block = false, mandatory = true }) => {
     const [isOpen, setOpen] = useState(false);
     const [isSearch, setSearch] = useState(false);
     const placeholder = Oskari.getMsg(BUNDLE, `actions.${isOpen ? 'search': 'select'}`);
@@ -40,7 +54,7 @@ const Srs = ({ srs, options, type, controller, block = false, mandatory = true }
         info='geodeticCoordinateSystem'
         value={srs}
         placeholder={placeholder}
-        options={isSearch ? [...options, ...COMPOUND_OPTIONS] : options}
+        options={isSearch ? SRS_OPTIONS : options}
         controller={controller}
         onSearch={value => setSearch(value?.length > 1)}
         onSelect={() => setSearch(false)}
@@ -67,7 +81,7 @@ const Height = ({ srs, heightSrs, type, block = false, controller }) => {
 export const ImportSrsSelect = ({ srs, heightSrs, controller }) => {
     return (
         <Content className='t_srs_import'>
-            <Srs mandatory={false} srs={srs} options={SRS_OPTIONS} type='import' controller={controller} />
+            <Srs mandatory={false} srs={srs} type='import' controller={controller} />
             <Height srs={srs} heightSrs={heightSrs} type='import' controller={controller} />
         </Content>
     );
@@ -78,7 +92,7 @@ export const SrsSelect = ({ srs, heightSrs, type, minimal, controller }) => {
         return (
             <Content className={`t_srs_${type}`}>
                 <ComponentLabel label={`flyout.coordinateSystem.${type}.title`}/>
-                <Srs block srs={srs} options={SRS_OPTIONS} type={type} controller={controller} />
+                <Srs block srs={srs} type={type} controller={controller} />
                 <Height block srs={srs} heightSrs={heightSrs} type={type} controller={controller} />
             </Content>
         );
