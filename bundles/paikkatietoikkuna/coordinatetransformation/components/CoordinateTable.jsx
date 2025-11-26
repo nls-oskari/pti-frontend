@@ -97,7 +97,7 @@ const getColumns = (srs, heightSrs, controller) => {
             width: colWidth,
             render: controller
                 ? (value, item, row) => <StyledInput size='small' value={value}
-                    status={value && isNaN(value) ? 'error' : ''}
+                    status={typeof value !== 'undefined' && isNaN(value) ? 'error' : ''}
                     onChange={e => controller.updateCoordinate(row, { ...item, [col]: e.target.value })}
                     onBlur={() => controller.parseInputCoordinate(row, col)} />
                 : undefined
