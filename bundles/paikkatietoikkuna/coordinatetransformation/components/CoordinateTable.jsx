@@ -22,6 +22,7 @@ const StyledTable = styled(Table)`
         padding: ${props => props.$editable ? '0px' : '4px 8px 2px'} !important;
         height: 26px;
         font-size: 12px;
+        white-space: nowrap;
     }
     .ant-table-thead {
         height: ${props => props.$large ? 52 : 34}px;
