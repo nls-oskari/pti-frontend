@@ -200,15 +200,22 @@ class UIHandler extends StateHandler {
         }
     }
 
-    // parse float on table input blur
+    // parse float on input blur
     parseInputCoordinate (row, column) {
         const { coordinates } = this.getState();
         const index = this.getIndexForRow(row);
-        const coord = coordinates[index] || {};
-        const parsed = parseCoordinateValue(coord[column]);
-        // use orginal value for NaN
-        const updated = isNaN(parsed) ? coord : { ...coord, [column]: parsed };
-        this.updateCoordinate(row, updated);
+        const value = coordinates[index]?.[column];
+        if (typeof value === 'number') {
+            // already parsed
+            return;
+        }
+        const parsed = parseCoordinateValue(value);
+        if (isNaN(parsed)) {
+            // use orginal value for NaN
+            return;
+        }
+        const updatedCoordinates = coordinates.map((coord = {}, i) => i === index ? { ...coord, [column]: parsed } : coord);
+        this.updateState({ coordinates: updatedCoordinates });
     }
 
     swapCoordinates () {
