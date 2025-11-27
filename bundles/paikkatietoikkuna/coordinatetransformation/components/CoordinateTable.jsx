@@ -51,9 +51,11 @@ const Cell = ({ value, item, onChange }) => {
         />
     );
 };
+const getFillCount = (array, { pageSize = 10 }) => pageSize - array.length % pageSize;
 
-const getFilledArray = (array, { pageSize = 10 }) => {
-    const empty = [...Array(pageSize - array.length % pageSize)].map(() => ({})); // .map((a,key) => ({...a, key }));
+const getFilledArray = (array, pagination) => {
+    const fillCount = getFillCount(array, pagination);
+    const empty = [...Array(fillCount)].map(() => ({})); // .map((a,key) => ({...a, key }));
     return [...array, ...empty];
 };
 
@@ -137,11 +139,10 @@ CoordinatesTable.propTypes = {
     pagination: PropTypes.object.isRequired
 };
 
-export const ResultsTable = ({ coordinates, results, outputSrs, outputHeightSrs, transformed, largeHeader, pagination, controller }) =>  {
+export const ResultsTable = ({ coordinates, results, count, outputSrs, outputHeightSrs, transformed, largeHeader, pagination, controller }) =>  {
     const dataSource = getFilledArray(results, pagination);
-    const count = coordinates.filter(coord => coord && !coord.invalid).length;
+    const paginationCount = coordinates.length + getFillCount(coordinates, pagination);
     const outdated = results.length > 0 && !transformed;
-    const validLengths = coordinates.length === results.length;
     return (
         <Content className='t_table_output'>
             <ComponentLabel height={LABEL_HEIGHT} label='flyout.coordinateTable.output'>
@@ -159,7 +160,7 @@ export const ResultsTable = ({ coordinates, results, outputSrs, outputHeightSrs,
                     ...pagination,
                     hideOnSinglePage: true,
                     showSizeChanger: false,
-                    total: coordinates.length,
+                    total: paginationCount,
                     onChange: (page, pageSize) => controller.setPagination(page, pageSize)
                 }}/>
         </Content>
@@ -169,6 +170,7 @@ export const ResultsTable = ({ coordinates, results, outputSrs, outputHeightSrs,
 ResultsTable.propTypes = {
     coordinates: PropTypes.array.isRequired,
     results: PropTypes.array.isRequired,
+    count: PropTypes.number.isRequired,
     outputSrs: PropTypes.string,
     outputHeightSrs: PropTypes.string,
     transformed: PropTypes.bool.isRequired,
