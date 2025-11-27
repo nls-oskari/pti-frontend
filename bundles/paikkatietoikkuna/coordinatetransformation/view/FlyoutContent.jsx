@@ -7,7 +7,7 @@ import { SourceButtons } from '../components/SourceSelect.jsx';
 import { CoordinatesTable, ResultsTable } from '../components/CoordinateTable.jsx';
 import { SrsSelect } from '../components/SrsSelect';
 import { MandatoryDescription } from '../components/MandatoryDescription';
-import { getDimension } from '../helper';
+import { getDimension, validateCoordinate } from '../helper';
 import { Progress as AntProgress } from 'antd';
 
 const Content = styled.div`
@@ -58,7 +58,9 @@ export const FlyoutContent = ({
 }) => {
     const [ minimalSrs, setMinimalSrs ] = useState(true);
     // Have to check here to use same height for input & output table headers
-    const transform3D = getDimension(inputSrs, inputHeightSrs) === 3 || getDimension(outputSrs, outputHeightSrs) === 3;
+    const input3D = getDimension(inputSrs, inputHeightSrs) === 3;
+    const transform3D = input3D || getDimension(outputSrs, outputHeightSrs) === 3;
+    const count = coordinates.filter(coord => validateCoordinate(coord, input3D)).length;
     return (
         <Content>
             <MandatoryDescription/>
@@ -73,8 +75,8 @@ export const FlyoutContent = ({
             </div>
             <SourceButtons controller={controller} />
             <Splitter>
-                <CoordinatesTable large={transform3D} pagination={pagination} inputSrs={inputSrs} inputHeightSrs={inputHeightSrs} coordinates={coordinates} sources={sources} controller={controller} />
-                <ResultsTable large={transform3D} pagination={pagination} outputSrs={outputSrs} outputHeightSrs={outputHeightSrs} coordinates={coordinates} results={results} transformed={transformed} controller={controller}/>
+                <CoordinatesTable largeHeader={transform3D} pagination={pagination} inputSrs={inputSrs} inputHeightSrs={inputHeightSrs} coordinates={coordinates} sources={sources} controller={controller} />
+                <ResultsTable largeHeader={transform3D} pagination={pagination} count={count} outputSrs={outputSrs} outputHeightSrs={outputHeightSrs} coordinates={coordinates} results={results} transformed={transformed} controller={controller}/>
             </Splitter>
             
             <StyledButtonContainer>
