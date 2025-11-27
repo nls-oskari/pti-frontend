@@ -169,8 +169,14 @@ class UIHandler extends StateHandler {
         this.updateState({ coordinates: cleaned });
     }
 
-    updateCoordinate (index, coordinate) {
+    getIndexForRow (row) {
+        const { current, pageSize } = this.getState().pagination;
+        return (current - 1) * pageSize + row;
+    }
+
+    updateCoordinate (row, coordinate) {
         const updated = [...this.getState().coordinates];
+        const index = this.getIndexForRow(row);
         updated[index] = coordinate;
         // fill empty/undefined with object
         const coordinates = updated.map(c => c ? c : {});
@@ -195,13 +201,14 @@ class UIHandler extends StateHandler {
     }
 
     // parse float on table input blur
-    parseInputCoordinate (index, column) {
+    parseInputCoordinate (row, column) {
         const { coordinates } = this.getState();
+        const index = this.getIndexForRow(row);
         const coord = coordinates[index] || {};
         const parsed = parseCoordinateValue(coord[column]);
         // use orginal value for NaN
         const updated = isNaN(parsed) ? coord : { ...coord, [column]: parsed };
-        this.updateCoordinate(index, updated);
+        this.updateCoordinate(row, updated);
     }
 
     swapCoordinates () {
