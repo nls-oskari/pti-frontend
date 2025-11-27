@@ -151,9 +151,20 @@ class UIHandler extends StateHandler {
         this.confirmPopup = null;
     }
 
-    cleanInputCoordinates () {
+    cleanInputCoordinates (trailingOnly) {
         const { coordinates, inputSrs, inputHeightSrs } = this.getState();
         const input3D = getDimension(inputSrs, inputHeightSrs) === 3;
+
+        if (trailingOnly) {
+            const last = coordinates.findLastIndex(coord => {
+                const { x, y, z } = coord || {};
+                const array = input3D ? [x, y, z] : [x, y];
+                return array.some(c => typeof c === 'number' || c?.trim());
+            });
+            const sliced = coordinates.slice(0, last + 1);
+            this.updateState({ coordinates: sliced });
+            return;
+        }
         const cleaned = coordinates.filter(coord => validateCoordinate(coord, input3D));
         this.updateState({ coordinates: cleaned });
     }
@@ -189,7 +200,7 @@ class UIHandler extends StateHandler {
         const coord = coordinates[index] || {};
         const parsed = parseCoordinateValue(coord[column]);
         // use orginal value for NaN
-        const updated = isNaN(value) ? coord : { ...coord, [column]: parsed };
+        const updated = isNaN(parsed) ? coord : { ...coord, [column]: parsed };
         this.updateCoordinate(index, updated);
     }
 
@@ -508,6 +519,8 @@ class UIHandler extends StateHandler {
     }
 
     transform () {
+        // remove empty trailing coords (table) before validate
+        this.cleanInputCoordinates(true);
         const { warnings, errors } = validateTransform(this.getState());
         if (errors.length) {
             this.showValidationError(errors);
