@@ -162,7 +162,7 @@ class UIHandler extends StateHandler {
         const updated = [...this.getState().coordinates];
         updated[index] = coordinate;
         // fill empty/undefined with object
-        const coordinates = updated.map(c => c ? c : { invalid: true });
+        const coordinates = updated.map(c => c ? c : {});
         this.addSourceToState('table');
         this.updateState({ coordinates, transformed: false });
     }
@@ -183,14 +183,13 @@ class UIHandler extends StateHandler {
         }
     }
 
-    // parse float on blur
+    // parse float on table input blur
     parseInputCoordinate (index, column) {
         const { coordinates } = this.getState();
-        // eslint-disable-next-line no-unused-vars
-        const { invalid: ignored, ...coord } = coordinates[index] || {};
-        const value = parseCoordinateValue(coord[column]);
-        // TODO: use column for invalid/error for styling ?
-        const updated = isNaN(value) ? { ...coord, invalid: true } : { ...coord, [column]: value };
+        const coord = coordinates[index] || {};
+        const parsed = parseCoordinateValue(coord[column]);
+        // use orginal value for NaN
+        const updated = isNaN(value) ? coord : { ...coord, [column]: parsed };
         this.updateCoordinate(index, updated);
     }
 
