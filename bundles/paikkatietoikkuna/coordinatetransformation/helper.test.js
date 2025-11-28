@@ -124,13 +124,13 @@ describe('validateTransform function', () => {
 
 describe('parseCoordinateValue function', () => {
     test('returns float', () => {
-        expect.assertions(8);
-        // TODO: toBeCloseTo
-        // 65.35548333333334
-        // 65.35548333 
+        expect.assertions(12);
+        // TODO: use toBeCloseTo 10 decimals?
         // DD
         expect(parseCoordinateValue('65,35548333°')).toEqual(65.35548333);
         expect(parseCoordinateValue('65,35548333')).toEqual(65.35548333);
+        expect(parseCoordinateValue('65.35548333N')).toEqual(65.35548333);
+        expect(parseCoordinateValue('65.35548333')).toEqual(65.35548333);
         // DD MM
         expect(parseCoordinateValue('65° 21,329\'')).toEqual(65.35548333333334);
         expect(parseCoordinateValue('65 21,329')).toEqual(65.35548333333334);
@@ -140,6 +140,9 @@ describe('parseCoordinateValue function', () => {
         // The coordinates recommended to be used in emergency calls
         expect(parseCoordinateValue('N 65° 21,329\'')).toEqual(65.35548333333334);
         expect(parseCoordinateValue('E 28° 49,125\'')).toEqual(28.81875);
+        // prime & double prime
+        expect(parseCoordinateValue('60°11′57″N')).toEqual(60.19916666666666);
+        expect(parseCoordinateValue('024°56′10″E')).toEqual(24.93611111111111);
     });
     test('returns NaN for invalid', () => {
         expect.assertions(3);
@@ -155,15 +158,18 @@ describe('parseCoordinateValue function', () => {
 
 describe('getDMS function', () => {
     test('returns suitable regexp for parsing', () => {
-        expect.assertions(3);
-        const ddmmss = getDMS('65° 21\' 19,740"');
-        expect(ddmmss.id).toEqual('DDMMSS');
+        expect.assertions(4);
+        let { unit } = getDMS('65° 21\' 19,740"');
+        expect(unit).toEqual('DDMMSS');
 
-        const ddmm = getDMS('65 21,329\'');
-        expect(ddmm.id).toEqual('DDMM');
+        unit = getDMS('60°11′57″N').unit;
+        expect(unit).toEqual('DDMMSS');
 
-        const dd = getDMS('65,35548333°');
-        expect(dd.id).toEqual('DD');
+        unit = getDMS('65 21,329\'').unit;
+        expect(unit).toEqual('DDMM');
+
+        unit = getDMS('65,35548333°').unit;
+        expect(unit).toEqual('DD');
 
         /*
         expect('65° 21\' 19,740"').toMatch(new RegExp(ddmmss.pattern));
