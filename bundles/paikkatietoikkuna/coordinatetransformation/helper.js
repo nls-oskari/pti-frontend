@@ -38,10 +38,7 @@ export const isLonFirst = (srs) => {
 };
 
 export const validateCoordinate = (coord, is3D) => {
-    if (coord.valid === false) {
-        return false;
-    }
-    const { x, y, z } = coord;
+    const { x, y, z } = coord || {};
     const array = is3D ? [x, y, z] : [x, y];
     return !array.some(c => typeof c !== 'number' || isNaN(c));
 };

@@ -32,7 +32,7 @@ Oskari.clazz.define('Oskari.coordinatetransformation.instance',
         },
         getMapCoordinates: function () {
             // remove id
-            return this.tempCoords.map(({ x, y }) => ({ x, y }));
+            return this.tempCoords.map(({ x, y, z }) => ({ x, y, z }));
         },
         setMapCoordinates: function (coords) {
             // Remove previous
@@ -55,6 +55,7 @@ Oskari.clazz.define('Oskari.coordinatetransformation.instance',
                 const coord = {
                     x: parseInt(lon),
                     y: parseInt(lat),
+                    z: 0,
                     id: ID_PREFIX + Oskari.getSeq(this.getName()).nextVal()
                 };
                 this.tempCoords.push(coord);

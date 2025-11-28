@@ -151,18 +151,35 @@ class UIHandler extends StateHandler {
         this.confirmPopup = null;
     }
 
-    cleanInputCoordinates () {
+    cleanInputCoordinates (trailingOnly) {
         const { coordinates, inputSrs, inputHeightSrs } = this.getState();
         const input3D = getDimension(inputSrs, inputHeightSrs) === 3;
+
+        if (trailingOnly) {
+            const last = coordinates.findLastIndex(coord => {
+                const { x, y, z } = coord || {};
+                const array = input3D ? [x, y, z] : [x, y];
+                return array.some(c => typeof c === 'number' || c?.trim());
+            });
+            const sliced = coordinates.slice(0, last + 1);
+            this.updateState({ coordinates: sliced });
+            return;
+        }
         const cleaned = coordinates.filter(coord => validateCoordinate(coord, input3D));
         this.updateState({ coordinates: cleaned });
     }
 
-    updateCoordinate (index, coordinate) {
+    getIndexForRow (row) {
+        const { current, pageSize } = this.getState().pagination;
+        return (current - 1) * pageSize + row;
+    }
+
+    updateCoordinate (row, coordinate) {
         const updated = [...this.getState().coordinates];
+        const index = this.getIndexForRow(row);
         updated[index] = coordinate;
         // fill empty/undefined with object
-        const coordinates = updated.map(c => c ? c : { invalid: true });
+        const coordinates = updated.map(c => c ? c : {});
         this.addSourceToState('table');
         this.updateState({ coordinates, transformed: false });
     }
@@ -183,15 +200,22 @@ class UIHandler extends StateHandler {
         }
     }
 
-    // parse float on blur
-    parseInputCoordinate (index, column) {
+    // parse float on input blur
+    parseInputCoordinate (row, column) {
         const { coordinates } = this.getState();
-        // eslint-disable-next-line no-unused-vars
-        const { invalid: ignored, ...coord } = coordinates[index] || {};
-        const value = parseCoordinateValue(coord[column]);
-        // TODO: use column for invalid/error for styling ?
-        const updated = isNaN(value) ? { ...coord, invalid: true } : { ...coord, [column]: value };
-        this.updateCoordinate(index, updated);
+        const index = this.getIndexForRow(row);
+        const value = coordinates[index]?.[column];
+        if (typeof value === 'number') {
+            // already parsed
+            return;
+        }
+        const parsed = parseCoordinateValue(value);
+        if (isNaN(parsed)) {
+            // use orginal value for NaN
+            return;
+        }
+        const updatedCoordinates = coordinates.map((coord = {}, i) => i === index ? { ...coord, [column]: parsed } : coord);
+        this.updateState({ coordinates: updatedCoordinates });
     }
 
     swapCoordinates () {
@@ -509,6 +533,8 @@ class UIHandler extends StateHandler {
     }
 
     transform () {
+        // remove empty trailing coords (table) before validate
+        this.cleanInputCoordinates(true);
         const { warnings, errors } = validateTransform(this.getState());
         if (errors.length) {
             this.showValidationError(errors);
