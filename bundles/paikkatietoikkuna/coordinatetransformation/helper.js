@@ -343,15 +343,15 @@ export const getDMS = value => {
     };
 };
 
-const dmsToDegree =  (dms, id) => {
+const dmsToDegree =  (dms, unit) => {
     const parts = dms?.map(n => parseFloat(n)) || [];
-    if (id === 'DD' || parts.length === 1) {
+    if (unit === 'DD' || parts.length === 1) {
         return parts[0];
     }
-    if (id === 'DDMM' || parts.length === 2) {
+    if (unit === 'DDMM' || parts.length === 2) {
         return parts[0] + (parts[1] / HOUR_TO_MIN);
     }
-    if (id === 'DDMMSS' || parts.length === 3) {
+    if (unit === 'DDMMSS' || parts.length === 3) {
         return parts[0] + (parts[1] / HOUR_TO_MIN) + (parts[2] / HOUR_TO_SEC);
     }
     return NaN;
@@ -366,10 +366,10 @@ export const parseCoordinateValue = value => {
     }
     value = value.trim().replace(',', '.');
     // DMS (° ' ")
-    const { regexp, id } = getDMS(value);
+    const { regexp, unit } = getDMS(value);
     if (regexp) {
         const dms = value.match(regexp)?.slice(1);
-        return dmsToDegree(dms, id);
+        return dmsToDegree(dms, unit);
     }
     // DMS with spaces only
     if (value.includes(' ')) {
