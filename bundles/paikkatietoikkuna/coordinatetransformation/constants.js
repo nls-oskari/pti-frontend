@@ -97,17 +97,22 @@ export const DEGREE = [
 ];
 export const DEGREE_DECIMALS = DEGREE.find(d => d.value === 'degree')?.decimals;
 export const DMS = ['\u00B0', '\u0027', '\u0022'];
+
 export const DMS_PATTERNS = [
     {
-        id: 'DDMMSS',
+        unit: 'DDMMSS',
         char: '\u0022', // quotation mark
         pattern: '(-?\\d+)[\u00B0d]\\s*(-?\\d+)\u0027\\s*(-?\\d+(?:\\.\\d+)?)\u0022'
     }, {
-        id: 'DDMM',
+        unit: 'DDMMSS',
+        char: '\u2033', // double prime
+        pattern: '(-?\\d+)[\u00B0d]\\s*(-?\\d+)\u2032\\s*(-?\\d+(?:\\.\\d+)?)\u2033' //prime & double prime
+    }, {
+        unit: 'DDMM',
         char: '\u0027', // apostrophe
         pattern: '(-?\\d+)[\u00B0d]\\s*(-?\\d+(?:\\.\\d+)?)[\u0027]\\s*'
     }, {
-        id: 'DD',
+        unit: 'DD',
         char: '\u00B0', // degree mark
         pattern: '(\\d+(?:\\.\\d+)?)[\u00B0d]\\s*'
     }

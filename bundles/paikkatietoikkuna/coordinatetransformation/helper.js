@@ -25,7 +25,7 @@ export const getSrsUnit = srs => {
     const { system } = SRS.find(s => s.value === srs) || {};
     const { unit } = SYSTEM.find(c => c.value === system) || {};
 
-    return unit || 'metric';
+    return unit || 'metre';
 };
 
 export const isLonFirst = (srs) => {
@@ -49,27 +49,31 @@ export const validateTransform = (state) => {
     const warnings = [];
     const input3D = getDimension(inputSrs, inputHeightSrs) === 3;
     const output3D = getDimension(outputSrs, outputHeightSrs) === 3;
+    const { bounds = [] } = SRS.find(s => s.value === inputSrs) || {};
 
+    if (!coordinates.length) {
+        errors.push('noInputData');
+    }
     if (!inputSrs || !outputSrs) {
         errors.push('crs');
     }
-    const { system: outputSystem } = SRS.find(s => s.value === outputSrs) || {};
-    if (!input3D && outputSystem === 'PROJ_3D') {
-        errors.push('xyz');
+    if (!input3D && output3D) {
+        errors.push('2DTo3D');
     }
     // No need to check warnings
     if (errors.length) {
         return { errors, warnings };
     }
-    if (input3D !== output3D) {
-        warnings.push(input3D ? '3DTo2D' : '2DTo3D');
+    if (input3D && !output3D) {
+        warnings.push('3DTo2D');
     }
     if (coordinates.some(coord => !validateCoordinate(coord, input3D))) {
         warnings.push('coordinates');
     }
-    if (coordinates.some(coord => !validateCoordInBounds(coord, inputSrs))) {
+    if (bounds.length === 4 && coordinates.some(coord => !validateCoordInBounds(coord, inputSrs, bounds))) {
         warnings.push('bbox');
     }
+    // FIXME?: coordinates.length / FETCH_SIZE > 10 etc.. or remove
     if (files.length && files[0].size > 10 * 1024 * 1024) {
         warnings.push('largeFile');
     }
@@ -87,10 +91,10 @@ export const validateFileSettings = (state, type) => {
         errors.push('noDecimalSeparator');
     }
 
-    if (selects.decimalSeparator === ',' && selects.delimiter === 'comma') {
+    if (selects.decimalSeparator === ',' && selects.delimiter === ',') {
         errors.push('doubleComma');
     }
-    if (selects.delimiter === 'space' && (selects.unit === 'DD MM SS' || selects.unit === 'DD MM')) {
+    if (selects.delimiter === ' ' && (selects.unit === 'DD MM SS' || selects.unit === 'DD MM')) {
         errors.push('doubleSpace');
     }
     if (type === 'import') {
@@ -113,12 +117,12 @@ export const validateFileSettings = (state, type) => {
     return errors;
 };
 
-export const getDecimalCount = (decimalValue, unit) => {
+export const getDecimalCount = (decimalValue, format) => {
     const decimals = parseInt(decimalValue);
     if (isNaN(decimals)) {
         return 0;
     }
-    switch (unit) {
+    switch (format) {
     case 'metric':
         return decimals;
     case 'DD MM SS':
@@ -139,10 +143,10 @@ export const getDecimalCount = (decimalValue, unit) => {
     }
 };
 
-export const validateCoordInBounds = (coord, srs) => {
-    const { bounds } = SRS.find(s => s.value === srs) || {};
-    if (!bounds || bounds.length !== 4) {
-        return true;
+const validateCoordInBounds = (coord, srs, bounds) => {
+    // used only after validateCoordinate in validateTransform
+    if (typeof coord.x !== 'number' || typeof coord.y !== 'number') {
+        return true; // skip bbox check for invalid
     }
     const swap = !isLonFirst(srs);
     const x = swap ? coord.y : coord.x;
@@ -336,15 +340,15 @@ export const getDMS = value => {
     };
 };
 
-const dmsToDegree =  (dms, id) => {
+const dmsToDegree =  (dms, unit) => {
     const parts = dms?.map(n => parseFloat(n)) || [];
-    if (id === 'DD' || parts.length === 1) {
+    if (unit === 'DD' || parts.length === 1) {
         return parts[0];
     }
-    if (id === 'DDMM' || parts.length === 2) {
+    if (unit === 'DDMM' || parts.length === 2) {
         return parts[0] + (parts[1] / HOUR_TO_MIN);
     }
-    if (id === 'DDMMSS' || parts.length === 3) {
+    if (unit === 'DDMMSS' || parts.length === 3) {
         return parts[0] + (parts[1] / HOUR_TO_MIN) + (parts[2] / HOUR_TO_SEC);
     }
     return NaN;
@@ -359,10 +363,10 @@ export const parseCoordinateValue = value => {
     }
     value = value.trim().replace(',', '.');
     // DMS (° ' ")
-    const { regexp, id } = getDMS(value);
+    const { regexp, unit } = getDMS(value);
     if (regexp) {
         const dms = value.match(regexp)?.slice(1);
-        return dmsToDegree(dms, id);
+        return dmsToDegree(dms, unit);
     }
     // DMS with spaces only
     if (value.includes(' ')) {

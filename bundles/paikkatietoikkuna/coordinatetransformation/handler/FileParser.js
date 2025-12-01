@@ -131,7 +131,7 @@ export const parseValue = (value, format = 'metric') => {
     return asNumber;
 };
 
-const interpretFileContents = (lines = [], dimension) => {
+const interpretFileContents = (lines = [], dimension = 2) => {
     const midIndex = Math.floor(lines.length / 2);
     const dataLine = lines[midIndex];
     const delimiter = detectDelimiter(dataLine);
@@ -163,7 +163,7 @@ const detectDecimalSeparator = (line = '', delimiter = ';') => {
     return '.';
 };
 
-const detectDelimiter = (line) => {
+export const detectDelimiter = (line) => {
     const delimiters = [';', '\t', '|'];
     let maxCount = 0;
     let bestDelimiter = ';';
@@ -185,7 +185,7 @@ const detectDelimiter = (line) => {
     return pointDecimalSeparator ? ',' : ' ';
 };
 
-const detectEpsgCodes = (headerLine) => {
+export const detectEpsgCodes = (headerLine) => {
     const codes = headerLine
         .replace(/\D/g, ' ') // replace non digits with white space
         .split(' ')
@@ -233,7 +233,7 @@ const countHeaders = (lines = [], delimiter) => {
     return headerLines;
 };
 
-const countPrefixColoumns = (row, nextRow, delimiter, dimension) => {
+export const countPrefixColoumns = (row, nextRow, delimiter, dimension) => {
     const cells = row.split(delimiter).map(cell => normalizeForNaN(cell));
     if (cells.length <= dimension) {
         return 0;

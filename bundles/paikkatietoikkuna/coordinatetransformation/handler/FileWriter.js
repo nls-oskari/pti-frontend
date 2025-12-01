@@ -3,7 +3,7 @@ import { getDimension, isDegreeSystem, isLonFirst, getDecimalCount } from '../he
 
 const CRS = 'Coordinate Reference System';
 
-const toDegree = (coord, unit, decimals) => { //, isLon)
+export const toDegree = (coord, unit, decimals) => { //, isLon)
     if (unit === 'DD' || unit === 'degree') {
         return coord.toFixed(decimals);
     }
@@ -37,7 +37,7 @@ const toDegree = (coord, unit, decimals) => { //, isLon)
     return dd + separator + mm + separator + ss;
 };
 
-const addCardinal = (coord, isLon) => {
+export const addCardinal = (coord, isLon) => {
     if (coord.startsWith('-')) {
         const cardinal = isLon ? 'W' : 'S';
         return coord.substring(1) + cardinal;
@@ -46,7 +46,7 @@ const addCardinal = (coord, isLon) => {
     return coord + cardinal;
 };
 
-const getFileContent = ({
+const getCoordinates = ({
     results,
     outputSrs,
     outputHeightSrs,
@@ -68,8 +68,8 @@ const getFileContent = ({
     const dimension = getDimension(outputSrs, outputHeightSrs);
     const isDegree = isDegreeSystem(outputSrs);
     // Force to 'metric' for non degree as select isn't shown for user
-    const decimalUnit = isDegree ? unit : 'metric';
-    const decimals = getDecimalCount(decimalCount, decimalUnit);
+    const decimalFormat = isDegree ? unit : 'metric';
+    const decimals = getDecimalCount(decimalCount, decimalFormat);
 
     const lonFirst = axisFlip ? !isLonFirst(outputSrs) : isLonFirst(outputSrs);
     const lonIndex = lonFirst ? 0 : 1;
@@ -86,7 +86,7 @@ const getFileContent = ({
 
         // replace point and writeCardinals if needed
         row = row.map(r => replace ? r.replace('.', ',') : r)
-            .map((r, i) => writeCardinals ? addCardinal(r, i === lonIndex) : r);
+            .map((r, i) => writeCardinals && i < 2 ? addCardinal(r, i === lonIndex) : r);
 
         if (prefixColCount > 0) {
             // use stored from imported file if available
@@ -122,9 +122,9 @@ const createSrsHeader = (srs, height, axisFlip, decimalUnit) => {
     return `${CRS}: ${epsg.join(' + ')} - ${labels.join(' + ')} - axes: ${modAxes.join()}${reversed} - unit: ${systemUnit}${selectedUnit}`;
 };
 
-export const exportStateToFile = (state) => {
+export const getFileContent = (state) => {
     const { outputSrs, outputHeightSrs, fileContents } = state;
-    const { fileName, lineSeparator, createHeader, writeHeaders, axisFlip, unit, delimiter } = state.export;
+    const { lineSeparator, createHeader, writeHeaders, axisFlip, unit, delimiter } = state.export;
 
     const content = [];
     if (createHeader) {
@@ -134,9 +134,15 @@ export const exportStateToFile = (state) => {
     if (writeHeaders) {
         fileContents?.headers?.forEach(header => content.push(header.join(delimiter)));
     }
-    const text = getFileContent(state);
-    content.push(text);
-    const file = new Blob([content.join(lineSeparator)], { type: 'text/plain' }); // transparent, native
+    const coords = getCoordinates(state);
+    content.push(coords);
+    return content.join(lineSeparator);
+};
+
+export const exportStateToFile = (state) => {
+    const content = getFileContent(state);
+    const file = new Blob([content], { type: 'text/plain' });
+    const { fileName } = state.export;
     loadFile(file, fileName);
 };
 

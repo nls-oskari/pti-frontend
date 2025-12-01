@@ -83,7 +83,6 @@ Oskari.registerLocalization(
                 "title": "Observera!",
                 "message": "Observera följande begränsningar för val eller koordinater före transformationen. Vill du fortsätta?",
                 "3DTo2D": "I de utgångsuppgifter du valt finns höjdvärden, men inte i resultatuppgifterna. Höjvärden ingår alltså inte i resultatkoordinaterna.",
-                "2DTo3D": "I de resultatuppgifter du valt finns höjdvärden, men inte i utgångsuppgifterna. Utgångsmaterialet ges höjdvärdet 0 och höjdsystemet N2000.",
                 "coordinates": "Det finns ogiltiga rader i koordinaterna som ska transformeras. De ogiltiga raderna kommer att tas bort före transformationen.",
                 "bbox": "Koordinaterna som ska transformeras ligger utanför täckningsområde av referenssystemet för koordinater. Koordinatvärdena måste vara i den axelordning som definieras av referenssystemet för koordinater.",
                 "largeFile": "Transformation av stora filer kan ta flera minuter."
@@ -91,7 +90,7 @@ Oskari.registerLocalization(
             "validate": {
                 "title": "Fel!",
                 "message": "Det finns brister eller fel i valen. Beakta följande krav och försök på nytt.",
-                "xyz": "I valen som berör utgångsreferenssystemet för koordinater finns inget höjdsystem. En omvandling till ett kartesiskt 3D-system kan inte göras.",
+                "2DTo3D": "I valen som berör utgångsreferenssystemet för koordinater finns inget höjdsystem. En omvandling till ett 3D-system kan inte göras.",
                 "crs": "Ett geodetiskt referenssystem för koordinater ska vara valt både i utgångs- och resultatuppgifterna.",
                 "noInputData": "Det finns inga koordinater som kan transformeras.",
                 "noInputFile": "Filen som innehåller utgångsmaterial ska vara vald.",
