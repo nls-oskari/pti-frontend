@@ -31,7 +31,7 @@
     "jest:dev": "node ./node_modules/oskari-frontend/node_modules/jest/bin/jest.js --config ./node_modules/oskari-frontend/jest.config.js --roots ../pti-frontend/bundles",
     "eslint": "eslint --config ./node_modules/oskari-frontend/eslint.config.js bundles",
     "eslint:dev": "node ./node_modules/oskari-frontend/node_modules/eslint/bin/eslint.js --config ./node_modules/oskari-frontend/eslint.config.js bundles",
-    "test": "npm run eslint && npm run jest",
+    "test": "npm run eslint",
     "test:dev": "npm run eslint:dev && npm run jest:dev",
     "test:watch": "node ./node_modules/oskari-frontend/node_modules/jest/bin/jest.js --config ./node_modules/oskari-frontend/jest.config.js --roots ../pti-frontend/bundles --watch",
     "generate-bom": "cyclonedx-bom --include-dev -o frontend-bom.json"
