@@ -150,7 +150,7 @@ class UIHandler extends StateHandler {
             this.reset();
             this.setSource(source);
         };
-        showConfirm('dataSource.title', 'dataSource.confirmChange', { onConfirm });
+        this.showConfirm('dataSource.title', 'dataSource.confirmChange', { onConfirm });
     }
 
     confirmTransform (warningKeys) {
@@ -471,7 +471,7 @@ class UIHandler extends StateHandler {
             this.instance.setMapSelectionMode();
             this.instance.toggleFlyout(true);
             this.closeMapPopup();
-        }
+        };
         this.closeInputPopups();
         this.mapPopup = showMapSelectPopup(this.getController(), onClose);
     }
