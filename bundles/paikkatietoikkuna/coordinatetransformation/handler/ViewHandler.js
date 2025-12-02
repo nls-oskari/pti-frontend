@@ -125,10 +125,6 @@ class UIHandler extends StateHandler {
     }
 
     confirmFileImport () {
-        const onChange = () => {
-            this.updateState({ coordinates: [], results: [], sources: [] });
-            this.showFileSettings('import');
-        };
         const onConfirm = () => {
             this.reset();
             this.showFileSettings('import');
