@@ -22,6 +22,7 @@ const StyledTable = styled(Table)`
         padding: ${props => props.$editable ? '0px' : '4px 8px 2px'} !important;
         height: 26px;
         font-size: 12px;
+        white-space: nowrap;
     }
     .ant-table-thead {
         height: ${props => props.$large ? 52 : 34}px;
@@ -50,9 +51,11 @@ const Cell = ({ value, item, onChange }) => {
         />
     );
 };
+const getFillCount = (array, { pageSize = 10 }) => pageSize - array.length % pageSize;
 
-const getFilledArray = (array, { pageSize = 10 }) => {
-    const empty = [...Array(pageSize - array.length % pageSize)].map(() => ({})); // .map((a,key) => ({...a, key }));
+const getFilledArray = (array, pagination) => {
+    const fillCount = getFillCount(array, pagination);
+    const empty = [...Array(fillCount)].map(() => ({})); // .map((a,key) => ({...a, key }));
     return [...array, ...empty];
 };
 
@@ -96,7 +99,7 @@ const getColumns = (srs, heightSrs, controller) => {
             width: colWidth,
             render: controller
                 ? (value, item, row) => <StyledInput size='small' value={value}
-                    status={value && isNaN(value) ? 'error' : ''}
+                    status={typeof value !== 'undefined' && isNaN(value) ? 'error' : ''}
                     onChange={e => controller.updateCoordinate(row, { ...item, [col]: e.target.value })}
                     onBlur={() => controller.parseInputCoordinate(row, col)} />
                 : undefined
@@ -104,21 +107,21 @@ const getColumns = (srs, heightSrs, controller) => {
     });
 };
 
-export const CoordinatesTable = ({ coordinates, sources, inputSrs, inputHeightSrs, large, pagination, controller }) => {
+export const CoordinatesTable = ({ coordinates, sources, inputSrs, inputHeightSrs, largeHeader, pagination, controller }) => {
     const dataSource = getFilledArray(coordinates, pagination);
     const fromFile = sources.includes(ACTIONS.IMPORT);
     const optController = fromFile ? null : controller;
     return (
         <Content className='t_table_input'>
             <ComponentLabel height={LABEL_HEIGHT} label='flyout.coordinateTable.input'>
-                <IconButton
+                <IconButton className='t_swap_coordinates'
                     icon={<SwapOutlined />}
                     title={<Message messageKey='actions.axisFlip'/>}
                     onClick={() => controller.swapCoordinates()} />
             </ComponentLabel>
             <StyledTable bordered
                 $editable={!fromFile}
-                $large={large}
+                $large={largeHeader}
                 columns={getColumns(inputSrs, inputHeightSrs, optController)}
                 dataSource={dataSource}
                 pagination={{ position: ['none'], ...pagination }}/>
@@ -132,15 +135,14 @@ CoordinatesTable.propTypes = {
     inputSrs: PropTypes.string,
     inputHeightSrs: PropTypes.string,
     controller: PropTypes.object.isRequired,
-    large: PropTypes.bool.isRequired,
+    largeHeader: PropTypes.bool.isRequired,
     pagination: PropTypes.object.isRequired
 };
 
-export const ResultsTable = ({ coordinates, results, outputSrs, outputHeightSrs, transformed, large, pagination, controller }) =>  {
+export const ResultsTable = ({ coordinates, results, count, outputSrs, outputHeightSrs, transformed, largeHeader, pagination, controller }) =>  {
     const dataSource = getFilledArray(results, pagination);
-    const count = coordinates.filter(coord => coord && !coord.invalid).length;
+    const paginationCount = coordinates.length + getFillCount(coordinates, pagination);
     const outdated = results.length > 0 && !transformed;
-    const validLengths = coordinates.length === results.length;
     return (
         <Content className='t_table_output'>
             <ComponentLabel height={LABEL_HEIGHT} label='flyout.coordinateTable.output'>
@@ -151,14 +153,14 @@ export const ResultsTable = ({ coordinates, results, outputSrs, outputHeightSrs,
                 <Message messageKey='flyout.coordinateTable.rows' />
             </ComponentLabel>
             <StyledTable bordered
-                $large={large}
+                $large={largeHeader}
                 columns={getColumns(outputSrs, outputHeightSrs)}
                 dataSource={dataSource}
                 pagination={{
                     ...pagination,
                     hideOnSinglePage: true,
                     showSizeChanger: false,
-                    total: coordinates.length,
+                    total: paginationCount,
                     onChange: (page, pageSize) => controller.setPagination(page, pageSize)
                 }}/>
         </Content>
@@ -168,10 +170,11 @@ export const ResultsTable = ({ coordinates, results, outputSrs, outputHeightSrs,
 ResultsTable.propTypes = {
     coordinates: PropTypes.array.isRequired,
     results: PropTypes.array.isRequired,
+    count: PropTypes.number.isRequired,
     outputSrs: PropTypes.string,
     outputHeightSrs: PropTypes.string,
     transformed: PropTypes.bool.isRequired,
     controller: PropTypes.object.isRequired,
-    large: PropTypes.bool.isRequired,
+    largeHeader: PropTypes.bool.isRequired,
     pagination: PropTypes.object.isRequired
 };

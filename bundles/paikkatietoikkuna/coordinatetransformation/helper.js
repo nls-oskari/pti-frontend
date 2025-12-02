@@ -1,4 +1,4 @@
-import { SRS, SRS_H, SYSTEM, MARKER, DEGREE_DECIMALS, DMS, LON_AXES } from './constants';
+import { SRS, SRS_H, SYSTEM, MARKER, DMS_PATTERNS, LON_AXES, HOUR_TO_MIN,  HOUR_TO_SEC} from './constants';
 
 export const getDimension = (srs, srsHeight) => {
     const { system } = SRS.find(s => s.value === srs) || {};
@@ -25,7 +25,7 @@ export const getSrsUnit = srs => {
     const { system } = SRS.find(s => s.value === srs) || {};
     const { unit } = SYSTEM.find(c => c.value === system) || {};
 
-    return unit || 'metric';
+    return unit || 'metre';
 };
 
 export const isLonFirst = (srs) => {
@@ -38,10 +38,7 @@ export const isLonFirst = (srs) => {
 };
 
 export const validateCoordinate = (coord, is3D) => {
-    if (coord.valid === false) {
-        return false;
-    }
-    const { x, y, z } = coord;
+    const { x, y, z } = coord || {};
     const array = is3D ? [x, y, z] : [x, y];
     return !array.some(c => typeof c !== 'number' || isNaN(c));
 };
@@ -52,27 +49,31 @@ export const validateTransform = (state) => {
     const warnings = [];
     const input3D = getDimension(inputSrs, inputHeightSrs) === 3;
     const output3D = getDimension(outputSrs, outputHeightSrs) === 3;
+    const { bounds = [] } = SRS.find(s => s.value === inputSrs) || {};
 
+    if (!coordinates.length) {
+        errors.push('noInputData');
+    }
     if (!inputSrs || !outputSrs) {
         errors.push('crs');
     }
-    const { system: outputSystem } = SRS.find(s => s.value === outputSrs) || {};
-    if (!input3D && outputSystem === 'PROJ_3D') {
-        errors.push('xyz');
+    if (!input3D && output3D) {
+        errors.push('2DTo3D');
     }
     // No need to check warnings
     if (errors.length) {
         return { errors, warnings };
     }
-    if (input3D !== output3D) {
-        warnings.push(input3D ? '3DTo2D' : '2DTo3D');
+    if (input3D && !output3D) {
+        warnings.push('3DTo2D');
     }
     if (coordinates.some(coord => !validateCoordinate(coord, input3D))) {
         warnings.push('coordinates');
     }
-    if (coordinates.some(coord => !validateCoordInBounds(coord, inputSrs))) {
+    if (bounds.length === 4 && coordinates.some(coord => !validateCoordInBounds(coord, inputSrs, bounds))) {
         warnings.push('bbox');
     }
+    // FIXME?: coordinates.length / FETCH_SIZE > 10 etc.. or remove
     if (files.length && files[0].size > 10 * 1024 * 1024) {
         warnings.push('largeFile');
     }
@@ -83,17 +84,17 @@ export const validateFileSettings = (state, type) => {
     const selects = state[type];
     const errors = [];
 
-    if (!selects.coordinateSeparator) {
-        errors.push('noCoordinateSeparator');
+    if (!selects.delimiter) {
+        errors.push('noDelimiter');
     }
     if (!selects.decimalSeparator) {
         errors.push('noDecimalSeparator');
     }
 
-    if (selects.decimalSeparator === ',' && selects.coordinateSeparator === 'comma') {
+    if (selects.decimalSeparator === ',' && selects.delimiter === ',') {
         errors.push('doubleComma');
     }
-    if (selects.coordinateSeparator === 'space' && (selects.unit === 'DD MM SS' || selects.unit === 'DD MM')) {
+    if (selects.delimiter === ' ' && (selects.unit === 'DD MM SS' || selects.unit === 'DD MM')) {
         errors.push('doubleSpace');
     }
     if (type === 'import') {
@@ -112,18 +113,16 @@ export const validateFileSettings = (state, type) => {
         if (!selects.fileName) {
             errors.push('noFileName');
         }
-        if (typeof selects.decimalCount !== 'number' || selects.decimalCount < 0) {
-            errors.push('decimalCount');
-        }
     }
     return errors;
 };
 
-export const getDecimalCount = (decimals, unit) => {
-    if (typeof decimals !== 'number') {
+export const getDecimalCount = (decimalValue, format) => {
+    const decimals = parseInt(decimalValue);
+    if (isNaN(decimals)) {
         return 0;
     }
-    switch (unit) {
+    switch (format) {
     case 'metric':
         return decimals;
     case 'DD MM SS':
@@ -146,10 +145,10 @@ export const getDecimalCount = (decimals, unit) => {
     }
 };
 
-export const validateCoordInBounds = (coord, srs) => {
-    const { bounds } = SRS.find(s => s.value === srs) || {};
-    if (!bounds || bounds.length !== 4) {
-        return true;
+const validateCoordInBounds = (coord, srs, bounds) => {
+    // used only after validateCoordinate in validateTransform
+    if (typeof coord.x !== 'number' || typeof coord.y !== 'number') {
+        return true; // skip bbox check for invalid
     }
     const swap = !isLonFirst(srs);
     const x = swap ? coord.y : coord.x;
@@ -244,8 +243,8 @@ export const getCoordinatesExtent = (coordinates, srs) => {
     return {
         extent: [minX, minY, maxX, maxY],
         bbox: { left: minX, bottom: minY, right: maxX, top: maxY },
-        min: { x: swap ? minY : minX, y: swap ? minX : minY},
-        max: { x: swap ? maxY : maxX, y: swap ? maxX : maxY},
+        min: { x: swap ? minY : minX, y: swap ? minX : minY },
+        max: { x: swap ? maxY : maxX, y: swap ? maxX : maxY },
         wkt: `POLYGON ((${minX} ${minY}, ${maxX} ${minY}, ${maxX} ${maxY}, ${minX} ${maxY}, ${minX} ${minY}))`
     };
     // Oskari.getSandbox().postRequestByName('MapModulePlugin.AddFeaturesToMapRequest', [wkt, { layerId: 'komu', centerTo: true }]);
@@ -259,24 +258,8 @@ export const coordinateToMarker = (coord, isNew) => {
     return { ...props, x, y, msg, color };
 };
 
-export const stateToTransformRequest = (state) => {
-    const { inputSrs, outputSrs, inputHeightSrs, outputHeightSrs, coordinates } = state;
-    let from = inputSrs;
-    if (inputHeightSrs) {
-        from += '+' + inputHeightSrs;
-    }
-    let to = outputSrs;
-    if (outputHeightSrs) {
-        to += '+' + outputHeightSrs;
-    }
-    const params = { from, to };
-    const body = JSON.stringify(coordinates);
-    return { params, body };
-};
-
-export const stateToKomuRequest = (state) => {
-    const { inputSrs, outputSrs, inputHeightSrs, outputHeightSrs, coordinates } = state;
-    const is2D = getDimension(inputSrs, inputHeightSrs) === 2;
+export const stateToKomuParams = (state) => {
+    const { inputSrs, outputSrs, inputHeightSrs, outputHeightSrs } = state;
     let sourceCRS = inputSrs;
     if (inputHeightSrs) {
         sourceCRS += ',' + inputHeightSrs;
@@ -285,13 +268,17 @@ export const stateToKomuRequest = (state) => {
     if (outputHeightSrs) {
         targetCRS += ',' + outputHeightSrs;
     }
-    const params = { sourceCRS, targetCRS };
+    const dimension = getDimension(inputSrs, inputHeightSrs);
+    return { sourceCRS, targetCRS, dimension };
+};
+
+export const coordinatesToCSV = (coordinates, dimension) => {
+    const is2D = dimension === 2;
     // x,y,z;x,y,z,..
-    const body = coordinates
+    return coordinates
         .map(({ x, y, z }) => is2D ? [x, y] : [x, y, z])
         .map(coord => coord.join())
         .join(';');
-    return { params, body };
 };
 
 export const parseKomuResponse = (text) => {
@@ -344,6 +331,31 @@ export const stateToPTIArray = (state, transformType = 'A2A', toFile) => {
     };
 };
 
+export const getDMS = value => {
+    const dms = DMS_PATTERNS.find(({ char }) => value.includes(char));
+    if (!dms) {
+        return {};
+    }
+    return {
+        ...dms,
+        regexp: new RegExp(dms.pattern)
+    };
+};
+
+const dmsToDegree =  (dms, unit) => {
+    const parts = dms?.map(n => parseFloat(n)) || [];
+    if (unit === 'DD' || parts.length === 1) {
+        return parts[0];
+    }
+    if (unit === 'DDMM' || parts.length === 2) {
+        return parts[0] + (parts[1] / HOUR_TO_MIN);
+    }
+    if (unit === 'DDMMSS' || parts.length === 3) {
+        return parts[0] + (parts[1] / HOUR_TO_MIN) + (parts[2] / HOUR_TO_SEC);
+    }
+    return NaN;
+};
+
 export const parseCoordinateValue = value => {
     if (typeof value === 'number') {
         return value;
@@ -351,18 +363,16 @@ export const parseCoordinateValue = value => {
     if (!value) {
         return NaN;
     }
-    // TODO: Oskari.util has only mehtod for point => use fake point[1]
-    // TODO: or DMS some value includes dms
-    if (Oskari.util.coordinateIsDegrees([value, '0\u00B0'])) {
-        return Oskari.util.coordinateDegreesToMetric([value, '0\u00B0'], DEGREE_DECIMALS)[0];
+    value = value.trim().replace(',', '.');
+    // DMS (° ' ")
+    const { regexp, unit } = getDMS(value);
+    if (regexp) {
+        const dms = value.match(regexp)?.slice(1);
+        return dmsToDegree(dms, unit);
     }
-    // TODO: refactor
-    // DMS with spaces only (not ° ' ")
-    if (value.includes(' ') && value.split(' ').filter(v => !isNaN(v).length > 1)) {
-        // double spaces??
-        const suffixed = value.split(' ').map((v, i) => v + DMS[i]).join(' ');
-        return Oskari.util.coordinateDegreesToMetric([suffixed, '0\u00B0'], DEGREE_DECIMALS)[0];
-        // TODO: or split filter empty map parseFloat / 60 ** i
+    // DMS with spaces only
+    if (value.includes(' ')) {
+        return dmsToDegree(value.split(' '));
     }
-    return parseFloat(value.replace(',', '.'));
+    return parseFloat(value);
 };

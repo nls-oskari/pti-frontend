@@ -7,8 +7,8 @@ import 'oskari-loader!oskari-frontend/packages/framework/bundle/ui-components/bu
 import 'oskari-loader!oskari-frontend/packages/framework/bundle/divmanazer/bundle.js';
 
 // Then import mapmodule (3D) and rest of the application 
-import 'oskari-loader!oskari-frontend/packages/mapping/olcs/mapmodule/bundle.js';
-import 'oskari-loader!oskari-frontend/packages/mapping/olcs/map3dtiles/bundle.js';
+import 'oskari-bundle!oskari-frontend/bundles/mapping/mapmodule/map3d_olcs';
+import 'oskari-bundle!oskari-frontend/bundles/mapping/tiles3d';
 import 'oskari-bundle!oskari-frontend/bundles/mapping/time-control-3d';
 import 'oskari-bundle!oskari-frontend/bundles/mapping/camera-controls-3d';
 
@@ -21,24 +21,21 @@ import 'oskari-bundle!oskari-frontend/bundles/framework/statehandler';
 import 'oskari-bundle!oskari-frontend/bundles/framework/search';
 import 'oskari-bundle!oskari-frontend/bundles/framework/timeseries';
 
-import 'oskari-loader!oskari-frontend/packages/mapping/ol/heatmap/bundle.js';
-import 'oskari-loader!oskari-frontend/packages/mapping/ol/mapwmts/bundle.js';
-import 'oskari-loader!oskari-frontend/packages/mapping/ol/maprotator/bundle.js';
-import 'oskari-loader!oskari-frontend/packages/mapping/ol/wfsvector/bundle.js';
-import 'oskari-loader!oskari-frontend/packages/mapping/ol/mapmyplaces/bundle.js';
-import 'oskari-loader!oskari-frontend/packages/mapping/ol/mapuserlayers/bundle.js';
-import 'oskari-loader!oskari-frontend/packages/mapping/ol/maparcgis/bundle.js';
-import 'oskari-loader!oskari-frontend/packages/mapping/ol/userstyle/bundle.js';
-import 'oskari-loader!oskari-frontend/packages/mapping/ol/drawtools/bundle.js';
-import 'oskari-loader!oskari-frontend/packages/mapping/ol/infobox/bundle.js';
-import 'oskari-loader!oskari-frontend/packages/mapping/ol/toolbar/bundle.js';
+import 'oskari-bundle!oskari-frontend/bundles/mapping/heatmap';
+import 'oskari-bundle!oskari-frontend/bundles/mapping/mapmyplaces';
+import 'oskari-bundle!oskari-frontend/bundles/framework/myplacesimport/mapuserlayers';
+import 'oskari-bundle!oskari-frontend/bundles/mapping/maparcgis';
+import 'oskari-bundle!oskari-frontend/bundles/mapping/userstyle';
+import 'oskari-bundle!oskari-frontend/bundles/mapping/drawtools';
+import 'oskari-bundle!oskari-frontend/bundles/mapping/infobox';
+import 'oskari-bundle!oskari-frontend/bundles/mapping/toolbar';
 
 import 'oskari-bundle!oskari-frontend/bundles/mapping/dimension-change';
 
 // pti
-import 'oskari-loader!../../packages/paikkatietoikkuna/bundle/register/bundle.js';
-import 'oskari-loader!../../packages/paikkatietoikkuna/bundle/telemetry/bundle.js'
-import 'oskari-loader!../../packages/paikkatietoikkuna/lang-overrides/bundle.js';
+import 'oskari-bundle!../../bundles/paikkatietoikkuna/register';
+import 'oskari-bundle!../../bundles/paikkatietoikkuna/telemetry'
+import 'oskari-bundle!../../bundles/paikkatietoikkuna/lang-overrides';
 
 // mobile tuning
 import 'oskari-lazy-bundle?feedbackService!oskari-frontend/bundles/framework/feedbackService';
@@ -51,13 +48,14 @@ import 'oskari-lazy-bundle?userguide!oskari-frontend/bundles/framework/userguide
 import 'oskari-lazy-bundle?statsgrid!oskari-frontend/bundles/statistics/statsgrid';
 import 'oskari-lazy-bundle?terrain-profile!oskari-frontend-contrib/bundles/terrain-profile';
 
-import 'oskari-lazy-loader?coordinatetransformation!../../packages/paikkatietoikkuna/bundle/coordinatetransformation/bundle.js';
+import 'oskari-lazy-bundle?coordinatetransformation!../../bundles/paikkatietoikkuna/coordinatetransformation';
 
+import 'oskari-lazy-bundle?maprotator!oskari-frontend/bundles/mapping/maprotator';
 import 'oskari-lazy-bundle?featuredata!oskari-frontend/bundles/framework/featuredata';
 import 'oskari-lazy-bundle?metadataflyout!oskari-frontend/bundles/catalogue/metadataflyout'
 import 'oskari-lazy-bundle?metadatasearch!oskari-frontend/bundles/catalogue/metadatasearch';
 // added for mobile
-import 'oskari-lazy-loader?mobileuserguide!../../bundles/paikkatietoikkuna/mobileuserguide/bundle.js';
+import 'oskari-lazy-bundle?mobileuserguide!../../bundles/paikkatietoikkuna/mobileuserguide';
 // end mobile tuning
 // lazy
 import 'oskari-lazy-bundle?admin-permissions!oskari-frontend/bundles/admin/admin-permissions';

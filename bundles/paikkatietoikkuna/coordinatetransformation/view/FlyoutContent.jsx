@@ -7,7 +7,8 @@ import { SourceButtons } from '../components/SourceSelect.jsx';
 import { CoordinatesTable, ResultsTable } from '../components/CoordinateTable.jsx';
 import { SrsSelect } from '../components/SrsSelect';
 import { MandatoryDescription } from '../components/MandatoryDescription';
-import { getDimension } from '../helper';
+import { getDimension, validateCoordinate } from '../helper';
+import { Progress as AntProgress } from 'antd';
 
 const Content = styled.div`
     display: flex;
@@ -18,7 +19,7 @@ const Content = styled.div`
 const Splitter = styled.div`
     display: flex;
     flex-flow: row nowrap;
-    gap: 1em;
+    gap: 2em;
 `;
 const MinimizeButton = styled(Button)`
     justify-content: flex-start;
@@ -27,6 +28,21 @@ const MinimizeButton = styled(Button)`
 const StyledButtonContainer = styled(ButtonContainer)`
     justify-content: space-between;
 `;
+
+export const Progress = ({ progress, abort }) => {
+    if (progress === -1) {
+        return null;
+    }
+    return (
+        <div>
+            <AntProgress percent={progress} size="small" style={{ width: 200 }}/>
+            <br/>
+            <Button className='t_abort' type='text' onClick={() => abort()}>
+                <Message messageKey='actions.cancel'/>
+            </Button>
+        </div>
+    );
+};
 
 export const FlyoutContent = ({
     controller,
@@ -42,7 +58,9 @@ export const FlyoutContent = ({
 }) => {
     const [ minimalSrs, setMinimalSrs ] = useState(true);
     // Have to check here to use same height for input & output table headers
-    const transform3D = getDimension(inputSrs, inputHeightSrs) === 3 || getDimension(outputSrs, outputHeightSrs) === 3;
+    const input3D = getDimension(inputSrs, inputHeightSrs) === 3;
+    const transform3D = input3D || getDimension(outputSrs, outputHeightSrs) === 3;
+    const count = coordinates.filter(coord => validateCoordinate(coord, input3D)).length;
     return (
         <Content>
             <MandatoryDescription/>
@@ -57,8 +75,8 @@ export const FlyoutContent = ({
             </div>
             <SourceButtons controller={controller} />
             <Splitter>
-                <CoordinatesTable large={transform3D} pagination={pagination} inputSrs={inputSrs} inputHeightSrs={inputHeightSrs} coordinates={coordinates} sources={sources} controller={controller} />
-                <ResultsTable large={transform3D} pagination={pagination} outputSrs={outputSrs} outputHeightSrs={outputHeightSrs} coordinates={coordinates} results={results} transformed={transformed} controller={controller}/>
+                <CoordinatesTable largeHeader={transform3D} pagination={pagination} inputSrs={inputSrs} inputHeightSrs={inputHeightSrs} coordinates={coordinates} sources={sources} controller={controller} />
+                <ResultsTable largeHeader={transform3D} pagination={pagination} count={count} outputSrs={outputSrs} outputHeightSrs={outputHeightSrs} coordinates={coordinates} results={results} transformed={transformed} controller={controller}/>
             </Splitter>
             
             <StyledButtonContainer>

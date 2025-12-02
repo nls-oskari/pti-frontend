@@ -3,7 +3,7 @@ import { getDimension, isDegreeSystem, isLonFirst, getDecimalCount } from '../he
 
 const CRS = 'Coordinate Reference System';
 
-const toDegree = (coord, unit, decimals) => { //, isLon)
+export const toDegree = (coord, unit, decimals) => { //, isLon)
     if (unit === 'DD' || unit === 'degree') {
         return coord.toFixed(decimals);
     }
@@ -20,28 +20,33 @@ const toDegree = (coord, unit, decimals) => { //, isLon)
     const m = (coord - d) * HOUR_TO_MIN;
     const dd = d < 10 ? '0' + d : d.toString();
     // const dd = isLon && d < 100 ? '0' + d : d.toString();
-    let mm = m.toFixed(decimals);
-    if (m < 10) {
-        mm = '0' + mm;
-    }
     if (unit === 'DDMM' || unit === 'DD MM') {
+        let mm = m.toFixed(decimals);
+        if (m < 10) {
+            mm = '0' + mm;
+        }
         return dd + separator + mm;
     }
-    const s = (m - Math.floor(m)) * HOUR_TO_MIN;
+    const mInt = Math.floor(m);
+    const s = (m - mInt) * HOUR_TO_MIN;
+    const mm = mInt < 10 ? '0' + mInt : mInt;
     let ss = s.toFixed(decimals);
     if (s < 10) {
         ss = '0' + ss;
     }
-    return dd + separator + mm.substring(0, 2) + separator + ss;
+    return dd + separator + mm + separator + ss;
 };
 
-const addCardinal = (coord, isLon) => {
-    // TODO: S or W to negative and remove '-'
+export const addCardinal = (coord, isLon) => {
+    if (coord.startsWith('-')) {
+        const cardinal = isLon ? 'W' : 'S';
+        return coord.substring(1) + cardinal;
+    }
     const cardinal = isLon ? 'E' : 'N';
     return coord + cardinal;
 };
 
-const getFileContent = ({
+const getCoordinates = ({
     results,
     outputSrs,
     outputHeightSrs,
@@ -52,7 +57,7 @@ const getFileContent = ({
         unit,
         decimalCount,
         decimalSeparator,
-        coordinateSeparator,
+        delimiter,
         lineSeparator,
         axisFlip,
         prefixColCount,
@@ -60,12 +65,11 @@ const getFileContent = ({
         writeLineEndings
     } = settings;
     const { prefixes = [], lineEndings = [] } = fileContents || {};
-
     const dimension = getDimension(outputSrs, outputHeightSrs);
     const isDegree = isDegreeSystem(outputSrs);
     // Force to 'metric' for non degree as select isn't shown for user
-    const decimalUnit = isDegree ? unit : 'metric';
-    const decimals = getDecimalCount(decimalCount, decimalUnit);
+    const decimalFormat = isDegree ? unit : 'metric';
+    const decimals = getDecimalCount(decimalCount, decimalFormat);
 
     const lonFirst = axisFlip ? !isLonFirst(outputSrs) : isLonFirst(outputSrs);
     const lonIndex = lonFirst ? 0 : 1;
@@ -82,23 +86,21 @@ const getFileContent = ({
 
         // replace point and writeCardinals if needed
         row = row.map(r => replace ? r.replace('.', ',') : r)
-            .map((r, i) => writeCardinals ? addCardinal(r, i === lonIndex) : r);
+            .map((r, i) => writeCardinals && i < 2 ? addCardinal(r, i === lonIndex) : r);
 
         if (prefixColCount > 0) {
             // use stored from imported file if available
             const ids = prefixesFromImport
-                ? prefixes[index] || ['']
+                ? prefixes[index] || [...Array(prefixColCount)].map(() => '')
                 : [index + 1];
             ids.forEach(p => row.unshift(p));
         }
         if (writeLineEndings) {
-            // use stored from input file if available
-            const ending = lineEndings[index] || [''];
-            ending.forEach(p => row.push(p));
+            // missing value at the end should be fine for csv
+            // could use settings.columns count to fill array with ''
+            lineEndings[index]?.forEach(p => row.push(p));
         }
-        // TODO: can prefixes and lineEndings lengths vary? now adds only one empty if missing
-        // => every row length must be same to get valid csv
-        return row.join(coordinateSeparator);
+        return row.join(delimiter);
     }).join(lineSeparator);
 };
 
@@ -106,20 +108,23 @@ const createSrsHeader = (srs, height, axisFlip, decimalUnit) => {
     // name for KKJ (no need to localize zones)
     const { name, label = name, axes = [], system } = SRS.find(s => s.value === srs) || {};
     const { unit: systemUnit } = SYSTEM.find(s => s.value === system) || {};
-    let heightName = '';
+    const modAxes = axisFlip ? [...axes.slice(0, 2).toReversed(), ...axes.slice(2)] : [...axes];
+    const epsg = [srs];
+    const labels = [label];
     if (height) {
+        epsg.push(height);
         const { axis = 'H', name } = SRS_H.find(h => h.value === height) || {};
-        axes.push(axis);
-        heightName = ` + ${name}`;
+        modAxes.push(axis);
+        labels.push(name);
     }
-    const modAxes = axisFlip ? [...axes.slice(0, 2).toReversed(), ...axes.slice(2)] : axes;
-    const selectedUnit = isDegreeSystem(srs) && decimalUnit ? ` (${decimalUnit}` : '';
-    return `${CRS}: ${srs} - ${label}${heightName} - axes: ${modAxes.join()}${axisFlip ? ' (reversed)' : ''} - unit: ${systemUnit}${selectedUnit}`;
+    const selectedUnit = isDegreeSystem(srs) && decimalUnit !== 'degree' ? ` (${decimalUnit})` : '';
+    const reversed = axisFlip ? ' (reversed)' : '';
+    return `${CRS}: ${epsg.join(' + ')} - ${labels.join(' + ')} - axes: ${modAxes.join()}${reversed} - unit: ${systemUnit}${selectedUnit}`;
 };
 
-export const exportStateToFile = (state) => {
+export const getFileContent = (state) => {
     const { outputSrs, outputHeightSrs, fileContents } = state;
-    const { fileName, lineSeparator, createHeader, writeHeaders, axisFlip, unit } = state.export;
+    const { lineSeparator, createHeader, writeHeaders, axisFlip, unit, delimiter } = state.export;
 
     const content = [];
     if (createHeader) {
@@ -127,11 +132,17 @@ export const exportStateToFile = (state) => {
         content.push(header);
     }
     if (writeHeaders) {
-        fileContents?.headerLines?.forEach(header => content.push(header));
+        fileContents?.headers?.forEach(header => content.push(header.join(delimiter)));
     }
-    const text = getFileContent(state);
-    content.push(text);
-    const file = new Blob([content.join(lineSeparator)], { type: 'text/plain' }); // transparent, native
+    const coords = getCoordinates(state);
+    content.push(coords);
+    return content.join(lineSeparator);
+};
+
+export const exportStateToFile = (state) => {
+    const content = getFileContent(state);
+    const file = new Blob([content], { type: 'text/plain' });
+    const { fileName } = state.export;
     loadFile(file, fileName);
 };
 

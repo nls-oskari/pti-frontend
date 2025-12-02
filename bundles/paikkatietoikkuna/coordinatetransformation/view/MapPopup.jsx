@@ -26,7 +26,7 @@ const Content = ({ controller, onClose }) => {
             <MapSelect controller={controller} />
             <ButtonContainer>
                 <SecondaryButton type='cancel' onClick={onClose} />
-                <Button type='primary' onClick={onPrimary}>
+                <Button type='primary' onClick={onPrimary} className='t_done'>
                     <Message messageKey='actions.done' bundleKey={BUNDLE}/>
                 </Button>
             </ButtonContainer>

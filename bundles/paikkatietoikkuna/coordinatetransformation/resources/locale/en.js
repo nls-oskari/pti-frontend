@@ -44,7 +44,7 @@ Oskari.registerLocalization(
                     "label": "System of map projections"
                 },
                 "geodeticCoordinateSystem":{
-                    "label": "Geodetic coordinate reference system",
+                    "label": "Coordinate reference system",
                     "choose": "Select", // Choose
                     "kkj": "KKJ zone {zone, number}",
                     "ykj": "KKJ zone 3 / YKJ"
@@ -85,7 +85,6 @@ Oskari.registerLocalization(
                 "title": "Warning!",
                 "message": "Please note the following restrictions on selections or coordinates before the transform.",
                 "3DTo2D": "The selected input information contains height values, but the output information does not. Output coordinates will therefore not include height values.",
-                "2DTo3D": "The selected output information contains height values, but the input information does not. The height values 0 and height system N2000 will be added to the input information.",
                 "coordinates": "There are invalid rows in the coordinates to be transformed. The invalid rows will be removed before transform.",
                 "bbox": "The coordinates to be transformed are outside the coverage area of ​​the source coordinate system. The coordinate values ​​must be in the axis order defined by the source coordinate system.",
                 "largeFile": "The transformation of large files can take several minutes."
@@ -93,7 +92,7 @@ Oskari.registerLocalization(
             "validate": {
                 "title": "Error!", // Error in coordinate system selections
                 "message": "Selections are incomplete or contain errors. Note the following requirements and try again.",
-                "xyz": "No height system has been selected for the input coordinate system. It is not possible to transform this input information into a projected 3D system.",
+                "2DTo3D": "No height system has been selected for the input coordinate system. It is not possible to transform this input information into a 3D system.",
                 "crs": "A geodetic coordinate reference system must be selected both in the input and the output information.",
                 "noInputData": "No input coordinates.",
                 "noInputFile": "The file containing input information must be selected.",
@@ -103,7 +102,7 @@ Oskari.registerLocalization(
                 "doubleComma": "The decimal and coordinate separators cannot both be commas.",
                 "doubleSpace": "The format/unit of an angle cannot contain spaces if the coordinate separator is Space.", //angle pattern
                 "noFileSettings": "No file settings.",
-                "noCoordinateSeparator": "Coordinate separator must be selected.",
+                "noDelimiter": "Coordinate separator must be selected.",
                 "noDecimalSeparator": "Decimal separator must be selected."
             },
             "errors": {
@@ -196,11 +195,11 @@ Oskari.registerLocalization(
             "export": "Output properties",
             "rows": "rows",
             "columns": "columns",
-            "previewTitle": "Preview",
+            "previewTitle": "Preview of the coordinates",
             "options": {
                 "fileName": "File name",
                 "decimalSeparator": "Decimal separator",
-                "coordinateSeparator": "Field separator",
+                "delimiter": "Field separator",
                 "headerLineCount": "Number of header rows",
                 "decimalPrecision": "Decimal precision",
                 "axisFlip": "Coordinates reversed",
@@ -220,7 +219,7 @@ Oskari.registerLocalization(
                     "gradian": "Grade",
                     "radian": "Radian"
                 },
-                "delimeters":{
+                "delimiters":{
                     "point": "Point",
                     "comma": "Comma",
                     "tab": "Tabulator",
@@ -318,11 +317,11 @@ Oskari.registerLocalization(
                     "sec": "DDMMSS and DD MM SS"
                 }
             },
-            "coordinateSeparator":{
+            "delimiter":{
                 "title":"Field separator",
-                "info": "Defines by which delimeter the columns are separated from each other",
+                "info": "Defines by which delimiter the columns are separated from each other",
                 "paragraphs": [
-                    "Defines by which delimeter the columns are separated from each other in the file.",
+                    "Defines by which delimiter the columns are separated from each other in the file.",
                     "If the coordinates are preceded by an identifier or followed by a character string, these must also be separated from the coordinates using the same separator."
                 ],
                 "listItems" : []

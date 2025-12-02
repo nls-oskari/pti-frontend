@@ -1,6 +1,7 @@
-import { SRS, DEGREE, HOUR_TO_MIN, HOUR_TO_SEC, DEC_TO_GRAD, DEC_TO_RAD  } from '../constants';
+import { SRS, SRS_H, DEGREE, HOUR_TO_MIN, HOUR_TO_SEC, DEC_TO_GRAD, DEC_TO_RAD, CARDINALS } from '../constants';
+import { getDimension } from '../helper';
 
-export const parseFile = (file) => {
+export const parseFile = (file, dimension) => {
     return new Promise((resolve, reject) => {
         if (!file || typeof file.text !== 'function') {
             reject(new Error('Unable to parse file'));
@@ -8,7 +9,7 @@ export const parseFile = (file) => {
         let lines = [];
         file.text().then(content => {
             lines = content.trim().split(/\r?\n/);
-            resolve(interpretFileContents(lines));
+            resolve(interpretFileContents(lines, dimension));
         });
     });
 };
@@ -21,25 +22,16 @@ const addToArray = (array, index, value) => {
     }
 };
 
-export const parseFileContents = (lines = [], delimiter = ';', headerLineCount = 0, prefixColCount = 0) => {
-    // parse always x,y,z to data
-    const dimension = 3; //TODO: data[2] or z could contain lineEnding stuff for 2D
-    const headerMetadata = {
-        headerLines: [],
-        headers: []
-    };
+export const parseFileContents = (lines = [], importSettings = {}) => {
+    const { delimiter, decimalSeparator, headerLineCount, prefixColCount, dimension } = importSettings;
+
+    let headers = [];
     let linesWithData = lines;
     if (headerLineCount > 0) {
         const headerLines = lines.slice(0, headerLineCount);
-        const headers = headerLines[0].split(delimiter).map(cell => cell.trim());
-        headerMetadata.headerLines = headerLines;
-        // remove possible id column(s) at the start
-        headerMetadata.headers = headers.slice(prefixColCount);
+        headers = headerLines.map(line => line.split(delimiter).map(cell => cell.trim()));
         linesWithData = lines.slice(headerLineCount);
-        headerMetadata.srs = headerLines.map(line => detectEpsgCode(line)).find(found => found);
     }
-    // TODO: always uses detected => remove option from import settings OR pass & use selected
-    const decimalSeparator = detectDecimalSeparator(linesWithData[0], delimiter);
     const data = [];
     const prefixes = [];
     const lineEndings = [];
@@ -62,11 +54,22 @@ export const parseFileContents = (lines = [], delimiter = ';', headerLineCount =
         }
     });
 
+    let lineEndingCount = 0;
+    lineEndings.forEach(row => {
+        const size = row?.length;
+        if (size > lineEndingCount) {
+            lineEndingCount = size;
+        }
+    });
+
+    // store values for export & preview
     const settings = {
+        dimension, // data column count
         decimalSeparator,
-        coordinateSeparator: delimiter,
+        delimiter,
         headerLineCount,
-        prefixColCount
+        prefixColCount,
+        columns: dimension + prefixColCount + lineEndingCount
     };
     return {
         settings,
@@ -74,7 +77,7 @@ export const parseFileContents = (lines = [], delimiter = ';', headerLineCount =
         prefixes,
         lineEndings,
         lines,
-        ...headerMetadata
+        headers
     };
 };
 
@@ -128,13 +131,26 @@ export const parseValue = (value, format = 'metric') => {
     return asNumber;
 };
 
-const interpretFileContents = (lines = []) => {
+const interpretFileContents = (lines = [], dimension = 2) => {
     const midIndex = Math.floor(lines.length / 2);
-    const delimiter = detectDelimiter(lines[midIndex]);
-    // could srs bbox be used to detect prefix
-    const prefixColCount = countPrefixColoumns(lines[midIndex], lines[midIndex + 1], delimiter);
+    const dataLine = lines[midIndex];
+    const delimiter = detectDelimiter(dataLine);
     const headerLineCount = countHeaders(lines, delimiter);
-    return parseFileContents(lines, delimiter, headerLineCount, prefixColCount);
+    const decimalSeparator = detectDecimalSeparator(dataLine, delimiter);
+
+    const detectedSrs = lines.slice(0, headerLineCount)
+        .map(line => detectEpsgCodes(line))
+        .find(found => found);
+
+    const { srs, height } = detectedSrs || {};
+    if (detectedSrs) {
+        dimension = getDimension(srs, height);
+    }
+
+    const prefixColCount = countPrefixColoumns(lines[midIndex], lines[midIndex + 1], delimiter, dimension);
+    const settings = { delimiter, decimalSeparator, headerLineCount, prefixColCount, dimension };
+    const fileContents = parseFileContents(lines, settings);
+    return { srs, height, fileContents };
 };
 
 const detectDecimalSeparator = (line = '', delimiter = ';') => {
@@ -147,47 +163,61 @@ const detectDecimalSeparator = (line = '', delimiter = ';') => {
     return '.';
 };
 
-const detectDelimiter = (line) => {
-    // comma as last as it very well be the decimal separator as well
-    const delimiters = [';', '\t', '|', ' ', ','];
+export const detectDelimiter = (line) => {
+    const delimiters = [';', '\t', '|'];
     let maxCount = 0;
     let bestDelimiter = ';';
 
     for (const delim of delimiters) {
-        const count = line.split(delim).length;
+        const count = countNumericCells(line, delim);
         if (count > maxCount) {
             maxCount = count;
             bestDelimiter = delim;
         }
     }
-
-    return bestDelimiter;
+    if (maxCount > 1) {
+        return bestDelimiter;
+    }
+    // space (DD MM SS) and comma (decimal separator) as last
+    // const comma = countNumericCells(line, ',');
+    // const space = countNumericCells(line, ' ');
+    const pointDecimalSeparator = line.includes('.');
+    return pointDecimalSeparator ? ',' : ' ';
 };
 
-const detectEpsgCode = (headerLine) => {
+export const detectEpsgCodes = (headerLine) => {
     const codes = headerLine
         .replace(/\D/g, ' ') // replace non digits with white space
         .split(' ')
         .filter(num => num.length === 4 || num.length === 5)
         .map(num => `EPSG:${num}`);
-    return codes.find(code => SRS.find(s => s.value === code));
+    const srs = codes.find(code => SRS.find(s => s.value === code));
+    const height = codes.find(code => SRS_H.find(s => s.value === code));
+    if (srs || height) {
+        return { srs, height };
+    }
+    return null;
 };
 
-const isNumericRow = (row, delimiter) => {
-    const cells = row.split(delimiter).map(cell => cell.trim());
+const normalizeForNaN = cell => {
+    // Remove spaces for e.g. DD MM SS
+    const normalized = cell.replace(',', '.').replaceAll(' ', '');
+    // remove cardinal
+    if (CARDINALS.some(c => normalized.endsWith(c))) {
+        return normalized.substring(0, normalized.length - 1);
+    }
+    return normalized;
+};
 
-    return cells.every(cell => {
-        const normalized = cell.replace(',', '.');
-        return !isNaN(normalized) && normalized !== '';
-    });
+// eslint-disable-next-line no-unused-vars
+const isNumericRow = (row, delimiter) => {
+    const cells = row.split(delimiter).map(cell => normalizeForNaN(cell));
+    return cells.every(normalized => !isNaN(normalized) && normalized !== '');
 };
 
 const countNumericCells = (row, delimiter) => {
-    const cells = row.split(delimiter).map(cell => cell.trim());
-    return cells.filter(cell => {
-        const normalized = cell.replace(',', '.');
-        return !isNaN(normalized) && normalized !== '';
-    }).length;
+    const cells = row.split(delimiter).map(cell => normalizeForNaN(cell));
+    return cells.filter(normalized => !isNaN(normalized) && normalized !== '').length;
 };
 
 const countHeaders = (lines = [], delimiter) => {
@@ -203,16 +233,20 @@ const countHeaders = (lines = [], delimiter) => {
     return headerLines;
 };
 
-const countPrefixColoumns = (row, nextRow, delimiter) => {
-    const cells = row.split(delimiter).map(cell => cell.trim());
-    const firstNumIndex = cells.findIndex(cell => !isNaN(cell));
-    if (firstNumIndex > 0) {
-        return firstNumIndex;
-    }
-    // TODO: how to figure numeric prefix (line number, srs bbox)
-    if (countNumericCells(row, delimiter) == 2) {
+export const countPrefixColoumns = (row, nextRow, delimiter, dimension) => {
+    const cells = row.split(delimiter).map(cell => normalizeForNaN(cell));
+    if (cells.length <= dimension) {
         return 0;
     }
+    const firstNumIndex = cells.findIndex(cell => !isNaN(cell));
+    if (firstNumIndex > 0) {
+        // UI has checkbox
+        return 1; // firstNumIndex;
+    }
+    // Cases:
+    // 3D data without srs selections (dimension === 2)
+    // line endings (number || string)
+    // numeric prefix
     if (nextRow) {
         const nextCells = nextRow.split(delimiter).map(cell => cell.trim());
         // use parse float (degree)

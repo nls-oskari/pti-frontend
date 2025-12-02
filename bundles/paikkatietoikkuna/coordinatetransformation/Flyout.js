@@ -1,6 +1,6 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import { FlyoutContent } from './view/FlyoutContent';
+import { createRoot } from 'react-dom/client';
+import { FlyoutContent, Progress } from './view/FlyoutContent';
 import { LocaleProvider, ThemeProvider } from 'oskari-ui/util';
 import { Spin } from 'oskari-ui';
 import { ViewHandler } from './handler/ViewHandler';
@@ -13,6 +13,7 @@ Oskari.clazz.define('Oskari.coordinatetransformation.Flyout',
         this.loc = Oskari.getMsg.bind(null, BUNDLE);
         this.container = null;
         this.handler = null;
+        this._reactRoot = null;
     }, {
         getName: function () {
             return 'Oskari.coordinatetransformation.Flyout';
@@ -33,8 +34,18 @@ Oskari.clazz.define('Oskari.coordinatetransformation.Flyout',
             }
             return this.handler;
         },
+        getReactRoot: function () {
+            if (!this._reactRoot && this.container) {
+                this._reactRoot = createRoot(this.container);
+            }
+            return this._reactRoot;
+        },
         teardown: function () {
             this.handler?.onFlyoutClose();
+            if (this._reactRoot) {
+                this._reactRoot.unmount();
+                this._reactRoot = null;
+            }
         },
         // For some screen sizes css + media doesn't give enough space for content
         setContainerMaxHeight: function (mapHeight) {
@@ -51,20 +62,23 @@ Oskari.clazz.define('Oskari.coordinatetransformation.Flyout',
         },
         lazyRender: function () {
             const handler = this.getHandler();
-            if (!this.container || !handler) {
+            const root = this.getReactRoot();
+            if (!root || !handler) {
                 return;
             }
             const state = handler.getState();
+            const controller = handler.getController();
             const content = (
                 <LocaleProvider value={{ bundleKey: BUNDLE }}>
                     <ThemeProvider>
-                        <Spin spinning={state.loading}>
-                            <FlyoutContent {...state} controller={handler.getController()}/>
+                        <Spin spinning={state.loading} size='large'
+                            tip={<Progress progress={state.progress} abort={controller.abortTransform}/>}>
+                            <FlyoutContent {...state} controller={controller}/>
                         </Spin>
                     </ThemeProvider>
                 </LocaleProvider>
             );
-            ReactDOM.render(content, this.container);
+            root.render(content);
         }
     }, {
         extend: ['Oskari.userinterface.extension.DefaultFlyout']

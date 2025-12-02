@@ -7,7 +7,7 @@ import { showPopup } from 'oskari-ui/components/window';
 import { BUNDLE } from '../constants';
 
 const POPUP_OPTIONS = {
-    id: BUNDLE + '-confirm'
+    id: BUNDLE + '-clipboard'
 };
 
 const Content = styled.div`
