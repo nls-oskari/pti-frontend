@@ -165,7 +165,7 @@ class UIHandler extends StateHandler {
         };
         const onConfirm = () => {
             this.cleanInputCoordinates();
-            this.transformFunction();
+            this.validatedTransform();
         };
         this.showConfirm(title, content, { onConfirm });
     }
