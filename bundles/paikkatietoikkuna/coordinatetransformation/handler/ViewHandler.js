@@ -99,6 +99,10 @@ class UIHandler extends StateHandler {
             }
             this.showFileSettings('import');
         } else if (source === ACTIONS.CLIPBOARD) {
+            if (coordinates.length) {
+                this.confirmClipboard();
+                return;
+            }
             this.showClipboard();
         }
     }
@@ -110,6 +114,14 @@ class UIHandler extends StateHandler {
             return;
         }
         this.updateState({ sources: [...sources, source] });
+    }
+
+    confirmClipboard () {
+        const onConfirm = () => {
+            this.reset();
+            this.showClipboard();
+        };
+        this.showConfirm('confirm.title', 'confirm.reset', { onConfirm });
     }
 
     confirmFileImport () {
