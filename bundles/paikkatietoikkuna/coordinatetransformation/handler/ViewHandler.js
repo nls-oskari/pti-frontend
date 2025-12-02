@@ -389,11 +389,11 @@ class UIHandler extends StateHandler {
         this.updateState(updated);
     }
 
-    confirmClearTables () {
+    confirmReset () {
         const onConfirm = () => {
-            this.updateState({ coordinates: [], results: [], sources: [], transformed: false });
+            this.reset();
         };
-        this.showConfirm('flyout.coordinateTable.clearTables', 'flyout.coordinateTable.confirmClear', { onConfirm });
+        this.showConfirm('confirm.title', 'confirm.reset', { onConfirm });
     }
 
     // deprecated
@@ -835,7 +835,7 @@ const wrapped = controllerMixin(UIHandler, [
     'parseInputCoordinate',
     'setFileSetting',
     'setFiles',
-    'confirmClearTables',
+    'confirmReset',
     'showOnMap',
     'exportResultsToFile',
     'transform',
