@@ -466,19 +466,19 @@ class UIHandler extends StateHandler {
         if (this.mapPopup) {
             return;
         }
-        this.instance.toggleFlyout(false);
-        const onClose = () => {
-            this.instance.setMapSelectionMode();
-            this.instance.toggleFlyout(true);
-            this.closeMapPopup();
-        };
         this.closeInputPopups();
-        this.mapPopup = showMapSelectPopup(this.getController(), onClose);
+        this.instance.toggleFlyout(false);
+        this.mapPopup = showMapSelectPopup(this.getController(), () => this.closeMapPopup(true));
     }
 
-    closeMapPopup () {
+    closeMapPopup (showFlyout) {
         this.mapPopup?.close();
         this.mapPopup = null;
+        if (showFlyout) {
+            // remove markers & enable GFI
+            this.instance.setMapSelectionMode();
+            this.instance.toggleFlyout(true);
+        }
     }
 
     showFileSettings (type) {
