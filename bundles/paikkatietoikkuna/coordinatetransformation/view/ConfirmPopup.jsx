@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import styled from 'styled-components';
 import { showPopup } from 'oskari-ui/components/window';
 import { Message, Button, Tooltip } from 'oskari-ui';
@@ -13,12 +13,41 @@ const Content = styled.div`
     padding: 20px;
 `;
 
-export const showConfirmPopup = (title, msg, onConfirm, onClose, onChange) => {
-    const change = typeof onChange === 'function';
+const StyledList = styled.ul`
+    padding: 0 1em;
+`;
+const Item = styled.li``;
+
+const List = ({ items }) => {
+    if (!items.length) {
+        return null;
+    }
+    return (
+        <Fragment>
+            <StyledList>
+                { items.map((item, i) => <Message key={`li_${i}`} messageKey={item} bundleKey={BUNDLE} LabelComponent={Item}/>) }
+            </StyledList>
+            <Message messageKey='confirm.continue' bundleKey={BUNDLE} />
+        </Fragment>
+    );
+};
+
+export const showConfirmPopup = (title, content, actions, onClose) => {
+    const { message, listItems = [] } = content || {};
+    const change = typeof actions.onChange === 'function';
+    const onConfirm = () => {
+        actions?.onConfirm?.();
+        onClose();
+    };
+    const onChange = () => {
+        actions?.onChange?.();
+        onClose();
+    };
     return showPopup(
         <Message messageKey={title} bundleKey={BUNDLE} />,
         (<Content>
-            <Message messageKey={msg} bundleKey={BUNDLE} />
+            <Message messageKey={message} bundleKey={BUNDLE} />
+            <List items={listItems} />
             <ButtonContainer>
                 <SecondaryButton type='cancel' onClick={() => onClose()} />
                 { change &&

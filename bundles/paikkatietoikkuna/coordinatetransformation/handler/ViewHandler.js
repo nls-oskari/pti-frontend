@@ -1,5 +1,6 @@
 import { StateHandler, controllerMixin, Messaging } from 'oskari-ui/util';
 import { showInfoPopup } from '../view/InfoPopup';
+import { showMessagePopup } from '../view/MessagePopup';
 import { showFilePopup } from '../view/FilePopup';
 import { showConfirmPopup } from '../view/ConfirmPopup';
 import { showClipboardPopup } from '../view/ClipboardPopup';
@@ -39,6 +40,7 @@ class UIHandler extends StateHandler {
         this.sandbox = instance.getSandbox();
         this.loc = loc;
         this.infoPopup = null;
+        this.msgPopup = null;
         this.filePopup = null;
         this.mapPopup = null;
         this.clipboardPopup = null;
@@ -55,9 +57,29 @@ class UIHandler extends StateHandler {
         const state = getInitialState();
         this.updateState(state);
         if (closeFlyout) {
-            const flyout = this.instance.getFlyout();
-            flyout.close();
+            this.instance.getFlyout().close();
         }
+    }
+
+    resetTables () {
+        this.updateState({
+            coordinates: [],
+            results: [],
+            sources: [],
+            transformed: false,
+            pagination: { ...PAGINATION }
+        });
+    }
+
+    resetKeepSrs () {
+        const { inputSrs, outputSrs, inputHeightSrs, outputHeightSrs } = this.getState();
+        this.updateState({
+            ...getInitialState(),
+            inputSrs,
+            outputSrs,
+            inputHeightSrs,
+            outputHeightSrs
+        });
     }
 
     // deprecated
@@ -92,15 +114,20 @@ class UIHandler extends StateHandler {
             this.selectFromMap();
         } else if (source === ACTIONS.IMPORT) {
             if (coordinates.length) {
-                this.confirmReset(() => this.showFileSettings('import'));
+                this.confirmFileImport();
                 return;
             }
             this.showFileSettings('import');
         } else if (source === ACTIONS.CLIPBOARD) {
+            if (coordinates.length) {
+                this.confirmClipboard();
+                return;
+            }
             this.showClipboard();
         }
     }
 
+    // deprecated
     addSourceToState (source) {
         const { sources } = this.getState();
         if (!source || sources.includes(source)) {
@@ -109,41 +136,64 @@ class UIHandler extends StateHandler {
         this.updateState({ sources: [...sources, source] });
     }
 
-    confirmReset (callback = () => {}) {
-        const onChange = () => {
-            this.updateState({ coordinates: [], results: [], sources: [] });
-            this.closeConfirmPopup();
-            callback();
-        };
+    confirmClipboard () {
         const onConfirm = () => {
             this.reset();
-            this.closeConfirmPopup();
-            callback();
+            this.showClipboard();
         };
-        this.confirmPopup = showConfirmPopup('confirm.title', 'confirm.reset', onConfirm, () => this.closeConfirmPopup(), onChange);
+        this.showConfirm('confirm.title', 'confirm.reset', { onConfirm });
+    }
+
+    confirmFileImport () {
+        const onConfirm = () => {
+            this.reset();
+            this.showFileSettings('import');
+        };
+        this.showConfirm('confirm.title', 'confirm.reset', { onConfirm });
     }
 
     confirmMapSrs (mapSrs) {
         const onChange = () => {
             this.setSrs('input', mapSrs, true);
-            this.closeConfirmPopup();
             this.selectFromMap();
         };
         const onConfirm = () => {
             this.reset();
             onChange();
-            this.closeConfirmPopup();
         };
-        this.confirmPopup = showConfirmPopup('confirm.title', 'confirm.mapSrs', onConfirm, () => this.closeConfirmPopup(), onChange);
+        this.showConfirm('confirm.title', 'confirm.mapSrs', { onConfirm, onChange });
     }
 
+    // deprecated
     confirmSourceChange (source) {
         const onConfirm = () => {
             this.reset();
             this.setSource(source);
-            this.closeConfirmPopup();
         };
-        this.confirmPopup = showConfirmPopup('dataSource.title', 'dataSource.confirmChange', onConfirm, () => this.closeConfirmPopup());
+        this.showConfirm('dataSource.title', 'dataSource.confirmChange', { onConfirm });
+    }
+
+    confirmTransform (warningKeys) {
+        const title = 'transform.warnings.title';
+        const content = {
+            message: 'transform.warnings.message',
+            listItems: warningKeys.map(key => `transform.warnings.${key}`)
+        };
+        const onConfirm = () => {
+            this.cleanInputCoordinates();
+            this.validatedTransform();
+        };
+        this.showConfirm(title, content, { onConfirm });
+    }
+
+    showConfirm (title, msgOrContent, actions) {
+        if (typeof actions.onConfirm !== 'function') {
+            this.log.warn('Callback missing');
+            return;
+        }
+        const content = typeof msgOrContent === 'string' ? { message: msgOrContent } : msgOrContent;
+        this.confirmPopup?.close();
+        this.confirmPopup = showConfirmPopup(title, content, actions, () => this.closeConfirmPopup());
     }
 
     closeConfirmPopup () {
@@ -242,38 +292,34 @@ class UIHandler extends StateHandler {
     }
 
     inputSrsChange (srs) {
+        const onChange = () => this.setSrs('input', srs, true);
         const { coordinates, inputSrs } = this.getState();
+
         if (!inputSrs || !coordinates.length) {
-            this.setSrs('input', srs, true);
+            onChange();
             return;
         }
-        const onChange = () => {
-            this.setSrs('input', srs, true);
-            this.closeConfirmPopup();
-        };
         const onConfirm = () => {
             this.reset();
             onChange();
         };
-        this.confirmPopup = showConfirmPopup('confirm.title', 'confirm.coordinates', onConfirm, () => this.closeConfirmPopup(), onChange);
+        this.showConfirm('confirm.title', 'confirm.coordinates', { onConfirm, onChange });
     }
 
     outputSrsChange (srs) {
+        const onChange = () => this.setSrs('output', srs, true);
         const { results, outputSrs } = this.getState();
+
         if (!outputSrs || !results.length) {
-            this.setSrs('output', srs, true);
+            onChange();
             return;
         }
-        const onChange = () => {
-            this.setSrs('output', srs, true);
-            this.closeConfirmPopup();
-        };
         const onConfirm = () => {
             this.updateState({ results: [] });
             onChange();
             this.transform();
         };
-        this.confirmPopup = showConfirmPopup('confirm.title', 'confirm.results', onConfirm, () => this.closeConfirmPopup(), onChange);
+        this.showConfirm('confirm.title', 'confirm.results', { onConfirm, onChange });
     }
 
     updateDimensions (type) {
@@ -295,8 +341,12 @@ class UIHandler extends StateHandler {
     setHeightSrs (type, srs) {
         const prop = `${type}HeightSrs`;
         if (srs === 'EPSG:8675') {
-            // TODO: url isn't added because it did't work, find working url and refactor showInfoMessage
-            this.showInfoMessage('flyout.coordinateSystem.heightSystem.label', 'flyout.coordinateSystem.heightSystem.n43.info');
+            const title = 'flyout.coordinateSystem.heightSystem.label';
+            const content = {
+                message: 'flyout.coordinateSystem.heightSystem.n43.info',
+                link: this.loc('flyout.coordinateSystem.heightSystem.n43', null, null)
+            };
+            this.showMessage(title, content);
         }
         this.updateState({ [prop]: srs, transformed: false });
         this.updateDimensions(type);
@@ -355,12 +405,11 @@ class UIHandler extends StateHandler {
         this.updateState(updated);
     }
 
-    confirmClearTables () {
+    confirmReset () {
         const onConfirm = () => {
-            this.updateState({ coordinates: [], results: [], sources: [], transformed: false });
-            this.closeConfirmPopup();
+            this.reset();
         };
-        this.confirmPopup = showConfirmPopup('flyout.coordinateTable.clearTables', 'flyout.coordinateTable.confirmClear', onConfirm, () => this.closeConfirmPopup());
+        this.showConfirm('confirm.title', 'confirm.reset', { onConfirm });
     }
 
     // deprecated
@@ -402,8 +451,8 @@ class UIHandler extends StateHandler {
         }
         if (!coordinates.length || !inputSrs) {
             const title = 'mapMarkers.show.errorTitle';
-            const msg = `mapMarkers.show.${!inputSrs ? 'noSrs' : 'noCoordinates'}`;
-            this.showInfoMessage(title, msg);
+            const message = `mapMarkers.show.${!inputSrs ? 'noSrs' : 'noCoordinates'}`;
+            this.showMessage(title, message);
             return;
         }
         const { current, pageSize } = pagination;
@@ -437,21 +486,23 @@ class UIHandler extends StateHandler {
         if (this.mapPopup) {
             return;
         }
+        this.closeInputPopups();
         this.instance.toggleFlyout(false);
         this.mapPopup = showMapSelectPopup(this.getController(), () => this.closeMapPopup(true));
     }
 
-    closeMapPopup (fromPopup) {
+    closeMapPopup (showFlyout) {
         this.mapPopup?.close();
         this.mapPopup = null;
-        if (fromPopup) {
+        if (showFlyout) {
+            // remove markers & enable GFI
             this.instance.setMapSelectionMode();
             this.instance.toggleFlyout(true);
         }
     }
 
     showFileSettings (type) {
-        this.filePopup?.close();
+        this.closeInputPopups();
         const state = this.getState();
         if (type === 'export' && state.fileContents) {
             const { headerLineCount, ...restSettings } = state.fileContents.settings;
@@ -471,6 +522,7 @@ class UIHandler extends StateHandler {
         if (this.clipboardPopup) {
             return;
         }
+        this.closeInputPopups();
         this.clipboardPopup = showClipboardPopup(this.getController(), () => this.closeClipboard());
     }
 
@@ -480,43 +532,16 @@ class UIHandler extends StateHandler {
     }
 
     showInfo (key) {
-        const { title, info = '', listItems = [], paragraphs = [info] } = this.loc(`infoPopup.${key}`);
-        if (this.infoPopup) {
-            this.infoPopup.update(title, paragraphs, listItems);
-        } else {
-            this.infoPopup = showInfoPopup(title, paragraphs, listItems, () => this.closeInfoPopup());
-        }
-    }
-
-    showInfoMessage (titleKey, msgKey) {
-        const title = this.loc(titleKey);
-        const paragraphs = [this.loc(msgKey)];
-        const listItems = [];
-        if (this.infoPopup) {
-            this.infoPopup.update(title, paragraphs, listItems);
+        const loc = this.loc(`infoPopup.${key}`, null, null);
+        if (!loc) {
+            this.log.warn('No info localization for:', key);
             return;
         }
-        this.infoPopup = showInfoPopup(title, paragraphs, listItems, () => this.closeInfoPopup());
-    }
-
-    showValidationError (errorKeys) {
-        this.infoPopup?.close();
-        const listItems = errorKeys.map(key => this.loc(`transform.validate.${key}`));
-        const title = this.loc('transform.validate.title');
-        const paragraphs = [this.loc('transform.validate.message')];
-        this.infoPopup = showInfoPopup(title, paragraphs, listItems, () => this.closeInfoPopup());
-    }
-
-    showConfirmTransform (warningKeys) {
-        this.infoPopup?.close();
-        const listItems = warningKeys.map(key => this.loc(`transform.warnings.${key}`));
-        const title = this.loc('transform.warnings.title');
-        const paragraphs = [this.loc('transform.warnings.message')];
-        const onConfirm = () => {
-            this.cleanInputCoordinates();
-            this.validatedTransform();
-        };
-        this.infoPopup = showInfoPopup(title, paragraphs, listItems, () => this.closeInfoPopup(), onConfirm);
+        if (this.infoPopup) {
+            this.infoPopup.update(loc);
+            return;
+        }
+        this.infoPopup = showInfoPopup(loc, () => this.closeInfoPopup());
     }
 
     closeInfoPopup () {
@@ -524,12 +549,40 @@ class UIHandler extends StateHandler {
         this.infoPopup = null;
     }
 
+    showValidationError (errorKeys) {
+        const title = 'transform.validate.title';
+        const message = 'transform.validate.message';
+        const listItems = errorKeys.map(key => this.loc(`transform.validate.${key}`));
+        this.showMessage(title, { message, listItems });
+    }
+
+    showMessage (title, msgOrContent) {
+        const content = typeof msgOrContent === 'string' ? { message: msgOrContent } : msgOrContent;
+        if (this.msgPopup) {
+            this.msgPopup.update(title, content);
+            return;
+        }
+        this.msgPopup = showMessagePopup(title, content, () => this.closeMessagePopup());
+    }
+
+    closeMessagePopup () {
+        this.msgPopup?.close();
+        this.msgPopup = null;
+    }
+
     onFlyoutClose () {
         this.closeFileSettings();
         this.closeInfoPopup();
+        this.closeMessagePopup();
         this.closeMapPopup();
         this.closeConfirmPopup();
         this.closeClipboard();
+    }
+
+    closeInputPopups() {
+        this.closeFileSettings();
+        this.closeClipboard();
+        this.closeMapPopup();
     }
 
     transform () {
@@ -541,7 +594,7 @@ class UIHandler extends StateHandler {
             return;
         }
         if (warnings.length) {
-            this.showConfirmTransform(warnings);
+            this.confirmTransform(warnings);
             return;
         }
         this.validatedTransform();
@@ -798,7 +851,7 @@ const wrapped = controllerMixin(UIHandler, [
     'parseInputCoordinate',
     'setFileSetting',
     'setFiles',
-    'confirmClearTables',
+    'confirmReset',
     'showOnMap',
     'exportResultsToFile',
     'transform',

@@ -127,9 +127,11 @@ export const getDecimalCount = (decimalValue, format) => {
         return decimals;
     case 'DD MM SS':
     case 'DDMMSS':
+    case 'sec':
         return decimals + 1;
     case 'DD MM':
     case 'DDMM':
+    case 'min':
         return decimals + 3;
     case 'degree':
     case 'gradian':

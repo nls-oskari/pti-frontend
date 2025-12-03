@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Message, Button} from 'oskari-ui';
-import { ButtonContainer } from 'oskari-ui/components/buttons';
+import { ButtonContainer, SecondaryButton } from 'oskari-ui/components/buttons';
 import { SourceButtons } from '../components/SourceSelect.jsx';
 import { CoordinatesTable, ResultsTable } from '../components/CoordinateTable.jsx';
 import { SrsSelect } from '../components/SrsSelect';
@@ -81,9 +81,7 @@ export const FlyoutContent = ({
             
             <StyledButtonContainer>
                 <div className='t_actions'>
-                    <Button className='t_clear' onClick={() => controller.confirmClearTables()}>
-                        <Message messageKey='flyout.coordinateTable.clearTables'/>
-                    </Button>
+                    <SecondaryButton type='reset' onClick={() => controller.confirmReset()}/>
                     <Button className='t_map' onClick={() => controller.showOnMap()}>
                         <Message messageKey='mapMarkers.show.title'/>
                     </Button>

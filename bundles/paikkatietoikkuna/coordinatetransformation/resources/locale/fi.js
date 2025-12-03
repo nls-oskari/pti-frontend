@@ -53,8 +53,10 @@ Oskari.registerLocalization(
                     "label": "Korkeusjärjestelmä",
                     "none": "Ei mitään",
                     "n43": {
-                        "info": "Huomaa, että N43 kolmioverkko ei kata koko Pohjois-Suomea, eikä muunnosta siksi voida välttämättä tehdä. Katso lisätietoja N60-N43 muunnospisteistön kolmioverkon kattavuudesta: JHS163 Suomen korkeusjärjestelmä N2000 Liite 2 (kuva 3):",
-                        "url": "https://www.suomidigi.fi/ohjeet-ja-tuki/jhs-suositukset/jhs-163-suomen-korkeusjarjestelma-n2000"
+                        "info": "Huomaa, että N43 kolmioverkko ei kata koko Pohjois-Suomea, eikä muunnosta siksi voida välttämättä tehdä.",
+                        "label": "Katso lisätietoja N60-N43 muunnospisteistön kolmioverkon kattavuudesta:",
+                        "link": "JHS163 Suomen korkeusjärjestelmä N2000 Liite 2 (kuva 3)",
+                        "url": "https://geoforum.fi/jhs-163-suomen-korkeusjarjestelma-n2000/"
                     }
                 }
             },
@@ -81,7 +83,7 @@ Oskari.registerLocalization(
         "transform": {
             "warnings": {
                 "title": "Huomio!",
-                "message": "Huomioi seuraavat rajoitukset valinnoissa tai koordinaateissa ennen kuin teet muunnoksen. Haluatko jatkaa?",
+                "message": "Huomioi seuraavat rajoitukset valinnoissa tai koordinaateissa ennen kuin teeet muunnoksen.",
                 "3DTo2D": "Valitsemissasi lähtötiedoissa on mukana korkeusarvoja, mutta tulostiedoissa ei. Tuloskoordinaatteihin ei siis tule korkeusarvoja mukaan.",
                 "coordinates": "Muunnettavissa koordinaateissa on virheellisiä rivejä. Virheelliset rivit poistetaan ennen muunnosta.",
                 "bbox": "Muunnettavia koordinaatteja on lähtökoordinaattijärjestelmän kattavuusalueen ulkopuolella. Koordinaattien arvot tulee olla lähdejärjestelmän määrittelemässä järjestyksessä.",
@@ -182,6 +184,7 @@ Oskari.registerLocalization(
         },
         "confirm": {
             "title": "Koordinaattitietojen valinnat",
+            "continue": "Haluatko jatkaa?",
             "reset": "Kaikki koordinaatit ja valinnat tyhjennetään. Haluatko jatkaa?",
             "coordinates": "Muunnettavat koordinaatit tyhjennetään. Haluatko jatkaa?",
             "results": "Tuloskoordinaatit tyhjennetään ja muunnos tehdään uusilla valinnoilla. Haluatko jatkaa?",
@@ -310,8 +313,8 @@ Oskari.registerLocalization(
                 "precisionTable": {
                     "title": "Kulman muodon/yksikön desimaalien määrä metrisenä tarkkuutena",
                     "unit": "Kulman muoto/yksikkö",
-                    "deg": "Aste, gooni ja DD",
-                    "rad": "Radiaanit",
+                    "degree": "Aste, gooni ja DD",
+                    "radian": "Radiaanit",
                     "min": "DDMM ja DD MM",
                     "sec": "DDMMSS ja DD MM SS"
                 }

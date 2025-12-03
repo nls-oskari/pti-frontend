@@ -53,8 +53,10 @@ Oskari.registerLocalization(
                     "label": "Vertical coordinate reference system", // Height system
                     "none": "None",
                     "n43" : {
-                        "info": "Please be aware that the N43 triangular network does not cover all of Northern Finland and therefore the transformation might not be possible to complete. For more details about N60-N43 transformation and triangulation (only in Finnish): JHS163 Finland's elevation system N2000, attachment 2 (figure 3):",
-                        "url": "https://www.suomidigi.fi/ohjeet-ja-tuki/jhs-suositukset/jhs-163-suomen-korkeusjarjestelma-n2000"
+                        "info": "Please be aware that the N43 triangular network does not cover all of Northern Finland and therefore the transformation might not be possible to complete.",
+                        "label": "For more details about N60-N43 transformation and triangulation (only in Finnish):",
+                        "link": "JHS163 Finland's elevation system N2000, attachment 2 (figure 3)",
+                        "url": "https://geoforum.fi/jhs-163-suomen-korkeusjarjestelma-n2000/"
                     }
                 }
             },
@@ -81,7 +83,7 @@ Oskari.registerLocalization(
         "transform": {
             "warnings": {
                 "title": "Warning!",
-                "message": "Please note the following restrictions on selections or coordinates before the transform. Do you want to continue?",
+                "message": "Please note the following restrictions on selections or coordinates before the transform.",
                 "3DTo2D": "The selected input information contains height values, but the output information does not. Output coordinates will therefore not include height values.",
                 "coordinates": "There are invalid rows in the coordinates to be transformed. The invalid rows will be removed before transform.",
                 "bbox": "The coordinates to be transformed are outside the coverage area of ​​the source coordinate system. The coordinate values ​​must be in the axis order defined by the source coordinate system.",
@@ -180,6 +182,7 @@ Oskari.registerLocalization(
         },
         "confirm": {
             "title": "Coordinate information selections",
+            "continue": "Do you want to continue?",
             "reset": "All coordinates and selections will be removed. Do you want to continue?",
             "coordinates": "Input coordinates will be removed. Do you want to continue?",
             "results": "Input coordinates will be removed and new transformation will be done with new selections. Do you want to continue?",
@@ -198,7 +201,7 @@ Oskari.registerLocalization(
                 "decimalSeparator": "Decimal separator",
                 "delimiter": "Field separator",
                 "headerLineCount": "Number of header rows",
-                "decimalPrecision": "Decimal precision",
+                "decimalCount": "Decimal precision",
                 "axisFlip": "Coordinates reversed",
                 "writeCardinals": "Add cardinals (N,E,W,S)",
                 "writeLineEndings": "Add end-of-lines from input file",
@@ -308,8 +311,8 @@ Oskari.registerLocalization(
                 "precisionTable": {
                     "title": "Number of decimals of angle pattern in metric equivalent",
                     "unit": "Angle pattern", // Angle shape/unit
-                    "deg": "Degree, Grade and DD",
-                    "rad": "Radian",
+                    "degree": "Degree, Grade and DD",
+                    "radian": "Radian",
                     "min": "DDMM and DD MM",
                     "sec": "DDMMSS and DD MM SS"
                 }

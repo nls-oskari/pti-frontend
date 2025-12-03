@@ -53,8 +53,10 @@ Oskari.registerLocalization(
                     "label": "Höjdsystem",
                     "none": "Ingenting",
                     "n43": {
-                        "info": "Observera, att deltanätet N43 inte täcker hela Norra Finland, och transformationen kan p.g.a detta eventuellt inte utföras. Tilläggsinformation (endast på finska, se Liite 2, bild 3) på sidan:",
-                        "url": "https://www.suomidigi.fi/ohjeet-ja-tuki/jhs-suositukset/jhs-163-suomen-korkeusjarjestelma-n2000"
+                        "info": "Observera, att deltanätet N43 inte täcker hela Norra Finland, och transformationen kan p.g.a detta eventuellt inte utföras.",
+                        "label": "Tilläggsinformation (endast på finska) på sidan:",
+                        "link": "JHS163 Finlands höjdsystem N2000, bilaga 2 (bild 3)",
+                        "url": "https://geoforum.fi/jhs-163-suomen-korkeusjarjestelma-n2000/"
                     }
                 }
             },
@@ -81,7 +83,7 @@ Oskari.registerLocalization(
         "transform": {
             "warnings": {
                 "title": "Observera!",
-                "message": "Observera följande begränsningar för val eller koordinater före transformationen. Vill du fortsätta?",
+                "message": "Observera följande begränsningar för val eller koordinater före transformationen.",
                 "3DTo2D": "I de utgångsuppgifter du valt finns höjdvärden, men inte i resultatuppgifterna. Höjvärden ingår alltså inte i resultatkoordinaterna.",
                 "coordinates": "Det finns ogiltiga rader i koordinaterna som ska transformeras. De ogiltiga raderna kommer att tas bort före transformationen.",
                 "bbox": "Koordinaterna som ska transformeras ligger utanför täckningsområde av referenssystemet för koordinater. Koordinatvärdena måste vara i den axelordning som definieras av referenssystemet för koordinater.",
@@ -180,6 +182,7 @@ Oskari.registerLocalization(
         },
         "confirm": {
             "title": "Val av koordinatuppgifter",
+            "continue": "Vill du fortsätta?",
             "reset": "Alla koordinater och val kommer att tas bort. Vill du fortsätta?.",
             "coordinates": "Koordinaterna som ska transformeras töms. Vill du fortsätta?",
             "results": "Resultatkoordinater töms och ny transformation kommer att göras med nya val. Vill du fortsätta?",
@@ -308,8 +311,8 @@ Oskari.registerLocalization(
                 "precisionTable": {
                     "title": "Antalet decimaler av vinkels form/enhet i metrisk ekvivalent",
                     "unit": "Vinkelns form/enhet",
-                    "deg": "Grad, gon och DD",
-                    "rad": "Radian",
+                    "degree": "Grad, gon och DD",
+                    "radian": "Radian",
                     "min": "DDMM och DD MM",
                     "sec": "DDMMSS och DD MM SS"
                 }

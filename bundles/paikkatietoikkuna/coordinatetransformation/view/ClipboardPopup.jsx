@@ -43,10 +43,14 @@ ClipboardPopup.propTypes = {
 };
 
 export const showClipboardPopup = (controller, onClose) => {
-    return showPopup(
+    const controls = showPopup(
         <Message messageKey='dataSource.clipboard.title' bundleKey={BUNDLE} />,
         <ClipboardPopup controller={controller} onClose={onClose} />,
         onClose,
         POPUP_OPTIONS
     );
+    return {
+        ...controls,
+        update: state => {} // noop
+    };
 };
