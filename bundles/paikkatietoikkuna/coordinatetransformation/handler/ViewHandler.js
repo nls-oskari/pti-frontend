@@ -57,9 +57,29 @@ class UIHandler extends StateHandler {
         const state = getInitialState();
         this.updateState(state);
         if (closeFlyout) {
-            const flyout = this.instance.getFlyout();
-            flyout.close();
+            this.instance.getFlyout().close();
         }
+    }
+
+    resetTables () {
+        this.updateState({
+            coordinates: [],
+            results: [],
+            sources: [],
+            transformed: false,
+            pagination: { ...PAGINATION }
+        });
+    }
+
+    resetKeepSrs () {
+        const { inputSrs, outputSrs, inputHeightSrs, outputHeightSrs } = this.getState();
+        this.updateState({
+            ...getInitialState(),
+            inputSrs,
+            outputSrs,
+            inputHeightSrs,
+            outputHeightSrs
+        });
     }
 
     // deprecated
