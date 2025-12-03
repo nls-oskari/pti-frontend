@@ -201,7 +201,7 @@ Oskari.registerLocalization(
                 "decimalSeparator": "Decimal separator",
                 "delimiter": "Field separator",
                 "headerLineCount": "Number of header rows",
-                "decimalPrecision": "Decimal precision",
+                "decimalCount": "Decimal precision",
                 "axisFlip": "Coordinates reversed",
                 "writeCardinals": "Add cardinals (N,E,W,S)",
                 "writeLineEndings": "Add end-of-lines from input file",
