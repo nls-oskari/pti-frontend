@@ -148,7 +148,7 @@ Oskari.registerLocalization(
             "clipboard": {
                 "title": "Importera koordinater från urklipp",
                 "button": "Hämta från urklipp",
-                "info":  "Valitse lähtöaineiston sisältävä tiedosto ja sen asetukset.",
+                "info":  "Importera koordinater från urklipp (csv, excel)",
                 "placeholder": "Ange värden från urklippet här. En rad motsvarar ett koordinat. Separera värden med semikolon eller tabulator. Värden kan tilläggas i följande form:\n383699,477;6676232,276;13,4"
             }
         },
