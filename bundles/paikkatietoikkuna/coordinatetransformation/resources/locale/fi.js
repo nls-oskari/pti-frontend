@@ -75,7 +75,7 @@ Oskari.registerLocalization(
                 "input": "Muunnettavat lähtökoordinaatit",
                 "output": "Tuloskoordinaatit",
                 "rows": "Riviä",
-                "outdated": "Valinnat tai koordinatit muuttuneet. Muunna koordinaatit, jotta tulokset päivittyvät.",
+                "outdated": "Valinnat tai koordinaatit ovat muuttuneet. Muunna koordinaatit, jotta tulokset päivittyvät.",
                 "clearTables": "Poista kaikki koordinaatit",
                 "confirmClear": "Haluatko poistaa taulukoista kaikki koordinaatit?"
             }
@@ -83,7 +83,7 @@ Oskari.registerLocalization(
         "transform": {
             "warnings": {
                 "title": "Huomio!",
-                "message": "Huomioi seuraavat rajoitukset valinnoissa tai koordinaateissa ennen kuin teeet muunnoksen.",
+                "message": "Huomioi seuraavat rajoitukset valinnoissa tai koordinaateissa ennen kuin teet muunnoksen.",
                 "3DTo2D": "Valitsemissasi lähtötiedoissa on mukana korkeusarvoja, mutta tulostiedoissa ei. Tuloskoordinaatteihin ei siis tule korkeusarvoja mukaan.",
                 "coordinates": "Muunnettavissa koordinaateissa on virheellisiä rivejä. Virheelliset rivit poistetaan ennen muunnosta.",
                 "bbox": "Muunnettavia koordinaatteja on lähtökoordinaattijärjestelmän kattavuusalueen ulkopuolella. Koordinaattien arvot tulee olla lähdejärjestelmän määrittelemässä järjestyksessä.",
@@ -110,7 +110,7 @@ Oskari.registerLocalization(
                 "transform": "Virhe muunnoksessa!",
                 "import": "Virhe tiedoston lukemisessa!", // Tiedostosta ei onnistuttu lukemaan kaikkia rivejä.
                 "paste": "Koordinaattien tuominen leikepöydältä epäonnistui.",
-                "export": "Koordinaattien kirjoittaminen tiedostoonn epäonnistui.",
+                "export": "Koordinaattien kirjoittaminen tiedostoon epäonnistui.",
                 "invalidLine": "Tiedostossa on rivillä: {index, number} virheellinen koordinaattirivi: {line} <br /> Tarkasta, että kyseinen rivi on kelvollinen ja vastaa lähtöaineiston ominaisuuksien valintoja.",
                 "generic": "Koordinaattimuunnos epäonnistui.",
                 //error codes
@@ -172,8 +172,8 @@ Oskari.registerLocalization(
         "actions": {
             "transform": "Tee muunnos",
             "export": "Tallenna tiedostoon",
-            "minimizeSrs": "Piilota koordinaattjijärjestelmän lisävalinnat",
-            "minimizedSrs": "Näytä kaikki koordinaattjijärjestelmän valinnat",
+            "minimizeSrs": "Piilota koordinaattijärjestelmän lisävalinnat",
+            "minimizedSrs": "Näytä kaikki koordinaattijärjestelmän valinnat",
             "axisFlip": "Koordinaatit käänteisesti",
             "search": "Hae nimellä tai EPSG-koodilla",
             "select": "Valitse",
@@ -209,7 +209,7 @@ Oskari.registerLocalization(
                 "writeLineEndings": "Lisää lähtötiedoston rivien loput",
                 "lineSeparator": "Rivierotin",
                 "unit": "Kulman muoto/yksikkö",
-                "createHeader": "Lisää koordinaattjijärjestelmä otsakerivi",
+                "createHeader": "Lisää koordinaattijärjestelmä otsakerivi",
                 "writeHeaders": "Lisää otsakerivit lähtötiedostosta", // (${count})??
                 "prefixes": {
                     "input": "Koordinaatit sisältävät tunnisteet",
@@ -243,7 +243,7 @@ Oskari.registerLocalization(
                 "title": "Koordinaattitietojen lähde - kartta",
                 "paragraphs": [
                     "Voit valita muunnettavia koordinaatteja kartalta klikkaamalla.",
-                    "Kartta on ETRS-TM35FIN-koordinaattijärjestelmässä. Tämä koordinaattijärjestelmä valitaan automaattisesti eikä sitä voi muutta.",
+                    "Kartta on ETRS-TM35FIN-koordinaattijärjestelmässä. Tämä koordinaattijärjestelmä valitaan automaattisesti eikä sitä voi muuttaa.",
                     "Valinnoissa on syytä huomioida, että kartalta sijaintien valinta ei ole tarkkaa ja valitut koordinaatit pyöristetään kokonaisluvuiksi."
                 ]
             },
@@ -350,7 +350,7 @@ Oskari.registerLocalization(
                 "title":"Desimaalierotin",
                 "info": "Desimaaliosan erottamiseen käytetty merkki",
                 "paragraphs": [
-                    "Ominaisuuden avulla pystyy kertomaan mikä merkki toimii desimaalierotimena.",
+                    "Ominaisuuden avulla pystyy kertomaan mikä merkki toimii desimaalierottimena.",
                     "Desimaalierottimen tulee poiketa koordinaattiarvot erottavasta merkistä. Kun koordinaattiarvot erottaa esimerkiksi pilkku sekä joukko välilyöntejä, niin desimaalierottimen on oltava piste."
                 ],
                 "listItems" : []
@@ -379,7 +379,7 @@ Oskari.registerLocalization(
                 "info": "X- ja Y-koordinaattiakselien järjestys poikkeaa määritetystä järjestyksestä",
                 "paragraphs": [
                     "Ominaisuuden avulla pystyy määrittämään ovatko tiedoston pisteiden kaksi ensimmäistä koordinaattiarvoa käänteisessä järjestyksessä suhteessa koordinaatiston kuvailussa annettuun järjestykseen.",
-                    "Esimerkiksi kkj:n koordinaatit ovat lähtökohtaisesti järjestyksessä, jossa ensimmäisenä on x-koordinaatti ja sitä seuraa y-koordinaatti. x-akseli osoittaa pohjoiseen ja y-akseli itään. Kun valitsee käänteisen järjestyksen, tulee tiedostossa y-koordinaatin edeltää x-koordinaattia."
+                    "Esimerkiksi KKJ:n koordinaatit ovat lähtökohtaisesti järjestyksessä, jossa ensimmäisenä on x-koordinaatti ja sitä seuraa y-koordinaatti. x-akseli osoittaa pohjoiseen ja y-akseli itään. Kun valitsee käänteisen järjestyksen, tulee tiedostossa y-koordinaatin edeltää x-koordinaattia."
                 ],
                 "listItems" : []
             },

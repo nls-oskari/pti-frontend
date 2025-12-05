@@ -211,7 +211,7 @@ Oskari.registerLocalization(
                 "writeHeaders": "Add header rows from input file", // (${count})??
                 "prefixes": { // Use identifier, Use id infront
                     "input": "Coordinates contain identifiers",
-                    "generate": "Generate identifers for rows",
+                    "generate": "Generate identifiers for rows",
                     "fromFile": "Add identifiers from input file"
                 },
                 "degrees":{
@@ -276,7 +276,7 @@ Oskari.registerLocalization(
                 "info": "A set of rules determining how an area is described using a set of map projections.",
                 "listItems" : [
                     "Map projection: a method of describing a three-dimensional surface on a two-dimensional plane (map).",
-                    "The rules can be used to define map projections and projection zones. Map projection system may define identifiers, scale factor at central meridian or parallel, width or lenght or overlapping of the projection zones."
+                    "The rules can be used to define map projections and projection zones. Map projection system may define identifiers, scale factor at central meridian or parallel, width or length or overlapping of the projection zones."
                 ]
             },
             "geodeticCoordinateSystem":{

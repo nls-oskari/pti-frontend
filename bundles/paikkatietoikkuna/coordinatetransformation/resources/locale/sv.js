@@ -53,7 +53,7 @@ Oskari.registerLocalization(
                     "label": "Höjdsystem",
                     "none": "Ingenting",
                     "n43": {
-                        "info": "Observera, att deltanätet N43 inte täcker hela Norra Finland, och transformationen kan p.g.a detta eventuellt inte utföras.",
+                        "info": "Observera, att deltanätet N43 inte täcker hela Norra Finland, och transformationen kan p.g.a. detta eventuellt inte utföras.",
                         "label": "Tilläggsinformation (endast på finska) på sidan:",
                         "link": "JHS163 Finlands höjdsystem N2000, bilaga 2 (bild 3)",
                         "url": "https://geoforum.fi/jhs-163-suomen-korkeusjarjestelma-n2000/"
@@ -101,7 +101,7 @@ Oskari.registerLocalization(
                 "headerCount": "Antalet rubrikrader ska vara 0 eller ett positivt heltal.",
                 "doubleComma": "Skiljetecknen för decimaler och koordinater kan inte båda vara kommatecken.",
                 "doubleSpace": "Vinkelns form/enhet kan inte innehålla mellanslag, om koordinatskiljetecknet är Mellanslag.",
-                "noFileSettings": "Inga filinställningar har angetts..",
+                "noFileSettings": "Inga filinställningar har angetts.",
                 "noDelimiter": "Skiljetecknet för koordinater ska vara valt.",
                 "noDecimalSeparator": "Skiljetecknet för decimaler ska vara valt."
             },
@@ -183,7 +183,7 @@ Oskari.registerLocalization(
         "confirm": {
             "title": "Val av koordinatuppgifter",
             "continue": "Vill du fortsätta?",
-            "reset": "Alla koordinater och val kommer att tas bort. Vill du fortsätta?.",
+            "reset": "Alla koordinater och val kommer att tas bort. Vill du fortsätta?",
             "coordinates": "Koordinaterna som ska transformeras töms. Vill du fortsätta?",
             "results": "Resultatkoordinater töms och ny transformation kommer att göras med nya val. Vill du fortsätta?",
             "mapSrs": "Uppgifterna om utgångsreferenssystemet för koordinater väljs automatiskt att vara i ETRS-TM35FIN. Dina val av utgångsreferenssystem för koordinater ersätts. Vill du fortsätta?",
@@ -241,7 +241,7 @@ Oskari.registerLocalization(
                 "title": "Källa för koordinatuppgifter - kartan",
                 "paragraphs": [
                     "Du kan välja koordinater som ska omvandlas genom att klicka på kartan",
-                    "Kartans  referenssystem för koordinater är ETRS-TM35FIN. Detta referenssystem för koordinater väljs automatiskt för de koordinater som omvandlas och kan inte ändras.",
+                    "Kartans referenssystem för koordinater är ETRS-TM35FIN. Detta referenssystem för koordinater väljs automatiskt för de koordinater som omvandlas och kan inte ändras.",
                     "Beakta vid val av koordinater att valet av läge inte är exakt."
                 ]
             },
@@ -276,7 +276,7 @@ Oskari.registerLocalization(
                 "info": "En mängd regler som bestämmer hur ett önskat område beskrivs med hjälp av en mängd kartprojektioner.",
                 "listItems" : [
                     "Kartprojektion: en metod för att beskriva jordklotets tredimensionella yta på ett tvådimensionellt kartplan.",
-                    "Med hjälp av reglerna kan man bestämma kartprojektioner och projektionszoner. För projektionszoner kan systemet bestämma identiferare, medelmeridianernas eller medelparallellernas skala, bredd, längd och överlappning."
+                    "Med hjälp av reglerna kan man bestämma kartprojektioner och projektionszoner. För projektionszoner kan systemet bestämma identifierare, medelmeridianernas eller medelparallellernas skala, bredd, längd och överlappning."
                 ]
             },
             "geodeticCoordinateSystem":{
@@ -305,7 +305,7 @@ Oskari.registerLocalization(
                 "title":"Decimalernas precision",
                 "info": "Antalet decimaler som visas i resultatet.",
                 "paragraphs": [
-                    "Med denna egenskap kan man ange med hur många decimalers noggrannhet koordinaterna visas i resultatet. Det förvalda värdet motsvarar ett antal decimaler som ger en 1 mm precision." // Det förvalda värdet för gradangivelser är det närmaste antalet decimaler som i det metriska sytemet motsvarar 1 mm."
+                    "Med denna egenskap kan man ange med hur många decimalers noggrannhet koordinaterna visas i resultatet. Det förvalda värdet motsvarar ett antal decimaler som ger en 1 mm precision." // Det förvalda värdet för gradangivelser är det närmaste antalet decimaler som i det metriska systemet motsvarar 1 mm."
                 ],
                 "listItems" : [],
                 "precisionTable": {
