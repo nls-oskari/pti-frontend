@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { Message } from 'oskari-ui';
 
 Oskari.clazz.define('Oskari.inspire.Flyout',
@@ -18,6 +18,7 @@ Oskari.clazz.define('Oskari.inspire.Flyout',
         },
         setEl: function (el, flyout, width, height) {
             this.container = el[0];
+            this._reactRoot = createRoot(this.container);
             this.flyout = flyout;
             this.container.classList.add('inspire');
             this.flyout.addClass('inspire');
@@ -28,11 +29,10 @@ Oskari.clazz.define('Oskari.inspire.Flyout',
          * @method createContent
          */
         createContent: function () {
-            const root = this.container;
-            if (!root) {
+            if (!this._reactRoot) {
                 return;
             }
-            ReactDOM.render(<Message bundleKey={ this.instance.getName() } messageKey="flyoutContent.content" allowHTML={true} />, root);
+            this._reactRoot.render(<Message bundleKey={ this.instance.getName() } messageKey="flyoutContent.content" allowHTML={true} />);
         },
         startPlugin: function () {}
     });

@@ -9,6 +9,10 @@ Oskari.registerLocalization(
         },
         "flyout": {
             "title":"Koordinattransformation",
+            "mandatory": {
+                "symbol": "Fält markerade med en asterisk (",
+                "desc": ") är obligatoriska."
+            },
             "filterSystems": {
                 "title": "Filtrera referenssystem för koordinater",
                 "epsg": "Med EPSG-kod",
@@ -40,7 +44,7 @@ Oskari.registerLocalization(
                     "label": "Kartprojektionssystem"
                 },
                 "geodeticCoordinateSystem":{
-                    "label": "Geodetiskt referenssystem för koordinater", // Geodetiskt koordinatsystem
+                    "label": "Referenssystem för koordinater", // Geodetiskt koordinatsystem
                     "choose": "Välj",
                     "kkj": "KKS zon {zone, number}",
                     "ykj": "KKS zon 3 / EKS"
@@ -49,91 +53,103 @@ Oskari.registerLocalization(
                     "label": "Höjdsystem",
                     "none": "Ingenting",
                     "n43": {
-                        "info": "Observera, att deltanätet N43 inte täcker hela Norra Finland, och transformationen kan p.g.a detta eventuellt inte utföras. Tilläggsinformation (endast på finska, se Liite 2, bild 3) på sidan:",
-                        "url": "https://www.suomidigi.fi/ohjeet-ja-tuki/jhs-suositukset/jhs-163-suomen-korkeusjarjestelma-n2000"
+                        "info": "Observera, att deltanätet N43 inte täcker hela Norra Finland, och transformationen kan p.g.a. detta eventuellt inte utföras.",
+                        "label": "Tilläggsinformation (endast på finska) på sidan:",
+                        "link": "JHS163 Finlands höjdsystem N2000, bilaga 2 (bild 3)",
+                        "url": "https://geoforum.fi/jhs-163-suomen-korkeusjarjestelma-n2000/"
                     }
                 }
+            },
+            "coordinateAxes": {
+                "N":"Nord-koordinat [m]",
+                "E":"Öst-koordinat [m]",
+                "φ":"Latitud",
+                "λ":"Longitud",
+                "X":"Geocentriskt X [m]",
+                "Y":"Geocentriskt Y [m]",
+                "Z":"Geocentriskt Z [m]",
+                "H": "Höjd [m]",
+                "h":"Höjd över ellipsoiden [m]"
             },
             "coordinateTable": {
                 "input": "Koordinater som ska transformeras",
                 "output": "Resultatkoordinater",
-                "north":"Nord-koordinat [m]",
-                "east":"Öst-koordinat [m]",
-                "lat":"Latitud",
-                "lon":"Longitud",
-                "elevation": "Höjd [m]",
-                "geoX":"Geocentriskt X [m]",
-                "geoY":"Geocentriskt Y [m]",
-                "geoZ":"Geocentriskt Z [m]",
-                "ellipseElevation":"Höjd över ellipsoiden [m]",
                 "rows": "Rader",
-                "clearTables": "Töm tabellerna",
-                "confirmClear": "Är du säker på att du vill tömma tabellerna?"
+                "outdated": "Valen eller koordinaterna har ändrats. Transformera koordinaterna för att få uppdaterade resultat.",
+                "clearTables": "Ta bort alla koordinater",
+                "confirmClear": "Är du säker på att du vill ta bort alla koordinater från tabellerna?"
+            }
+        },
+        "transform": {
+            "warnings": {
+                "title": "Observera!",
+                "message": "Observera följande begränsningar för val eller koordinater före transformationen.",
+                "3DTo2D": "I de utgångsuppgifter du valt finns höjdvärden, men inte i resultatuppgifterna. Höjvärden ingår alltså inte i resultatkoordinaterna.",
+                "coordinates": "Det finns ogiltiga rader i koordinaterna som ska transformeras. De ogiltiga raderna kommer att tas bort före transformationen.",
+                "bbox": "Koordinaterna som ska transformeras ligger utanför täckningsområde av referenssystemet för koordinater. Koordinatvärdena måste vara i den axelordning som definieras av referenssystemet för koordinater.",
+                "largeFile": "Transformation av stora filer kan ta flera minuter."
             },
-            "transform": {
-                "warnings": {
-                    "title": "Observera!",
-                    "3DTo2D": "I de utgångsuppgifter du valt finns höjdvärden, men inte i resultatuppgifterna. Höjvärden ingår alltså inte i resultatkoordinaterna. Vill du fortsätta?",
-                    "2DTo3D": "I de resultatuppgifter du valt finns höjdvärden, men inte i utgångsuppgifterna. Utgångsmaterialet ges höjdvärdet 0 och höjdsystemet N2000. Vill du fortsätta?",
-                    "xyz": "I valen som berör utgångsreferenssystemet för koordinater finns inget höjdsystem. En omvandling till ett kartesiskt 3D-system kan inte göras.",
-                    "largeFile": "Transformation av stora filer kan ta flera minuter."
-                },
-                "validateErrors": {
-                    "title": "Fel!",
-                    "message": "Det finns brister eller fel i valen. Beakta följande krav och försök på nytt.",
-                    "crs": "Ett geodetiskt referenssystem för koordinater ska vara valt både i utgångs- och resultatuppgifterna.",
-                    "noInputData": "Det finns inga koordinater som kan transformeras.",
-                    "noInputFile": "Filen som innehåller utgångsmaterial ska vara vald.",
-                    "noFileName": "Filen som bildas ska ges ett filnamn.",
-                    "decimalCount": "Decimalernas antalet ska vara 0 eller ett positivt heltal.",
-                    "headerCount": "Antalet rubrikrader ska vara 0 eller ett positivt heltal.",
-                    "doubleComma": "Skiljetecknen för decimaler och koordinater kan inte båda vara kommatecken.",
-                    "doubleSpace": "Vinkelns form/enhet kan inte innehålla mellanslag, om koordinatskiljetecknet är Mellanslag.",
-                    "noFileSettings": "Inga filinställningar har angetts..",
-                    "noCoordinateSeparator": "Skiljetecknet för koordinater ska vara valt.",
-                    "noDecimalSeparator": "Skiljetecknet för decimaler ska vara valt."
-                },
-                "responseErrors": {
-                    "titleTransform": "Fel i transformation!",
-                    "titleRead": "Fel i inläsningen av filen!",
-                    "readFileError" : "Inläsningen av alla rader i filen lyckades inte.",
-                    "transformFileError": "Transformationen av koordinater i filen lyckades inte.",
-                    "invalidLine": "I filen finns på rad: {index, number} felaktig koordinatrad: {line} Kontrollera att valen av skiljetecknen för decimaler och koordinater samt antalet rubrikrader motsvarar filens innehåll.",
-                    "generic": "Koordinattransformationen misslyckades.",
-                    //error codes
-                    "invalid_coord": "Fel i koordinaten. Kontrollera att koordinaterna som ska omvandlas är i rätt format och att de geodetiska referenssystemen för koordinater och höjder är korrekta.",
-                    //"invalid_number": "",
-                    //"invalid_coord_in_array": "",
-                    "no_coordinates": "Inga koordinater",
-                    "invalid_file_settings": "Felaktiga filinställningar.",
-                    "no_file": "Det fanns ingen fil för begäran.",
-                    "invalid_first_coord": "Det var inte möjligt att bilda en koordinat med de angivna inställningarna. Kontrollera att valen av skiljetecken för koordinater, antalet rubrikrader, huruvida identifierare används eller inte samt geodetiska referenssystem för koordinater och höjdsystem (dimension) motsvarar filens innehåll.",
-                    "transformation_error": "Koordinatomvandlingen misslyckades. Koordinattransformation service respons:", //TODO
-                    "service_busy": "Det finns trängsel i tjänsten. Var så vänlig och prova åter senare."
-                },
-                "responseFile": {
-                    "title": "Observera!",
-                    "hasMoreCoordinates": "Det är inte möjligt att från utgångsmaterialet transformera fler än {maxCoordsToArray, number} koordinater i tabellen. Om du vill transformera alla koordinater, använd funktionen För in resultaten i en fil."
-                }
+            "validate": {
+                "title": "Fel!",
+                "message": "Det finns brister eller fel i valen. Beakta följande krav och försök på nytt.",
+                "2DTo3D": "I valen som berör utgångsreferenssystemet för koordinater finns inget höjdsystem. En omvandling till ett 3D-system kan inte göras.",
+                "crs": "Ett geodetiskt referenssystem för koordinater ska vara valt både i utgångs- och resultatuppgifterna.",
+                "noInputData": "Det finns inga koordinater som kan transformeras.",
+                "noInputFile": "Filen som innehåller utgångsmaterial ska vara vald.",
+                "noFileName": "Filen som bildas ska ges ett filnamn.",
+                "decimalCount": "Decimalernas antalet ska vara 0 eller ett positivt heltal.",
+                "headerCount": "Antalet rubrikrader ska vara 0 eller ett positivt heltal.",
+                "doubleComma": "Skiljetecknen för decimaler och koordinater kan inte båda vara kommatecken.",
+                "doubleSpace": "Vinkelns form/enhet kan inte innehålla mellanslag, om koordinatskiljetecknet är Mellanslag.",
+                "noFileSettings": "Inga filinställningar har angetts.",
+                "noDelimiter": "Skiljetecknet för koordinater ska vara valt.",
+                "noDecimalSeparator": "Skiljetecknet för decimaler ska vara valt."
+            },
+            "errors": {
+                "transform": "Fel i transformation!",
+                "import": "Fel i inläsningen av filen!", // Inläsningen av alla rader i filen lyckades inte.
+                "paste" : "Importera koordinater från urklipp lyckades inte!",
+                "export": "Utskrift koordinater i filen lyckades inte.",
+                "invalidLine": "I filen finns på rad: {index, number} felaktig koordinatrad: {line} Kontrollera att valen av skiljetecknen för decimaler och koordinater samt antalet rubrikrader motsvarar filens innehåll.",
+                "generic": "Koordinattransformationen misslyckades.",
+                //error codes
+                "invalid_coord": "Fel i koordinaten. Kontrollera att koordinaterna som ska omvandlas är i rätt format och att de geodetiska referenssystemen för koordinater och höjder är korrekta.",
+                //"invalid_number": "",
+                //"invalid_coord_in_array": "",
+                "no_coordinates": "Inga koordinater",
+                "invalid_file_settings": "Felaktiga filinställningar.",
+                "no_file": "Det fanns ingen fil för begäran.",
+                "invalid_first_coord": "Det var inte möjligt att bilda en koordinat med de angivna inställningarna. Kontrollera att valen av skiljetecken för koordinater, antalet rubrikrader, huruvida identifierare används eller inte samt geodetiska referenssystem för koordinater och höjdsystem (dimension) motsvarar filens innehåll.",
+                "transformation_error": "Koordinatomvandlingen misslyckades. Koordinattransformation service respons:", //TODO
+                "service_busy": "Det finns trängsel i tjänsten. Var så vänlig och prova åter senare."
             }
         },
         "dataSource": {
             "title": "Källa för koordinatuppgifter",
+            "select": "Välj källa för koordinatuppgifter",
             "confirmChange": "Koordinaterna som ska transformeras töms. Vill du fortsätta?",
             "file": {
                 "label": "Från fil",
+                "button": "Från fil",
                 "info":  "Välj filen med utgångsmaterialet och dess inställningar.",
                 "action": "redigera dina val"
             },
-            "keyboard": {
-                "label": "Med tangentbordet",
+            "table": {
+                "label": "Med tabellen",
                 "info": "Mata in utgångsuppgifter i tabellen Koordinater som ska transformeras."
             },
             "map": {
                 "label": "Välj lägen på kartan",
+                "button": "Välj lägen på kartan",
                 "info": "Du kan välja koordinater som ska transformeras genom att klicka på kartan",
                 "confirmSelect": "Uppgifterna om utgångsreferenssystemet för koordinater väljs automatiskt att vara i ETRS-TM35FIN. Dina val av utgångsreferenssystem för koordinater ersätts. Vill du fortsätta?",
                 "action": "välj fler"
+            },
+            "clipboard": {
+                "title": "Importera koordinater från urklipp",
+                "button": "Hämta från urklipp",
+                "info":  "Importera koordinater från urklipp (csv, excel)",
+                "placeholder": "Ange värden från urklippet här. En rad motsvarar ett koordinat. Separera värden med semikolon eller tabulator. Värden kan tilläggas i följande form:\n383699,477;6676232,276;13,4"
             }
         },
         "mapMarkers":{
@@ -142,11 +158,7 @@ Oskari.registerLocalization(
                 "info" : "Kartans referenssystem för koordinater är ETRS-TM35FIN. Koordinaterna har placerats på kartan med hjälp av detta referenssystem för koordinater. I samband med lägesanteckningen anges koordinaterna enligt utgångs- och/eller resultatreferenssystemet i siffror.",
                 "errorTitle": "Fel i visningen av positioner",
                 "noCoordinates": "Det finns inga koordinater att visa på kartan.",
-                "noSrs": "Ett geodetiskt referenssystem för koordinater måste ingå i utgångsuppgifterna för att kunna visa punkter på kartan.",
-                "lon": "Lon",
-                "lat": "Lat",
-                "north": "N",
-                "east": "E"
+                "noSrs": "Ett geodetiskt referenssystem för koordinater måste ingå i utgångsuppgifterna för att kunna visa punkter på kartan."
             },
             "select":{
                 "title": "Välj lägen på kartan",
@@ -156,59 +168,70 @@ Oskari.registerLocalization(
             }
         },
         "actions": {
-            "convert": "Transformera", //Transformera
-            "export": "Transformera i en fil",
+            "transform": "Transformera",
+            "export": "Spara till fil",
+            "minimizeSrs": "Dölj extra val för koordinatreferenssystem",
+            "minimizedSrs": "Visa alla val av koordinatreferenssystem",
+            "axisFlip": "Omvända koordinater",
+            "search": "Sök med namn eller EPSG-kod",
             "select": "Välj",
             "cancel": "Avbryt", //Ångra
             "done": "Färdig",
             "ok": "Ok",
             "close": "Stäng"
         },
+        "confirm": {
+            "title": "Val av koordinatuppgifter",
+            "continue": "Vill du fortsätta?",
+            "reset": "Alla koordinater och val kommer att tas bort. Vill du fortsätta?",
+            "coordinates": "Koordinaterna som ska transformeras töms. Vill du fortsätta?",
+            "results": "Resultatkoordinater töms och ny transformation kommer att göras med nya val. Vill du fortsätta?",
+            "mapSrs": "Uppgifterna om utgångsreferenssystemet för koordinater väljs automatiskt att vara i ETRS-TM35FIN. Dina val av utgångsreferenssystem för koordinater ersätts. Vill du fortsätta?",
+            "change": "Behåll andra val och koordinater",
+            "changeTooltip": "Observera att om du behåller valen och koordinaterna kan det leda till att resultaten inte matchar valen."
+        },
         "fileSettings": {
+            "import" : "Utgångsmaterialets egenskaper",
+            "export": "Bildande av datamaterial",
+            "rows": "rader",
+            "columns": "fält",
+            "previewTitle": "Förhandsvy av koordinaterna",
             "options": {
+                "fileName": "Filnamn",
                 "decimalSeparator": "Skiljetecken för decimaler",
-                "coordinateSeparator": "Skiljetecken för fält",
-                "headerCount": "Antal rubrikrader",
+                "delimiter": "Skiljetecken för fält",
+                "headerLineCount": "Antal rubrikrader",
                 "decimalCount": "Decimalernas precision",
-                "reverseCoordinates": "Omvända koordinater",
-                "useId": { // Använd identifierare
+                "axisFlip": "Omvända koordinater",
+                "writeCardinals": "Lägg till kardinalväderstreck (N,E,W,S)",
+                "writeLineEndings": "Lägg till utgångsfilens radavslutningarna",
+                "lineSeparator": "Radavskiljare",
+                "unit": "Vinkelns form/enhet",
+                "createHeader": "Skapa koordinatuppgifter rubrikraden",
+                "writeHeaders": "Lägg till utgångsfilens rubrikraden", // (${count})??
+                "prefixes": { // Använd identifierare
                     "input": "Koordinater innehåller identifierare",
-                    "generate": "Skapa identifierare",
-                    "add": "Lägg till identifierare",
+                    "generate": "Skapa identifierare för rader",
                     "fromFile": "Lägg till utgångsfilens identifierare"
                 },
-                "writeHeader": "Skriv rubrikraden i filen",
-                "useCardinals": "Använd kardinalväderstreck (N,E,W,S)",
-                "lineEnds": "Ta med radavslutningarna i resultatet",
-                "choose": "Välj",
-                "degreeFormat":{
-                    "label": "Vinkelns form/enhet",
+                "degrees":{
                     "degree": "Grad",
                     "gradian": "Gon (nygrad)",
                     "radian": "Radian"
                 },
-                "lineSeparator": {
-                    "label": "Radavskiljare"
-                },
-                "delimeters":{
+                "delimiters":{
                     "point": "Punkt",
                     "comma": "Kommatecken",
                     "tab": "Tabulator",
                     "space": "Mellanslag", //Utslutning
-                    "semicolon": "Semikolon"
+                    "semicolon": "Semikolon",
+                    "pipe": "Vertikalstreck"
                 }
-            },
-            "export": {
-                "title": "Bildande av datamaterial",
-                "fileName": "Filnamn"
-            },
-            "import": {
-                "title": "Utgångsmaterialets egenskaper"
             }
         },
         "infoPopup": {
             "description": "Beskrivning",
-            "keyboard": {
+            "table": {
                 "title": "Källa för koordinatuppgifter - tabell",
                 "paragraphs": [
                     "Mata in utgångsuppgifter i tabellen Koordinater som ska omvandlas."
@@ -218,7 +241,7 @@ Oskari.registerLocalization(
                 "title": "Källa för koordinatuppgifter - kartan",
                 "paragraphs": [
                     "Du kan välja koordinater som ska omvandlas genom att klicka på kartan",
-                    "Kartans  referenssystem för koordinater är ETRS-TM35FIN. Detta referenssystem för koordinater väljs automatiskt för de koordinater som omvandlas och kan inte ändras.",
+                    "Kartans referenssystem för koordinater är ETRS-TM35FIN. Detta referenssystem för koordinater väljs automatiskt för de koordinater som omvandlas och kan inte ändras.",
                     "Beakta vid val av koordinater att valet av läge inte är exakt."
                 ]
             },
@@ -253,7 +276,7 @@ Oskari.registerLocalization(
                 "info": "En mängd regler som bestämmer hur ett önskat område beskrivs med hjälp av en mängd kartprojektioner.",
                 "listItems" : [
                     "Kartprojektion: en metod för att beskriva jordklotets tredimensionella yta på ett tvådimensionellt kartplan.",
-                    "Med hjälp av reglerna kan man bestämma kartprojektioner och projektionszoner. För projektionszoner kan systemet bestämma identiferare, medelmeridianernas eller medelparallellernas skala, bredd, längd och överlappning."
+                    "Med hjälp av reglerna kan man bestämma kartprojektioner och projektionszoner. För projektionszoner kan systemet bestämma identifierare, medelmeridianernas eller medelparallellernas skala, bredd, längd och överlappning."
                 ]
             },
             "geodeticCoordinateSystem":{
@@ -278,23 +301,23 @@ Oskari.registerLocalization(
                 "paragraphs" : [],
                 "listItems" : []
             },
-            "decimalPrecision":{
+            "decimalCount":{
                 "title":"Decimalernas precision",
                 "info": "Antalet decimaler som visas i resultatet.",
                 "paragraphs": [
-                    "Med denna egenskap kan man ange med hur många decimalers noggrannhet koordinaterna visas i resultatet. Det förvalda värdet motsvarar ett antal decimaler som ger en 1 mm precision." // Det förvalda värdet för gradangivelser är det närmaste antalet decimaler som i det metriska sytemet motsvarar 1 mm."
+                    "Med denna egenskap kan man ange med hur många decimalers noggrannhet koordinaterna visas i resultatet. Det förvalda värdet motsvarar ett antal decimaler som ger en 1 mm precision." // Det förvalda värdet för gradangivelser är det närmaste antalet decimaler som i det metriska systemet motsvarar 1 mm."
                 ],
                 "listItems" : [],
                 "precisionTable": {
                     "title": "Antalet decimaler av vinkels form/enhet i metrisk ekvivalent",
                     "unit": "Vinkelns form/enhet",
-                    "deg": "Grad, gon och DD",
-                    "rad": "Radian",
+                    "degree": "Grad, gon och DD",
+                    "radian": "Radian",
                     "min": "DDMM och DD MM",
                     "sec": "DDMMSS och DD MM SS"
                 }
             },
-            "coordinateSeparator":{
+            "delimiter":{
                 "title":"Skiljetecken för fält",
                 "info": "Definierar med vilket skiljetecken fält separeras",
                 "paragraphs": [
@@ -312,7 +335,7 @@ Oskari.registerLocalization(
                 ],
                 "listItems" : []
             },
-            "unitFormat":{
+            "unit":{
                 "title":"Vinkelns form/enhet",
                 "info": "Enhet för geodetiska koordinater",
                 "paragraphs": [
@@ -337,7 +360,7 @@ Oskari.registerLocalization(
                 ],
                 "listItems" : []
             },
-            "prefixId":{
+            "prefixColCount":{
                 "title":"Använd identifierare",
                 "info": "Koordinatraden börjar med identifieraruppgift",
                 "paragraphs": [
@@ -348,7 +371,7 @@ Oskari.registerLocalization(
                 ],
                 "listItems" : []
             },
-            "reverseCoordinates":{
+            "axisFlip":{
                 "title":"Omvända koordinater",
                 "info": "X- och Y-koordinataxlarnas ordning avviker från den definierade ordningen.",
                 "paragraphs": [
@@ -357,8 +380,15 @@ Oskari.registerLocalization(
                 ],
                 "listItems" : []
             },
-            "writeHeader":{
-                "title":"Skriv rubrikraden i filen",
+            "createHeader": {
+                "title":"Skriv referenssystemet rubrikraden",
+                "info": "info",
+                "paragrapsh": [
+                    "Rubrikraden som ska läggas till skapas från data i det koordinatsystem du valt. Som visas i följande exempel:"
+                ]
+            },
+            "writeHeaders":{
+                "title":"Skriv rubrikraden från utgångsmaterialet",
                 "info": "Inkludera rubrikraderna i början av resultatfilen",
                 "paragraphs": [
                     "Med denna egenskap kan användaren ta med metadata om koordinaterna på rubrikraden i resultatfilen. Namnet på referenssystemet för koordinater läggs till på rubrikraden.",
@@ -366,7 +396,7 @@ Oskari.registerLocalization(
                 ],
                 "listItems" : []
             },
-            "lineEnds":{
+            "writeLineEndings":{
                 "title":"Ta med radavslutningarna i resultatet",
                 "info": "Inkludera radsluten i utgångsfilen i resultatfilen",
                 "paragraphs": [
@@ -376,7 +406,7 @@ Oskari.registerLocalization(
                 ],
                 "listItems" : []
             },
-            "useCardinals":{
+            "writeCardinals":{
                 "title":"Använd kardinalväderstreck",
                 "info": "Lägg till väderstrecken (N, E, W eller S) efter koordinatvärdena",
                 "paragraphs": [

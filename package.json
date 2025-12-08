@@ -1,6 +1,6 @@
 {
   "name": "oskari-frontend-paikkis",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "kartta.paikkatietoikkuna.fi bundles & app conf",
   "license": "(MIT OR EUPL-1.1)",
   "keywords": [
@@ -8,8 +8,8 @@
   ],
   "dependencies": {
     "fs-extra": "^8.1.0",
-    "oskari-frontend": "https://git@github.com/oskariorg/oskari-frontend.git#3.1.0",
-    "oskari-frontend-contrib": "https://git@github.com/oskariorg/oskari-frontend-contrib.git#3.1.0"
+    "oskari-frontend": "https://git@github.com/oskariorg/oskari-frontend.git#3.2.1",
+    "oskari-frontend-contrib": "https://git@github.com/oskariorg/oskari-frontend-contrib.git#3.2.0"
   },
   "devDependencies": {
     "@cyclonedx/bom": "^3.10.1"
@@ -27,7 +27,13 @@
     "build:dev": "npm run dev-mode:on && node ./node_modules/oskari-frontend/node_modules/webpack/bin/webpack.js --config ./node_modules/oskari-frontend/webpack.config.js --mode production --progress --env appdef=applications --env theme=theme.less",
     "start:dev": "npm run dev-mode:on && node ./node_modules/oskari-frontend/node_modules/webpack-dev-server/bin/webpack-dev-server.js --config ./node_modules/oskari-frontend/webpack.config.js --hot --env appdef=devapp:applications --env theme=theme.less",
     "sprite": "node ./node_modules/oskari-frontend/webpack/sprite.js",
-    "test": "eslint --config ./node_modules/oskari-frontend/.eslintrc.js bundles",
+    "jest": "jest --config ./node_modules/oskari-frontend/jest.config.js --roots ../../bundles",
+    "jest:dev": "node ./node_modules/oskari-frontend/node_modules/jest/bin/jest.js --config ./node_modules/oskari-frontend/jest.config.js --roots ../pti-frontend/bundles",
+    "eslint": "eslint --config ./node_modules/oskari-frontend/eslint.config.js bundles",
+    "eslint:dev": "node ./node_modules/oskari-frontend/node_modules/eslint/bin/eslint.js --config ./node_modules/oskari-frontend/eslint.config.js bundles",
+    "test": "npm run eslint && npm run jest",
+    "test:dev": "npm run eslint:dev && npm run jest:dev",
+    "test:watch": "node ./node_modules/oskari-frontend/node_modules/jest/bin/jest.js --config ./node_modules/oskari-frontend/jest.config.js --roots ../pti-frontend/bundles --watch",
     "generate-bom": "cyclonedx-bom --include-dev -o frontend-bom.json"
   },
   "private": true

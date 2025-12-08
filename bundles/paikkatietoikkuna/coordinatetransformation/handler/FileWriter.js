@@ -1,0 +1,158 @@
+import { SRS, SRS_H, SYSTEM, HOUR_TO_MIN, DEC_TO_GRAD, DEC_TO_RAD } from '../constants';
+import { getDimension, isDegreeSystem, isLonFirst, getDecimalCount } from '../helper';
+
+const CRS = 'Coordinate Reference System';
+
+export const toDegree = (coord, unit, decimals) => { //, isLon)
+    if (unit === 'DD' || unit === 'degree') {
+        return coord.toFixed(decimals);
+    }
+    if (unit === 'gradian') {
+        coord *= DEC_TO_GRAD;
+        return coord.toFixed(decimals);
+    }
+    if (unit === 'radian') {
+        coord *= DEC_TO_RAD;
+        return coord.toFixed(decimals);
+    }
+    const separator = unit.includes(' ') ? ' ' : '';
+    const d = Math.floor(coord);
+    const m = (coord - d) * HOUR_TO_MIN;
+    const dd = d < 10 ? '0' + d : d.toString();
+    // const dd = isLon && d < 100 ? '0' + d : d.toString();
+    if (unit === 'DDMM' || unit === 'DD MM') {
+        let mm = m.toFixed(decimals);
+        if (m < 10) {
+            mm = '0' + mm;
+        }
+        return dd + separator + mm;
+    }
+    const mInt = Math.floor(m);
+    const s = (m - mInt) * HOUR_TO_MIN;
+    const mm = mInt < 10 ? '0' + mInt : mInt;
+    let ss = s.toFixed(decimals);
+    if (s < 10) {
+        ss = '0' + ss;
+    }
+    return dd + separator + mm + separator + ss;
+};
+
+export const addCardinal = (coord, isLon) => {
+    if (coord.startsWith('-')) {
+        const cardinal = isLon ? 'W' : 'S';
+        return coord.substring(1) + cardinal;
+    }
+    const cardinal = isLon ? 'E' : 'N';
+    return coord + cardinal;
+};
+
+const getCoordinates = ({
+    results,
+    outputSrs,
+    outputHeightSrs,
+    export: settings,
+    fileContents
+}) => {
+    const {
+        unit,
+        decimalCount,
+        decimalSeparator,
+        delimiter,
+        lineSeparator,
+        axisFlip,
+        prefixColCount,
+        writeCardinals,
+        writeLineEndings
+    } = settings;
+    const { prefixes = [], lineEndings = [] } = fileContents || {};
+    const dimension = getDimension(outputSrs, outputHeightSrs);
+    const isDegree = isDegreeSystem(outputSrs);
+    // Force to 'metric' for non degree as select isn't shown for user
+    const decimalFormat = isDegree ? unit : 'metric';
+    const decimals = getDecimalCount(decimalCount, decimalFormat);
+
+    const lonFirst = axisFlip ? !isLonFirst(outputSrs) : isLonFirst(outputSrs);
+    const lonIndex = lonFirst ? 0 : 1;
+    const prefixesFromImport = prefixes.length > 0;
+    const replace = decimalSeparator === ',';
+
+    return results.map((coord, index) => {
+        const x = axisFlip ? coord.y : coord.x;
+        const y = axisFlip ? coord.x : coord.y;
+        const array = dimension === 3 ? [x, y, coord.z] : [x, y];
+        let row = isDegree
+            ? array.map((c, i) => toDegree(c, unit, decimals, i === lonIndex))
+            : array.map(c => c.toFixed(decimals));
+
+        // replace point and writeCardinals if needed
+        row = row.map(r => replace ? r.replace('.', ',') : r)
+            .map((r, i) => writeCardinals && i < 2 ? addCardinal(r, i === lonIndex) : r);
+
+        if (prefixColCount > 0) {
+            // use stored from imported file if available
+            const ids = prefixesFromImport
+                ? prefixes[index] || [...Array(prefixColCount)].map(() => '')
+                : [index + 1];
+            ids.forEach(p => row.unshift(p));
+        }
+        if (writeLineEndings) {
+            // missing value at the end should be fine for csv
+            // could use settings.columns count to fill array with ''
+            lineEndings[index]?.forEach(p => row.push(p));
+        }
+        return row.join(delimiter);
+    }).join(lineSeparator);
+};
+
+const createSrsHeader = (srs, height, axisFlip, decimalUnit) => {
+    // name for KKJ (no need to localize zones)
+    const { name, label = name, axes = [], system } = SRS.find(s => s.value === srs) || {};
+    const { unit: systemUnit } = SYSTEM.find(s => s.value === system) || {};
+    const modAxes = axisFlip ? [...axes.slice(0, 2).toReversed(), ...axes.slice(2)] : [...axes];
+    const epsg = [srs];
+    const labels = [label];
+    if (height) {
+        epsg.push(height);
+        const { axis = 'H', name } = SRS_H.find(h => h.value === height) || {};
+        modAxes.push(axis);
+        labels.push(name);
+    }
+    const selectedUnit = isDegreeSystem(srs) && decimalUnit !== 'degree' ? ` (${decimalUnit})` : '';
+    const reversed = axisFlip ? ' (reversed)' : '';
+    return `${CRS}: ${epsg.join(' + ')} - ${labels.join(' + ')} - axes: ${modAxes.join()}${reversed} - unit: ${systemUnit}${selectedUnit}`;
+};
+
+export const getFileContent = (state) => {
+    const { outputSrs, outputHeightSrs, fileContents } = state;
+    const { lineSeparator, createHeader, writeHeaders, axisFlip, unit, delimiter } = state.export;
+
+    const content = [];
+    if (createHeader) {
+        const header = createSrsHeader(outputSrs, outputHeightSrs, axisFlip, unit);
+        content.push(header);
+    }
+    if (writeHeaders) {
+        fileContents?.headers?.forEach(header => content.push(header.join(delimiter)));
+    }
+    const coords = getCoordinates(state);
+    content.push(coords);
+    return content.join(lineSeparator);
+};
+
+export const exportStateToFile = (state) => {
+    const content = getFileContent(state);
+    const file = new Blob([content], { type: 'text/plain' });
+    const { fileName } = state.export;
+    loadFile(file, fileName);
+};
+
+const loadFile = (file, name) => {
+    const elem = document.createElement('a');
+    const href = window.URL.createObjectURL(file);
+    elem.href = href;
+    elem.download = name || 'results.txt';
+    document.body.appendChild(elem);
+    elem.click();
+    document.body.removeChild(elem);
+    window.URL.revokeObjectURL(href);
+};

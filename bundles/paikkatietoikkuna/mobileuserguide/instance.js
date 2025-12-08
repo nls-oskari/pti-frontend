@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { Message } from 'oskari-ui';
 import { Link } from './Link';
 import styled from 'styled-components';
@@ -55,7 +55,8 @@ Oskari.clazz.define('Oskari.pti.mobileuserguide.UserGuideBundleInstance',
             if (linksContainer) {
                 const container = document.createElement('div');
                 linksContainer.append(container);
-                this.addLink(container);
+                const reactRoot = createRoot(container);
+                this.addLink(reactRoot);
             }
             this.addDesktopRequestLink();
         },
@@ -64,22 +65,23 @@ Oskari.clazz.define('Oskari.pti.mobileuserguide.UserGuideBundleInstance',
             return LINKS[Oskari.getLang()] || LINKS.fi;
         },
 
-        addLink: function (root) {
-            ReactDOM.render(<div>
+        addLink: function (reactRoot) {
+            reactRoot.render(<div>
                 <Link href={ this.getHref() }><Message bundleKey={ this.getName() } messageKey='title' /></Link>
-            </div>, root);
+            </div>);
         },
 
         addDesktopRequestLink: function () {
+            const containerElement = document.createElement('div');
             // generate root for React
-            const linkContainer = document.createElement('div');
+            const linkContainer = createRoot(containerElement);
             // attach under the disclaimer
             const disclaimerEl = document.getElementById('pti_disclaimer');
-            disclaimerEl.after(linkContainer);
+            disclaimerEl.after(containerElement);
             // render the link
-            ReactDOM.render(<DesktopLink href={ this.createLinkHref() }>
+            linkContainer.render(<DesktopLink href={ this.createLinkHref() }>
                 <Message bundleKey={ this.getName() } messageKey='requestDesktop' />
-            </DesktopLink>, linkContainer);
+            </DesktopLink>);
         },
         createLinkHref: function () {
             const url = new URL(window.location.href);

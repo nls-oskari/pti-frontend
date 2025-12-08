@@ -1,151 +1,78 @@
+import './Flyout.js';
+import { MAP, ID_PREFIX } from './constants';
+import { coordinateToMarker } from './helper';
+
 Oskari.clazz.define('Oskari.coordinatetransformation.instance',
     function () {
         this.defaultConf.name = 'coordinatetransformation';
         this.defaultConf.flyoutClazz = 'Oskari.coordinatetransformation.Flyout';
-        this.transformationService = null;
-        this.dataHandler = null;
-        this.views = null;
-        this.helper = null;
         this.loc = Oskari.getMsg.bind(null, 'coordinatetransformation');
-        this.isMapSelection = false;
-        this.isRemoveMarkers = false;
+        this.mapSelection = null;
+        this.tempCoords = []; // {id, x, y, ?label?}
         this.sandbox = Oskari.getSandbox();
-        // TODO should dimensions be handled by dataHandler
-        this.dimensions = {
-            input: 2,
-            output: 2
-        };
     }, {
         __name: 'coordinatetransformation',
         getName: function () {
             return this.__name;
         },
-        getViews: function () {
-            return this.views;
+        getFlyout: function () {
+            return this.plugins['Oskari.userinterface.Flyout'];
         },
-        getService: function () {
-            return this.transformationService;
+        toggleFlyout: function (visible) {
+            const mode = visible ? 'attach' : 'hide';
+            this.sandbox.postRequestByName('userinterface.UpdateExtensionRequest', [this, mode]);
         },
-        setDimension: function (type, srs, elevation) {
-            this.dimensions[type] = this.helper.getDimension(srs, elevation);
-        },
-        getDimension: function (type) {
-            return this.dimensions[type];
-        },
-        getDimensions: function () {
-            return this.dimensions;
-        },
-        /**
-     * @method afterStart
-     */
-        afterStart: function () {
-            this.helper = Oskari.clazz.create('Oskari.coordinatetransformation.helper');
-            this.transformationService = Oskari.clazz.create('Oskari.coordinatetransformation.TransformationService', this);
-            this.dataHandler = Oskari.clazz.create('Oskari.coordinatetransformation.CoordinateDataHandler', this.helper);
-            this.instantiateViews();
-            this.createUi();
-            this.bindListeners();
-        },
-        bindListeners: function () {
-            const me = this;
-            const dimensions = this.getDimensions();
-            this.dataHandler.on('InputCoordAdded', function (coords) {
-                me.views.transformation.inputTable.render(coords, dimensions.input);
-            });
-            this.dataHandler.on('InputCoordsChanged', function (coords) {
-                me.views.transformation.inputTable.render(coords, dimensions.input);
-            });
-            this.dataHandler.on('ResultCoordsChanged', function (coords) {
-                me.views.transformation.outputTable.render(coords, dimensions.output);
-            });
-        },
-        getPlugins: function () {
-            return this.plugins;
-        },
-        getDataHandler: function () {
-            return this.dataHandler;
-        },
-        getHelper: function () {
-            return this.helper;
-        },
-        instantiateViews: function () {
-            this.views = {
-                transformation: Oskari.clazz.create('Oskari.coordinatetransformation.view.transformation', this, this.helper, this.dataHandler),
-                MapSelection: Oskari.clazz.create('Oskari.coordinatetransformation.view.CoordinateMapSelection', this),
-                mapmarkers: Oskari.clazz.create('Oskari.coordinatetransformation.view.mapmarkers', this)
-            };
-        },
-        toggleViews: function (view) {
-            const views = this.getViews();
-            if (views[view]) {
-                views[view].setVisible(true);
+        setMapSelectionMode: function (mode) {
+            const stopped = !mode;
+            this.sandbox.postRequestByName('MapModulePlugin.GetFeatureInfoActivationRequest', [stopped]);
+            if (stopped) {
+                this.setMapCoordinates([]);
             }
-            Object.keys(views).forEach(function (key) {
-                if (view !== key) {
-                    views[key].setVisible(false);
-                }
+            this.mapSelection = mode;
+        },
+        getMapCoordinates: function () {
+            // remove id
+            return this.tempCoords.map(({ x, y, z }) => ({ x, y, z }));
+        },
+        setMapCoordinates: function (coords) {
+            // Remove previous
+            this.tempCoords.forEach(({ id }) => this.sandbox.postRequestByName('MapModulePlugin.RemoveMarkersRequest', [id]));
+            this.tempCoords = [];
+
+            this.tempCoords = coords.map(coord => ({ ...coord, id: ID_PREFIX + Oskari.getSeq(this.getName()).nextVal() }));
+            this.tempCoords.forEach(coord => {
+                const marker = coordinateToMarker(coord);
+                this.sandbox.postRequestByName('MapModulePlugin.AddMarkerRequest', [marker, coord.id]);
             });
         },
-        clearPopupsAndMarkers: function () {
-            this.views.MapSelection.setVisible(false);
-            this.views.mapmarkers.setVisible(false);
-            this.views.transformation.closePopups();
-            this.helper.removeMarkers();
-            this.addMapCoordsToInput(false);
-            this.setMapSelectionMode(false);
-        },
-        createUi: function () {
-            this.plugins['Oskari.userinterface.Flyout'].createUi();
-        },
-        setMapSelectionMode: function (isSelect) {
-            this.isMapSelection = !!isSelect;
-            if (isSelect === true) {
-                this.sandbox.postRequestByName('MapModulePlugin.GetFeatureInfoActivationRequest', [false]);
-            } else {
-                this.sandbox.postRequestByName('MapModulePlugin.GetFeatureInfoActivationRequest', [true]);
-            }
-        },
-        setRemoveMarkers: function (isRemove) {
-            this.isRemoveMarkers = isRemove;
-        },
-        addMapCoordsToInput: function (addBln) { // event??
-            this.getDataHandler().addMapCoordsToInput(addBln);
-        },
-        /**
-     * Creates the coordinatetransformation service and registers it to the sandbox.
-     * @method createService
-     * @param  {Oskari.Sandbox} sandbox
-     * @return {Oskari.coordinatetransformation.TransformationService}
-     *
-    createService: function(sandbox) {
-        var transformationService = Oskari.clazz.create( 'Oskari.coordinatetransformation.TransformationService', this );
-        sandbox.registerService(transformationService);
-        return transformationService;
-    }, */
         eventHandlers: {
             'MapClickedEvent': function (event) {
-                if (!this.isMapSelection || this.isRemoveMarkers) {
+                if (this.mapSelection !== MAP.ADD) {
                     return;
                 }
-                const lonlat = event.getLonLat();
-                const roundedLonLat = {
-                    lon: parseInt(lonlat.lon),
-                    lat: parseInt(lonlat.lat)
+                const { lon, lat } = event.getLonLat();
+                // This assumes lon first (3067)
+                const coord = {
+                    x: parseInt(lon),
+                    y: parseInt(lat),
+                    z: 0,
+                    id: ID_PREFIX + Oskari.getSeq(this.getName()).nextVal()
                 };
-                // add coords to map coords
-                const markerId = this.dataHandler.addMapCoord(roundedLonLat);
-                const label = this.helper.getLabelForMarker(roundedLonLat);
-                this.helper.addMarkerForCoords(markerId, roundedLonLat, label);
+                this.tempCoords.push(coord);
+                const marker = coordinateToMarker(coord, true);
+                this.sandbox.postRequestByName('MapModulePlugin.AddMarkerRequest', [marker, coord.id]);
             },
             'MarkerClickEvent': function (event) {
-                if (!this.isMapSelection) {
+                if (this.mapSelection !== MAP.REMOVE) {
                     return;
                 }
-                const markerId = event.getID();
-                if (this.isRemoveMarkers === true) {
-                    this.dataHandler.removeMapCoord(markerId);
-                    this.sandbox.postRequestByName('MapModulePlugin.RemoveMarkersRequest', [markerId]);
+                const id = event.getID();
+                if (!id.startsWith(ID_PREFIX)) {
+                    return;
                 }
+                this.tempCoords = this.tempCoords.filter(coord => coord.id !== id);
+                // TODO: add some check that we remove only own markers => id starts with prefix etc
+                this.sandbox.postRequestByName('MapModulePlugin.RemoveMarkersRequest', [id]);
             },
             'userinterface.ExtensionUpdatedEvent': function (event) {
                 if (event.getExtension().getName() !== this.getName()) {
@@ -153,17 +80,17 @@ Oskari.clazz.define('Oskari.coordinatetransformation.instance',
                 }
                 const state = event.getViewState();
                 if (state === 'attach') {
-                    this.plugins['Oskari.userinterface.Flyout'].setContainerMaxHeight(Oskari.getSandbox().getMap().getHeight());
+                    this.getFlyout().setContainerMaxHeight(Oskari.getSandbox().getMap().getHeight());
                     this.sandbox.postRequestByName('DisableMapKeyboardMovementRequest');
                 } else if (state === 'close') {
-                    this.clearPopupsAndMarkers();
+                    this.getFlyout().teardown();
                     this.sandbox.postRequestByName('EnableMapKeyboardMovementRequest');
                 } else if (state === 'hide') {
                     this.sandbox.postRequestByName('EnableMapKeyboardMovementRequest');
                 }
             },
             'MapSizeChangedEvent': function (event) {
-                this.plugins['Oskari.userinterface.Flyout'].setContainerMaxHeight(event.getHeight());
+                this.getFlyout().setContainerMaxHeight(event.getHeight());
             }
         }
     }, {
