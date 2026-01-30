@@ -45,6 +45,8 @@ import 'oskari-lazy-bundle?featuredata!oskari-frontend/bundles/framework/feature
 import 'oskari-lazy-bundle?metadataflyout!oskari-frontend/bundles/catalogue/metadataflyout'
 import 'oskari-lazy-bundle?metadatasearch!oskari-frontend/bundles/catalogue/metadatasearch';
 import 'oskari-lazy-bundle?terrain-profile!oskari-frontend-contrib/bundles/terrain-profile';
+// for testing purposes
+import 'oskari-lazy-bundle?myfeatures!oskari-frontend/bundles/framework/myfeatures';
 
 import 'oskari-lazy-bundle?coordinatetransformation!../../bundles/paikkatietoikkuna/coordinatetransformation';
 import 'oskari-lazy-bundle?layerswipe!oskari-frontend/bundles/mapping/layerswipe';
