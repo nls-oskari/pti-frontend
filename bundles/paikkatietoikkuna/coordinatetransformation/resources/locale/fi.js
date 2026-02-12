@@ -21,10 +21,10 @@ Oskari.registerLocalization(
             "coordinateSystem": {
                 "title": "Koordinaattijärjestelmän tiedot",
                 "input": {
-                    "title": "Anna lähtökoordinaattijärjestelmän tiedot"
+                    "title": "Lähtökoordinaattijärjestelmä"
                 },
                 "output": {
-                    "title": "Anna tuloskoordinaattijärjestelmän tiedot"
+                    "title": "Tuloskoordinaattijärjestelmä"
                 },
                 "noFilter": "Mikä tahansa",
                 "epsgSearch": {
@@ -233,26 +233,6 @@ Oskari.registerLocalization(
         },
         "infoPopup": {
             "description": "Kuvaus",
-            "table": {
-                "title": "Koordinaattitietojen lähde - taulukko",
-                "paragraphs": [
-                    "Syötä lähtötiedot Muunnettavat koordinaatit -taulukkoon."
-                ]
-            },
-            "map": {
-                "title": "Koordinaattitietojen lähde - kartta",
-                "paragraphs": [
-                    "Voit valita muunnettavia koordinaatteja kartalta klikkaamalla.",
-                    "Kartta on ETRS-TM35FIN-koordinaattijärjestelmässä. Tämä koordinaattijärjestelmä valitaan automaattisesti eikä sitä voi muuttaa.",
-                    "Valinnoissa on syytä huomioida, että kartalta sijaintien valinta ei ole tarkkaa ja valitut koordinaatit pyöristetään kokonaisluvuiksi."
-                ]
-            },
-            "file": {
-                "title": "Koordinaattitietojen lähde - tiedosto",
-                "paragraphs": [
-                    "Valitse lähtöaineiston sisältävä tiedosto ja sen asetukset."
-                ]
-            },
             "epsgSearch": {
                 "title": "Haku EPSG-koodin perusteella",
                 "info": "Voit hakea geodeettisen koordinaattijärjestelmän EPSG-koodin avulla. Syötä koodi pelkkänä numerona esim. 3067.",

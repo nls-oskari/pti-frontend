@@ -21,10 +21,10 @@ Oskari.registerLocalization(
             "coordinateSystem": {
                 "title": "Uppgifter om referenssystemet för koordinater",
                 "input": {
-                    "title": "Utgångsuppgifter om referenssystemet för koordinater"
+                    "title": "Utgångskoordinatsystemet"
                 },
                 "output": {
-                    "title": "Resultatuppgifter om referenssystemet för koordinater"
+                    "title": "Målkoordinatsystemet"
                 },
                 "noFilter": "Vad som helst",
                 "epsgSearch": {
@@ -231,26 +231,6 @@ Oskari.registerLocalization(
         },
         "infoPopup": {
             "description": "Beskrivning",
-            "table": {
-                "title": "Källa för koordinatuppgifter - tabell",
-                "paragraphs": [
-                    "Mata in utgångsuppgifter i tabellen Koordinater som ska omvandlas."
-                ]
-            },
-            "map": {
-                "title": "Källa för koordinatuppgifter - kartan",
-                "paragraphs": [
-                    "Du kan välja koordinater som ska omvandlas genom att klicka på kartan",
-                    "Kartans referenssystem för koordinater är ETRS-TM35FIN. Detta referenssystem för koordinater väljs automatiskt för de koordinater som omvandlas och kan inte ändras.",
-                    "Beakta vid val av koordinater att valet av läge inte är exakt."
-                ]
-            },
-            "file": {
-                "title": "Källa för koordinatuppgifter - fil",
-                "paragraphs": [
-                    "Välj filen med utgångsmaterialet och dess inställningar."
-                ]
-            },
             "epsgSearch": {
                 "title": "Sök med EPSG-kod",
                 "info": "Du kan söka ett geodetiskt referenssystem för koordinater med EPSG-kod. Mata in koden enbart i sifferform, t.ex. 3067.",
