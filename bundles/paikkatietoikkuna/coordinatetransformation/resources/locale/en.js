@@ -21,10 +21,10 @@ Oskari.registerLocalization(
             "coordinateSystem": {
                 "title": "Coordinate reference system information",
                 "input": {
-                    "title": "Input coordinate reference system information"
+                    "title": "Original coordinate system"
                 },
                 "output": {
-                    "title": "Output coordinate reference system information"
+                    "title": "Result coordinate system"
                 },
                 "noFilter": "Any option",
                 "epsgSearch": {
@@ -231,26 +231,6 @@ Oskari.registerLocalization(
         },
         "infoPopup": {
             "description": "Description",
-            "table": {
-                "title": "Coordinate information source - table",
-                "paragraphs": [
-                    "Put the input information into the Input coordinates table."
-                ]
-            },
-            "map": {
-                "title": "Coordinate information source - map",
-                "paragraphs": [
-                    "Select coordinates to be transformed on the map by clicking them.",
-                    "The coordinate reference system of the map is ETRS-TM35FIN. This coordinate reference system is automatically selected for the coordinates to be transformed and it cannot be changed.",
-                    "When selecting coordinates, please note that selecting locations on the map is not precise."
-                ]
-            },
-            "file": {
-                "title": "Coordinate information source - file",
-                "paragraphs": [
-                    "Select the file containing the input information and its settings."
-                ]
-            },
             "epsgSearch": {
                 "title": "Search using EPSG code",
                 "info": "A geodetic reference system may be searched with the EPSG code. Give the code as a numerical value, such as 3067.",
