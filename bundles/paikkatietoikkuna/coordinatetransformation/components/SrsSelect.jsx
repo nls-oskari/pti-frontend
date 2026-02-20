@@ -7,15 +7,13 @@ import { ComponentLabel } from './ComponentLabel';
 import { BUNDLE, DATUM, SYSTEM, PROJECTION, SRS, SRS_H, SRS_C } from '../constants';
 import { getDimension } from '../helper';
 
-// Use EPSG code as data-value (tests) and title for srs options
 const mapForOptions = (list, addTitle) => {
-    return list.map(({ name, axes, reversed, ...opt }) => { // remove name
-        const option = {...opt, 'data-value': opt.value };
+    return list.map(({ name, axes, reversed, ...option }) => { // remove name
         if (addTitle) {
-            option.title = opt.value;
+            option.title = option.value;
         }
         if (reversed && axes) {
-            option.label = opt.label + ` (${axes.join()})`
+            option.label = option.label + ` (${axes.join()})`
         }
         return option;
     });
