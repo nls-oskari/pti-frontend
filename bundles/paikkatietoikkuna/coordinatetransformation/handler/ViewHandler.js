@@ -5,7 +5,7 @@ import { showFilePopup } from '../view/FilePopup';
 import { showConfirmPopup } from '../view/ConfirmPopup';
 import { showClipboardPopup } from '../view/ClipboardPopup';
 import { showMapSelectPopup, showMapPreviewPopup } from '../view/MapPopup';
-import { SOURCE, MAP, BASE_URL, WATCH_JOB, WATCH_URL, FILE_DEFAULTS, ACTIONS, PAGINATION, SRS, FETCH_SIZE } from '../constants';
+import { SOURCE, MAP, BASE_URL, WATCH_JOB, WATCH_URL, FILE_DEFAULTS, ACTIONS, PAGINATION, SRS, SRS_C, FETCH_SIZE } from '../constants';
 import { stateToPTIArray, stateToKomuParams, coordinatesToCSV, parseKomuResponse, validateFileSettings, validateTransform, validateCoordinate, parseCoordinateValue, is3DSystem, getDimension, getLabelForMarker, getCoordinatesExtent } from '../helper';
 import { parseFile, parseFileContents, parseValue } from './FileParser';
 import { exportStateToFile } from './FileWriter';
@@ -284,9 +284,16 @@ class UIHandler extends StateHandler {
             return;
         }
         const prop = `${type}Srs`;
+        const compound = SRS_C.find(c => c.value === srs);
+        if (compound) {
+            // select compound's srs
+            srs = compound.srs;
+        }
         this.updateState({ [prop]: srs, transformed: false });
-        if (is3DSystem(srs)) {
-            this.setHeightSrs(type, null);
+        if (compound || is3DSystem(srs)) {
+            // select compound height or remove for 3D
+            const height = compound ? compound.srsHeight : null;
+            this.setHeightSrs(type, height);
         }
         this.updateDimensions(type);
     }

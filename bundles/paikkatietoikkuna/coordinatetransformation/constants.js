@@ -356,79 +356,87 @@ export const SRS = [
         axes: ['N', 'E']
     }, {
         value: 'EPSG:3046',
-        label: 'ETRS-TM34 (N,E)',
+        label: 'ETRS-TM34',
         name: 'ETRS89 / UTM zone 34N (N-E)',
         datum: 'ETRS89',
         projection: 'TM',
         system: 'PROJ_2D',
         bounds: [-3043798.18, 3680130.24, 2093536.19, 9528204.85], // europe
-        axes: ['N', 'E']
+        axes: ['N', 'E'],
+        reversed: 'EPSG:10699'
     }, {
         value: 'EPSG:10699',
-        label: 'ETRS-TM34 (E,N)',
+        label: 'ETRS-TM34',
         name: 'EUREF-FIN / UTM zone 34N',
         datum: 'EUREF-FIN',
         projection: 'TM',
         system: 'PROJ_2D',
         bounds: [389189.88, 6522255.9, 1109609.4, 7810851.98],
         axes: ['E', 'N'],
+        reversed: 'EPSG:3046',
         replaced: 'EPSG:25834' // ETRS89 / UTM zone 34N
     }, {
         value: 'EPSG:3047',
-        label: 'ETRS-TM35 (N,E)',
+        label: 'ETRS-TM35',
         name: 'ETRS89 / UTM zone 35N (N-E)',
         datum: 'ETRS89',
         projection: 'TM',
         system: 'PROJ_2D',
         bounds: [-3646007.42, 3680723.36, 1528001.15, 9567789.69], // europe
-        axes: ['N', 'E']
+        axes: ['N', 'E'],
+        reversed: 'EPSG:25835'
     }, {
         value: 'EPSG:25835',
-        label: 'ETRS-TM35 (E,N)',
+        label: 'ETRS-TM35',
         name: 'ETRS89 / UTM zone 35N',
         datum: 'ETRS89',
         projection: 'TM',
         system: 'PROJ_2D',
         bounds: [-3646007.42, 3680723.36, 1528001.15, 9567789.69], // europe
-        axes: ['E', 'N']
+        axes: ['E', 'N'],
+        reversed: 'EPSG:3047'
     }, {
         value: 'EPSG:3048',
-        label: 'ETRS-TM36 (N,E)',
+        label: 'ETRS-TM36',
         name: 'ETRS89 / UTM zone 36N (N-E)',
         datum: 'ETRS89',
         projection: 'TM',
         system: 'PROJ_2D',
         bounds: [-4254095.6, 3680114.85, 966874.41, 9612110.39], // europe
-        axes: ['N', 'E']
+        axes: ['N', 'E'],
+        reversed: 'EPSG:10702'
     }, {
         value: 'EPSG:10702',
-        label: 'ETRS-TM36 (E,N)',
+        label: 'ETRS-TM36',
         name: 'EUREF-FIN / UTM zone 36N',
         datum: 'EUREF-FIN',
         projection: 'TM',
         system: 'PROJ_2D',
         bounds: [-299713.56, 6523093.09, 446414.83, 7836242.3],
         axes: ['E', 'N'],
+        reversed: 'EPSG:3048',
         replaced: 'EPSG:25836' // ETRS89 / UTM zone 36N
     }, {
         value: 'EPSG:3067',
-        label: 'ETRS-TM35FIN (E,N)',
+        label: 'ETRS-TM35FIN',
         name: 'EUREF-FIN / TM35FIN(E,N)',
         datum: 'EUREF-FIN',
         projection: 'TM',
         system: 'PROJ_2D',
         bounds: [43547.79, 6522236.87, 764796.72, 7795461.19],
         axes: ['E', 'N'],
+        reversed: 'EPSG:5048',
         alias: 'ETRS89 / TM35FIN(E,N)'
     }, {
         value: 'EPSG:5048',
-        label: 'ETRS-TM35FIN (N,E)',
+        label: 'ETRS-TM35FIN',
         name: 'EUREF-FIN / TM35FIN(N,E)',
         datum: 'EUREF-FIN',
         projection: 'TM',
         system: 'PROJ_2D',
         bounds: [43547.79, 6522236.87, 764796.72, 7795461.19],
         axes: ['N', 'E'],
+        reversed: 'EPSG:3067',
         alias: 'ETRS89 / TM35FIN(N,E)'
     }, {
         value: 'EPSG:10690',
@@ -538,7 +546,7 @@ export const SRS_C = [
         name: 'KKJ / Finland Uniform Coordinate System + N60 height',
         datum: 'KKJ',
         projection: 'KKJ',
-        system: 'PROJ_2D',
+        system: 'PROJ_3D',
         srs: 'EPSG:2393',
         srsHeight: 'EPSG:5717',
         bounds: [3064557.21, 6626355.8, 3758085.96, 7797932.96],
@@ -549,7 +557,7 @@ export const SRS_C = [
         name: 'EUREF-FIN / TM35FIN(N,E) + N60 height',
         datum: 'EUREF-FIN',
         projection: 'TM',
-        system: 'PROJ_2D',
+        system: 'PROJ_3D',
         srs: 'EPSG:5048',
         srsHeight: 'EPSG:5717',
         bounds: [64562.79, 6623573.95, 757812.73, 7794679.58],
@@ -560,7 +568,7 @@ export const SRS_C = [
         name: 'EUREF-FIN / TM35FIN(N,E) + N2000 height',
         datum: 'EUREF-FIN',
         projection: 'TM',
-        system: 'PROJ_2D',
+        system: 'PROJ_3D',
         srs: 'EPSG:5048',
         srsHeight: 'EPSG:3900',
         bounds: [64562.79, 6623573.95, 757812.73, 7794679.58],
@@ -571,7 +579,7 @@ export const SRS_C = [
         name: 'EUREF-FIN / TM35FIN(E,N) + N2000 height',
         datum: 'EUREF-FIN',
         projection: 'TM',
-        system: 'PROJ_2D',
+        system: 'PROJ_3D',
         srs: 'EPSG:3067',
         srsHeight: 'EPSG:3900',
         bounds: [64562.79, 6623573.95, 757812.73, 7794679.58],
@@ -582,7 +590,7 @@ export const SRS_C = [
         name: 'EUREF-FIN + N60 height',
         datum: 'EUREF-FIN',
         projection: '',
-        system: 'GEOG_2D',
+        system: 'GEOG_3D',
         srs: 'EPSG:10690',
         srsHeight: 'EPSG:5717',
         bounds: [19.24, 59.75, 31.59, 70.09],
@@ -594,7 +602,7 @@ export const SRS_C = [
         name: 'EUREF-FIN + N2000 height',
         datum: 'EUREF-FIN',
         projection: '',
-        system: 'GEOG_2D',
+        system: 'GEOG_3D',
         srs: 'EPSG:10690',
         srsHeight: 'EPSG:3900',
         bounds: [19.24, 59.75, 31.59, 70.09],
