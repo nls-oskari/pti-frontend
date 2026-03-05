@@ -61,8 +61,8 @@ Oskari.registerLocalization(
                 }
             },
             "coordinateAxes": {
-                'N': 'Pohjois-koordinaatti [m]',
-                'E': 'Itä-koordinaatti [m]',
+                'N': 'Pohjoiskoordinaatti [m]',
+                'E': 'Itäkoordinaatti [m]',
                 'φ': 'Leveysaste',
                 'λ': 'Pituusaste',
                 'X': 'Geosentrinen X [m]',
@@ -72,7 +72,7 @@ Oskari.registerLocalization(
                 'h': 'Ellipsoidinen korkeus [m]'
             },
             "coordinateTable": {
-                "input": "Muunnettavat lähtökoordinaatit",
+                "input": "Lähtökoordinaatit",
                 "output": "Tuloskoordinaatit",
                 "rows": "Riviä",
                 "outdated": "Valinnat tai koordinaatit ovat muuttuneet. Muunna koordinaatit, jotta tulokset päivittyvät.",
@@ -141,17 +141,17 @@ Oskari.registerLocalization(
                 "info": "Syötä lähtötiedot Muunnettavat koordinaatit -taulukkoon."
             },
             "map": {
-                "label": "Valitse sijainnit kartalta",
-                "button": "Valitse sijainnit kartalta",
+                "label": "Osoita pisteet kartalta",
+                "button": "Osoita pisteet kartalta",
                 "info": "Voit valita muunnettavia koordinaatteja kartalta klikkaamalla.",
                 "confirmSelect": "Lähtökoordinaattijärjestelmän tiedot valitaan automaattisesti kartan käyttämän ETRS-TM35FIN-koordinaattijärjestelmän mukaisiksi. Tekemäsi lähtökoordinaattijärjestelmän valinnat korvataan. Haluatko jatkaa?",
                 "action": "valitse lisää"
             },
             "clipboard": {
-                "title": "Tuo koordinaatit leikepöydältä",
+                "title": "Tuo leikepöydältä",
                 "button": "Tuo leikepöydältä",
                 "info":  "Voit tuoda koordinaatteja leikepöydältä (csv, excel)",
-                "placeholder": "Kopioi tähän koordinaattien tiedot. Yhdellä rivillä on yhden pisteen koordinaatit. Erottimeksi puolipiste tai sarkain (tab). Tiedot voivat olla seuraavassa muodossa:\n383699,477;6676232,276;13,4"
+                "placeholder": "Liitä koordinaatit tähän leikepöydältä esimerkiksi CTRL+V-painikkeella. Kirjoita yhden pisteen koordinaatit yhdelle riville. Erota koordinaatit toisistaan puolipisteellä tai tabulaattorilla.  Tiedot voivat olla esimerkiksi tässä muodossa:\n383699,477;6676232,276;13,4"
             }
         },
         "mapMarkers":{
@@ -163,18 +163,18 @@ Oskari.registerLocalization(
                 "noSrs": "Geodeettinen koordinaattijärjestelmä pitää olla valittuna lähtötiedoissa, jotta pisteet voidaan näyttää kartalla."
             },
             "select":{
-                "title": "Valitse sijainnit kartalta",
-                "info": "Valitse yksi tai useampi piste kartalta klikkaamalla. Kartta on ETRS-TM35FIN-koordinaattijärjestelmässä. Tämä koordinaattijärjestelmä valitaan automaattisesti eikä sitä voi muuttaa. Valinnoissa on syytä huomioida, että kartalta sijaintien valinta ei ole tarkka ja valitut koordinaatit pyöristetään kokonaisluvuiksi.",
-                "add": "Lisää merkintöjä",
-                "remove": "Poista merkintöjä"
+                "title": "Osoita pisteet kartalta",
+                "info": "Klikkaa kartalla yhtä tai useampaa pistettä. Klikkaamiesi pisteiden koordinaatit näkyvät taulukossa Koordinaattimuunnoksen pääsivulla. Koordinaatit ovat ETRS-TM35FIN-koordinaattijärjestelmän mukaisia ja pyöristetty kokonaisluvuiksi. Voit muuttaa pisteitä taulukkoon klikkaamalla uudestaan Valitse sijainnit kartalta. Valitse avautuvasta ikkunasta, haluatko lisätä vai poistaa pisteitä.",
+                "add": "Lisää pisteitä",
+                "remove": "Poista pisteitä"
             }
         },
         "actions": {
             "transform": "Tee muunnos",
             "export": "Tallenna tiedostoon",
-            "minimizeSrs": "Piilota koordinaattijärjestelmän lisävalinnat",
-            "minimizedSrs": "Näytä kaikki koordinaattijärjestelmän valinnat",
-            "axisFlip": "Koordinaatit käänteisesti",
+            "minimizeSrs": "Piilota lisävalinnat",
+            "minimizedSrs": "Näytä lisävalinnat",
+            "axisFlip": "Vaihda koordinaattien järjestys",
             "search": "Hae nimellä tai EPSG-koodilla",
             "select": "Valitse",
             "cancel": "Peruuta",
@@ -193,7 +193,7 @@ Oskari.registerLocalization(
             "changeTooltip": "Huomioi, että valintojen ja koordinaattien säilyttäminen voi johtaa tilanteeseen, jossa tulokset eivät vastaa valintoja."
         },
         "fileSettings": {
-            "import": "Lähtöaineiston ominaisuudet",
+            "import": "Tuo tiedostosta",
             "export": "Aineiston muodostaminen",
             "rows": "riviä",
             "columns": "saraketta",
@@ -202,13 +202,13 @@ Oskari.registerLocalization(
                 "fileName": "Tiedoston nimi",
                 "decimalSeparator": "Desimaalierotin",
                 "delimiter": "Sarake-erotin",
-                "headerLineCount": "Otsakerivien määrä",
+                "headerLineCount": "Otsakerivien lukumäärä",
                 "decimalCount": "Desimaalien tarkkuus",
                 "axisFlip": "Koordinaatit käänteisesti",
                 "writeCardinals": "Lisää kardinaalit (N,E,W,S)",
                 "writeLineEndings": "Lisää lähtötiedoston rivien loput",
                 "lineSeparator": "Rivierotin",
-                "unit": "Kulman muoto/yksikkö",
+                "unit": "Kulman muoto ja yksikkö",
                 "createHeader": "Lisää koordinaattijärjestelmä otsakerivi",
                 "writeHeaders": "Lisää otsakerivit lähtötiedostosta", // (${count})??
                 "prefixes": {
@@ -240,41 +240,44 @@ Oskari.registerLocalization(
             },
             "geodeticDatum": {
                 "title": "Geodeettinen datumi",
-                "info": "Datumi, joka kuvaa kaksi- tai kolmiulotteisen koordinaatiston suhdetta Maahan.",
+                "info": "Valitse, määritelläänkö koordinaatit KKJ-, EUREF-FIN vai ETRS89-datumissa.",
                 "listItems" : [
-                    "Datumi: parametri tai parametrijoukko, joka määrittelee koordinaatiston origon, mittakaavan ja orientaation.",
-                    "Esimerkkejä geodeettisesta datumista ovat mm. EUREF-FIN ja kartastokoordinaattijärjestelmä."
+                    "Geodeettinen datumi on parametrijoukko, jonka avulla määritellään koordinaatiston origo, mittakaava ja orientaatio suhteessa Maan pintaan.",
+                    "Paikkatietoikkunassa datumivaihtoehdot ovat KKJ, EUREF-FIN ja ETRS89."
                 ]
             },
             "coordinateSystem":{
                 "title": "Koordinaatisto",
-                "info": "Matemaattisten sääntöjen joukko, jolla määritellään se, miten pisteille annetaan koordinaatit.",
+                "info": "Valitse, ilmoitetaanko koordinaatit suorakulmaisessa vai maantieteellisessä koordinaatistossa ja kaksi- vai kolmiulotteisena (korkeus mukana).",
                 "listItems" : [
-                    "Erityyppisiä koordinaatistoja ovat esimerkiksi suorakulmainen koordinaatisto, tasokoordinaatisto, napakoordinaatisto, geodeettinen koordinaatisto, pallokoordinaatisto ja lieriökoordinaatisto."
+                    "Koordinaatisto: matemaattisten sääntöjen joukko, jolla määritellään se, miten pisteille annetaan koordinaatit (Lähde: Geoinformatiikan sanasto)",
+                    "Jos valitset koordinaatistoksi ”Suorakulmainen 2d (Taso)”, voit suodattaa vaihtoehtoja valitsemalla karttaprojektiojärjestelmän."
                 ]
             },
             "mapProjection":{
                 "title": "Karttaprojektiojärjestelmä",
-                "info": "Joukko sääntöjä, joiden avulla määrätään, kuinka haluttu alue kuvataan joukolla karttaprojektioita",
+                "info": "Valitse karttaprojektio, jonka avulla kolmiulotteinen kohde kuvataan kaksiulotteiselle karttatasolle.",
                 "listItems" : [
-                    "Karttaprojektio: menetelmä, jolla maapallon kolmiulotteinen pinta kuvataan kaksiulotteiselle karttatasolle.",
-                    "Säännöillä voidaan esimerkiksi sitoa käytettävät karttaprojektiot ja projektiokaistat. Projektiokaistojen osalta järjestelmä voi määrittää kaistoille esimerkiksi tunnisteet, keskimeridiaanien tai -paralleelien mittakaavan, leveyden, pituuden ja päällekkäisyyden."
+                    "Karttaprojektio: Menetelmä, jolla maapallon kolmiulotteinen pinta kuvataan kaksiulotteiselle karttatasolle (Lähde: Geoinformatiikan sanasto).",
+                    "Karttaprojektio on valittavissa vain koordinaatistolle, joka on suorakulmainen ja kaksiulotteinen (2D)."
                 ]
             },
             "geodeticCoordinateSystem":{
-                "title": "Geodeettinen koordinaattijärjestelmä",
-                "info": "Koordinaattijärjestelmä, joka perustuu geodeettiseen datumiin.",
+                "title": "Koordinaattijärjestelmä",
+                "info": "Valitse koordinaattijärjestelmä, jossa haluat esittää koordinaatit.",
                 "listItems" : [
-                    "Koordinaattijärjestelmä: järjestelmä, joka muodostuu datumin avulla reaalimaailmaan kiinnitetystä koordinaatistosta.",
-                    "Suomen valtakunnallinen tasokoordinaattijärjestelmä on ETRS-TM35FIN."
+                    "Koordinaattijärjestelmä:  Geodeettiseen datumiin perustuva järjestelmä, joka muodostuu datumin avulla reaalimaailmaan kiinnitetystä koordinaatistosta (Lähde: Geoinformatiikan sanasto).",
+                    "Valtakunnallinen tasokoordinaattijärjestelmä Suomessa on ETRS-TM35FIN. Se on myös käytössä Paikkatietoikkunassa.",
+                    "WGS84-koordinaattijärjestelmää ei ole valittavissa Paikkatietoikkunassa. Voit valita sen sijaan EUREF-FIN-G80-koordinaattijärjestelmän. Poikkeama koordinaattien arvoissa on näiden järjestelmien välillä alle metri."
                 ]
             },
             "heightSystem":{
                 "title":"Korkeusjärjestelmä",
-                "info": "Yksiulotteinen koordinaattijärjestelmä, joka perustuu korkeusdatumiin.",
+                "info": "Valitse, missä korkeusjärjestelmässä korkeuskoordinaatti esitetään.",
                 "listItems" : [
-                    "Korkeusdatumi: datumi, joka määrittelee painovoimaan liittyvien korkeuksien tai syvyyksien suhteen Maahan.",
-                    "Suomessa käytetään valtakunnallisissa töissä JHS 163-suosituksen mukaista N2000-korkeusjärjestelmää."
+                    "Korkeusjärjestelmä: Yksiulotteinen koordinaattijärjestelmä, joka perustuu korkeusdatumiin (Lähde: Geoinformatiikan sanasto).",
+                    "Suomessa valtakunnallinen korkeusjärjestelmä on N2000. Paikkatietoikkunassa käytössä oleva N2000-järjestelmä perustuu vuonna 2024 päivitettyyn geoidimalliin.",
+                    "N43-korkeusjärjestelmä ei kata koko Pohjois-Suomea."
                 ]
             },
             "fileName":{
@@ -301,37 +304,36 @@ Oskari.registerLocalization(
             },
             "delimiter":{
                 "title":"Sarake-erotin",
-                "info": "Sarakkeiden erottamiseen käytetty merkki",
+                "info": "Sarake-erotin erottaa eri sarakkeet, kuten saman pisteen eri koordinaatit, toisistaan tekstitiedostossa.",
                 "paragraphs": [
-                    "Määrittää millä erotinmerkillä sarakkeet on eroteltu tiedostossa toisistaan.",
-                    "Jos koordinaatteja edeltää jokin tunniste tai seuraa jokin merkkijono, tulee nämäkin olla erotettuna samalla erottimella."
+                    "Tiedostossa voi olla myös muita sarakkeita kuin koordinaatit. Ne erotetaan samalla merkillä.",
+                    "Sarake-erotin ei voi olla sama merkki kuin desimaalierotin.",
                 ],
                 "listItems" : []
             },
             "headerLineCount":{
-                "title":"Otsakerivien määrä",
-                "info": "Montako riviä tiedoston alussa on ennen ensimmäistä koordinaattiriviä",
+                "title":"Otsakerivien lukumäärä",
+                "info": "Otsakeriveiksi lasketaan ne rivit, joilla ei ole koordinaattitietoja, ja jotka ovat tiedostossa ennen koordinaattirivejä.",
                 "paragraphs": [
-                    "Ominaisuuden avulla pystyy ohjelmalle kertomaan kuinka monta riviä tiedoston alusta ohitetaan ennen ensimmäisen koordinaattirivin lukemista.",
-                    "Ohittamisen syynä voi olla, että tiedoston alussa on esimerkiksi sanallinen kuvaus tiedoston sisällöstä."
+                    "Otsakeriveillä voi olla esimerkiksi sanallinen kuvaus tiedoston sisällöstä."
                 ],
                 "listItems" : []
             },
             "unit":{
-                "title":"Kulman muoto/yksikkö",
-                "info": "Geodeettisten koordinaattien yksikkö",
+                "title":"Kulman muoto ja yksikkö",
+                "info": "Kulman yksikkö ja muoto kertovat, miten koordinaattien kulma-arvot esitetään tiedostossa.",
                 "paragraphs": [
-                    "Ominaisuuden avulla kerrotaan ohjelmalle missä muodossa kulma-arvot ovat. Tuettuja kulmayksikköjä ovat: Aste, Gooni (graadi) ja Radiaani.",
-                    "Lisäksi asteesta johdetut sexagesimaalimuodot ovat tuettuja. Jos näissä muodoissa esimerkiksi asteet, kaariminuutit ja kaarisekunnit ovat erotettuina, hyväksyy ohjelma erottimena tabulaattorin, pilkun ja puolipisteen, mutta ei välilyöntiä."
+                    "Kulman yksikkö voi olla aste, gooni tai radiaani.",
+                    "Koordinaatit voidaan ilmoittaa myös asteina, sekunteina ja minuutteina."
                 ],
                 "listItems" : []
             },
             "decimalSeparator":{
                 "title":"Desimaalierotin",
-                "info": "Desimaaliosan erottamiseen käytetty merkki",
+                "info": "Desimaaliluvussa desimaalierotin erottaa kokonaisluvun ja desimaaliosan toisistaan.",
                 "paragraphs": [
-                    "Ominaisuuden avulla pystyy kertomaan mikä merkki toimii desimaalierottimena.",
-                    "Desimaalierottimen tulee poiketa koordinaattiarvot erottavasta merkistä. Kun koordinaattiarvot erottaa esimerkiksi pilkku sekä joukko välilyöntejä, niin desimaalierottimen on oltava piste."
+                    "Desimaalierotin ei voi olla sama merkki kuin sarake-erotin.",
+                    "Esimerkiksi desimaalierottimen on oltava piste, jos sarake-erottimena on käytetty pilkkua."
                 ],
                 "listItems" : []
             },
@@ -344,13 +346,12 @@ Oskari.registerLocalization(
                 "listItems" : []
             },
             "prefixColCount":{
-                "title":"Koordinaattiarvoja edeltää pisteen tunniste",
+                "title":"Koordinaattirivien alussa on tunniste.",
                 "info": "Koordinaattirivi alkaa tunnistetiedolla",
                 "paragraphs": [
-                    "Ominaisuuden avulla pystyy ohjelmalle kertomaan, että jokaisen pisteen koordinaattiarvoja edeltää samalla rivillä pisteen tunniste (ID).",
-                    "Pisteen tunnisteen tulee olla erotettuna koordinaattiarvoista samalla merkkijonolla kuin koordinaattiarvot ovat erotettuina toisistaan.",
-                    "Jos tuodussa tiedostossa ei ole pisteiden tunnisteita tai pisteet on tuotu taulukosta tai kartalta, niin tulostiedoston pisteiden tunnisteiksi luodaan yhdellä kasvava kokonaisluku alkaen arvosta 1.",
-                    "Tunnisteen ei tarvitse olla numeerinen."
+                    "Yksi koordinaattirivi vastaa yhtä pistettä.",
+                    "Tunniste erotetaan koordinaattiarvoista sarake-erottimella.",
+                    "Voit myös itse määritellä tunnisteet. Tällöin ne voivat sisältää sekä kirjaimia että numeroita."
                 ],
                 "listItems" : []
             },

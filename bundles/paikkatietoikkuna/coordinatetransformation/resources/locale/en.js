@@ -72,7 +72,7 @@ Oskari.registerLocalization(
                 "h":"Ellipsoidal height [m]"
             },
             "coordinateTable": {
-                "input": "Coordinates to be transformed",
+                "input": "Original coordinates",
                 "output": "Result coordinates",
                 "rows": "Rows",
                 "outdated": "The selections or coordinates have changed. Transform coordinates to get updated results.",
@@ -149,7 +149,7 @@ Oskari.registerLocalization(
                 "title": "Import coordinates from clipboard",
                 "button": "Import from clipboard",
                 "info":  "Import coordinates from clipboard (csv, excel)",
-                "placeholder": "Enter coordinates here. Each row should contain one coordinate. Use semicolon or tab as a separator. Data can be imported in following format:\n383699,477;6676232,276;13,4"
+                "placeholder": "Paste coordinates from the clipboard for example by pressing CTRL+V. One row includes coordinates for one point. Separate the coordinates with a semicolon or a tab. Coordinates may be for example in this format:\n383699,477;6676232,276;13,4"
             }
         },
         "mapMarkers":{
@@ -170,9 +170,9 @@ Oskari.registerLocalization(
         "actions": {
             "transform": "Transform",
             "export": "Save to file",
-            "minimizeSrs": "Hide coordinate reference system extra selections",
-            "minimizedSrs": "Show all coordinate reference system selections",
-            "axisFlip": "Coordinates reversed",
+            "minimizeSrs": "Hide extra options",
+            "minimizedSrs": "Show all options",
+            "axisFlip": "Reverse coordinates",
             "search": "Search using name or EPSG code",
             "select": "Select",
             "cancel": "Cancel",
@@ -191,7 +191,7 @@ Oskari.registerLocalization(
             "changeTooltip": "Note that keeping the selections and coordinates can lead to a situation where the results do not match the selections."
         },
         "fileSettings": {
-            "import": "Input properties",
+            "import": "Import from file",
             "export": "Output properties",
             "rows": "rows",
             "columns": "columns",
@@ -199,14 +199,14 @@ Oskari.registerLocalization(
             "options": {
                 "fileName": "File name",
                 "decimalSeparator": "Decimal separator",
-                "delimiter": "Field separator",
+                "delimiter": "Column separator",
                 "headerLineCount": "Number of header rows",
                 "decimalCount": "Decimal precision",
                 "axisFlip": "Coordinates reversed",
                 "writeCardinals": "Add cardinals (N,E,W,S)",
                 "writeLineEndings": "Add end-of-lines from input file",
                 "lineSeparator": "Line separator", // Row separator
-                "unit": "Angle pattern", // Angle format/unit type/unit
+                "unit": "Angle format and unit", // Angle format/unit type/unit
                 "createHeader": "Add CRS header",
                 "writeHeaders": "Add header rows from input file", // (${count})??
                 "prefixes": { // Use identifier, Use id infront
@@ -238,41 +238,45 @@ Oskari.registerLocalization(
             },
             "geodeticDatum": {
                 "title": "Geodetic datum",
-                "info": "Datum describing the relationship between a 2D or 3D coordinate system and the Earth.",
+                "info": "Choose whether the coordinates are defined in the KKJ, EUREF-FIN or ETRS89 datum.",
                 "listItems" : [
-                    "Datum: a parameter or set of parameters defining the origin, scale and orientation of a coordinate system.",
-                    "Examples of a geodetic datum are EUREF-FIN and the KKJ."
+                    "Geodetic datum is a set of parameters used to determine the origin, scale and orientation of a coordinate system in relation to the surface of the Earth.",
+                    "In the Finnish Geoportal you can choose whether the coordinates are defined in the KKJ, EUREF-FIN or ETRS89 datum."
                 ]
             },
             "coordinateSystem":{
                 "title": "Coordinate system",
-                "info": "A set of mathematical rules defining how coordinates are assigned to points.",
+                "info": "Choose whether the coordinates are indicated in a rectangular or geographical coordinate system and in 2D or 3D (height included). ",
                 "listItems" : [
-                    "Different types of coordinate systems include cartesian coordinate systems, projected coordinate systems, polar coordinate systems, geodetic coordinate systems, spherical coordinate systems and cylindrical coordinate systems."
+                    "Coordinate system defines, how the coordinates will be defined to the points.",
+                    "In the Finnish Geoportal you can choose whether the coordinates are indicated in a rectangular or geographical coordinate system and in 2D or 3D (height included).",
+                    "If you select \"Rectangular 2D (Plane)\" as the coordinate system, you can filter the options by selecting the map projection system."
                 ]
             },
             "mapProjection":{
-                "title": "System of map projection",
-                "info": "A set of rules determining how an area is described using a set of map projections.",
+                "title": "Map projection system",
+                "info": "Choose a map projection to describe a 3D feature on the 2D map layer.",
                 "listItems" : [
-                    "Map projection: a method of describing a three-dimensional surface on a two-dimensional plane (map).",
-                    "The rules can be used to define map projections and projection zones. Map projection system may define identifiers, scale factor at central meridian or parallel, width or length or overlapping of the projection zones."
+                    "Map projection is a method to describe three-dimensional Earth surface on the two-dimensional map layer.",
+                    "You can select a map projection only if you have chosen \"Rectangular 2D (Plane)\" as a coordinate system."
                 ]
             },
             "geodeticCoordinateSystem":{
-                "title": "Geodetic coordinate reference system",
-                "info": "Coordinate reference system based on a geodetic datum.",
+                "title": "Coordinate reference system",
+                "info": "Choose a coordinate reference system in which coordinates are represented.",
                 "listItems" : [
-                    "Coordinate reference system: a system consisting of a coordinate system that is related to the Earth with a datum.",
-                    "The national projected coordinate system of Finland is ETRS-TM35FIN."
+                    "Coordinate refence system is a reference system which is related to the Earth with a geodetic datum.",
+                    "The national projected coordinate system in Finland is ETRS-TM35FIN. It is used also in the Finnish Geoportal.",
+                    "The commonly used WGS84 coordinate system is not available in this service. Instead, select the EUREF-FIN-G80 coordinate system. The deviation in coordinate values between these systems is less than one metre."
                 ]
             },
             "heightSystem":{
                 "title":"Vertical coordinate reference system",
-                "info": "One-dimensional coordinate system based on a vertical datum.",
+                "info": "Choose in which vertical coordiante reference system heights and depths are represented.",
                 "listItems" : [
-                    "Vertical datum: a datum defining the relationship between gravity-related heights or depths and the Earth.",
-                    "N2000 height system, described in the JHS163 recommendation, is to be used for nationwide tasks in Finland. "
+                    "Vertical coordinate reference system is a system defining the point elevation in relation to the Earth.",
+                    "In Finland, the national height system is N2000. The N2000 system used in the Finnish Geoportal has been updated to the new geoid model published in 2024.",
+                    "Please note that the N43 height system does not cover the whole of Northern Finland."
                 ]
             },
             "fileName":{
@@ -298,38 +302,37 @@ Oskari.registerLocalization(
                 }
             },
             "delimiter":{
-                "title":"Field separator",
-                "info": "Defines by which delimiter the columns are separated from each other",
+                "title":"Column separator",
+                "info": "A column separator separates different columns, such as different coordinates of the same point, from each other in a text file.",
                 "paragraphs": [
-                    "Defines by which delimiter the columns are separated from each other in the file.",
-                    "If the coordinates are preceded by an identifier or followed by a character string, these must also be separated from the coordinates using the same separator."
+                    "The file may also contain columns other than coordinates. They are separated by the same character.",
+                    "The column separator cannot be the same character as the decimal separator."
                 ],
                 "listItems" : []
             },
             "headerLineCount":{
                 "title":"Number of header rows",
-                "info": "Number of lines in the beginning of the file before the first coordinate row",
+                "info": "Header rows are those rows that do not have coordinate data and that are in the file before the coordinate rows.",
                 "paragraphs": [
-                    "This property is used to assign the number of lines to be bypassed at the start of the file before reading the first coordinate row.",
-                    "The reason for bypassing can be, for example, a verbal description of the contents at the start of the file."
+                    "For example, header rows may have a verbal description of the contents of a file."
                 ],
                 "listItems" : []
             },
             "unit":{
-                "title":"Angle pattern",
-                "info": "Unit of a geodetic coordinates",
+                "title":"Angle format and unit",
+                "info": "Angle format and unit defines the unit and format where the angle values of the coordinates are in the file.",
                 "paragraphs": [
-                    "This property is used to define the format of angle values. Supported angle units: Degree, Grade and Radian",
-                    "Sexagesimal forms derived from the degree are also supported. In these formats, if degrees, minutes of arc and seconds of arc are separated by a space (DD MM and DD MM SS), the space cannot be used as the coordinate separator."
+                    "The unit of angle can be degrees, gon, or radians.",
+                    "In addition, coordinates can be expressed in degrees, seconds and minutes."
                 ],
                 "listItems" : []
             },
             "decimalSeparator":{
                 "title":"Decimal separator",
-                "info": "This property is used to define the decimal separator.",
+                "info": "In the decimal number a decimal separator separates an integer and a decimal part from each other.",
                 "paragraphs": [
-                    "This property is used to define the decimal separator.",
-                    "The decimal separator cannot be the same character as the coordinate separator. If the coordinate separator is a comma, the decimal separator must be a point."
+                    "The decimal separator cannot be the same character as the column separator.",
+                    "For example, a decimal separator must be a point if a comma is used as a column separator."
                 ],
                 "listItems" : []
             },
@@ -342,13 +345,12 @@ Oskari.registerLocalization(
                 "listItems" : []
             },
             "prefixColCount":{
-                "title":"Use identifiers",
+                "title":"Coordinates include identifiers",
                 "info": "Coordinate row starts with identifier",
                 "paragraphs": [
-                    "This property is used to define that the coordinate values of each point are preceded on the same line by the point's identifier (ID)",
-                    "The point identifier must be separated from the coordinate values using the same character string as that used as the coordinate value separator.",
-                    "If the input file does not contain point identifiers or the points have been imported from a table or a map, the points are assigned identifiers starting from 1 and increasing by one integer for each point.",
-                    "The identifiers in the input file do not need to be numerical."
+                    "One row of coordinates corresponds to one point.",
+                    "The identifier and coordinates are separated by the column separator.",
+                    "You can also define identiers yourself. In this case they can contain both letters and numbers."
                 ],
                 "listItems" : []
             },
