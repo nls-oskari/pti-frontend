@@ -156,15 +156,15 @@ Oskari.registerLocalization(
         },
         "mapMarkers":{
             "show":{
-                "title": "Näytä sijainnit kartalla",
-                "info": "Kartta on ETRS-TM35FIN-koordinaattijärjestelmässä. Koordinaatit on sijoitettu kartalle kyseistä koordinaattijärjestelmää käyttäen. Sijaintimerkinnän yhteydessä näytään lähtö- ja/tai tuloskoordinaattijärjestelmän mukaiset koordinaatit lukemina. ",
+                "title": "Näytä pisteet kartalla",
+                "info": "Näytä taulukossa määriteltyjen pisteiden sijainnit kartalla ETRS-TM35FIN-koordinaattijärjestelmässä. Jokaisen pisteen kohdalla näytetään pisteen itä- ja pohjoiskoordinaatti (E, N).",
                 "errorTitle": "Virhe sijaintien näyttämisessä",
                 "noCoordinates": "Ei koordinaatteja näytettäväksi kartalla",
                 "noSrs": "Geodeettinen koordinaattijärjestelmä pitää olla valittuna lähtötiedoissa, jotta pisteet voidaan näyttää kartalla."
             },
             "select":{
                 "title": "Osoita pisteet kartalta",
-                "info": "Klikkaa kartalla yhtä tai useampaa pistettä. Klikkaamiesi pisteiden koordinaatit näkyvät taulukossa Koordinaattimuunnoksen pääsivulla. Koordinaatit ovat ETRS-TM35FIN-koordinaattijärjestelmän mukaisia ja pyöristetty kokonaisluvuiksi. Voit muuttaa pisteitä taulukkoon klikkaamalla uudestaan Valitse sijainnit kartalta. Valitse avautuvasta ikkunasta, haluatko lisätä vai poistaa pisteitä.",
+                "info": "Klikkaa kartalla yhtä tai useampaa pistettä. Klikkaamiesi pisteiden koordinaatit näkyvät taulukossa Koordinaattimuunnoksen pääsivulla. Koordinaatit ovat ETRS-TM35FIN-koordinaattijärjestelmän mukaisia ja pyöristetty kokonaisluvuiksi. Jos haluat lisätä tai poistaa pisteitä, klikkaa uudelleen \"Osoita pisteet kartalta\" -painiketta.",
                 "add": "Lisää pisteitä",
                 "remove": "Poista pisteitä"
             }
@@ -194,7 +194,7 @@ Oskari.registerLocalization(
         },
         "fileSettings": {
             "import": "Tuo tiedostosta",
-            "export": "Aineiston muodostaminen",
+            "export": "Tallenna tiedostoon",
             "rows": "riviä",
             "columns": "saraketta",
             "previewTitle": "Koordinaattien esikatselu",
@@ -204,16 +204,16 @@ Oskari.registerLocalization(
                 "delimiter": "Sarake-erotin",
                 "headerLineCount": "Otsakerivien lukumäärä",
                 "decimalCount": "Desimaalien tarkkuus",
-                "axisFlip": "Koordinaatit käänteisesti",
-                "writeCardinals": "Lisää kardinaalit (N,E,W,S)",
+                "axisFlip": "Vaihda koordinaattien järjestys.",
+                "writeCardinals": "Lisää kardinaalit (N, E, W, S) koordinaattiarvojen loppuun.",
                 "writeLineEndings": "Lisää lähtötiedoston rivien loput",
                 "lineSeparator": "Rivierotin",
                 "unit": "Kulman muoto ja yksikkö",
-                "createHeader": "Lisää koordinaattijärjestelmä otsakerivi",
+                "createHeader": "Lisää tiedoston alkuun tietoa koordinaatti- ja korkeusjärjestelmistä.",
                 "writeHeaders": "Lisää otsakerivit lähtötiedostosta", // (${count})??
                 "prefixes": {
                     "input": "Koordinaatit sisältävät tunnisteet",
-                    "generate": "Luo riveille tunnisteet",
+                    "generate": "Luo koordinaattiriveille tunnisteet.",
                     "fromFile": "Lisää tunnisteet lähtötiedostosta"
                 },
                 "degrees": {
@@ -288,18 +288,19 @@ Oskari.registerLocalization(
             },
             "decimalCount":{
                 "title":"Desimaalien tarkkuus",
-                "info": "Tulokseen tulevien desimaalien määrä",
+                "info": "Valitse, kuinka monen desimaalin tarkkuudella koordinaatit esitetään. ",
                 "paragraphs": [
-                    "Ominaisuuden avulla kerrotaan ohjelmalle millä tarkkuudella koordinaatit halutaan tulokseen. Oletusarvona on 1mm tarkkuutta vastaava desimaalimäärä." // Asteen esitysmuodoille oletusarvo on metristä järjestelmää vastaava lähin desimaalimäärä 1mm tarkkuuteen."
+                    "Valitse, kuinka monen desimaalin tarkkuudella koordinaatit esitetään.",
+                    "Oletusarvoisesti koordinaatit esitetään 1 mm tarkkuudella."
                 ],
                 "listItems": [],
                 "precisionTable": {
-                    "title": "Kulman muodon/yksikön desimaalien määrä metrisenä tarkkuutena",
-                    "unit": "Kulman muoto/yksikkö",
-                    "degree": "Aste, gooni ja DD",
+                    "title": "Desimaalien lukumäärä eri kulmayksiköille:",
+                    "unit": "Koordinaattien esitystapa",
+                    "degree": "Asteet ja goonit (DD)",
                     "radian": "Radiaanit",
-                    "min": "DDMM ja DD MM",
-                    "sec": "DDMMSS ja DD MM SS"
+                    "min": "Asteet ja minuutit (DDMM tai DD MM)",
+                    "sec": "Asteet, minuutit ja sekunnit (DDMMSS ja DD MM SS)"
                 }
             },
             "delimiter":{
@@ -338,10 +339,11 @@ Oskari.registerLocalization(
                 "listItems" : []
             },
             "lineSeparator":{
-                "title":"Rivin erotin",
-                "info": "Tiedostossa rivinvaihtona käytetty merkki",
+                "title":"Käyttöjärjestelmä",
+                "info": "Rivinlopetusmerkki tiedostossa määräytyy käyttöjärjestelmän mukaan.",
                 "paragraphs": [
-                    "Ominaisuuden avulla kerrotaan ohjelmalle mitä merkkiä/merkkijonoa käytetään erottamaan toisistaan rivit (pisteet)."
+                    "Tiedostoon lisätään automaattisesti rivinlopetusmerkki, joka erottaa rivit toisistaan.",
+                    "Rivinlopetusmerkki ei näy käyttäjälle."
                 ],
                 "listItems" : []
             },
@@ -356,19 +358,20 @@ Oskari.registerLocalization(
                 "listItems" : []
             },
             "axisFlip":{
-                "title":"Koordinaatit käänteisesti",
-                "info": "X- ja Y-koordinaattiakselien järjestys poikkeaa määritetystä järjestyksestä",
+                "title":"Vaihda koordinaattien järjestys.",
+                "info": "Koordinaatit kirjataan tiedostoon päinvastaisessa järjestyksessä kuin ne ovat taulukossa.",
                 "paragraphs": [
-                    "Ominaisuuden avulla pystyy määrittämään ovatko tiedoston pisteiden kaksi ensimmäistä koordinaattiarvoa käänteisessä järjestyksessä suhteessa koordinaatiston kuvailussa annettuun järjestykseen.",
-                    "Esimerkiksi KKJ:n koordinaatit ovat lähtökohtaisesti järjestyksessä, jossa ensimmäisenä on x-koordinaatti ja sitä seuraa y-koordinaatti. x-akseli osoittaa pohjoiseen ja y-akseli itään. Kun valitsee käänteisen järjestyksen, tulee tiedostossa y-koordinaatin edeltää x-koordinaattia."
+                    "Koordinaatit kirjataan tiedostoon päinvastaisessa järjestyksessä kuin ne ovat taulukossa.",
+                    "Esimerkiksi jos taulukossa X-koordinaatti on ennen Y-koordinaattia, tiedostoon kirjataan Y-koordinaatti ennen X-koordinaattia."
                 ],
                 "listItems" : []
             },
             "createHeader": {
-                "title":"Luo otsakerivi",
-                "info": "Lisättävä otsakerivi luodaan valitsemasi koordinaattijärjestelmän tiedoista",
-                "paragrapsh": [
-                    "Lisättävä otsakerivi luodaan valitsemasi koordinaattijärjestelmän tiedoista. Seuraavan esimerkin mukaisesti:"
+                "title":"Lisää tiedoston alkuun tietoa koordinaatti- ja korkeusjärjestelmistä.",
+                "info": "Tiedoston alkuun lisätään käytetyn koordinaatti- ja korkeusjärjestelmän EPSG-koodi ja nimi sekä niissä käytetyt koordinaatti- ja korkeusyksiköt.",
+                "paragraphs": [
+                    "Tiedoston alkuun lisätään käytetyn koordinaatti- ja korkeusjärjestelmän EPSG-koodi ja nimi sekä niissä käytetyt koordinaatti- ja korkeusyksiköt.",
+                    "Esimerkki koordinaattijärjestelmän tiedoista: \"Coordinate Reference System: EPSG:2393 - KKJ / Finland Uniform Coordinate System - axes: N,E - unit: metre\""
                 ]
             },
             "writeHeaders":{
@@ -390,12 +393,11 @@ Oskari.registerLocalization(
                 "listItems" : []
             },
             "writeCardinals":{
-                "title":"Kardinaalien käyttö",
-                "info": "Koordinaattiarvojen perään lisätään ilmansuunnat (N, E, W tai S)",
+                "title":"Lisää kardinaalit (N, E, W, S).",
+                "info": "Kardinaali on ilmansuuntaa osoittava kirjain (N=pohjoinen, E=itä, W=länsi, S=pohjoinen).",
                 "paragraphs": [
-                    "Ominaisuudella määritetään kirjoitetaanko tulosteeseen koordinaattiarvojen perään niiden ilmansuunnat.",
-                    "Ilmansuunnat annetaan kirjoittamalla joko N, E, W tai S koordinaattiarvon perään.",
-                    "Miinusmerkkisille arvoille lisätään vastailmansuunta, jolloin miinusmerkit poistetaan koordinaattiarvoista.",
+                    "Kardinaali on ilmansuuntaa osoittava kirjain (N=pohjoinen, E=itä, W=länsi, S=pohjoinen).",
+                    "Jos koordinaatti on taulukossa miinusmerkkinen, sen eteen lisätään vastailmasuunta. Idän vastailmansuunta on länsi, ja pohjoisen etelä.",
                     "Esimerkiksi itäkoordinaatin 325418 arvoksi tulee 325418E ja itäkoordinaatin -325418 arvoksi tulee 325418W."
                 ],
                 "listItems" : []

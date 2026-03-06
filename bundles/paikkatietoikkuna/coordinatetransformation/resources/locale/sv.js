@@ -155,14 +155,14 @@ Oskari.registerLocalization(
         "mapMarkers":{
             "show":{
                 "title": "Visa positioner på kartan",
-                "info" : "Kartans referenssystem för koordinater är ETRS-TM35FIN. Koordinaterna har placerats på kartan med hjälp av detta referenssystem för koordinater. I samband med lägesanteckningen anges koordinaterna enligt utgångs- och/eller resultatreferenssystemet i siffror.",
+                "info" : "Visa punkter i tabellen på kartan. Koordinaterna anges enligt koordinatsystemet ETRS-TM35FIN. Vid varje punkt visas punktens öst- och nordkoordinat (E, N).",
                 "errorTitle": "Fel i visningen av positioner",
                 "noCoordinates": "Det finns inga koordinater att visa på kartan.",
                 "noSrs": "Ett geodetiskt referenssystem för koordinater måste ingå i utgångsuppgifterna för att kunna visa punkter på kartan."
             },
             "select":{
                 "title": "Välj positioner på kartan",
-                "info": "Välj en eller flera punkter på kartan genom att klicka på dem. Kartans referenssystem för koordinater är ETRS-TM35FIN. Detta referenssystem för koordinater väljs automatiskt för de koordinater som omvandlas och kan inte ändras. Beakta vid val av koordinater att valet av läge inte är exakt.",
+                "info": "Klicka en eller mera punkter på kartan. Koordinaterna för de punkter som du har klickat på visas i tabellen på huvussidan för koordinattransformationen. Koordinaterna anges enligt koordinatsystemet ETRS-TM35FIN och avrundas till heltal. Om du vill lägga till eller ta bort punkter, iklicka på Välj positioner positioner på kartan igen.",
                 "add": "Lägg till punkter",
                 "remove": "Ta bort punkter"
             }
@@ -192,7 +192,7 @@ Oskari.registerLocalization(
         },
         "fileSettings": {
             "import" : "Utgångsmaterialets egenskaper",
-            "export": "Bildande av datamaterial",
+            "export": "Spara till fil",
             "rows": "rader",
             "columns": "fält",
             "previewTitle": "Förhandsvy av koordinaterna",
@@ -202,16 +202,16 @@ Oskari.registerLocalization(
                 "delimiter": "Kolumnseparator",
                 "headerLineCount": "Antal rubrikrader",
                 "decimalCount": "Decimalernas precision",
-                "axisFlip": "Omvända koordinater",
-                "writeCardinals": "Lägg till kardinalväderstreck (N,E,W,S)",
+                "axisFlip": "Byt koordinaternas ordning.",
+                "writeCardinals": "Lägg till kardinalväderstreck (N,E,W,S) i slutet av koordinatvärdena.",
                 "writeLineEndings": "Lägg till utgångsfilens radavslutningarna",
                 "lineSeparator": "Radavskiljare",
                 "unit": "Vinkelns form/enhet",
-                "createHeader": "Skapa koordinatuppgifter rubrikraden",
+                "createHeader": "Lägg till information om använda koordinat- och höjdsystemet i borjan av filen.",
                 "writeHeaders": "Lägg till utgångsfilens rubrikraden", // (${count})??
                 "prefixes": { // Använd identifierare
                     "input": "Koordinater innehåller identifierare",
-                    "generate": "Skapa identifierare för rader",
+                    "generate": "Skapa identifierare till koordinatrader.",
                     "fromFile": "Lägg till utgångsfilens identifierare"
                 },
                 "degrees":{
@@ -287,18 +287,19 @@ Oskari.registerLocalization(
             },
             "decimalCount":{
                 "title":"Decimalernas precision",
-                "info": "Antalet decimaler som visas i resultatet.",
+                "info": "Välj med vilken precision du vill ange koordinaternas decimaler.",
                 "paragraphs": [
-                    "Med denna egenskap kan man ange med hur många decimalers noggrannhet koordinaterna visas i resultatet. Det förvalda värdet motsvarar ett antal decimaler som ger en 1 mm precision." // Det förvalda värdet för gradangivelser är det närmaste antalet decimaler som i det metriska systemet motsvarar 1 mm."
+                    "Välj med vilken precision du vill ange koordinaternas decimaler.",
+                    "Koordinaterna anges som standard med en precision på 1 mm."
                 ],
                 "listItems" : [],
                 "precisionTable": {
-                    "title": "Antalet decimaler av vinkels form/enhet i metrisk ekvivalent",
-                    "unit": "Vinkelns form/enhet",
-                    "degree": "Grad, gon och DD",
-                    "radian": "Radian",
-                    "min": "DDMM och DD MM",
-                    "sec": "DDMMSS och DD MM SS"
+                    "title": "Antalet decimaler i olika formater av koordinater:",
+                    "unit": "Format av koordinater",
+                    "degree": "Grader och goner (DD)",
+                    "radian": "Radianer",
+                    "min": "Grader och minuter (DDMM tai DD MM)",
+                    "sec": "Grader, minuter och sekunder (DDMMSS ja DD MM SS)"
                 }
             },
             "delimiter":{
@@ -337,10 +338,11 @@ Oskari.registerLocalization(
                 "listItems" : []
             },
             "lineSeparator":{
-                "title":"Radavskiljare",
-                "info": "Tecken som i filen anger radbyte.",
+                "title":"Operativsystem",
+                "info": "Radslutstecknet i filen bestäms av operativsystemet.",
                 "paragraphs": [
-                    "Med denna egenskap anges vilket tecken eller vilken teckensträng används för att ange radbyte. Detta tecken eller denna teckensträng läggs alltså till slutet av varje rad."
+                    "Ett radslutstecken läggs automatiskt till i filen för att skilja raderna åt.",
+                    "Radslutstecknet är inte synligt för användaren."
                 ],
                 "listItems" : []
             },
@@ -355,23 +357,24 @@ Oskari.registerLocalization(
                 "listItems" : []
             },
             "axisFlip":{
-                "title":"Omvända koordinater",
-                "info": "X- och Y-koordinataxlarnas ordning avviker från den definierade ordningen.",
+                "title":"Byt koordinaternas ordning.",
+                "info": "Koordinater skrivas i filen i omvänd ordning jämfört med hur de har angetts i tabellen.",
                 "paragraphs": [
-                    "Med denna egenskap kan man definiera om de två första koordinatvärdena för punkterna i filen är i motsatt ordning jämfört med den ordning som anges i koordinatsystemets beskrivning.",
-                    "Exempelvis visas KKS-koordinater så att nordkoordinaten är först och östkoordinaten följer. När man väljer omvänd ordning, ska östkoordinaten vara först i filen och sedan nordkoordinaten."
+                    "Koordinater skrivas i filen i omvänd ordning jämfört med hur de har angetts i tabellen.",
+                    "Till exempel ifall: Om X-koordinaten står före Y-koordinaten i tabellen, skrivs Y-koordinaten före X-koordinaten i filen."
                 ],
                 "listItems" : []
             },
             "createHeader": {
                 "title":"Skriv referenssystemet rubrikraden",
-                "info": "info",
-                "paragrapsh": [
-                    "Rubrikraden som ska läggas till skapas från data i det koordinatsystem du valt. Som visas i följande exempel:"
+                "info": "I början av filen läggs EPSG-koden och namnet på det koordinat- och höjdsystem som används samt de koordinat- och höjdenheter som används i dessa.",
+                "paragraphs": [
+                    "I början av filen läggs EPSG-koden och namnet på det koordinat- och höjdsystem som används samt de koordinat- och höjdenheter som används i dessa.",
+                    "Exempel på information om koordinatsystemet: \"Coordinate Reference System: EPSG:2393 - KKJ / Finland Uniform Coordinate System - axes: N,E - unit: metre\""
                 ]
             },
             "writeHeaders":{
-                "title":"Skriv rubrikraden från utgångsmaterialet",
+                "title":"Lägg till information om använda koordinat- och höjdsystemet i borjan av filen.",
                 "info": "Inkludera rubrikraderna i början av resultatfilen",
                 "paragraphs": [
                     "Med denna egenskap kan användaren ta med metadata om koordinaterna på rubrikraden i resultatfilen. Namnet på referenssystemet för koordinater läggs till på rubrikraden.",
@@ -390,13 +393,12 @@ Oskari.registerLocalization(
                 "listItems" : []
             },
             "writeCardinals":{
-                "title":"Använd kardinalväderstreck",
-                "info": "Lägg till väderstrecken (N, E, W eller S) efter koordinatvärdena",
+                "title":"Lägg till kardinalväderstreck (N,E,W,S)",
+                "info": "Kardinal är en bokstav som anger väderstrecket (N=nord, E=öst, W=väst, S=syd).",
                 "paragraphs": [
-                    "Med denna egenskap anges om koordinatvärdenas väderstreck skrivs ut efter koordinatvärdena i en utskrift.",
-                    "Väderstrecken anges genom att skriva N, E, W eller S efter respektive koordinatvärde.",
-                    "På värden med förtecknet minus läggs det motsatta väderstrecket till och minustecknen tas bort från koordinatvärdena.",
-                    "Exempel: värdet på östkoordinaten 325418 blir 325418E och på östkoordinaten -325418 blir värdet 325418W."
+                    "Kardinal är en bokstav som anger väderstrecket (N=nord, E=öst, W=väst, S=syd).",
+                    "Om koordinaten har förtecknet minus i tabellen, läggs motsatt väderstreck till för den. Det motsatta väderstrecket till öst är väst, och det motsatta väderstrecket till nord är syd.",
+                    "Till exempel östkoordinatens 325418 värde blir 325418E och östkoordinatens -325418 värde blir 325418W."
                 ],
                 "listItems" : []
             }

@@ -155,14 +155,14 @@ Oskari.registerLocalization(
         "mapMarkers":{
             "show":{
                 "title": "Show locations on the map",
-                "info" : "The coordinate reference system of the map is ETRS-TM35FIN. Coordinates have been placed on the map using this coordinate reference system. With the location, the coordinates are shown numerically in the input and/or output coordinate reference system. ",
+                "info" : "Show the locations of the points in the table on a map using the ETRS-TM35FIN coordinate system. For each point, the east and north coordinates (E, N) are displayed.",
                 "errorTitle": "Error in showing positions",
                 "noCoordinates": "No coordinates available to be shown on the map",
                 "noSrs": "A geodetic coordinate reference system must be selected in input properties in order to show points on the map."
             },
             "select":{
                 "title": "Select locations on the map",
-                "info": "Click to select one or more points on the map. The coordinate reference system of the map is ETRS-TM35FIN. This coordinate reference system is automatically selected for the coordinates to be transformed and it cannot be changed. When selecting coordinates, please note that selecting locations on the map is not precise.",
+                "info": "Click one or more points on the map. The coordinates of the points you clicked will appear in a table on the main page of Coordinate Transformation. The coordinates are represented in the ETRS-TM35FIN coordinate referesen system and rounded to integers. If you want to add or remove points, click the button \"Select locations on the map\" again.",
                 "add": "Add points",
                 "remove": "Delete points"
             }
@@ -192,7 +192,7 @@ Oskari.registerLocalization(
         },
         "fileSettings": {
             "import": "Import from file",
-            "export": "Output properties",
+            "export": "Save to file",
             "rows": "rows",
             "columns": "columns",
             "previewTitle": "Preview of the coordinates",
@@ -202,16 +202,16 @@ Oskari.registerLocalization(
                 "delimiter": "Column separator",
                 "headerLineCount": "Number of header rows",
                 "decimalCount": "Decimal precision",
-                "axisFlip": "Coordinates reversed",
-                "writeCardinals": "Add cardinals (N,E,W,S)",
+                "axisFlip": "Reverse coordinates",
+                "writeCardinals": "Add cardinals (N,E,W,S) to the end of the coordinate values.",
                 "writeLineEndings": "Add end-of-lines from input file",
                 "lineSeparator": "Line separator", // Row separator
                 "unit": "Angle format and unit", // Angle format/unit type/unit
-                "createHeader": "Add CRS header",
+                "createHeader": "Add nformation about the used coordinate and height reference systems into the bginning of the file.",
                 "writeHeaders": "Add header rows from input file", // (${count})??
                 "prefixes": { // Use identifier, Use id infront
                     "input": "Coordinates contain identifiers",
-                    "generate": "Generate identifiers for rows",
+                    "generate": "Create identifiers for coordinate rows.",
                     "fromFile": "Add identifiers from input file"
                 },
                 "degrees":{
@@ -287,18 +287,19 @@ Oskari.registerLocalization(
             },
             "decimalCount":{
                 "title":"Decimal precision",
-                "info": "Number of decimals included in the output",
+                "info": "Select the desired decimal place precision for the coordinates.",
                 "paragraphs": [
-                    "This property is used to define the decimal accuracy of coordinates in the output. The default is the number of decimals matching an accuracy of 1mm." // The default for showing degrees is the nearest number of decimals in the metric system matching an accuracy of 1mm."
+                    "Select the desired decimal place precision for the coordinates.",
+                    "By default, coordinates are displayed with a resolution of 1 mm."
                 ],
                 "listItems" : [],
                 "precisionTable": {
-                    "title": "Number of decimals of angle pattern in metric equivalent",
-                    "unit": "Angle pattern", // Angle shape/unit
-                    "degree": "Degree, Grade and DD",
-                    "radian": "Radian",
-                    "min": "DDMM and DD MM",
-                    "sec": "DDMMSS and DD MM SS"
+                    "title": "Number of decimal for different angle forms and units:",
+                    "unit": "Angle format and unit", // Angle shape/unit
+                    "degree": "Degrees and grades (DD)",
+                    "radian": "Radians",
+                    "min": "Degrees and minutes (DDMM and DD MM)",
+                    "sec": "Degrees, minutes and seconds (DDMMSS ja DD MM SS)"
                 }
             },
             "delimiter":{
@@ -337,10 +338,11 @@ Oskari.registerLocalization(
                 "listItems" : []
             },
             "lineSeparator":{
-                "title":"Line separator",
-                "info": "Character used as line break in the file",
+                "title":"Operating system",
+                "info": "The end-of-line character in the file is determined by the operating system.",
                 "paragraphs": [
-                    "This property is used to define the character or character string used to separate lines in the file. This character or character string is added to the end of each line in the file."
+                    "The end-of-line character is automatically added to the file to separate lines from each other.",
+                    "The end-of-line character is not visible to users."
                 ],
                 "listItems" : []
             },
@@ -355,19 +357,20 @@ Oskari.registerLocalization(
                 "listItems" : []
             },
             "axisFlip":{
-                "title":"Reversed coordinates",
-                "info": "",
+                "title":"Reverse coordinates",
+                "info": "Coordinates will be written into the file in the reverse order compared to the coordinates in the table.",
                 "paragraphs": [
-                    "This property is used to define whether the first two coordinate values of each point in the file are in reverse order in comparison with the order given in the description of the coordinate reference system.",
-                    "For example, coordinates in the KKJ coordinate reference system are by default given in North, East order. If the reverse order is selected, the East coordinate must precede the North coordinate in the file."
+                    "Coordinates will be written into the file in the reverse order compared to the coordinates in the table.",
+                    "For example, if the X-coordinate in the table comes before the Y-coordinate, the Y-coordinate is written in the file before the X-coordinate."
                 ],
                 "listItems" : []
             },
             "createHeader": {
-                "title":"Create CRS header",
-                "info": "The header row to be added is created from the data in the coordinate system you selected",
-                "paragrapsh": [
-                    "The header row to be added is created from the data in the coordinate system you selected. As shown in the following example:"
+                "title":"Add information about the used coordinate and height reference systems into the bginning of the file.",
+                "info": "At the beginning of the file will be added the EPSG code, name and coordinate and height units of the coordinate and height reference systems used in the file.",
+                "paragraphs": [
+                    "At the beginning of the file will be added the EPSG code, name and coordinate and height units of the coordinate and height reference systems used in the file.",
+                    "Example of information about coordinate reference system:  \"Coordinate Reference System: EPSG:2393 - KKJ / Finland Uniform Coordinate System - axes: N,E - unit: metre\""
                 ]
             },
             "writeHeaders":{
@@ -389,12 +392,11 @@ Oskari.registerLocalization(
                 "listItems" : []
             },
             "writeCardinals":{
-                "title":"Use cardinals",
-                "info": "Coordinate values are followed by cardinal directions (N, E, W or S).",
+                "title":"Add cardinals (N,E,W,S)",
+                "info": "A cardinal is a letter indicating the cardinal direction (N = North, E = East, W = West, S = South).",
                 "paragraphs": [
-                    "This property is used to include cardinal directions to the coordinate values in the output.",
-                    "Cardinal directions are indicated by N, E, W or S after the coordinate value.",
-                    "The opposite cardinal direction is added to negative values and the minus signs are removed from coordinate values.",
+                    "A cardinal is a letter indicating the cardinal direction (N = North, E = East, W = West, S = South).",
+                    "If a coordinate is negative, the opposite cardinal direction letter will be added in front of it. East is the opposite direction of west, and north is the opposite direction of south.",
                     "For example, the value of the East coordinate 325418 becomes 325418E and the value of the East coordinate -325418 becomes 325418W."
                 ],
                 "listItems" : []
