@@ -12,6 +12,7 @@
     "oskari-frontend-contrib": "https://git@github.com/oskariorg/oskari-frontend-contrib.git#develop"
   },
   "devDependencies": {
+    "@cyclonedx/cyclonedx-npm": "4.2.1",
     "eslint": "9.39.2"
   },
   "scripts": {
@@ -33,7 +34,8 @@
     "eslint:dev": "node ./node_modules/oskari-frontend/node_modules/eslint/bin/eslint.js --config ./node_modules/oskari-frontend/eslint.config.js bundles",
     "test": "npm run eslint && npm run jest",
     "test:dev": "npm run eslint:dev && npm run jest:dev",
-    "test:watch": "node ./node_modules/oskari-frontend/node_modules/jest/bin/jest.js --config ./node_modules/oskari-frontend/jest.config.js --roots ../pti-frontend/bundles --watch"
+    "test:watch": "node ./node_modules/oskari-frontend/node_modules/jest/bin/jest.js --config ./node_modules/oskari-frontend/jest.config.js --roots ../pti-frontend/bundles --watch",
+    "generate-bom": "cyclonedx-npm -o frontend-bom.json"
   },
   "private": true
 }
