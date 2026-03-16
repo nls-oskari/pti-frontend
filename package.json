@@ -11,6 +11,9 @@
     "oskari-frontend": "https://git@github.com/oskariorg/oskari-frontend.git#develop",
     "oskari-frontend-contrib": "https://git@github.com/oskariorg/oskari-frontend-contrib.git#develop"
   },
+  "devDependencies": {
+    "eslint": "9.39.2"
+  },
   "scripts": {
     "dev-mode": "node ./node_modules/oskari-frontend/scripts/oskari-dev-mode",
     "dev-mode:off": "npm run dev-mode -- disabled",
