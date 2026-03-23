@@ -35,7 +35,7 @@ describe('toDegree function', () => {
 });
 
 describe('getFileContent function', () => {
-    test('test export without file contents', () => {
+    test('test 2D export without file contents', () => {
         expect.assertions(4);
         const results = [
             { x: 65.8297771534, y: 26.8019647025},
@@ -60,6 +60,23 @@ describe('getFileContent function', () => {
         const lines = getFileContent(state).split('\r\n');
         expect(lines[0].includes(unit)).toBe(true);
         expect(lines[1]).toEqual('65 49 47.2;26 48 07.1');
+    });
+
+    test('test 3D export without file contents', () => {
+        expect.assertions(2);
+        const results = [
+            { x: 65.8297771534, y: 26.8019647025, z: 10},
+            { x: 65.6578528212, y: 26.2021364531, z: 11.235}
+        ];
+        const state = {
+            results,
+            outputSrs: 'EPSG:10690', // GRS80
+            outputHeightSrs: 'EPSG:3900', // N2000
+            export: { ...FILE_DEFAULTS.export, decimalCount: 1, decimalSeparator: '.', unit: 'DD MM SS'} // ~0.1 m => 2 decimals
+        };
+        const lines = getFileContent(state).split('\r\n');
+        expect(lines[0]).toEqual('65 49 47.20;26 48 07.07;10.0');
+        expect(lines[1]).toEqual('65 39 28.27;26 12 07.69;11.2');
     });
 
     test('test export with imported file', () => {
