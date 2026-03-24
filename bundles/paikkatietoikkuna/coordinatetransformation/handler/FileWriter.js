@@ -80,9 +80,10 @@ const getCoordinates = ({
         const x = axisFlip ? coord.y : coord.x;
         const y = axisFlip ? coord.x : coord.y;
         const array = dimension === 3 ? [x, y, coord.z] : [x, y];
+        // use original decimal count for height
         let row = isDegree
-            ? array.map((c, i) => toDegree(c, unit, decimals, i === lonIndex))
-            : array.map(c => c.toFixed(decimals));
+            ? array.map((c, i) => i < 2 ? toDegree(c, unit, decimals, i === lonIndex) : c.toFixed(decimalCount))
+            : array.map((c, i) => c.toFixed(i < 2 ? decimals : decimalCount));
 
         // replace point and writeCardinals if needed
         row = row.map(r => replace ? r.replace('.', ',') : r)
