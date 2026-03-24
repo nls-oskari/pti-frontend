@@ -63,7 +63,6 @@ export const FlyoutContent = ({
     const count = coordinates.filter(coord => validateCoordinate(coord, input3D)).length;
     return (
         <Content>
-            <MandatoryDescription/>
             <div>
                 <Splitter>
                     <SrsSelect type='input' minimal={minimalSrs} srs={inputSrs} heightSrs={inputHeightSrs} controller={controller}/>

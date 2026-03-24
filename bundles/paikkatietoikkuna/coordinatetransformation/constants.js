@@ -608,6 +608,149 @@ export const SRS_C = [
         bounds: [19.24, 59.75, 31.59, 70.09],
         axes: ['φ', 'λ', 'H'],
         replaced: 'EPSG:7423' // ETRS89 + EVRF2007 height
+    }, {
+        value: 'EPSG:11169',
+        label: 'ETRS-GK19 + N2000',
+        name: 'ETRS89-FIN GK19FIN + N2000',
+        datum: 'EUREF-FIN',
+        projection: 'GK',
+        system: 'PROJ_3D',
+        srs: 'EPSG:3873',
+        srsHeight: 'EPSG:3900',
+        bounds: [19513254.33, 6663010.11, 19527832.44, 6692058.68],
+        axes: ['N', 'E', 'H']
+    }, {
+        value: 'EPSG:11170',
+        label: 'ETRS-GK20 + N2000',
+        name: 'ETRS89-FIN GK20FIN + N2000',
+        datum: 'EUREF-FIN',
+        projection: 'GK',
+        system: 'PROJ_3D',
+        srs: 'EPSG:3874',
+        srsHeight: 'EPSG:3900',
+        bounds: [20472032.84, 6645159.89, 20527967.16, 6707657.06],
+        axes: ['N', 'E', 'H']
+    }, {
+        value: 'EPSG:11171',
+        label: 'ETRS-GK21 + N2000',
+        name: 'ETRS89-FIN GK21FIN + N2000',
+        datum: 'EUREF-FIN',
+        projection: 'GK',
+        system: 'PROJ_3D',
+        srs: 'EPSG:3875',
+        srsHeight: 'EPSG:3900',
+        bounds: [471965.57, 6636247.07, 528034.43, 7694317.48],
+        axes: ['N', 'E', 'H']
+    }, {
+        value: 'EPSG:11172',
+        label: 'ETRS-GK22 + N2000',
+        name: 'ETRS89-FIN GK22FIN + N2000',
+        datum: 'EUREF-FIN',
+        projection: 'GK',
+        system: 'PROJ_3D',
+        srs: 'EPSG:3876',
+        srsHeight: 'EPSG:3900',
+        bounds: [22471898.34, 6627334.36, 22528101.66, 7692086.48],
+        axes: ['N', 'E', 'H']
+    }, {
+        value: 'EPSG:11173',
+        label: 'ETRS-GK23 + N2000',
+        name: 'ETRS89-FIN GK23FIN + N2000',
+        datum: 'EUREF-FIN',
+        projection: 'GK',
+        system: 'PROJ_3D',
+        srs: 'EPSG:3877',
+        srsHeight: 'EPSG:3900',
+        bounds: [471889.95, 6626220.28, 528110.05, 7628505.09],
+        axes: ['N', 'E', 'H']
+    }, {
+        value: 'EPSG:11174',
+        label: 'ETRS-GK24 + N2000',
+        name: 'ETRS89-FIN GK24FIN + N2000',
+        datum: 'EUREF-FIN',
+        projection: 'GK',
+        system: 'PROJ_3D',
+        srs: 'EPSG:3878',
+        srsHeight: 'EPSG:3900',
+        bounds: [24471982.38, 6638475.27, 24528017.62, 7639659.41],
+        axes: ['N', 'E', 'H']
+    }, {
+        value: 'EPSG:11175',
+        label: 'ETRS-GK25 + N2000',
+        name: 'ETRS89-FIN GK25FIN + N2000',
+        datum: 'EUREF-FIN',
+        projection: 'GK',
+        system: 'PROJ_3D',
+        srs: 'EPSG:3879',
+        srsHeight: 'EPSG:3900',
+        bounds: [25472049.67, 6647388.11, 25527950.33, 7646352.07],
+        axes: ['N', 'E', 'H']
+    }, {
+        value: 'EPSG:11176',
+        label: 'ETRS-GK26 + N2000',
+        name: 'ETRS89-FIN GK26FIN + N2000',
+        datum: 'EUREF-FIN',
+        projection: 'GK',
+        system: 'PROJ_3D',
+        srs: 'EPSG:3880',
+        srsHeight: 'EPSG:3900',
+        bounds: [26472251.88, 6674127.31, 26527748.12, 7762365.51],
+        axes: ['N', 'E', 'H']
+    }, {
+        value: 'EPSG:11177',
+        label: 'ETRS-GK27 + N2000',
+        name: 'ETRS89-FIN GK27FIN + N2000',
+        datum: 'EUREF-FIN',
+        projection: 'GK',
+        system: 'PROJ_3D',
+        srs: 'EPSG:3881',
+        srsHeight: 'EPSG:3900',
+        bounds: [27472403.85, 6694182.34, 27527596.15, 7774636.97],
+        axes: ['N', 'E', 'H']
+    }, {
+        value: 'EPSG:11178',
+        label: 'ETRS-GK28 + N2000',
+        name: 'ETRS89-FIN GK28FIN + N2000',
+        datum: 'EUREF-FIN',
+        projection: 'GK',
+        system: 'PROJ_3D',
+        srs: 'EPSG:3882',
+        srsHeight: 'EPSG:3900',
+        bounds: [28472454.57, 6700867.47, 28527545.43, 7779099.35],
+        axes: ['N', 'E', 'H']
+    }, {
+        value: 'EPSG:11179',
+        label: 'ETRS-GK29 + N2000',
+        name: 'ETRS89-FIN GK29FIN + N2000',
+        datum: 'EUREF-FIN',
+        projection: 'GK',
+        system: 'PROJ_3D',
+        srs: 'EPSG:3883',
+        srsHeight: 'EPSG:3900',
+        bounds: [29472895.43, 6758807.83, 29527104.57, 7747863.07],
+        axes: ['N', 'E', 'H']
+    }, {
+        value: 'EPSG:11180',
+        label: 'ETRS-GK30 + N2000',
+        name: 'ETRS89-FIN GK30FIN + N2000',
+        datum: 'EUREF-FIN',
+        projection: 'GK',
+        system: 'PROJ_3D',
+        srs: 'EPSG:3884',
+        srsHeight: 'EPSG:3900',
+        bounds: [30473312.92, 6813409.6, 30526687.08, 7543736.6],
+        axes: ['N', 'E', 'H']
+    }, {
+        value: 'EPSG:11181',
+        label: 'ETRS-GK31 + N2000',
+        name: 'ETRS89-FIN GK31FIN + N2000',
+        datum: 'EUREF-FIN',
+        projection: 'GK',
+        system: 'PROJ_3D',
+        srs: 'EPSG:3885',
+        srsHeight: 'EPSG:3900',
+        bounds: [31473869.79, 6885846.63, 31530833.57, 7130086.16],
+        axes: ['N', 'E', 'H']
     }
 ];
 
