@@ -337,12 +337,12 @@ Oskari.registerLocalization(
                 "listItems" : []
             },
             "prefixColCount":{
-                "title":"Skapa identifierare för rader",
-                "info": "Koordinatraden börjar med identifieraruppgift",
+                "title":"Identifierare till koordinatrader",
+                "info": "I början av varje rad finns en identifierare som skiljer positionerna åt.",
                 "paragraphs": [
                     "En koordinatrad motsvarar en punkt.",
                     "Idenfieringsnummer separeras från koordinater med skiljetecken för fält.",
-                    "Du kan också definiera själva identifierare. Då kan den innehålla både bokstäver och siffror."
+                    "Indentifierare kan innehålla både bokstäver och siffror."
                 ],
                 "listItems" : []
             },

@@ -338,12 +338,12 @@ Oskari.registerLocalization(
                 "listItems" : []
             },
             "prefixColCount":{
-                "title":"Koordinaattirivien alussa on tunniste.",
-                "info": "Koordinaattirivi alkaa tunnistetiedolla",
+                "title":"Koordinaattirivien tunnisteet",
+                "info": "Jokaisen rivin alussa on tunniste, joka erottaa pisteet toisistaan.",
                 "paragraphs": [
                     "Yksi koordinaattirivi vastaa yhtä pistettä.",
                     "Tunniste erotetaan koordinaattiarvoista sarake-erottimella.",
-                    "Voit myös itse määritellä tunnisteet. Tällöin ne voivat sisältää sekä kirjaimia että numeroita."
+                    "Tunniste voi sisältää sekä kirjaimia että numeroita."
                 ],
                 "listItems" : []
             },
