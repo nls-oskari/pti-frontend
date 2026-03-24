@@ -13,11 +13,6 @@ Oskari.registerLocalization(
                 "symbol": "Tähdellä (",
                 "desc": ") merkityt ovat pakollisia kenttiä."
             },
-            "filterSystems": {
-                "title": "Suodata koordinaattijärjestelmiä",
-                "epsg": "EPSG-koodilla",
-                "systems": "Datumilla ja koordinaatistolla"
-            },
             "coordinateSystem": {
                 "title": "Koordinaattijärjestelmän tiedot",
                 "input": {
@@ -27,9 +22,6 @@ Oskari.registerLocalization(
                     "title": "Tuloskoordinaattijärjestelmä"
                 },
                 "noFilter": "Mikä tahansa",
-                "epsgSearch": {
-                    "label": "Hae EPSG-koodilla"
-                },
                 "geodeticDatum": {
                     "label": "Geodeettinen datumi"
                 },
@@ -178,9 +170,7 @@ Oskari.registerLocalization(
             "search": "Hae nimellä tai EPSG-koodilla",
             "select": "Valitse",
             "cancel": "Peruuta",
-            "done": "Valmis",
-            "ok": "Ok",
-            "close": "Sulje"
+            "done": "Valmis"
         },
         "confirm": {
             "title": "Koordinaattitietojen valinnat",

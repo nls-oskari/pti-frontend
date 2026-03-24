@@ -13,11 +13,6 @@ Oskari.registerLocalization(
                 "symbol": "Fields marked with an asterisk (",
                 "desc": ") are required."
             },
-            "filterSystems": {
-                "title": "Filter coordinate reference systems",
-                "epsg": "With EPSG code",
-                "systems": "With datum and coordinate system"
-            },
             "coordinateSystem": {
                 "title": "Coordinate reference system information",
                 "input": {
@@ -27,9 +22,6 @@ Oskari.registerLocalization(
                     "title": "Result coordinate system"
                 },
                 "noFilter": "Any option",
-                "epsgSearch": {
-                    "label": "Search using EPSG code"
-                },
                 "geodeticDatum": {
                     "label": "Geodetic datum"
                 },
@@ -176,9 +168,7 @@ Oskari.registerLocalization(
             "search": "Search using name or EPSG code",
             "select": "Select",
             "cancel": "Cancel",
-            "done": "Done",
-            "ok": "Ok",
-            "close": "Close"
+            "done": "Done"
         },
         "confirm": {
             "title": "Coordinate information selections",
