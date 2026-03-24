@@ -337,12 +337,12 @@ Oskari.registerLocalization(
                 "listItems" : []
             },
             "prefixColCount":{
-                "title":"Coordinates include identifiers",
-                "info": "Coordinate row starts with identifier",
+                "title":"Identifiers for coordinate rows",
+                "info": "At the beginning of each row is an identifier that separates the locations from each other.",
                 "paragraphs": [
                     "One row of coordinates corresponds to one point.",
                     "The identifier and coordinates are separated by the column separator.",
-                    "You can also define identiers yourself. In this case they can contain both letters and numbers."
+                    "Identifier can contain both letters and numbers."
                 ],
                 "listItems" : []
             },
