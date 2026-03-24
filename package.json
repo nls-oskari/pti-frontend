@@ -7,12 +7,12 @@
     "Oskari"
   ],
   "dependencies": {
-    "fs-extra": "^11.3.3",
+    "fs-extra": "^11.3.4",
     "oskari-frontend": "https://git@github.com/oskariorg/oskari-frontend.git#develop",
     "oskari-frontend-contrib": "https://git@github.com/oskariorg/oskari-frontend-contrib.git#develop"
   },
   "devDependencies": {
-    "eslint": "9.39.2"
+    "eslint": "9.39.4"
   },
   "scripts": {
     "dev-mode": "node ./node_modules/oskari-frontend/scripts/oskari-dev-mode",
