@@ -13,11 +13,6 @@ Oskari.registerLocalization(
                 "symbol": "Fält markerade med en asterisk (",
                 "desc": ") är obligatoriska."
             },
-            "filterSystems": {
-                "title": "Filtrera referenssystem för koordinater",
-                "epsg": "Med EPSG-kod",
-                "systems": "Med datum och koordinatsystem"
-            },
             "coordinateSystem": {
                 "title": "Uppgifter om referenssystemet för koordinater",
                 "input": {
@@ -27,9 +22,6 @@ Oskari.registerLocalization(
                     "title": "Målkoordinatsystemet"
                 },
                 "noFilter": "Vad som helst",
-                "epsgSearch": {
-                    "label": "Sök med EPSG-kod"
-                },
                 "geodeticDatum": {
                     "label": "Geodetiskt datum"
                 },
@@ -176,9 +168,7 @@ Oskari.registerLocalization(
             "search": "Sök med namn eller EPSG-kod",
             "select": "Välj",
             "cancel": "Avbryt", //Ångra
-            "done": "Färdig",
-            "ok": "Ok",
-            "close": "Stäng"
+            "done": "Färdig"
         },
         "confirm": {
             "title": "Val av koordinatuppgifter",
