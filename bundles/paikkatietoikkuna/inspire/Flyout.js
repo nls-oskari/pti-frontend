@@ -1,6 +1,14 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
+import styled from 'styled-components';
 import { Message } from 'oskari-ui';
+
+// The content is on p-tags that don't have any padding/margin without this
+const Content = styled.div`
+    p {
+        margin-bottom: 1em;
+    }
+`;
 
 Oskari.clazz.define('Oskari.inspire.Flyout',
 
@@ -32,7 +40,7 @@ Oskari.clazz.define('Oskari.inspire.Flyout',
             if (!this._reactRoot) {
                 return;
             }
-            this._reactRoot.render(<Message bundleKey={ this.instance.getName() } messageKey="flyoutContent.content" allowHTML={true} />);
+            this._reactRoot.render(<Message bundleKey={ this.instance.getName() } messageKey="flyoutContent.content" allowHTML={true} LabelComponent={Content} />);
         },
         startPlugin: function () {}
     });
