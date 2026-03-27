@@ -6,7 +6,7 @@ const flyoutTextContent = `
 Organisaatiot tarjoavat karttatasojaan Paikkatietoikkunaan julkaisemiensa rajapintapalvelujen kautta. Ennen tasojen liittämistä palveluun organisaatio laatii tiedontuottajasopimuksen Maanmittauslaitoksen kanssa. Karttatasojen sisältö ja ajantasaisuus ovat tiedontuottajan vastuulla.
 </p>
 <p>
-Paikkatietoikkuna on osa <a target="_blank" href="https://www.maanmittauslaitos.fi/kartat-ja-paikkatieto/paikkatietojen-yhteentoimivuus/inspire/mika-inspire">INSPIRE-direktiivin toimeenpanoa</a> Suomessa.
+Paikkatietoikkuna on osa <a target="_blank" href="https://www.maanmittauslaitos.fi/kartat-ja-paikkatieto/paikkatietojen-yhteentoimivuus/inspire">INSPIRE-direktiivin toimeenpanoa</a> Suomessa.
 Direktiivi tähtää siihen, että eurooppalaiset paikkatiedot olisivat helposti saatavilla ja hyödynnettävissä.</p>
 <p>
 Tilaa <a target="_blank" href="https://www.maanmittauslaitos.fi/tietoa-maanmittauslaitoksesta/uutishuone/uutiskirjeet">Maanmittauslaitoksen uutiskirje</a> sähköpostiisi, jos haluat seurata ajankohtaisia Maanmittauslaitoksen ja Paikkatietoikkunan ajankohtaisia kuulumisia.

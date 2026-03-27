@@ -8,8 +8,7 @@ Dataproducenterna erbjuder dem att bifogas i Paikkatietoikkuna. Lantmäteriverke
 </p>
 
 <p>
-Paikkatietoikkuna är en del av implementeringen av <a target="_blank" href="https://www.maanmittauslaitos.fi/sv/kartor-och-geodata/interoperabla-geodata/inspire/vilket-inspire">INSPIRE-direktivet i Finland</a>.
- Direktivets målsättning är att geodata är lätt tillgängliga och användbara.
+Paikkatietoikkuna är en del av implementeringen av <a target="_blank" href="https://www.maanmittauslaitos.fi/sv/kartor-och-geodata/interoperabla-geodata/inspire">INSPIRE-direktivet i Finland</a>. Direktivets målsättning är att geodata är lätt tillgängliga och användbara..
 </p>
 `;
 
