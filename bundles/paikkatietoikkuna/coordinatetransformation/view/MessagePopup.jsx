@@ -15,7 +15,6 @@ const Content = styled.div`
 const StyledList = styled.ul`
     padding: 0 1em;
 `;
-const Item = styled.li``;
 
 const List = ({ items }) => {
     if (!items.length) {
@@ -23,7 +22,7 @@ const List = ({ items }) => {
     }
     return (
         <StyledList>
-            { items.map((item, i) => <Message key={`li_${i}`} messageKey={item} bundleKey={BUNDLE} LabelComponent={Item}/>) }
+            { items.map((item, i) => <Message key={`li_${i}`} messageKey={item} bundleKey={BUNDLE} LabelComponent={'li'}/>) }
         </StyledList>
     );
 };
