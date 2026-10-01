@@ -11,8 +11,8 @@ import 'oskari-bundle!oskari-frontend/bundles/mapping/mapmodule/map2d_ol';
 
 import 'oskari-bundle!oskari-frontend/bundles/mapping/tiles3d';
 import 'oskari-bundle!oskari-frontend/bundles/mapping/maparcgis';
-import 'oskari-bundle!oskari-frontend/bundles/mapping/mapmyplaces';
-import 'oskari-bundle!oskari-frontend/bundles/framework/myplacesimport/mapuserlayers';
+// import 'oskari-bundle!oskari-frontend/bundles/mapping/mapmyplaces';
+// import 'oskari-bundle!oskari-frontend/bundles/framework/myplacesimport/mapuserlayers';
 import 'oskari-bundle!oskari-frontend/bundles/mapping/drawtools';
 import 'oskari-bundle!oskari-frontend/bundles/mapping/toolbar';
 import 'oskari-bundle!oskari-frontend/bundles/mapping/infobox';
@@ -34,8 +34,8 @@ import 'oskari-bundle!oskari-frontend/bundles/framework/timeseries';
 
 // mobile tuning
 import 'oskari-lazy-bundle?feedbackService!oskari-frontend/bundles/framework/feedbackService';
-import 'oskari-lazy-bundle?myplaces3!oskari-frontend/bundles/framework/myplaces3';
-import 'oskari-lazy-bundle?myplacesimport!oskari-frontend/bundles/framework/myplacesimport';
+//import 'oskari-lazy-bundle?myplaces3!oskari-frontend/bundles/framework/myplaces3';
+//import 'oskari-lazy-bundle?myplacesimport!oskari-frontend/bundles/framework/myplacesimport';
 import 'oskari-lazy-bundle?mydata!oskari-frontend/bundles/framework/mydata';
 import 'oskari-lazy-bundle?publisher2!oskari-frontend/bundles/framework/publisher2';
 import 'oskari-lazy-bundle?printout!oskari-frontend/bundles/framework/printout';
@@ -45,7 +45,7 @@ import 'oskari-lazy-bundle?featuredata!oskari-frontend/bundles/framework/feature
 import 'oskari-lazy-bundle?metadataflyout!oskari-frontend/bundles/catalogue/metadataflyout'
 import 'oskari-lazy-bundle?metadatasearch!oskari-frontend/bundles/catalogue/metadatasearch';
 import 'oskari-lazy-bundle?terrain-profile!oskari-frontend-contrib/bundles/terrain-profile';
-// for testing purposes
+// new myfeatures funtionality (replacing myplaces/userlayer)
 import 'oskari-lazy-bundle?myfeatures!oskari-frontend/bundles/framework/myfeatures';
 
 import 'oskari-lazy-bundle?coordinatetransformation!../../bundles/paikkatietoikkuna/coordinatetransformation';
@@ -65,7 +65,6 @@ import 'oskari-bundle!../../bundles/paikkatietoikkuna/lang-overrides';
 import 'oskari-bundle!oskari-frontend/bundles/framework/layeranalytics';
 
 // lazy
-
 import 'oskari-lazy-bundle?admin-permissions!oskari-frontend/bundles/admin/admin-permissions';
 import 'oskari-lazy-bundle?admin!oskari-frontend/bundles/admin/admin';
 import 'oskari-lazy-bundle?metrics!oskari-frontend/bundles/admin/metrics';

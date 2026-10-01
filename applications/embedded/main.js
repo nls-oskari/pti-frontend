@@ -7,7 +7,7 @@ import 'oskari-loader!oskari-frontend/packages/framework/bundle/divmanazer/bundl
 
 import 'oskari-bundle!oskari-frontend/bundles/mapping/mapmodule/map2d_ol';
 import 'oskari-bundle!oskari-frontend/bundles/mapping/maparcgis';
-import 'oskari-bundle!oskari-frontend/bundles/framework/myplacesimport/mapuserlayers';
+//import 'oskari-bundle!oskari-frontend/bundles/framework/myplacesimport/mapuserlayers';
 
 import 'oskari-bundle!oskari-frontend/bundles/mapping/infobox';
 import 'oskari-bundle!oskari-frontend/bundles/mapping/drawtools';

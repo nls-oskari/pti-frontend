@@ -12,7 +12,7 @@ import 'oskari-bundle!oskari-frontend/bundles/mapping/time-control-3d';
 import 'oskari-bundle!oskari-frontend/bundles/mapping/camera-controls-3d';
 
 import 'oskari-bundle!oskari-frontend/bundles/mapping/maparcgis';
-import 'oskari-bundle!oskari-frontend/bundles/framework/myplacesimport/mapuserlayers';
+//import 'oskari-bundle!oskari-frontend/bundles/framework/myplacesimport/mapuserlayers';
 
 import 'oskari-bundle!oskari-frontend/bundles/mapping/infobox';
 import 'oskari-bundle!oskari-frontend/bundles/mapping/drawtools';

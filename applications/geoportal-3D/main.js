@@ -22,8 +22,8 @@ import 'oskari-bundle!oskari-frontend/bundles/framework/search';
 import 'oskari-bundle!oskari-frontend/bundles/framework/timeseries';
 
 import 'oskari-bundle!oskari-frontend/bundles/mapping/heatmap';
-import 'oskari-bundle!oskari-frontend/bundles/mapping/mapmyplaces';
-import 'oskari-bundle!oskari-frontend/bundles/framework/myplacesimport/mapuserlayers';
+// import 'oskari-bundle!oskari-frontend/bundles/mapping/mapmyplaces';
+// import 'oskari-bundle!oskari-frontend/bundles/framework/myplacesimport/mapuserlayers';
 import 'oskari-bundle!oskari-frontend/bundles/mapping/maparcgis';
 import 'oskari-bundle!oskari-frontend/bundles/mapping/userstyle';
 import 'oskari-bundle!oskari-frontend/bundles/mapping/drawtools';
@@ -39,8 +39,8 @@ import 'oskari-bundle!../../bundles/paikkatietoikkuna/lang-overrides';
 
 // mobile tuning
 import 'oskari-lazy-bundle?feedbackService!oskari-frontend/bundles/framework/feedbackService';
-import 'oskari-lazy-bundle?myplaces3!oskari-frontend/bundles/framework/myplaces3';
-import 'oskari-lazy-bundle?myplacesimport!oskari-frontend/bundles/framework/myplacesimport';
+// import 'oskari-lazy-bundle?myplaces3!oskari-frontend/bundles/framework/myplaces3';
+// import 'oskari-lazy-bundle?myplacesimport!oskari-frontend/bundles/framework/myplacesimport';
 import 'oskari-lazy-bundle?mydata!oskari-frontend/bundles/framework/mydata';
 import 'oskari-lazy-bundle?publisher2!oskari-frontend/bundles/framework/publisher2';
 import 'oskari-lazy-bundle?printout!oskari-frontend/bundles/framework/printout';
