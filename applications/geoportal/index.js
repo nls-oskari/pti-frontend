@@ -49,8 +49,6 @@ jQuery(document).ready(function () {
             app.startApplication(function () {
                 var sb = Oskari.getSandbox();
                 gfiParamHandler(sb);
-                // TODO: move to db eventually
-                Oskari.app.playBundle({bundlename: 'myfeatures'});
             });
         },
         error: function (jqXHR, textStatus) {
