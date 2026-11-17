@@ -6,6 +6,8 @@ import 'oskari-loader!oskari-frontend/packages/framework/bundle/oskariui/bundle.
 import 'oskari-loader!oskari-frontend/packages/framework/bundle/ui-components/bundle.js';
 import 'oskari-loader!oskari-frontend/packages/framework/bundle/divmanazer/bundle.js';
 
+import 'oskari-bundle!oskari-frontend/bundles/framework/mainnavigation';
+
 // Then import mapmodule and rest of the application
 import 'oskari-bundle!oskari-frontend/bundles/mapping/mapmodule/map2d_ol';
 
